@@ -35,30 +35,49 @@ def preprocess_customers_data(df: pd.DataFrame) -> pd.DataFrame:
     processed_df['shop_type'] = "Customers"
 
     return processed_df
-# Load CSV
-#agro_dealers_file_path = "../../../../../../all_shops_02202025.csv"
-agro_dealers_file_path = "https://raw.githubusercontent.com/SunCulture/sunculture-data/refs/heads/rodgers-dev/data-sets/all_shops_02202025.csv"
-#customers_file_path = "../../../../../../customers.csv"
-customers_file_path = "https://raw.githubusercontent.com/SunCulture/sunculture-data/refs/heads/rodgers-dev/data-sets/customers.csv"
 
-agro_delears = pd.read_csv(agro_dealers_file_path)
-customers = pd.read_csv(customers_file_path)
+def preprocess_ssc_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Processes SSC data with lat/lon columns."""
+    df = df.dropna(subset=['lat', 'lon'])
+    df = df[(df['lat'] != 0) & (df['lon'] != 0)]
+
+    processed_df = pd.DataFrame()
+    processed_df['lat'] = df['lat']
+    processed_df['lon'] = df['lon']
+    processed_df['shop_name'] = df['name']
+    processed_df['shop_type'] = "SSCs"
+
+    return processed_df
+
+# Load CSV
+agro_dealers_file_path = "https://raw.githubusercontent.com/SunCulture/sunculture-data/refs/heads/rodgers-dev/data-sets/all_shops_02202025.csv"
+customers_file_path = "https://raw.githubusercontent.com/SunCulture/sunculture-data/refs/heads/rodgers-dev/data-sets/customers.csv"
+sscs_file_url = 'https://raw.githubusercontent.com/SunCulture/sunculture-data/refs/heads/rodgers-dev/data-sets/sscs.csv'
+
+@st.cache_data
+def load_csv(url: str) -> pd.DataFrame:
+    return pd.read_csv(url)
+
+agro_delears = load_csv(agro_dealers_file_path)
+customers = load_csv(customers_file_path)
+sscs = load_csv(sscs_file_url)
 
 # Process location data
 agro_delaers_data = preprocess_agro_delaers_data(agro_delears)
 customers_data = preprocess_customers_data(customers)
+ssc_data = preprocess_ssc_data(sscs)
 
 # Combine both datasets
-map_data = pd.concat([agro_delaers_data, customers_data], ignore_index=True)
+map_data = pd.concat([agro_delaers_data, customers_data, ssc_data], ignore_index=True)
 map_data["lat"] = pd.to_numeric(map_data["lat"], errors="coerce")
 map_data["lon"] = pd.to_numeric(map_data["lon"], errors="coerce")
 
 # Streamlit UI
-st.title("Shop Locations: Existing vs Potential")
+st.title("Locations: Agro-Deaers, Customers & SSC")
 st.write("Filter by shop type and shop name to visualize locations.")
 
 # **Shop Type Filter**
-shop_type_options = ["All", "Potential Shop", "Existing Shop"]
+shop_type_options = ["All", "Agro-Delear", "Customers", "SSCs"]
 selected_shop_types = st.multiselect("Select Shop Type", shop_type_options, default="All")
 
 # **Shop Name Filter**
@@ -76,7 +95,8 @@ if "All" not in selected_shops:
 # Define color mapping
 color_map = {
     "Agro-Delear": [255, 0, 0, 200],  # Red for Agro-Dealers
-    "Customers": [0, 0, 255, 200]     # Blue for Customers
+    "Customers": [0, 0, 255, 200] ,    # Blue for Customers
+    "SSCs": [0, 255, 0, 200]          # Green for SSCs
 }
 filtered_data["color"] = filtered_data["shop_type"].map(color_map)
 
