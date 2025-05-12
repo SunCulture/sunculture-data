@@ -19,7 +19,6 @@ RUN pip install --no-cache-dir --upgrade pip==25.0.1
 
 # Install Airflow-related packages first
 RUN pip install --no-cache-dir \
-    sqlparse==0.5.1 \
     collate_sqllineage==1.6.14 \
     apache-airflow-providers-mysql==6.2.1 \
     apache-airflow-providers-postgres==6.1.3 \
@@ -28,9 +27,7 @@ RUN pip install --no-cache-dir \
     psycopg2-binary==2.9.10 \
     connexion[swagger-ui] \
     requests==2.32.3 \
-    clickhouse-connect==0.8.17 \
-    openmetadata-managed-apis==1.7.0 \
-    openmetadata-ingestion==1.7.0
+    clickhouse-connect==0.8.17 
 
 # Install dbt with compatible versions
 RUN pip install --no-cache-dir \
