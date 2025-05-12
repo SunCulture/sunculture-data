@@ -1,0 +1,5 @@
+services:
+  docusaurus:
+    extends:
+      file: ./docs/docusaurus/docker-compose-docusaurus.yml
+      service: docusaurus
