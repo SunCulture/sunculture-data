@@ -13,6 +13,7 @@ const config = {
   title: "SunCulture",
   tagline: "Data Catalog",
   favicon: "img/favicon.ico",
+  trailingSlash: true,
 
   // Set the production url of your site here
   url: "https://sunculture.github.io",
