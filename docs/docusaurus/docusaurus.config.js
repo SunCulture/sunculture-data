@@ -4,14 +4,14 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from "prism-react-renderer";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "SunCulture",
-  tagline: "Data Catalog",
+  tagline: "Data Portal",
   favicon: "img/favicon.ico",
   trailingSlash: true,
 
@@ -76,9 +76,20 @@ const config = {
       "@docusaurus/plugin-content-docs",
       {
         id: "dashboards",
-        path: "Dashboards", // Path to the dashboards folder
-        routeBasePath: "dashboards", // URL path => /dashboards
+        path: "Dashboards",
+        routeBasePath: "dashboards",
         sidebarPath: require.resolve("./sidebarsDashboards.js"),
+        sidebarItemsGenerator: async (args) =>
+          args.defaultSidebarItemsGenerator(args),
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "insights",
+        path: "Insights",
+        routeBasePath: "insights",
+        sidebarPath: require.resolve("./sidebarsInsights.js"),
         sidebarItemsGenerator: async (args) =>
           args.defaultSidebarItemsGenerator(args),
       },
@@ -101,14 +112,18 @@ const config = {
             type: "docSidebar",
             sidebarId: "tutorialSidebar",
             position: "left",
-            label: "Data Catalog",
+            label: "KPIs & Metrics",
           },
           {
             to: "/dashboards/overview",
             label: "Dashboards",
             position: "left",
           },
-          { to: "/insights", label: "Insights", position: "left" },
+          {
+            to: "/insights/overview",
+            label: "Insights",
+            position: "left",
+          },
           {
             href: "https://sunculture.io/",
             label: "SunCulture",
@@ -119,7 +134,7 @@ const config = {
       footer: {
         style: "dark",
         links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} SunCulture, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} SunCulture, Inc.`,
       },
       prism: {
         theme: prismThemes.github,
