@@ -1,1 +1,0 @@
-# SunCulture Data Science
