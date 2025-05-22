@@ -71,6 +71,20 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "dashboards",
+        path: "Dashboards", // Path to the dashboards folder
+        routeBasePath: "dashboards", // URL path => /dashboards
+        sidebarPath: require.resolve("./sidebarsDashboards.js"),
+        sidebarItemsGenerator: async (args) =>
+          args.defaultSidebarItemsGenerator(args),
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -90,15 +104,14 @@ const config = {
             label: "Data Catalog",
           },
           {
-            to: "/dashboards-reports",
-            label: "Dashboards & Reports",
+            to: "/dashboards/overview",
+            label: "Dashboards",
             position: "left",
           },
           { to: "/insights", label: "Insights", position: "left" },
-          { to: "/releases", label: "Releases", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
-            label: "GitHub",
+            href: "https://sunculture.io/",
+            label: "SunCulture",
             position: "right",
           },
         ],
