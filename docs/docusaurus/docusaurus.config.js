@@ -12,7 +12,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config = {
   title: "SunCulture",
   tagline: "Data Portal",
-  favicon: "img/favicon.ico",
+  //favicon: "img/favicon.ico",
   trailingSlash: true,
 
   // Set the production url of your site here
@@ -102,10 +102,13 @@ const config = {
       // Replace with your project's social card
       image: "img/docusaurus-social-card.jpg",
       navbar: {
-        title: "SunCulture",
         logo: {
           alt: "SunCulture Logo",
-          src: "img/logo.svg",
+          src: "img/SunCulture_Logo.png",
+          style: {
+            height: "40px", // adjust height
+            width: "auto", // auto to preserve aspect ratio
+          },
         },
         items: [
           {
