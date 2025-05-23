@@ -4,7 +4,7 @@ sidebar_label: Insights
 description: Juicy data stories, smart trends, and monthly nuggets that go beyond the dashboards.
 ---
 
-# 📊 Insights
+# 📊 SunCulture Insights
 
 We’re cooking up something special!  
 This space will soon be your go-to for juicy data stories and sharp business takeaways.

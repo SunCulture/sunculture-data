@@ -1,37 +1,31 @@
 ---
 id: overview
 title: Dashboards Overview
+sidebar_label: Overview
+sidebar_position: 1
 ---
 
-## Overview
+# 📊 SunCulture Dashboards
 
-This section contains links to the various dashboards and reports used by different teams in SunCulture. These dashboards provide valuable insights and track key metrics such as sales, collections, financial performance, and customer behavior.
+Welcome to the central catalog of **SunCulture** dashboards—your gateway to data-driven decisions across teams and countries.
 
-## Available Dashboards
+This section brings together all dashboards used across **Kenya, Uganda, and CIV**, organized by **department** to ensure quick access and clarity on what insights each dashboard delivers.
 
-### 1. **Sales Dashboard**
-- **Purpose**: Track sales performance across regions and customer segments.
-- **Reports**: 
-  - Sales Growth
-  - Total Sales vs Target
-  - Sales by Region
+Whether you're looking for operational metrics, sales performance, credit risk, or product adoption trends, this is your starting point.
 
-### 2. **Credit & PAYG Dashboard**
-- **Purpose**: Monitor credit performance and PAYG repayments.
-- **Reports**:
-  - Portfolio At Risk (PAR30)
-  - Collection Rate
-  - Default Rate
+## 🎯 Objectives
 
-### 3. **Finance Dashboard**
-- **Purpose**: Track financial health, expenses, and revenue.
-- **Reports**:
-  - Total Expenses
-  - Revenue vs Expenses
+- Create a **single reference point** for all existing dashboards.
+- Organize dashboards by **country and department** for intuitive navigation.
+- Provide context on **use cases, business questions, and stakeholders** for each report.
+- Enable teams to **track coverage and adoption** of dashboards across the organization.
 
-### 4. **Operations Dashboard**
-- **Purpose**: Assess operational efficiency, inventory, and supply chain performance.
-- **Reports**:
-  - Inventory Levels
-  - Supply Chain Delays
-  - Operations Efficiency Metrics
+## 📁 What’s Inside
+
+Explore dashboards segmented by:
+
+- **Country**: Kenya, Uganda, CIV
+- **Departments**: Sales, Credit/PAYG, Supply Chain, Customer Service, Marketing, ESG, People & Culture, Product, Operations, Finance, and more
+- **Metadata**: Includes description, intended audience, primary KPIs, and links to the live reports
+
+> Looking to request a new dashboard or suggest an update to an existing one? Contact the Data Team—we’d love to hear from you.
