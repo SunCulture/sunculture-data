@@ -1,0 +1,4 @@
+streamlit==1.38.0
+sqlalchemy==1.4.39
+psycopg2-binary==2.9.6
+requests==2.28.1

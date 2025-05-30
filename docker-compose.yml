@@ -1,0 +1,15 @@
+services:
+  ocr-app:
+    extends:
+      file: ocr-poc/docker-compose-ocr.yml
+      service: ocr-app
+  receipt-scan-api:
+    extends:
+      file: receipt_scan_api/docker-compose-receipt-scan-api.yml
+      service: receipt-scan-api
+
+# Define Networks
+networks:
+  sd-network:
+    driver: bridge
+    external: true

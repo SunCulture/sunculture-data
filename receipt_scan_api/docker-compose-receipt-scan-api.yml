@@ -1,0 +1,27 @@
+services:
+  receipt-scan-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: receipt-scan-api
+    ports:
+      - "5000:5000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ep_stage_db_user=${ep_stage_db_user}
+      - ep_stage_db_password=${ep_stage_db_password}
+      - ep_stage_db_host=${ep_stage_db_host}
+      - ep_stage_db_port=${ep_stage_db_port}
+      - ep_stage_db=${ep_stage_db}
+      - PGPASSWORD=${ep_stage_db_password}
+    env_file:
+      - ../.env
+    volumes:
+      - ../logs:/app/logs
+    command: python app.py
+    networks:
+      - sd-network
+
+networks:
+  sd-network:
+    name: sd-network

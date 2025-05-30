@@ -2,3 +2,5 @@
 windows-venv/
 
 .env
+
+logs/
