@@ -70,67 +70,87 @@ def detect_table_structure(table_rows: List[Dict]) -> Tuple[List[str], int]:
     if not table_rows:
         return [], 0
     
-    # Look for potential header patterns
-    header_indicators = ['expense', 'type', 'amount', 'cost', 'currency', 'description', 'category']
     start_idx = 0
     headers = []
     
-    # Find the first row that looks like data (not headers/labels)
+    # Enhanced skip indicators to filter out header rows and non-data
+    skip_indicators = ['details', 'date', 'total', 'advance', 'amount repayable', 
+                      'cash/cheque', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 
+                      'id number', 'cell phone', 'week ending']
+    
+    # Find the first row that contains actual expense data
+    actual_data_rows = []
     for idx, row in enumerate(table_rows):
-        row_values = [str(v).lower().strip() for v in row.values() if v]
+        row_values = [str(v).strip() for v in row.values() if v]
+        row_text = ' '.join(row_values).lower()
         
         # Skip empty rows
         if not row_values:
             continue
             
-        # Skip rows with day names or common labels
-        skip_indicators = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 
-                          'id number', 'cell phone', 'week ending', 'total']
-        if any(indicator in ' '.join(row_values) for indicator in skip_indicators):
-            start_idx = idx + 1
+        # Skip header/label rows
+        if any(indicator in row_text for indicator in skip_indicators):
             continue
             
-        # Check if this row contains actual data (amounts or expense types)
-        has_amount = any(is_valid_amount(str(v)) for v in row.values())
-        has_expense_data = any(len(str(v).strip()) > 2 and not str(v).isdigit() 
+        # Look for rows that contain meaningful expense descriptions
+        has_meaningful_expense = any(
+            len(str(v).strip()) > 10 and  # Reasonable length description
+            not str(v).strip().isdigit() and  # Not just a number
+            not is_valid_amount(str(v)) and  # Not an amount
+            any(keyword in str(v).lower() for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation'])
+            for v in row.values() if v
+        )
+        
+        has_valid_amount = any(is_valid_amount(str(v)) and float(str(v).replace(',', '')) > 0 
                               for v in row.values() if v)
         
-        if has_amount or has_expense_data:
-            # This looks like a data row, previous structure analysis complete
-            break
-        
-        start_idx = idx + 1
+        # This is likely an actual expense entry
+        if has_meaningful_expense and has_valid_amount:
+            actual_data_rows.append((idx, row))
     
-    # Generate dynamic headers based on column count and content analysis
-    if table_rows and start_idx < len(table_rows):
-        sample_row = table_rows[start_idx] if start_idx < len(table_rows) else table_rows[0]
-        col_count = max(sample_row.keys()) + 1 if sample_row else 0
-        
-        # Analyze first few data rows to understand structure
-        expense_cols = []
-        amount_cols = []
-        
-        for row_idx in range(start_idx, min(start_idx + 3, len(table_rows))):
-            if row_idx >= len(table_rows):
-                break
-            row = table_rows[row_idx]
-            for col_idx, value in row.items():
-                if is_valid_amount(str(value)):
-                    if col_idx not in amount_cols:
-                        amount_cols.append(col_idx)
-                elif value and len(str(value).strip()) > 2:
-                    if col_idx not in expense_cols:
-                        expense_cols.append(col_idx)
-        
-        # Generate headers based on analysis
-        headers = []
-        for i in range(col_count):
-            if i in amount_cols:
-                headers.append(f'Amount_{len([h for h in headers if h.startswith("Amount")])}'.replace('_0', ''))
-            elif i in expense_cols:
-                headers.append(f'Expense_Type_{len([h for h in headers if h.startswith("Expense")])}'.replace('_0', ''))
-            else:
-                headers.append(f'Column_{i}')
+    if not actual_data_rows:
+        return [], len(table_rows)  # No valid data found
+    
+    # Use the first actual data row to determine structure
+    start_idx = actual_data_rows[0][0]
+    sample_row = actual_data_rows[0][1]
+    col_count = max(sample_row.keys()) + 1 if sample_row else 0
+    
+    # Analyze the actual data rows to understand column purposes
+    description_cols = set()
+    amount_cols = set()
+    date_cols = set()
+    
+    for _, row in actual_data_rows[:3]:  # Analyze first 3 data rows
+        for col_idx, value in row.items():
+            if not value:
+                continue
+            value_str = str(value).strip()
+            
+            if is_valid_amount(value_str) and float(value_str.replace(',', '')) > 0:
+                amount_cols.add(col_idx)
+            elif clean_date(value_str):
+                date_cols.add(col_idx)
+            elif len(value_str) > 10 and any(keyword in value_str.lower() 
+                                           for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation']):
+                description_cols.add(col_idx)
+    
+    # Generate meaningful headers
+    headers = []
+    amount_counter = 0
+    description_counter = 0
+    
+    for i in range(col_count):
+        if i in amount_cols:
+            headers.append('Amount' if amount_counter == 0 else f'Amount_{amount_counter}')
+            amount_counter += 1
+        elif i in description_cols:
+            headers.append('Description' if description_counter == 0 else f'Description_{description_counter}')
+            description_counter += 1
+        elif i in date_cols:
+            headers.append('Date')
+        else:
+            headers.append(f'Column_{i}')
     
     return headers, start_idx
 
@@ -149,20 +169,52 @@ def extract_table_data_enhanced(table_rows: List[Dict]) -> List[Dict]:
         if not any(row.values()):  # Skip empty rows
             continue
         
+        row_values = [str(v).strip() for v in row.values() if v]
+        row_text = ' '.join(row_values).lower()
+        
+        # Skip non-data rows that might have been missed
+        skip_patterns = ['details', 'total', 'advance', 'amount repayable', 'cash/cheque']
+        if any(pattern in row_text for pattern in skip_patterns) and not any(
+            keyword in row_text for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation']
+        ):
+            continue
+        
         item = {}
+        has_meaningful_description = False
+        has_valid_amount = False
+        
         for col_idx, header in enumerate(headers):
             value = row.get(col_idx, '')
-            if value:
-                # Clean amounts
-                if 'amount' in header.lower():
-                    cleaned_amount = clean_amount(str(value))
-                    if cleaned_amount:
-                        item[header] = cleaned_amount
-                else:
-                    item[header] = str(value).strip()
+            if not value:
+                continue
+                
+            value_str = str(value).strip()
+            
+            # Clean amounts
+            if 'amount' in header.lower():
+                cleaned_amount = clean_amount(value_str)
+                if cleaned_amount and float(cleaned_amount.replace(',', '')) > 0:
+                    item[header] = cleaned_amount
+                    has_valid_amount = True
+            elif 'description' in header.lower():
+                # Only include meaningful descriptions
+                if (len(value_str) > 10 and 
+                    not value_str.isdigit() and 
+                    not is_valid_amount(value_str) and
+                    any(keyword in value_str.lower() for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation'])):
+                    item[header] = value_str
+                    has_meaningful_description = True
+            elif 'date' in header.lower():
+                cleaned_date = clean_date(value_str)
+                if cleaned_date:
+                    item[header] = cleaned_date
+            else:
+                # For other columns, be more selective
+                if len(value_str) > 1 and value_str not in ['..', '-', 'N/A']:
+                    item[header] = value_str
         
-        # Only include rows with meaningful data
-        if any(item.values()):
+        # Only include items that have both a meaningful description AND a valid amount
+        if has_meaningful_description and has_valid_amount and len(item) >= 2:
             items.append(item)
     
     return items
@@ -182,39 +234,70 @@ def validate_extracted_data(form_data: Dict) -> Dict:
         }
     }
     
-    # Check for critical fields
-    critical_fields = ['Date', 'Total Amount Requested', 'Bill Total', 'Name of Employee']
-    found_critical = sum(1 for field in critical_fields if any(field.lower() in k.lower() for k in form_data.keys()))
+    # Check for critical fields with more flexible matching
+    critical_field_patterns = {
+        'date': ['date', 'when'],
+        'amount': ['total', 'amount', 'cost', 'sum'],
+        'name': ['name', 'employee', 'person'],
+        'signature': ['signature', 'sign']
+    }
     
-    if found_critical > 0:
+    found_critical = {}
+    for category, patterns in critical_field_patterns.items():
+        for key in form_data.keys():
+            if any(pattern in key.lower() for pattern in patterns):
+                found_critical[category] = key
+                break
+    
+    if len(found_critical) >= 2:  # At least 2 critical field types found
         validation_result['validation']['has_critical_fields'] = True
     else:
-        validation_result['validation']['issues'].append('Missing critical fields')
+        validation_result['validation']['issues'].append(f'Missing critical fields. Found: {list(found_critical.keys())}')
     
-    # Validate items
+    # Enhanced items validation
     items = form_data.get('Items', [])
     if items:
-        complete_items = 0
+        valid_items = []
         for item in items:
-            has_expense = any('expense' in k.lower() or 'type' in k.lower() for k, v in item.items() if v)
-            has_amount = any('amount' in k.lower() for k, v in item.items() if v and is_valid_amount(str(v)))
-            if has_expense and has_amount:
-                complete_items += 1
+            # Check for meaningful expense description
+            has_description = any(
+                v and len(str(v)) > 10 and 
+                any(keyword in str(v).lower() for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation'])
+                for k, v in item.items() if 'description' in k.lower() or 'expense' in k.lower()
+            )
+            
+            # Check for valid amount
+            has_amount = any(
+                v and is_valid_amount(str(v)) and float(str(v).replace(',', '')) > 0
+                for k, v in item.items() if 'amount' in k.lower()
+            )
+            
+            if has_description and has_amount:
+                valid_items.append(item)
         
-        if complete_items > 0:
+        if valid_items:
             validation_result['validation']['has_complete_items'] = True
-            validation_result['validation']['completion_rate'] = complete_items / len(items)
+            validation_result['validation']['completion_rate'] = len(valid_items) / len(items)
+            validation_result['validation']['valid_items_count'] = len(valid_items)
+            # Update the items to only include valid ones
+            form_data['Items'] = valid_items
         else:
-            validation_result['validation']['issues'].append('No complete expense items found')
+            validation_result['validation']['issues'].append('No valid expense items found (missing description or amount)')
     else:
         validation_result['validation']['issues'].append('No expense items extracted')
     
-    # Calculate confidence score
+    # Calculate enhanced confidence score
     score = 0.0
+    
+    # Critical fields contribution (40%)
     if validation_result['validation']['has_critical_fields']:
-        score += 0.4
+        critical_score = len(found_critical) / len(critical_field_patterns)
+        score += 0.4 * critical_score
+    
+    # Items contribution (60%)
     if validation_result['validation']['has_complete_items']:
-        score += 0.6 * validation_result['validation'].get('completion_rate', 0)
+        items_score = validation_result['validation'].get('completion_rate', 0)
+        score += 0.6 * items_score
     
     validation_result['validation']['confidence_score'] = round(score, 2)
     
