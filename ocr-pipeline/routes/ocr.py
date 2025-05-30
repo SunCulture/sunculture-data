@@ -7,9 +7,30 @@ from config.settings import S3_BUCKET, SUPPORTED_EXTENSIONS
 import logging
 import os
 import json
+import psycopg2
+from config.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 
 ocr_bp = Blueprint('ocr', __name__)
 logger = logging.getLogger(__name__)
+
+def check_duplicate(file_key):
+    try:
+        conn = psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT
+        )
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1 FROM extracted_text WHERE file_name = %s", (file_key,))
+        exists = cursor.fetchone() is not None
+        cursor.close()
+        conn.close()
+        return exists
+    except Exception as e:
+        logger.error(f"Error checking duplicate for {file_key}: {e}")
+        return False
 
 @ocr_bp.route('/process-file', methods=['POST'])
 def process_file():
@@ -19,16 +40,22 @@ def process_file():
             logger.error("Missing file_key in request payload")
             return jsonify({'error': 'Missing file_key'}), 400
 
-        file_key = data['file_key']
+        file_key = data['file_key'].strip()  # Trim whitespace
         logger.info(f"Received request to process file: {file_key}")
         
+        # Check for duplicate
+        if check_duplicate(file_key):
+            logger.warning(f"Duplicate file detected: {file_key}")
+            return jsonify({'error': 'File already processed', 'file_key': file_key}), 409
+
         # Check if file has extension, if not, skip validation (assume it's processable)
-        has_extension = any(file_key.lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS)
-        has_any_extension = '.' in os.path.basename(file_key)
+        basename = os.path.basename(file_key)
+        has_extension = any(basename.lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS)
+        has_any_extension = '.' in basename
         
         logger.info(f"File extension check - has supported extension: {has_extension}, has any extension: {has_any_extension}")
         
-        # Only validate extension if the file actually has an extension
+        # Only validate extension if the file has an extension
         if has_any_extension and not has_extension:
             return jsonify({'error': f'Unsupported file type. Supported extensions: {SUPPORTED_EXTENSIONS}'}), 400
 

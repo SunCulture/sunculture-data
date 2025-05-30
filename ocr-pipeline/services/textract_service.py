@@ -75,21 +75,34 @@ def extract_text_from_file(file_path):
                 # Ensure row exists
                 while len(current_table['rows']) <= row_index:
                     current_table['rows'].append({})
-                # Add text to the appropriate column
                 current_table['rows'][row_index][col_index] = text
 
-        # Convert table data to a structured format (e.g., assuming first row is headers)
+        # Process table data
         if table_data:
             items = []
             for table in table_data:
-                headers = table['rows'][0] if table['rows'] else {}
-                for row in table['rows'][1:]:  # Skip header row
-                    item = {}
-                    for col_idx, value in row.items():
-                        header = list(headers.keys())[col_idx] if col_idx < len(headers) else f'Column{col_idx+1}'
-                        item[header] = value
-                    if item:
-                        items.append(item)
+                if not table['rows']:
+                    continue
+                # Skip metadata rows (e.g., Counter, #) and infer headers from first data row
+                start_idx = 0
+                while start_idx < len(table['rows']) and any(k in table['rows'][start_idx].values() for k in ['Counter', '#']):
+                    start_idx += 1
+                if start_idx >= len(table['rows']):
+                    continue
+
+                # Use first data row as a template to infer headers
+                first_data_row = table['rows'][start_idx]
+                headers = [f'Column{i+1}' for i in range(len(first_data_row))]
+                if first_data_row:
+                    items = [dict(zip(headers, row.values())) for row in table['rows'][start_idx:] if any(row.values())]
+                
+                # Aggregate subtotals into Bill Total
+                bill_total = form_data.get('Bill Total:', '0.00')
+                for row in table['rows']:
+                    if len(row) == 1 and row.get(3) and row[3].replace('.', '').replace(',', '').isdigit():
+                        bill_total = str(float(bill_total.replace(',', '')) + float(row[3].replace(',', '')))
+                form_data['Bill Total:'] = bill_total
+
             if items:
                 form_data['Items'] = items
 
