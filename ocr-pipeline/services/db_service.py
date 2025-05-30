@@ -1,4 +1,3 @@
-# services/db_service.py
 import psycopg2
 from psycopg2 import sql
 from config.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
@@ -23,11 +22,11 @@ def save_to_db(file_name, extracted_text):
             VALUES (%s, %s)
             RETURNING id
         """)
-        cursor.execute(insert_query, (file_name, extracted_text))
+        cursor.execute(insert_query, (file_name, extracted_text))  # extracted_text is a JSON string
         record_id = cursor.fetchone()[0]
         conn.commit()
         
-        logger.info(f"Successfully saved extracted text for {file_name} to database with record ID {record_id}")
+        logger.info(f"Successfully saved form data for {file_name} to database with record ID {record_id}")
         
         cursor.close()
         conn.close()

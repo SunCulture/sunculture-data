@@ -1,4 +1,3 @@
-# routes/ocr.py (This is your existing file, fixed)
 from flask import Blueprint, request, jsonify
 from services.s3_service import download_file_from_s3, list_files_in_folder
 from services.textract_service import extract_text_from_file
@@ -7,6 +6,7 @@ from werkzeug.utils import secure_filename
 from config.settings import S3_BUCKET, SUPPORTED_EXTENSIONS
 import logging
 import os
+import json
 
 ocr_bp = Blueprint('ocr', __name__)
 logger = logging.getLogger(__name__)
@@ -16,6 +16,7 @@ def process_file():
     try:
         data = request.get_json()
         if not data or 'file_key' not in data:
+            logger.error("Missing file_key in request payload")
             return jsonify({'error': 'Missing file_key'}), 400
 
         file_key = data['file_key']
@@ -40,10 +41,11 @@ def process_file():
         download_file_from_s3(S3_BUCKET, file_key, temp_file)
 
         # Process with Textract
-        extracted_text = extract_text_from_file(temp_file)
+        extracted_json = extract_text_from_file(temp_file)  # JSON string
+        extracted_data = json.loads(extracted_json)  # Parse for response
 
         # Save to database
-        record_id = save_to_db(file_key, extracted_text)
+        record_id = save_to_db(file_key, extracted_json)  # Save JSON string
 
         # Clean up
         if os.path.exists(temp_file):
@@ -53,7 +55,7 @@ def process_file():
         return jsonify({
             'status': 'success',
             'file_key': file_key,
-            'extracted_text': extracted_text,
+            'extracted_data': extracted_data,  # Return parsed JSON
             'record_id': record_id
         }), 200
 
@@ -87,10 +89,11 @@ def process_all_files():
                 download_file_from_s3(S3_BUCKET, file_key, temp_file)
 
                 # Process with Textract
-                extracted_text = extract_text_from_file(temp_file)
+                extracted_json = extract_text_from_file(temp_file)  # JSON string
+                extracted_data = json.loads(extracted_json)  # Parse for response
 
                 # Save to database
-                record_id = save_to_db(file_key, extracted_text)
+                record_id = save_to_db(file_key, extracted_json)  # Save JSON string
 
                 # Add to results
                 results.append({

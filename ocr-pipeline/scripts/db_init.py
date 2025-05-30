@@ -1,4 +1,3 @@
-# scripts/db_init.py
 import psycopg2
 from config.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 import logging
@@ -20,7 +19,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS extracted_text (
             id SERIAL PRIMARY KEY,
             file_name VARCHAR(255) NOT NULL,
-            extracted_text TEXT,
+            extracted_text JSONB,  -- Changed to JSONB for form data
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
