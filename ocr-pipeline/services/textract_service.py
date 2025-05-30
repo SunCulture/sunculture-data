@@ -122,6 +122,10 @@ def extract_text_from_file(file_path):
                 for row in table['rows'][start_idx:]:
                     if any(row.values()):
                         item = dict(zip(headers, [row.get(i, '') for i in range(len(headers))]))
+                        # Fix amount placement: if Currency 1 is numeric and Amount is empty, move it
+                        if item['Currency 1'].replace('.', '').replace(',', '').replace('-', '').isdigit() and not item['Amount']:
+                            item['Amount'] = item['Currency 1']
+                            item['Currency 1'] = ''  # Could set to 'KES' if currency is known
                         # Only include rows with a meaningful amount or expense type
                         if (item['Amount'] and item['Amount'].replace('.', '').replace(',', '').replace('-', '').isdigit()) or \
                            any(item[f'Expense Type {i}'] for i in [1, 2]):
@@ -130,20 +134,43 @@ def extract_text_from_file(file_path):
             if items:
                 form_data['Items'] = items
 
-        # Remove redundant fields (e.g., days of the week) if already in Items
+        # Remove redundant fields (e.g., days of the week, expense types already in Items)
         days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat']
         for day in days:
             if day in form_data and any(day.lower() in str(item).lower() for item in form_data.get('Items', [])):
                 del form_data[day]
+        # Remove expense types that match Items
+        expense_types = set()
+        for item in form_data.get('Items', []):
+            for i in [1, 2]:
+                expense_type = item.get(f'Expense Type {i}')
+                if expense_type:
+                    expense_types.add(expense_type)
+        for key in list(form_data.keys()):
+            if key in expense_types and key != 'Items':
+                del form_data[key]
 
-        # Fallback to raw text if no form or table data
-        if not form_data:
-            raw_response = textract_client.detect_document_text(Document={'Bytes': file.read()})
+        # Fallback to raw text if critical fields are missing
+        critical_fields = ['Date', 'Total Amount Requested', 'Bill Total']
+        if not any(field in form_data for field in critical_fields):
+            with open(file_path, 'rb') as file:
+                raw_response = textract_client.detect_document_text(Document={'Bytes': file.read()})
             raw_text = ''
             for item in raw_response.get('Blocks', []):
                 if item['BlockType'] == 'LINE':
                     raw_text += item['Text'] + '\n'
-            form_data['raw_text'] = raw_text.strip()
+            # Extract missing fields using simple regex
+            for field in critical_fields:
+                if field == 'Date':
+                    date_match = re.search(r'\b\d{2}-\d{2}-(\d{2}|\d{4})\b', raw_text)
+                    if date_match:
+                        form_data['Date'] = date_match.group(0)
+                elif field == 'Total Amount Requested' or field == 'Bill Total':
+                    total_match = re.search(r'(?:Total Amount Requested|Bill Total)[:\s]*([\d,.]+)', raw_text, re.IGNORECASE)
+                    if total_match:
+                        form_data[field] = total_match.group(1)
+            if not any(field in form_data for field in critical_fields):
+                form_data['raw_text'] = raw_text.strip()
 
         logger.info(f"Successfully extracted form and table data from {file_path}")
         return json.dumps(form_data)  # Return JSON string
