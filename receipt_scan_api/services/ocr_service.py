@@ -1,4 +1,4 @@
-import pytesseract
+import easyocr
 from PIL import Image
 import io
 import re
@@ -11,6 +11,9 @@ from datetime import datetime
 import json
 
 logger = logging.getLogger(__name__)
+
+# Initialize EasyOCR reader (load model on startup)
+reader = easyocr.Reader(['en'], gpu=False)  # English only, CPU mode
 
 def preprocess_image(image):
     """Preprocess image for better OCR results."""
@@ -31,7 +34,7 @@ def preprocess_image(image):
         return image
 
 def extract_text(image_data, file_type):
-    """Extract text from image or PDF using Tesseract."""
+    """Extract text from image or PDF using EasyOCR."""
     logger.info(f"Extracting text from {file_type}, size: {len(image_data)} bytes")
     try:
         if file_type == "PDF":
@@ -42,7 +45,9 @@ def extract_text(image_data, file_type):
                 logger.debug(f"Processing page {i+1}/{len(images)}")
                 img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
                 processed = preprocess_image(img_cv)
-                text = pytesseract.image_to_string(processed, lang='eng')
+                # EasyOCR expects a numpy array (BGR format)
+                result = reader.readtext(processed, detail=0)  # detail=0 returns only text
+                text = "\n".join(result)
                 full_text += text + "\n"
             logger.info(f"PDF extracted, characters: {len(full_text)}")
             return full_text
@@ -52,7 +57,9 @@ def extract_text(image_data, file_type):
             if img is None:
                 raise ValueError("Failed to decode image")
             processed = preprocess_image(img)
-            text = pytesseract.image_to_string(processed, lang='eng')
+            # EasyOCR expects a numpy array (BGR format)
+            result = reader.readtext(processed, detail=0)  # detail=0 returns only text
+            text = "\n".join(result)
             logger.info(f"Image extracted, characters: {len(text)}")
             return text
     except Exception as e:

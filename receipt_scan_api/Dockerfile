@@ -6,11 +6,11 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     postgresql-client \
-    tesseract-ocr \
-    libtesseract-dev \
-    libleptonica-dev \
     poppler-utils \
     && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip install --upgrade pip
 
 # Install Python dependencies
 COPY requirements.txt .
