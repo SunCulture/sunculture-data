@@ -1,5 +1,6 @@
 import boto3
 import json
+import re
 from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 import logging
 
@@ -17,6 +18,17 @@ try:
 except Exception as e:
     logger.error(f"Failed to connect to AWS Textract: {e}")
     raise
+
+# Regex for date validation (DD-MM-YY or DD-MM-YYYY)
+DATE_REGEX = re.compile(r'^\d{2}-\d{2}-(\d{2}|\d{4})$')
+
+def is_valid_date(date_str):
+    return bool(DATE_REGEX.match(date_str))
+
+def clean_date(date_str):
+    if is_valid_date(date_str):
+        return date_str
+    return None  # Return None for invalid dates
 
 def extract_text_from_file(file_path):
     try:
@@ -54,7 +66,15 @@ def extract_text_from_file(file_path):
                                     value += child_block['Text'] + ' '
                     value = value.strip()
                     if key and value:
-                        form_data[key] = value
+                        # Clean date fields
+                        if 'date' in key.lower():
+                            cleaned_value = clean_date(value)
+                            if cleaned_value:
+                                form_data[key] = cleaned_value
+                            else:
+                                logger.warning(f"Invalid date for key '{key}': {value}")
+                        else:
+                            form_data[key] = value
 
             elif block['BlockType'] == 'TABLE':
                 current_table = {'rows': []}
@@ -83,28 +103,38 @@ def extract_text_from_file(file_path):
             for table in table_data:
                 if not table['rows']:
                     continue
-                # Skip metadata rows (e.g., Counter, #) and infer headers from first data row
+                # Skip metadata rows (e.g., headers with days of week, labels like 'ID Number')
                 start_idx = 0
-                while start_idx < len(table['rows']) and any(k in table['rows'][start_idx].values() for k in ['Counter', '#']):
-                    start_idx += 1
+                while start_idx < len(table['rows']):
+                    row_values = list(table['rows'][start_idx].values())
+                    if (any('KES' in str(v) for v in row_values) or
+                        all(not v for v in row_values) or
+                        any(day in str(v).lower() for v in row_values for day in ['sun', 'mon', 'tues', 'weds', 'thurs', 'fri', 'sat']) or
+                        any(label in str(v).lower() for v in row_values for label in ['id number', 'cell phone number', 'week ending'])):
+                        start_idx += 1
+                    else:
+                        break
                 if start_idx >= len(table['rows']):
                     continue
 
-                # Use first data row as a template to infer headers
-                first_data_row = table['rows'][start_idx]
-                headers = [f'Column{i+1}' for i in range(len(first_data_row))]
-                if first_data_row:
-                    items = [dict(zip(headers, row.values())) for row in table['rows'][start_idx:] if any(row.values())]
-                
-                # Aggregate subtotals into Bill Total
-                bill_total = form_data.get('Bill Total:', '0.00')
-                for row in table['rows']:
-                    if len(row) == 1 and row.get(3) and row[3].replace('.', '').replace(',', '').isdigit():
-                        bill_total = str(float(bill_total.replace(',', '')) + float(row[3].replace(',', '')))
-                form_data['Bill Total:'] = bill_total
+                # Use custom headers for a two-column layout
+                headers = ['Expense Type 1', 'Currency 1', 'Expense Type 2', 'Amount']
+                for row in table['rows'][start_idx:]:
+                    if any(row.values()):
+                        item = dict(zip(headers, [row.get(i, '') for i in range(len(headers))]))
+                        # Only include rows with a meaningful amount or expense type
+                        if (item['Amount'] and item['Amount'].replace('.', '').replace(',', '').replace('-', '').isdigit()) or \
+                           any(item[f'Expense Type {i}'] for i in [1, 2]):
+                            items.append(item)
 
             if items:
                 form_data['Items'] = items
+
+        # Remove redundant fields (e.g., days of the week) if already in Items
+        days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat']
+        for day in days:
+            if day in form_data and any(day.lower() in str(item).lower() for item in form_data.get('Items', [])):
+                del form_data[day]
 
         # Fallback to raw text if no form or table data
         if not form_data:
