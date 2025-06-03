@@ -25,6 +25,21 @@ DATE_REGEX = re.compile(r'^\d{1,2}[-/]\d{1,2}[-/](\d{2}|\d{4})$')
 AMOUNT_REGEX = re.compile(r'^[\d,.]+(\.?\d{0,2})?$')
 CURRENCY_REGEX = re.compile(r'^(KES|USD|EUR|GBP)\s*[\d,.]+$', re.IGNORECASE)
 
+# List of prohibited items (alcoholic beverages)
+PROHIBITED_ITEMS = [
+    'beer', 'wine', 'whiskey', 'whisky', 'vodka', 'gin', 'rum', 'tequila',
+    'brandy', 'cognac', 'champagne', 'sake', 'cider', 'ale', 'lager', 'stout',
+    'port', 'sherry', 'vermouth', 'absinthe', 'liquor', 'spirit', 'alcohol'
+]
+
+def safe_float(value: str) -> Optional[float]:
+    """Safely convert a string to float, returning None if conversion fails."""
+    try:
+        return float(value.replace(',', ''))
+    except (ValueError, TypeError):
+        logger.debug(f"Failed to convert '{value}' to float")
+        return None
+
 def is_valid_date(date_str: str) -> bool:
     """Enhanced date validation supporting multiple formats"""
     if not date_str:
@@ -56,10 +71,20 @@ def clean_amount(amount_str: str) -> Optional[str]:
     if not amount_str:
         return None
     
-    # Remove currency symbols and extra spaces
+    # Remove currency symbols, spaces, and other non-numeric characters
     cleaned = re.sub(r'[^\d.,]', '', amount_str.strip())
     if is_valid_amount(cleaned):
         return cleaned
+    
+    # Additional check for malformed amounts (e.g., "MINT 306000000181.00")
+    # Try to extract the numeric part
+    numeric_match = re.search(r'[\d,.]+', amount_str)
+    if numeric_match:
+        cleaned = numeric_match.group(0)
+        if is_valid_amount(cleaned):
+            return cleaned
+    
+    logger.warning(f"Could not clean amount: {amount_str}")
     return None
 
 def detect_table_structure(table_rows: List[Dict]) -> Tuple[List[str], int]:
@@ -101,8 +126,11 @@ def detect_table_structure(table_rows: List[Dict]) -> Tuple[List[str], int]:
             for v in row.values() if v
         )
         
-        has_valid_amount = any(is_valid_amount(str(v)) and float(str(v).replace(',', '')) > 0 
-                              for v in row.values() if v)
+        # Safely check for valid amount
+        has_valid_amount = any(
+            is_valid_amount(str(v)) and (safe_float(str(v)) or 0) > 0 
+            for v in row.values() if v
+        )
         
         # This is likely an actual expense entry
         if has_meaningful_expense and has_valid_amount:
@@ -127,7 +155,8 @@ def detect_table_structure(table_rows: List[Dict]) -> Tuple[List[str], int]:
                 continue
             value_str = str(value).strip()
             
-            if is_valid_amount(value_str) and float(value_str.replace(',', '')) > 0:
+            amount_value = safe_float(value_str)
+            if is_valid_amount(value_str) and amount_value and amount_value > 0:
                 amount_cols.add(col_idx)
             elif clean_date(value_str):
                 date_cols.add(col_idx)
@@ -193,7 +222,8 @@ def extract_table_data_enhanced(table_rows: List[Dict]) -> List[Dict]:
             # Clean amounts
             if 'amount' in header.lower():
                 cleaned_amount = clean_amount(value_str)
-                if cleaned_amount and float(cleaned_amount.replace(',', '')) > 0:
+                amount_value = safe_float(cleaned_amount) if cleaned_amount else None
+                if cleaned_amount and amount_value and amount_value > 0:
                     item[header] = cleaned_amount
                     has_valid_amount = True
             elif 'description' in header.lower():
@@ -268,7 +298,7 @@ def validate_extracted_data(form_data: Dict) -> Dict:
             
             # Check for valid amount
             has_amount = any(
-                v and is_valid_amount(str(v)) and float(str(v).replace(',', '')) > 0
+                v and is_valid_amount(str(v)) and (safe_float(str(v)) or 0) > 0
                 for k, v in item.items() if 'amount' in k.lower()
             )
             
@@ -303,9 +333,46 @@ def validate_extracted_data(form_data: Dict) -> Dict:
     
     return validation_result
 
+def check_for_prohibited_items(form_data: Dict) -> bool:
+    """
+    Check if the extracted data contains prohibited items (alcoholic beverages).
+    Returns True if prohibited items are found, False otherwise.
+    """
+    logger.debug(f"Checking for prohibited items in: {form_data}")
+    # Check Items list for prohibited keywords
+    items = form_data.get('Items', [])
+    for item in items:
+        for key, value in item.items():
+            if isinstance(value, str):
+                value_lower = value.lower()
+                logger.debug(f"Checking item value '{value_lower}' for prohibited items")
+                if any(prohibited in value_lower for prohibited in PROHIBITED_ITEMS):
+                    logger.info(f"Prohibited item found in item {key}: {value}")
+                    return True
+    
+    # Check both keys and values in form_data for prohibited keywords
+    for key, value in form_data.items():
+        if key == 'Items':
+            continue
+        if isinstance(key, str):
+            key_lower = key.lower()
+            logger.debug(f"Checking key '{key_lower}' for prohibited items")
+            if any(prohibited in key_lower for prohibited in PROHIBITED_ITEMS):
+                logger.info(f"Prohibited item found in key '{key}': {key}")
+                return True
+        if isinstance(value, str):
+            value_lower = value.lower()
+            logger.debug(f"Checking value for key '{key}' with value '{value_lower}' for prohibited items")
+            if any(prohibited in value_lower for prohibited in PROHIBITED_ITEMS):
+                logger.info(f"Prohibited item found in {key}: {value}")
+                return True
+    
+    logger.debug("No prohibited items found")
+    return False
+
 def extract_text_from_file(file_path: str) -> str:
     """
-    Enhanced text extraction with improved error handling and validation
+    Enhanced text extraction with improved error handling, validation, and prohibited items detection
     """
     try:
         with open(file_path, 'rb') as file:
@@ -362,13 +429,13 @@ def extract_text_from_file(file_path: str) -> str:
             
             elif block['BlockType'] == 'CELL' and current_table is not None:
                 row_index = block.get('RowIndex', 1) - 1
-                col_index = block.get('ColumnIndex', 1) - 1
+                col_idx = block.get('ColumnIndex', 1) - 1
                 text = extract_text_from_block(block, blocks_by_id)
 
                 # Ensure row exists
                 while len(current_table['rows']) <= row_index:
                     current_table['rows'].append({})
-                current_table['rows'][row_index][col_index] = text
+                current_table['rows'][row_index][col_idx] = text
 
         # Enhanced table processing
         if table_data:
@@ -434,9 +501,12 @@ def extract_text_from_file(file_path: str) -> str:
             if not any(field.lower() in ' '.join(form_data.keys()).lower() for field in critical_fields):
                 form_data['raw_text'] = raw_text.strip()
 
-        # Validate and return results
+        # Validate the extracted data
         validated_result = validate_extracted_data(form_data)
         
+        # Check for prohibited items (alcoholic beverages)
+        validated_result['has_prohibited_items'] = check_for_prohibited_items(form_data)
+
         logger.info(f"Successfully extracted data from {file_path} with confidence score: {validated_result['validation']['confidence_score']}")
         if validated_result['validation']['issues']:
             logger.warning(f"Validation issues: {validated_result['validation']['issues']}")
@@ -453,7 +523,8 @@ def extract_text_from_file(file_path: str) -> str:
                 'has_complete_items': False,
                 'confidence_score': 0.0,
                 'issues': [f'Extraction failed: {str(e)}']
-            }
+            },
+            'has_prohibited_items': False
         }
         return json.dumps(error_result, indent=2)
 

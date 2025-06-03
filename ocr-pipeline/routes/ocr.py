@@ -71,8 +71,11 @@ def process_file():
         extracted_json = extract_text_from_file(temp_file)  # JSON string
         extracted_data = json.loads(extracted_json)  # Parse for response
 
-        # Save to database
-        record_id = save_to_db(file_key, extracted_json)  # Save JSON string
+        # Extract has_prohibited_items
+        has_prohibited_items = extracted_data.get('has_prohibited_items', False)
+
+        # Save to database with new columns
+        record_id = save_to_db(file_key, extracted_json, has_prohibited_items)
 
         # Clean up
         if os.path.exists(temp_file):
@@ -119,8 +122,11 @@ def process_all_files():
                 extracted_json = extract_text_from_file(temp_file)  # JSON string
                 extracted_data = json.loads(extracted_json)  # Parse for response
 
-                # Save to database
-                record_id = save_to_db(file_key, extracted_json)  # Save JSON string
+                # Extract has_prohibited_items
+                has_prohibited_items = extracted_data.get('has_prohibited_items', False)
+
+                # Save to database with new columns
+                record_id = save_to_db(file_key, extracted_json, has_prohibited_items)
 
                 # Add to results
                 results.append({
