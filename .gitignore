@@ -4,3 +4,6 @@ windows-venv/
 .env
 
 logs/
+
+# sqs
+access-policy.json
