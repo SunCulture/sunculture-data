@@ -17,7 +17,7 @@ def save_to_db(file_key, extracted_text, has_prohibited_items):
         
         cursor.execute(
             """
-            INSERT INTO extracted_text (file_name, extracted_text, has_prohibited_items, updated_at)
+            INSERT INTO extracted_text_v2 (file_name, extracted_text, has_prohibited_items, updated_at)
             VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
             RETURNING id
             """,
