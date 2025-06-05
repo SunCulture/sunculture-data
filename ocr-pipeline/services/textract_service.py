@@ -4,6 +4,7 @@ import re
 from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION
 import logging
 from typing import Dict, List, Optional, Any
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -20,10 +21,11 @@ except Exception as e:
     logger.error(f"Failed to connect to AWS Textract: {e}")
     raise
 
-# Enhanced regex patterns for fallback extraction
-DATE_REGEX = re.compile(r'^\d{1,2}[-/]\d{1,2}[-/](\d{2}|\d{4})$')
-AMOUNT_REGEX = re.compile(r'^[\d,.]+(\.?\d{0,2})?$')
-CURRENCY_REGEX = re.compile(r'^(KES|USD|EUR|GBP)\s*[\d,.]+$', re.IGNORECASE)
+# Enhanced regex patterns for date extraction
+DATE_REGEX_MMDDYYYY = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{2}|\d{4})')  # MM/DD/YYYY or MM-DD-YYYY
+DATE_REGEX_YYYYMMDD = re.compile(r'(\d{4})[/-](\d{1,2})[/-](\d{1,2})')       # YYYY-MM-DD or YYYY/MM/DD
+DATE_REGEX_DDMMYYYY = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{2}|\d{4})')  # DD-MM-YYYY or DD/MM/YYYY
+DATE_REGEX_DDMMYY = re.compile(r'(\d{1,2})[.](\d{1,2})[.](\d{2})')           # DD.MM.YY
 
 # List of prohibited items (alcoholic beverages)
 PROHIBITED_ITEMS = [
@@ -31,6 +33,16 @@ PROHIBITED_ITEMS = [
     'brandy', 'cognac', 'champagne', 'sake', 'cider', 'ale', 'lager', 'stout',
     'port', 'sherry', 'vermouth', 'absinthe', 'liquor', 'spirit', 'alcohol'
 ]
+
+# Expanded keywords for expense items
+EXPENSE_KEYWORDS = [
+    'lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation',
+    'delivery', 'chicken', 'vanilla', 'charges', 'mishkaki', 'food', 'service'
+]
+
+# Regex for amount and currency validation
+AMOUNT_REGEX = re.compile(r'^[\d,.]+(\.?\d{0,2})?$')
+CURRENCY_REGEX = re.compile(r'^(KES|UGX|XOF|USD|EUR|GBP)\s*[\d,.]+$', re.IGNORECASE)
 
 def safe_float(value: str) -> Optional[float]:
     """Safely convert a string to float, returning None if conversion fails."""
@@ -41,11 +53,16 @@ def safe_float(value: str) -> Optional[float]:
         return None
 
 def is_valid_date(date_str: str) -> bool:
-    """Enhanced date validation supporting multiple formats."""
+    """Validate date string by checking if it matches any known format."""
     if not date_str:
         return False
-    cleaned = re.sub(r'[^\d/-]', '', date_str.strip())
-    return bool(DATE_REGEX.match(cleaned))
+    cleaned = re.sub(r'[^\d./-]', '', date_str.strip())
+    return bool(
+        DATE_REGEX_MMDDYYYY.match(cleaned) or 
+        DATE_REGEX_YYYYMMDD.match(cleaned) or 
+        DATE_REGEX_DDMMYYYY.match(cleaned) or 
+        DATE_REGEX_DDMMYY.match(cleaned)
+    )
 
 def is_valid_amount(amount_str: str) -> bool:
     """Check if string represents a valid monetary amount."""
@@ -55,12 +72,61 @@ def is_valid_amount(amount_str: str) -> bool:
     return bool(AMOUNT_REGEX.match(cleaned))
 
 def clean_date(date_str: str) -> Optional[str]:
-    """Clean and validate date strings."""
+    """Clean and validate date strings, preserving the original format and padding 2-digit years."""
     if not date_str:
         return None
-    date_match = re.search(r'\d{1,2}[-/]\d{1,2}[-/](\d{2}|\d{4})', date_str)
-    if date_match and is_valid_date(date_match.group(0)):
-        return date_match.group(0)
+
+    current_year = datetime.now().year
+    separator = next((sep for sep in ['.', '/', '-'] if sep in date_str), '/')
+
+    # Try DD.MM.YY first (common in your log example)
+    ddmmyy_match = DATE_REGEX_DDMMYY.search(date_str)
+    if ddmmyy_match:
+        day, month, year = ddmmyy_match.groups()
+        year_int = int(year)
+        if year_int <= 50:  # Assume 00-49 are in 2000s, 50-99 in 1900s
+            year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+        if abs(int(year) - current_year) > 10:
+            year = str(current_year)  # Fallback to current year
+        return f"{day.zfill(2)}{separator}{month.zfill(2)}{separator}{year}"
+
+    # Try MM/DD/YYYY or MM-DD-YYYY
+    mmddyyyy_match = DATE_REGEX_MMDDYYYY.search(date_str)
+    if mmddyyyy_match:
+        month, day, year = mmddyyyy_match.groups()
+        if len(year) == 2:
+            year_int = int(year)
+            if year_int <= 50:
+                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+            if abs(int(year) - current_year) > 10:
+                year = str(current_year)
+        return f"{month.zfill(2)}{separator}{day.zfill(2)}{separator}{year}"
+
+    # Try YYYY-MM-DD or YYYY/MM/DD
+    yyyymmdd_match = DATE_REGEX_YYYYMMDD.search(date_str)
+    if yyyymmdd_match:
+        year, month, day = yyyymmdd_match.groups()
+        if len(year) == 2:  # Shouldn't happen, but handle it
+            year_int = int(year)
+            if year_int <= 50:
+                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+            if abs(int(year) - current_year) > 10:
+                year = str(current_year)
+        return f"{year}{separator}{month.zfill(2)}{separator}{day.zfill(2)}"
+
+    # Try DD-MM-YYYY or DD/MM/YYYY
+    ddmmyyyy_match = DATE_REGEX_DDMMYYYY.search(date_str)
+    if ddmmyyyy_match:
+        day, month, year = ddmmyyyy_match.groups()
+        if len(year) == 2:
+            year_int = int(year)
+            if year_int <= 50:
+                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+            if abs(int(year) - current_year) > 10:
+                year = str(current_year)
+        return f"{day.zfill(2)}{separator}{month.zfill(2)}{separator}{year}"
+
+    logger.warning(f"Could not parse date: {date_str}")
     return None
 
 def clean_amount(amount_str: str) -> Optional[str]:
@@ -77,6 +143,36 @@ def clean_amount(amount_str: str) -> Optional[str]:
             return cleaned
     logger.warning(f"Could not clean amount: {amount_str}")
     return None
+
+def detect_currency(form_data: Dict, raw_text: Optional[str] = None) -> str:
+    """Detect the currency used in the receipt data."""
+    currencies = {
+        'KES': ['KES', 'Ksh', 'Kenya Shilling'],
+        'UGX': ['UGX', 'Ush', 'Ugandan Shilling'],
+        'XOF': ['XOF', 'CFA', 'West African CFA Franc'],
+        'USD': ['USD', '$', 'US Dollar'],
+        'EUR': ['EUR', '€', 'Euro'],
+        'GBP': ['GBP', '£', 'British Pound']
+    }
+    
+    text_to_search = raw_text or ''
+    if 'Items' in form_data:
+        text_to_search += ' ' + ' '.join(f"{item.get('Amount', '')} {item.get('Description', '')}" for item in form_data['Items'])
+    if 'Total Amount Requested' in form_data:
+        text_to_search += ' ' + form_data['Total Amount Requested']
+    if 'Name of Employee' in form_data:
+        text_to_search += ' ' + form_data['Name of Employee']
+    
+    text_to_search = text_to_search.lower().strip()
+    
+    for currency_code, indicators in currencies.items():
+        for indicator in indicators:
+            if re.search(rf'\b{re.escape(indicator.lower())}\b', text_to_search):
+                logger.info(f"Detected currency: {currency_code} (indicator: {indicator})")
+                return currency_code
+    
+    logger.warning("No currency detected in the data")
+    return "Not Detected"
 
 def validate_extracted_data(form_data: Dict) -> Dict:
     """
@@ -119,8 +215,8 @@ def validate_extracted_data(form_data: Dict) -> Dict:
         valid_items = []
         for item in items:
             has_description = any(
-                v and len(str(v)) > 10 and 
-                any(keyword in str(v).lower() for keyword in ['lunch', 'transport', 'travel', 'meal', 'fuel', 'accommodation', 'facilitation'])
+                v and len(str(v)) > 5 and
+                (any(keyword in str(v).lower() for keyword in EXPENSE_KEYWORDS) or len(str(v).split()) > 1)
                 for k, v in item.items() if 'description' in k.lower() or 'expense' in k.lower()
             )
             has_amount = any(
@@ -129,6 +225,8 @@ def validate_extracted_data(form_data: Dict) -> Dict:
             )
             if has_description and has_amount:
                 valid_items.append(item)
+            else:
+                logger.debug(f"Item failed validation: {item} (has_description={has_description}, has_amount={has_amount})")
         
         if valid_items:
             validation_result['validation']['has_complete_items'] = True
@@ -259,6 +357,7 @@ def extract_text_from_file(file_path: str) -> str:
         missing_critical = [field for field in critical_fields 
                            if field not in form_data or not form_data[field]]
         
+        raw_text = None
         if missing_critical:
             logger.info(f"Attempting fallback extraction for missing fields: {missing_critical}")
             raw_response = textract_client.detect_document_text(Document={'Bytes': file_bytes})
@@ -267,8 +366,10 @@ def extract_text_from_file(file_path: str) -> str:
             
             fallback_patterns = {
                 'Date': [
-                    r'Date[:\s]*(\d{1,2}[-/]\d{1,2}[-/](?:\d{2}|\d{4}))',
-                    r'(\d{1,2}(?:st|nd|rd|th)?\s+\w+\s*,?\s*\d{4})'
+                    r'Date[:\s]*(\d{1,2}[./-]\d{1,2}[./-]\d{2})',  # DD.MM.YY or DD-MM-YY
+                    r'Date[:\s]*(\d{4}[./-]\d{1,2}[./-]\d{1,2})',  # YYYY-MM-DD
+                    r'(\d{1,2}[./-]\d{1,2}[./-]\d{2})',            # DD.MM.YY or DD-MM-YY
+                    r'(\d{1,2}(?:st|nd|rd|th)?\s+\w+\s*,?\s*\d{4})' # e.g., 23rd November 2024
                 ],
                 'Total Amount Requested': [
                     r'Total Amount Requested[:\s]*([\d,.]+)',
@@ -302,6 +403,9 @@ def extract_text_from_file(file_path: str) -> str:
             
             if not any(field.lower() in ' '.join(form_data.keys()).lower() for field in critical_fields):
                 form_data['raw_text'] = raw_text.strip()
+        
+        # Detect currency (default to "Not Detected" if none found)
+        form_data['Currency'] = detect_currency(form_data, raw_text)
         
         # Validate the extracted data
         validated_result = validate_extracted_data(form_data)
