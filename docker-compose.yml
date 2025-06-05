@@ -1,12 +1,4 @@
 services:
-  ocr-app:
-    extends:
-      file: ocr-poc/docker-compose-ocr.yml
-      service: ocr-app
-  receipt-scan-api:
-    extends:
-      file: receipt_scan_api/docker-compose-receipt-scan-api.yml
-      service: receipt-scan-api
   ocr-pipeline:
     extends:
       file: ocr-pipeline/docker-compose-ocr-pipeline.yml
