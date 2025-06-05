@@ -1,9 +1,8 @@
 import psycopg2
-from config.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 import logging
+from config.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)  # Ensure logs show up
 
 def init_db():
     try:
@@ -16,26 +15,24 @@ def init_db():
         )
         cursor = conn.cursor()
         
-        create_table_query = """
-        CREATE TABLE IF NOT EXISTS extracted_text_v2 (
-            id SERIAL PRIMARY KEY,
-            file_name VARCHAR(255) NOT NULL,
-            extracted_text JSONB,
-            has_prohibited_items BOOLEAN DEFAULT FALSE,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-        """
-        cursor.execute(create_table_query)
+        # Create table if it doesn't exist
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS extracted_text_v2 (
+                id SERIAL PRIMARY KEY,
+                file_name VARCHAR(255) NOT NULL,
+                extracted_text JSONB,
+                has_prohibited_items BOOLEAN DEFAULT FALSE,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                duplicate_receipt BOOLEAN DEFAULT FALSE  -- New column
+            );
+        """)
+        
         conn.commit()
-
         logger.info("Database initialized successfully")
-
     except Exception as e:
-        logger.error("Database initialization error", exc_info=True)
+        logger.error(f"Error initializing database: {e}")
         raise
     finally:
-        if cursor:
-            cursor.close()
         if conn:
             conn.close()

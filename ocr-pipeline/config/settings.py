@@ -6,6 +6,7 @@ AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = os.getenv('AWS_REGION')
 S3_BUCKET = os.getenv('S3_BUCKET')  # Fixed S3 bucket name
 SQS_QUEUE_URL = os.getenv('SQS_QUEUE_URL')
+SQS_DLQ_URL = os.getenv('SQS_DLQ_URL')  # Dead Letter Queue URL
 
 # Database configurations
 DB_NAME = os.getenv('ep_stage_db')

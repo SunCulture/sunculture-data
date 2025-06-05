@@ -31,7 +31,7 @@ def check_duplicate(file_key):
             port=DB_PORT
         )
         cursor = conn.cursor()
-        cursor.execute("SELECT 1 FROM extracted_text_v2 WHERE file_name = %s", (file_key,))  # Fix table name
+        cursor.execute("SELECT 1 FROM extracted_text_v2 WHERE file_name = %s", (file_key,))
         exists = cursor.fetchone() is not None
         cursor.close()
         conn.close()
@@ -52,9 +52,26 @@ def process_file():
         file_key = data['file_key'].strip()
         logger.info(f"Received request to process file: s3://{S3_BUCKET}/{file_key}")
 
-        if check_duplicate(file_key):
+        is_duplicate = check_duplicate(file_key)
+        if is_duplicate:
             logger.warning(f"Duplicate file detected: s3://{S3_BUCKET}/{file_key}")
-            return jsonify({'error': 'File already processed', 'file_key': file_key}), 409
+            # Update database with duplicate flag
+            conn = psycopg2.connect(
+                dbname=DB_NAME,
+                user=DB_USER,
+                password=DB_PASSWORD,
+                host=DB_HOST,
+                port=DB_PORT
+            )
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE extracted_text_v2 SET duplicate_receipt = TRUE WHERE file_name = %s",
+                (file_key,)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return jsonify({'status': 'skipped', 'file_key': file_key, 'reason': 'duplicate'}), 200
 
         basename = os.path.basename(file_key)
         has_extension = any(basename.lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS)
@@ -69,6 +86,8 @@ def process_file():
 
         filename = os.path.basename(file_key)
         temp_file = f"/tmp/{secure_filename(filename)}"
+        
+        # Remove URL encoding, pass raw file_key to S3
         download_file_from_s3(S3_BUCKET, file_key, temp_file)
 
         extracted_json = extract_text_from_file(temp_file)
@@ -91,7 +110,9 @@ def process_file():
 
     except Exception as e:
         logger.error(f"Error processing file s3://{S3_BUCKET}/{file_key if 'file_key' in locals() else 'unknown'}: {e}")
-        raise
+        if '404' in str(e):  # Handle S3 404 specifically
+            return jsonify({'error': 'File not found in S3', 'file_key': file_key if 'file_key' in locals() else None}), 404
+        return jsonify({'error': str(e)}), 500
 
 @ocr_bp.route('/process-all-files', methods=['POST'])
 def process_all_files():
@@ -114,6 +135,8 @@ def process_all_files():
 
                 filename = os.path.basename(file_key)
                 temp_file = f"/tmp/{secure_filename(filename)}"
+                
+                # Remove URL encoding, pass raw file_key to S3
                 download_file_from_s3(S3_BUCKET, file_key, temp_file)
 
                 extracted_json = extract_text_from_file(temp_file)
