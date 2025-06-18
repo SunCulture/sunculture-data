@@ -2,7 +2,8 @@ import boto3
 import json
 import logging
 import requests
-from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, SQS_QUEUE_URL, SQS_DLQ_URL
+import urllib.parse
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, SQS_QUEUE_URL, SQS_DLQ_URL, S3_CASH_RELEASE_BUCKET, SUPPORTED_EXTENSIONS
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ class SQSService:
             )
             self.queue_url = SQS_QUEUE_URL
             self.dlq_url = SQS_DLQ_URL
+            self.retry_counts = {}  # Track retries per ReceiptHandle
             logger.info("Successfully connected to AWS SQS")
         except Exception as e:
             logger.error(f"Failed to connect to AWS SQS: {e}")
@@ -33,14 +35,20 @@ class SQSService:
                 ReceiptHandle=message['ReceiptHandle']
             )
             logger.info(f"Moved message to DLQ: {self.dlq_url}")
+            self.retry_counts.pop(message['ReceiptHandle'], None)
         else:
             logger.warning("No DLQ configured, message will not be moved: deleting from source queue")
             self.sqs_client.delete_message(
                 QueueUrl=self.queue_url,
                 ReceiptHandle=message['ReceiptHandle']
             )
+            self.retry_counts.pop(message['ReceiptHandle'], None)
 
-    def process_message(self, message, retry_count=0, max_retries=2):
+    def process_message(self, message):
+        receipt_handle = message['ReceiptHandle']
+        if receipt_handle not in self.retry_counts:
+            self.retry_counts[receipt_handle] = 0
+
         try:
             body = json.loads(message['Body'])
             file_key = None
@@ -49,18 +57,31 @@ class SQSService:
             if 'Records' in body and isinstance(body['Records'], list):
                 for record in body['Records']:
                     if 's3' in record and 'object' in record['s3']:
-                        file_key = record['s3']['object']['key']
+                        file_key = urllib.parse.unquote(record['s3']['object']['key'])
                         break
             
             # Fallback to direct file_key if present
             if not file_key:
-                file_key = body.get('file_key')
+                file_key = urllib.parse.unquote(body.get('file_key', ''))
             
             if not file_key:
                 raise ValueError("No file_key in SQS message")
             
-            logger.info(f"Extracted file_key from SQS message: {file_key}")
-            logger.info(f"Processing SQS message for file: s3://cash-release/{file_key} (Retry {retry_count}/{max_retries})")
+            # Check if file extension is supported
+            if not any(file_key.lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS):
+                logger.warning(f"Unsupported file format {file_key}, skipping")
+                self.sqs_client.delete_message(
+                    QueueUrl=self.queue_url,
+                    ReceiptHandle=message['ReceiptHandle']
+                )
+                logger.info("Message deleted from queue due to unsupported format")
+                self.retry_counts.pop(receipt_handle, None)
+                return
+            
+            retry_count = self.retry_counts[receipt_handle]
+            max_retries = 2
+            logger.info(f"Extracted and decoded file_key from SQS message: {file_key}")
+            logger.info(f"Processing SQS message for file: s3://{S3_CASH_RELEASE_BUCKET}/{file_key} (Retry {retry_count}/{max_retries})")
             
             response = requests.post(
                 'http://localhost:5001/ocr/process-file',
@@ -70,37 +91,41 @@ class SQSService:
             if response.status_code == 200:
                 data = response.json()
                 if data.get('status') == 'skipped':
-                    logger.info(f"File s3://cash-release/{file_key} skipped as duplicate")
+                    logger.info(f"File s3://{S3_CASH_RELEASE_BUCKET}/{file_key} skipped as duplicate")
                     self.sqs_client.delete_message(
                         QueueUrl=self.queue_url,
                         ReceiptHandle=message['ReceiptHandle']
                     )
                     logger.info("Message deleted from queue")
+                    self.retry_counts.pop(receipt_handle, None)
                 else:
-                    logger.info(f"Successfully processed file: s3://cash-release/{file_key}")
+                    logger.info(f"Successfully processed file: s3://{S3_CASH_RELEASE_BUCKET}/{file_key}")
                     self.sqs_client.delete_message(
                         QueueUrl=self.queue_url,
                         ReceiptHandle=message['ReceiptHandle']
                     )
                     logger.info("Message deleted from queue")
+                    self.retry_counts.pop(receipt_handle, None)
             elif response.status_code == 404:
                 if retry_count < max_retries:
-                    logger.warning(f"File not found s3://cash-release/{file_key}, retrying ({retry_count + 1}/{max_retries})")
+                    self.retry_counts[receipt_handle] += 1
+                    logger.warning(f"File not found s3://{S3_CASH_RELEASE_BUCKET}/{file_key}, retrying ({self.retry_counts[receipt_handle]}/{max_retries})")
                     return
                 else:
-                    logger.error(f"File not found after {max_retries} retries: s3://cash-release/{file_key}")
+                    logger.error(f"File not found after {max_retries} retries: s3://{S3_CASH_RELEASE_BUCKET}/{file_key}")
                     self.move_to_dlq(message)
             else:
                 try:
                     error_detail = response.json().get('error', response.text)
                 except ValueError:
                     error_detail = response.text
-                logger.error(f"Failed to process file s3://cash-release/{file_key}: {error_detail}")
+                logger.error(f"Failed to process file s3://{S3_CASH_RELEASE_BUCKET}/{file_key}: {error_detail}")
                 self.move_to_dlq(message)
         
         except Exception as e:
             logger.error(f"Error processing SQS message: {e}")
-            if retry_count < max_retries:
+            if self.retry_counts[receipt_handle] < max_retries:
+                self.retry_counts[receipt_handle] += 1
                 return
             self.move_to_dlq(message)
 

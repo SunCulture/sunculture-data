@@ -26,10 +26,11 @@ DATE_REGEX_MMDDYYYY = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{2}|\d{4})')  # 
 DATE_REGEX_YYYYMMDD = re.compile(r'(\d{4})[/-](\d{1,2})[/-](\d{1,2})')       # YYYY-MM-DD or YYYY/MM/DD
 DATE_REGEX_DDMMYYYY = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{2}|\d{4})')  # DD-MM-YYYY or DD/MM/YYYY
 DATE_REGEX_DDMMYY = re.compile(r'(\d{1,2})[.](\d{1,2})[.](\d{2})')           # DD.MM.YY
+DATE_REGEX_DDMMMYYYY = re.compile(r'(\d{1,2})[ -](\w{3,9})[ -](\d{4})', re.IGNORECASE)  # e.g., 30-May-2025
 
 # List of prohibited items (alcoholic beverages)
 PROHIBITED_ITEMS = [
-    'beer', 'wine', 'whiskey', 'whisky', 'vodka', 'gin', 'rum', 'tequila',
+    'beer', 'wine', 'whiskey', 'whisky', 'vodva', 'gin', 'rum', 'tequila',
     'brandy', 'cognac', 'champagne', 'sake', 'cider', 'ale', 'lager', 'stout',
     'port', 'sherry', 'vermouth', 'absinthe', 'liquor', 'spirit', 'alcohol'
 ]
@@ -40,9 +41,10 @@ EXPENSE_KEYWORDS = [
     'delivery', 'chicken', 'vanilla', 'charges', 'mishkaki', 'food', 'service'
 ]
 
-# Regex for amount and currency validation
+# Regex for amount, currency, and vendor name validation
 AMOUNT_REGEX = re.compile(r'^[\d,.]+(\.?\d{0,2})?$')
 CURRENCY_REGEX = re.compile(r'^(KES|UGX|XOF|USD|EUR|GBP)\s*[\d,.]+$', re.IGNORECASE)
+VENDOR_NAME_REGEX = re.compile(r'^[A-Za-z0-9\s&\'-]+$', re.IGNORECASE)  # Updated to allow apostrophes
 
 def safe_float(value: str) -> Optional[float]:
     """Safely convert a string to float, returning None if conversion fails."""
@@ -61,7 +63,8 @@ def is_valid_date(date_str: str) -> bool:
         DATE_REGEX_MMDDYYYY.match(cleaned) or 
         DATE_REGEX_YYYYMMDD.match(cleaned) or 
         DATE_REGEX_DDMMYYYY.match(cleaned) or 
-        DATE_REGEX_DDMMYY.match(cleaned)
+        DATE_REGEX_DDMMYY.match(cleaned) or
+        DATE_REGEX_DDMMMYYYY.search(date_str)
     )
 
 def is_valid_amount(amount_str: str) -> bool:
@@ -77,17 +80,54 @@ def clean_date(date_str: str) -> Optional[str]:
         return None
 
     current_year = datetime.now().year
+    current_date = datetime.now().strftime("%d-%m-%Y")
     separator = next((sep for sep in ['.', '/', '-'] if sep in date_str), '/')
 
-    # Try DD.MM.YY first (common in your log example)
+    # Month mapping for textual months
+    month_map = {
+        'jan': '01', 'january': '01',
+        'feb': '02', 'february': '02',
+        'mar': '03', 'march': '03',
+        'apr': '04', 'april': '04',
+        'may': '05',
+        'jun': '06', 'june': '06',
+        'jul': '07', 'july': '07',
+        'aug': '08', 'august': '08',
+        'sep': '09', 'september': '09',
+        'oct': '10', 'october': '10',
+        'nov': '11', 'november': '11',
+        'dec': '12', 'december': '12'
+    }
+
+    # Try DD-MMM-YYYY (e.g., 30-May-2025)
+    ddmmmyyyy_match = DATE_REGEX_DDMMMYYYY.search(date_str)
+    if ddmmmyyyy_match:
+        day, month_str, year = ddmmmyyyy_match.groups()
+        logger.debug(f"DDMMMYYYY match: day={day}, month_str={month_str}, year={year}")
+        month_str = month_str.lower()
+        month = month_map.get(month_str)
+        if month and len(year) == 4:
+            try:
+                parsed_date = datetime.strptime(f"{day.zfill(2)}-{month}-{year}", "%d-%m-%Y")
+                logger.debug(f"Validated date: {parsed_date.strftime('%d-%m-%Y')}")
+                return f"{day.zfill(2)}{separator}{month}{separator}{year}"
+            except ValueError:
+                logger.warning(f"Invalid date components: {day}-{month_str}-{year}")
+                return f"{day.zfill(2)}{separator}{month}{separator}{current_year}"
+        logger.warning(f"Invalid month or year in {date_str}")
+        return f"{day.zfill(2)}{separator}{month}{separator}{current_year}"
+
+    # Try DD.MM.YY first
     ddmmyy_match = DATE_REGEX_DDMMYY.search(date_str)
     if ddmmyy_match:
         day, month, year = ddmmyy_match.groups()
         year_int = int(year)
-        if year_int <= 50:  # Assume 00-49 are in 2000s, 50-99 in 1900s
-            year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+        if year_int <= 50:
+            year = str(year_int + 2000)
+        else:
+            year = str(year_int + 1900)
         if abs(int(year) - current_year) > 10:
-            year = str(current_year)  # Fallback to current year
+            year = str(current_year)
         return f"{day.zfill(2)}{separator}{month.zfill(2)}{separator}{year}"
 
     # Try MM/DD/YYYY or MM-DD-YYYY
@@ -97,7 +137,9 @@ def clean_date(date_str: str) -> Optional[str]:
         if len(year) == 2:
             year_int = int(year)
             if year_int <= 50:
-                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+                year = str(year_int + 2000)
+            else:
+                year = str(year_int + 1900)
             if abs(int(year) - current_year) > 10:
                 year = str(current_year)
         return f"{month.zfill(2)}{separator}{day.zfill(2)}{separator}{year}"
@@ -106,10 +148,12 @@ def clean_date(date_str: str) -> Optional[str]:
     yyyymmdd_match = DATE_REGEX_YYYYMMDD.search(date_str)
     if yyyymmdd_match:
         year, month, day = yyyymmdd_match.groups()
-        if len(year) == 2:  # Shouldn't happen, but handle it
+        if len(year) == 2:
             year_int = int(year)
             if year_int <= 50:
-                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+                year = str(year_int + 2000)
+            else:
+                year = str(year_int + 1900)
             if abs(int(year) - current_year) > 10:
                 year = str(current_year)
         return f"{year}{separator}{month.zfill(2)}{separator}{day.zfill(2)}"
@@ -121,13 +165,15 @@ def clean_date(date_str: str) -> Optional[str]:
         if len(year) == 2:
             year_int = int(year)
             if year_int <= 50:
-                year = str(year_int + 2000 if year_int < 50 else year_int + 1900)
+                year = str(year_int + 2000)
+            else:
+                year = str(year_int + 1900)
             if abs(int(year) - current_year) > 10:
                 year = str(current_year)
         return f"{day.zfill(2)}{separator}{month.zfill(2)}{separator}{year}"
 
     logger.warning(f"Could not parse date: {date_str}")
-    return None
+    return current_date  # Default to current date if all parsing fails
 
 def clean_amount(amount_str: str) -> Optional[str]:
     """Clean and validate amount strings."""
@@ -142,6 +188,19 @@ def clean_amount(amount_str: str) -> Optional[str]:
         if is_valid_amount(cleaned):
             return cleaned
     logger.warning(f"Could not clean amount: {amount_str}")
+    return None
+
+def clean_vendor_name(vendor_str: str) -> Optional[str]:
+    """Clean and validate vendor name strings."""
+    if not vendor_str:
+        return None
+    cleaned = vendor_str.strip()
+    if len(cleaned) < 2 or len(cleaned) > 100:  # Reasonable length for business names
+        logger.warning(f"Invalid vendor name length: {cleaned}")
+        return None
+    if VENDOR_NAME_REGEX.match(cleaned):
+        return cleaned
+    logger.warning(f"Invalid vendor name format: {cleaned}")
     return None
 
 def detect_currency(form_data: Dict, raw_text: Optional[str] = None) -> str:
@@ -160,8 +219,8 @@ def detect_currency(form_data: Dict, raw_text: Optional[str] = None) -> str:
         text_to_search += ' ' + ' '.join(f"{item.get('Amount', '')} {item.get('Description', '')}" for item in form_data['Items'])
     if 'Total Amount Requested' in form_data:
         text_to_search += ' ' + form_data['Total Amount Requested']
-    if 'Name of Employee' in form_data:
-        text_to_search += ' ' + form_data['Name of Employee']
+    if 'Vendor Name' in form_data:
+        text_to_search += ' ' + form_data['Vendor Name']
     
     text_to_search = text_to_search.lower().strip()
     
@@ -193,7 +252,7 @@ def validate_extracted_data(form_data: Dict) -> Dict:
     critical_field_patterns = {
         'date': ['date', 'when'],
         'amount': ['total', 'amount', 'cost', 'sum'],
-        'name': ['name', 'employee', 'person'],
+        'vendor': ['vendor', 'merchant', 'provider', 'hotel', 'airline'],
         'signature': ['signature', 'sign']
     }
     
@@ -285,7 +344,7 @@ def check_for_prohibited_items(form_data: Dict) -> bool:
     logger.debug("No prohibited items found")
     return False
 
-def extract_text_from_file(file_path: str) -> str:
+def extract_text_from_file(file_path: str) -> Dict:
     """
     Extract text using AnalyzeExpense API for better receipt processing.
     Includes validation, prohibited items detection, and fallback logic.
@@ -317,8 +376,10 @@ def extract_text_from_file(file_path: str) -> str:
                     cleaned_amount = clean_amount(value)
                     if cleaned_amount:
                         form_data['Total Amount Requested'] = cleaned_amount
-                elif field_type == 'NAME':
-                    form_data['Name of Employee'] = value
+                elif field_type in ['VENDOR_NAME', 'RECEIVER_NAME', 'MERCHANT_NAME']:
+                    cleaned_vendor = clean_vendor_name(value)
+                    if cleaned_vendor:
+                        form_data['Vendor Name'] = cleaned_vendor
                 
                 if confidence:
                     total_confidence += confidence
@@ -353,7 +414,7 @@ def extract_text_from_file(file_path: str) -> str:
             form_data['confidence_score'] = total_confidence / confidence_count
         
         # Fallback extraction if critical fields are missing
-        critical_fields = ['Date', 'Total Amount Requested', 'Name of Employee']
+        critical_fields = ['Date', 'Total Amount Requested', 'Vendor Name']
         missing_critical = [field for field in critical_fields 
                            if field not in form_data or not form_data[field]]
         
@@ -366,18 +427,21 @@ def extract_text_from_file(file_path: str) -> str:
             
             fallback_patterns = {
                 'Date': [
-                    r'Date[:\s]*(\d{1,2}[./-]\d{1,2}[./-]\d{2})',  # DD.MM.YY or DD-MM-YY
+                    r'Date[:\s]*(\d{1,2}[ -]\w{3,9}[ -]\d{4})',  # e.g., 30-May-2025
+                    r'Date[:\s]*(\d{1,2}[./-]\d{1,2}[./-]\d{2})',  # DD.MM.YY
                     r'Date[:\s]*(\d{4}[./-]\d{1,2}[./-]\d{1,2})',  # YYYY-MM-DD
-                    r'(\d{1,2}[./-]\d{1,2}[./-]\d{2})',            # DD.MM.YY or DD-MM-YY
+                    r'(\d{1,2}[./-]\d{1,2}[./-]\d{2})',            # DD.MM.YY
                     r'(\d{1,2}(?:st|nd|rd|th)?\s+\w+\s*,?\s*\d{4})' # e.g., 23rd November 2024
                 ],
                 'Total Amount Requested': [
                     r'Total Amount Requested[:\s]*([\d,.]+)',
                     r'Total[:\s]*([\d,.]+)'
                 ],
-                'Name of Employee': [
-                    r'Name of Employee[:\s]*([A-Za-z\s]+)',
-                    r'Employee[:\s]*([A-Za-z\s]+)'
+                'Vendor Name': [
+                    r'Vendor[:\s]*([A-Za-z0-9\s&\'-]+)',
+                    r'Merchant[:\s]*([A-Za-z0-9\s&\'-]+)',
+                    r'Provider[:\s]*([A-Za-z0-9\s&\'-]+)',
+                    r'^([A-Za-z0-9\s&\'-]+)\n'  # Vendor name often at top of receipt
                 ]
             }
             
@@ -387,6 +451,7 @@ def extract_text_from_file(file_path: str) -> str:
                     match = re.search(pattern, raw_text, re.IGNORECASE | re.MULTILINE)
                     if match:
                         extracted_value = match.group(1).strip()
+                        logger.debug(f"Fallback match for {field} with pattern {pattern}: {extracted_value}")
                         if field == 'Date':
                             cleaned_value = clean_date(extracted_value)
                             if cleaned_value:
@@ -398,13 +463,15 @@ def extract_text_from_file(file_path: str) -> str:
                                 form_data[field] = cleaned_value
                                 break
                         else:
-                            form_data[field] = extracted_value
-                            break
+                            cleaned_value = clean_vendor_name(extracted_value)
+                            if cleaned_value:
+                                form_data[field] = cleaned_value
+                                break
             
             if not any(field.lower() in ' '.join(form_data.keys()).lower() for field in critical_fields):
                 form_data['raw_text'] = raw_text.strip()
         
-        # Detect currency (default to "Not Detected" if none found)
+        # Detect currency
         form_data['Currency'] = detect_currency(form_data, raw_text)
         
         # Validate the extracted data
@@ -417,7 +484,7 @@ def extract_text_from_file(file_path: str) -> str:
         if validated_result['validation']['issues']:
             logger.warning(f"Validation issues: {validated_result['validation']['issues']}")
         
-        return json.dumps(validated_result, indent=2)
+        return validated_result
     
     except Exception as e:
         logger.error(f"Error extracting data from {file_path}: {e}")
@@ -431,4 +498,13 @@ def extract_text_from_file(file_path: str) -> str:
             },
             'has_prohibited_items': False
         }
-        return json.dumps(error_result, indent=2)
+        return error_result
+
+def extract_data_from_image(file_path: str) -> Dict:
+    """
+    Extract data from an image file using AWS Textract.
+    Returns a dictionary containing the extracted and validated data.
+    """
+    logger.info(f"Extracting data from image: {file_path}")
+    result = extract_text_from_file(file_path)
+    return result
