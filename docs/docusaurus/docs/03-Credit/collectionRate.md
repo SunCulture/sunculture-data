@@ -4,19 +4,22 @@ title: Collection Rate
 sidebar_label: Collection Rate
 ---
 
-## Definition
+# 💸 KPI: Collection Rate
 
-**Collection Rate** is the percentage of expected payments that were actually collected from PAYG (Pay-As-You-Go) customers within a specific time period (usually monthly). It measures how effectively the company is recovering dues from active accounts.
+| Attribute            | Description |
+|----------------------|-------------|
+| **Business Question** | How well are we collecting scheduled payments from active PAYG clients? |
+| **Definition**        | Percentage of expected payments that were actually collected from active PAYG customers in a given period (typically monthly). Focuses only on **active** accounts—excludes paid-off or repossessed ones. |
+| **Formula**           | `(Total Amount Collected ÷ Total Amount Due) × 100` |
+| **Data Source(s)**    | `payment_schedule`, `payment_transactions` |
+| **Owner**             | Credit Team |
+| **Reporting Period**  | Monthly |
+| **Tags**              | `Credit`, `Portfolio Quality`, `Repayment` |
+| **Notes**             | Includes only active PAYG clients scheduled to pay during the reporting window. |
 
-## Business Logic
+### 💡 Example
 
-Collection Rate is used to evaluate the health and repayment behavior of the PAYG portfolio. A high collection rate indicates strong customer compliance and financial discipline, while a low rate could point to repayment issues or operational challenges.
+If PAYG clients were expected to pay **KES 1,000,000** in June, and the actual collections were **KES 850,000**, the Collection Rate would be:
 
-This metric typically excludes customers who have fully paid off their loans or whose loans have been repossessed, focusing only on active accounts expected to pay.
+**`(850,000 ÷ 1,000,000) × 100 = 85%`**
 
-## Formula
-
-**Collection Rate (%) = (Total Amount Collected ÷ Total Amount Due) × 100**
-
-- **Total Amount Collected**: Sum of payments received from active PAYG customers during the period.  
-- **Total Amount Due**: Sum of scheduled payments expected from those same customers during the period.

@@ -1,3 +1,8 @@
+---
+id: sales
+title: Sale
+sidebar_label: Sale
+---
 ### 💰 KPI: Sales
 
 **Business Question**  
@@ -12,7 +17,7 @@ A customer is recorded as a sale when the full deposit is paid.
 `COUNT(Clients WHERE full_deposit_paid_date IS NOT NULL)`
 
 **Reporting Period**  
-YTD
+Daily, YTD
 
 **Data Source**  
 `sales_orders`, `payment_transactions`
