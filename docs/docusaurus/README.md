@@ -1,41 +1,31 @@
-# Website
+# SunCulture Data Catalog
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+# Setup
 
-### Installation
+3. **Step** : **Running the development server**
 
-```
-$ yarn
-```
+   - To preview the changes, run:
+     ```sh
+        cd <app-name>
+        npm run start
+     ```
+   - By default, a browser window will open at http://localhost:3000.
 
-### Local Development
+4. **Step** : **Build**
+   - Docusaurus is a modern static website generator so we need to build the website into a directory of static contents and put it on a web server so that it can be viewed. To build the website:
+     ```sh
+        npm run build
+     ```
 
-```
-$ yarn start
-```
+# Deployment
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+## 1. Deploy to GitHub Pages
 
-### Build
+- Run:
+  ```sh
+   npm run deploy
+  ```
 
-```
-$ yarn build
-```
+# Resources and Further Reading
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+1. [docusaurus - docs](https://docusaurus.io/docs)
