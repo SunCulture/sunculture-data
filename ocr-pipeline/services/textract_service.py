@@ -44,7 +44,7 @@ EXPENSE_KEYWORDS = [
 # Regex for amount, currency, and vendor name validation
 AMOUNT_REGEX = re.compile(r'^[\d,.]+(\.?\d{0,2})?$')
 CURRENCY_REGEX = re.compile(r'^(KES|UGX|XOF|USD|EUR|GBP)\s*[\d,.]+$', re.IGNORECASE)
-VENDOR_NAME_REGEX = re.compile(r'^[A-Za-z0-9\s&\'-]+$', re.IGNORECASE)  # Updated to allow apostrophes
+VENDOR_NAME_REGEX = re.compile(r'^[A-Za-z0-9\s&\'-]+$', re.IGNORECASE)
 
 def safe_float(value: str) -> Optional[float]:
     """Safely convert a string to float, returning None if conversion fails."""
@@ -106,7 +106,7 @@ def clean_date(date_str: str) -> Optional[str]:
         logger.debug(f"DDMMMYYYY match: day={day}, month_str={month_str}, year={year}")
         month_str = month_str.lower()
         month = month_map.get(month_str)
-        if month and len(year) == 4:
+        if month and len(year) == 4:  # Ensure four-digit year
             try:
                 parsed_date = datetime.strptime(f"{day.zfill(2)}-{month}-{year}", "%d-%m-%Y")
                 logger.debug(f"Validated date: {parsed_date.strftime('%d-%m-%Y')}")
@@ -114,7 +114,7 @@ def clean_date(date_str: str) -> Optional[str]:
             except ValueError:
                 logger.warning(f"Invalid date components: {day}-{month_str}-{year}")
                 return f"{day.zfill(2)}{separator}{month}{separator}{current_year}"
-        logger.warning(f"Invalid month or year in {date_str}")
+        logger.warning(f"Invalid month or year length in {date_str}")
         return f"{day.zfill(2)}{separator}{month}{separator}{current_year}"
 
     # Try DD.MM.YY first
@@ -367,6 +367,7 @@ def extract_text_from_file(file_path: str) -> Dict:
                 field_type = field.get('Type', {}).get('Text')
                 value = field.get('ValueDetection', {}).get('Text')
                 confidence = field.get('ValueDetection', {}).get('Confidence', 0.0)
+                logger.debug(f"Textract field: {field_type}, value: {value}")
                 
                 if field_type == 'INVOICE_RECEIPT_DATE':
                     cleaned_date = clean_date(value)
