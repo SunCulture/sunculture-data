@@ -3,7 +3,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "SunCulture",
-  tagline: "Data Portal",
+  tagline: "Data Catalog",
   trailingSlash: true,
 
   url: "https://sunculture.github.io",
@@ -128,7 +128,7 @@ const config = {
     footer: {
       style: "dark",
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} SunCulture, Inc.`,
+      copyright: `Copyright © ${new Date().getFullYear()} SunCulture Data, Inc.`,
     },
     prism: {
       theme: prismThemes.github,
