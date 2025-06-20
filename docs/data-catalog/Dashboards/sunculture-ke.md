@@ -12,7 +12,7 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ## 📊 Dashboard Index
 
-### 1. Sales
+### 1️⃣ 📈 Sales
 
 - **Purpose**: Track sales performance by region, agent, and product.
 - **Stakeholders**: Sales Team
@@ -28,15 +28,22 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 2. Marketing
+### 2️⃣ 📣 Marketing
 
 - **Purpose**: Assess campaign/channel effectiveness.
 - **Stakeholders**: Marketing Team
-- **Reports**: _(coming soon)_
+- **Reports**:
+  1. [On-Ground Marketing Overview](#)
+  2. [Digital Marketing Overview](#)
+  3. [Media Marketing Overview](#)
+  4. [Self-Registartion Overview](#)
+  5. [Refer & Earn Overview](#)
+  6. [Marketing Activities](#)
+  7. [Sentiment Analysis](#)
 
 ---
 
-### 3. Operations
+### 3️⃣ ⚙️ Operations
 
 - **Purpose**: Track installations, repossessions, and dispatches.
 - **Stakeholders**: Ops, Logistics
@@ -44,15 +51,22 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 4. PAYG / Credit
-
-- **Purpose**: Monitor repayments, delinquency, and customer behavior.
-- **Stakeholders**: Credit, Finance
-- **Reports**: _(coming soon)_
+### 4️⃣ 🛠️ After Sales
 
 ---
 
-### 5. Finance
+### 5️⃣ 💰 PAYG / Credit
+
+- **Purpose**: Monitor repayments, delinquency, and customer behavior.
+- **Stakeholders**: Credit, Finance
+- **Reports**:
+  1. [PAYG Overview](#)
+  2. [PAYG Analysis](#)
+  3. [Cohort Analysis](#)
+
+---
+
+### 6️⃣ 🧾 Finance
 
 - **Purpose**: Evaluate revenue, costs, and margins.
 - **Stakeholders**: Finance Team
@@ -60,7 +74,7 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 6. Supply Chain
+### 7️⃣ 🚚 Supply Chain
 
 - **Purpose**: Analyze inventory, delivery, and fulfillment performance.
 - **Stakeholders**: Supply Chain Team
@@ -68,7 +82,7 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 7. Customer Experience
+### 8️⃣ ☎️ Customer Experience
 
 - **Purpose**: Understand support volume, issue trends, and resolution times.
 - **Stakeholders**: Customer Experience
@@ -76,7 +90,7 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 8. Business Development
+### 9️⃣ 🤝 Business Development
 
 - **Purpose**: Track carbon credits generation and claims.
 - **Stakeholders**: Carbon Team, Finance
@@ -85,7 +99,7 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ---
 
-### 9. Carbon
+### 🔟 ♻️ Carbon
 
 - **Purpose**: Track carbon credits generation and claims.
 - **Stakeholders**: Carbon Team, Finance
@@ -97,4 +111,4 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 _Last updated: 2025-05-21_  
 _Maintainer: Data Team_
 
-> Need help? Ping us in `#data-requests` on Slack.
+> For custom reports or access issues, contact the Data Team via the [Data Request Form](https://sunculture.jotform.com/250342132233037). 🧠

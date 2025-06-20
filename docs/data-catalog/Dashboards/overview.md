@@ -28,4 +28,4 @@ Explore dashboards segmented by:
 - **Departments**: Sales, Credit/PAYG, Supply Chain, Customer Service, Marketing, ESG, People & Culture, Product, Operations, Finance, and more
 - **Metadata**: Includes description, intended audience, primary KPIs, and links to the live reports
 
-> Looking to request a new dashboard or suggest an update to an existing one? Contact the Data Team—we’d love to hear from you.
+> For custom reports or access issues, contact the Data Team via the [Data Request Form](https://sunculture.jotform.com/250342132233037). 🧠

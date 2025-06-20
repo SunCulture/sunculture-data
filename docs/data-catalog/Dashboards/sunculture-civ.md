@@ -12,75 +12,66 @@ Welcome to the dashboards for the Kenya team. This section highlights key dashbo
 
 ## 📊 Dashboard Index
 
-### 1. Sales
+### 1️⃣ 📈 Sales
 
 - **Purpose**: Track sales performance by region, agent, and product.
 - **Stakeholders**: Sales Team
 - **Related KPIs**: [Sales KPIs](../../kpis/overview)
-- **Reports**:  
-  - [Sales Overview](#)  
+- **Reports**:
+  - [Sales Overview](#)
   - [Leads Analysis](#)
 
 ---
 
-### 2. Marketing
+### 2️⃣ 📣 Marketing
 
 - **Purpose**: Assess campaign/channel effectiveness.
 - **Stakeholders**: Marketing Team
-- **Reports**: *(coming soon)*
+- **Reports**: _(coming soon)_
 
 ---
 
-### 3. Operations
+### 3️⃣ ⚙️ Operations
 
 - **Purpose**: Track installations, repossessions, and dispatches.
 - **Stakeholders**: Ops, Logistics
-- **Reports**: *(coming soon)*
+- **Reports**: _(coming soon)_
 
 ---
 
-### 4. PAYG / Credit
+### 5️⃣ 💰 PAYG / Credit
 
 - **Purpose**: Monitor repayments, delinquency, and customer behavior.
 - **Stakeholders**: Credit, Finance
-- **Reports**: *(coming soon)*
+- **Reports**: _(coming soon)_
 
 ---
 
-### 5. Finance
+### 6️⃣ 🧾 Finance
 
 - **Purpose**: Evaluate revenue, costs, and margins.
 - **Stakeholders**: Finance Team
-- **Reports**: *(coming soon)*
+- **Reports**: _(coming soon)_
 
 ---
 
-### 6. Supply Chain
+### 7️⃣ 🚚 Supply Chain
 
 - **Purpose**: Analyze inventory, delivery, and fulfillment performance.
 - **Stakeholders**: Supply Chain Team
-- **Reports**: *(coming soon)*
+- **Reports**: _(coming soon)_
 
 ---
 
-### 7. Customer Service
+### 8️⃣ ☎️ Customer Experience
 
 - **Purpose**: Understand support volume, issue trends, and resolution times.
 - **Stakeholders**: Customer Experience
-- **Reports**: *(coming soon)*
-
----
-
-### 8. Carbon
-
-- **Purpose**: Track carbon credits generation and claims.
-- **Stakeholders**: Carbon Team, Finance
-- **Reports**:  
-  - [Carbon Data Survey - 2025](#)
+- **Reports**: _(coming soon)_
 
 ---
 
 _Last updated: 2025-05-21_  
 _Maintainer: Data Team_
 
-> Need help? Ping us in `#data-requests` on Slack.
+> For custom reports or access issues, contact the Data Team via the [Data Request Form](https://sunculture.jotform.com/250342132233037). 🧠
