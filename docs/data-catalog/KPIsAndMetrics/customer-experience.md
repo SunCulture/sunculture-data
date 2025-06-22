@@ -12,10 +12,10 @@ This section evaluates satisfaction, complaints, support handling, and engagemen
 
 | 🗂️ Topic         | ❓ Business Question                      | 📊 Answer / KPI       | 🧮 Calculation                        | 🎯 Benchmark | 💬 Comments |
 |------------------|------------------------------------------|-----------------------|----------------------------------------|--------------|-------------|
-| **Topic 1**       | Are customers satisfied with our service? | Sample KPI           | Define how the KPI is calculated       | TBD          |             |
+| **TBD**       | TBD | TBD          | TBD       | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Combine both qualitative (feedback) and quantitative (NPS, resolution time) data.
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

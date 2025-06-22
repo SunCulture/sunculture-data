@@ -10,15 +10,12 @@ This section tracks **Carbon and Climate Impact** metrics focused on sustainabil
 
 ## 📈 KPI Table
 
-| 🗂️ Topic      | ❓ Business Question                          | 📊 Answer / KPI            | 🧮 Calculation                        | 🎯 Benchmark | 💬 Comments        |
-| ------------- | --------------------------------------------- | -------------------------- | ------------------------------------- | ------------ | ------------------ |
-| **Emissions** | What are our total annual CO₂e emissions?     | Total CO₂e Emissions       | Sum of direct & indirect emissions   | TBD          |                    |
-| **Offsets**   | How much are we offsetting via our programs?  | Offsets Achieved           | Total tons CO₂e offset                | TBD          |                    |
-| **Efficiency**| How energy-efficient are our operations?       | Emissions per Product Unit | Emissions ÷ Units Delivered           | TBD          |                    |
+| 🗂️ Topic | ❓ Business Question | 📊 Answer / KPI | 🧮 Calculation | 🎯 Benchmark | 💬 Comments |
+| -------- | -------------------- | --------------- | -------------- | ------------ | ----------- |
+| **TBD**  | TBD                  | TBD             | TBD            | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Emissions follow GHG Protocol scopes (Scope 1, 2, 3).
-- KPIs help SunCulture benchmark its climate goals and net-zero commitments.
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

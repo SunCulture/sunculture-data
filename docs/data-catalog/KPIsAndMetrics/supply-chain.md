@@ -10,13 +10,12 @@ This section captures key metrics for the Supply Chain team. Each KPI is designe
 
 ## 📈 KPI Table
 
-| 🗂️ Topic    | ❓ Business Question                     | 📊 Answer / KPI | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments |
-| ----------- | ---------------------------------------- | --------------- | -------------------------------- | ------------ | ----------- |
-| **Topic 1** | How effectively are we delivering units? | Sample KPI      | Define how the KPI is calculated | TBD          |             |
-|             |                                          | Sample KPI 2    | Define how the KPI is calculated | TBD          |             |
+| 🗂️ Topic | ❓ Business Question | 📊 Answer / KPI | 🧮 Calculation | 🎯 Benchmark | 💬 Comments |
+| -------- | -------------------- | --------------- | -------------- | ------------ | ----------- |
+| **TBD**  | TBD                  | TBD             | TBD            | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Use this section to explain logistics timelines, stockouts, or vendor-related challenges.
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

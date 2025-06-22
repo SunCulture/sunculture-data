@@ -12,10 +12,11 @@ This section reflects on how marketing efforts drive engagement, conversions, an
 
 | 🗂️ Topic    | ❓ Business Question                        | 📊 Answer / KPI | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments |
 | ----------- | ------------------------------------------- | --------------- | -------------------------------- | ------------ | ----------- |
-| **Topic 1** | Are our campaigns generating quality leads? | Sample KPI      | Define how the KPI is calculated | TBD          |             |
+| **TBD** | TBD | TBD      | TBD | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Link with Sales and BD KPIs where relevant.
+
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

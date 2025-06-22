@@ -12,11 +12,11 @@ This section highlights KPIs that track lead generation, partnerships, and marke
 
 | 🗂️ Topic    | ❓ Business Question                       | 📊 Answer / KPI | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments |
 | ----------- | ------------------------------------------ | --------------- | -------------------------------- | ------------ | ----------- |
-| **Topic 1** | Are we expanding our pipeline effectively? | Sample KPI      | Define how the KPI is calculated | TBD          |             |
-|             |                                            | Sample KPI 2    | Define how the KPI is calculated | TBD          |             |
+| **TBD** | TBD | TBD      | TBD | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Useful for campaign impact, market entry, or lead quality discussions.
+
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

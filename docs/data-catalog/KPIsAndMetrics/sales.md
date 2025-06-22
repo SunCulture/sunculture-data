@@ -12,8 +12,13 @@ Sales KPIs track how effectively we convert leads into paying customers and how 
 
 | 🗂️ Topic             | ❓ Business Question                              | 📊 Answer / KPI      | 🧮 Calculation                                                                                      | 🎯 Benchmark        | 💬 Comments |
 |---------------------- |---------------------------------------------------|----------------------|----------------------------------------------------------------------------------------------------|---------------------|-------------|
-| **Sales Performance** | How many units of products did we sell?           | **Total Unit Sales** | PAYG clients: after full deposit.<br />Cash clients: full payment date.                              | Varies by country   |             |
-| **Sales Performance**  | Are we maintaining a good balance between PAYG Risks and sales growth    | **PAYG Sales Volume (%)** | PAYG Sales / Total Sales x 100 | TBD |
-| **Productivity**      | How many agents are closing sales?               | **Selling Agent**     | Count of **Sales Agents** with at least 1 `fullDepositDate`.                                                 | TBD  |             |
-| **Productivity**      | How active are our agents in lead generation?    | **Working Agent**    | Count of **Sales Agents** with at least 1 lead.                                                              | TBD  |             |
+| **Sales Performance** | How many units of products did we sell?           | **Total Unit Sales** | PAYG clients: after full deposit.<br />Cash clients: full payment date.                              | TBD   |             |
+| **Sales Performance** | Are we maintaining a good balance between PAYG Risks and sales growth    | **PAYG Sales Volume (%)** | PAYG Sales / Total Sales x 100 | TBD |
+| **Productivity**      | How many agents are closing sales?               | **Selling Agent**     | Count of **Sales Agents** with at least 1 **Sale**                                                 | TBD  |             |
+| **Productivity**      | How active are our agents in lead generation?    | **Working Agent**    | Count of **Sales Agents** with at least 1 **Lead**.                                                              | TBD  |             |
+| **Productivity**      | How active are our agents in lead generation?    | **Agent Productivity**    | Total Sales / Count of Selling Agents                                                             | TBD  |             |
 
+
+## 📝 Notes
+
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

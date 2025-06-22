@@ -12,13 +12,11 @@ This section captures key metrics tracked by the **ESG (Environmental, Social & 
 
 | 🗂️ Topic    | ❓ Business Question                              | 📊 Answer / KPI              | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments        |
 | ----------- | ------------------------------------------------- | ---------------------------- | -------------------------------- | ------------ | ------------------ |
-| **Environment** | What’s our current CO₂ emissions footprint?       | Sample KPI                   | Emissions from Ops + Logistics  | TBD          |                    |
-| **Social**      | How are we tracking community impact programs?   | Sample KPI                   | # of projects / regions         | TBD          |                    |
-| **Governance**  | Are we compliant with ESG regulatory standards?  | Sample KPI                   | % policies aligned w/ standards | TBD          |                    |
+| **TBD** | TBD       | TBD                 | TBD  | TBD          |                    |
 
 ---
 
 ## 📝 Notes
 
-- ESG metrics are aligned with SunCulture’s impact strategy and external ESG reporting frameworks (e.g., GRI, SASB).
-- Additional breakdowns available in sub-pages (e.g., environment, social initiatives, governance structure).
+
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

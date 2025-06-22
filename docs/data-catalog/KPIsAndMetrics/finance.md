@@ -10,12 +10,12 @@ This section tracks financial health, cost control, revenue streams, and payment
 
 ## 📈 KPI Table
 
-| 🗂️ Topic    | ❓ Business Question                        | 📊 Answer / KPI | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments |
-| ----------- | ------------------------------------------- | --------------- | -------------------------------- | ------------ | ----------- |
-| **Topic 1** | Are we on track with our financial targets? | Sample KPI      | Define how the KPI is calculated | TBD          |             |
+| 🗂️ Topic | ❓ Business Question | 📊 Answer / KPI | 🧮 Calculation | 🎯 Benchmark | 💬 Comments |
+| -------- | -------------------- | --------------- | -------------- | ------------ | ----------- |
+| **TBD**  | TBD                  | TBD             | TBD            | TBD          |             |
 
 ---
 
 ## 📝 Notes
 
-- Consider including margin metrics, burn rate, and forecasts.
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.

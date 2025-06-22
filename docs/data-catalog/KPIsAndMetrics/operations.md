@@ -20,6 +20,7 @@ This section captures key metrics for the **Operations** team. Each KPI is desig
 
 ## 📝 Notes
 
-- **JSF** = Job Service Form (represents intent to install)
-- Pending installations may indicate staffing or logistical bottlenecks
+- **JSF** = Job Service Form
 - Turnaround time is measured against SLA commitments
+
+> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.
