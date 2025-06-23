@@ -22,7 +22,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
     
     - name: Build Docker image 
-      working-directory: ./sunculture-data/ocr-pipeline
+      working-directory: ./ocr-pipeline
       run: |
         docker build -t cash-release:ocr .
     
