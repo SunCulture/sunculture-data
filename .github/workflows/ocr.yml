@@ -1,0 +1,37 @@
+name: Build and Push to ECR and Force Update ECS Service
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+    
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+    
+    - name: Build Docker image 
+      working-directory: ./ocr-pipeline
+      run: |
+        docker build -t cash-release:ocr .
+    
+    - name: Tag and Push to ECR
+      run: |
+        echo "Registry URL: ${{ steps.login-ecr.outputs.registry }}"
+        docker tag cash-release:ocr ${{ steps.login-ecr.outputs.registry }}/cash-release:ocr
+        docker push ${{ steps.login-ecr.outputs.registry }}/cash-release:ocr
+    
+    - name: Force update ECS service
+      run: |
+        aws ecs update-service --cluster Cashrelease --service ocr-pipeline --force-new-deployment
