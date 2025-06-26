@@ -52,7 +52,7 @@ All entries are displayed in a **concise, tabular format** for quick consumption
 - [Sales](Operations/sales.md)
 - [Credit](Operations/credit.md)
 - [Supply Chain](Operations/supply-chain.md)
-- [Operations](Operations/Operations.md)
+- [Operations](Operations/operations.md)
 - [After Sales](Operations/aftersales.md)
 - [Customer Experience](Operations/customer-experience.md)
 - [Carbon](Operations/carbon.md)
@@ -76,7 +76,7 @@ All entries are displayed in a **concise, tabular format** for quick consumption
 
 ### 👥 People & Culture
 
-- [People & Culture](PeopleAndCultureulture/people-culture.md)
+- [People & Culture](PeopleAndCulture/people-and-culture.md)
 
 ### 🤝 External Affairs
 
