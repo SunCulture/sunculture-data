@@ -76,6 +76,15 @@ const config = {
         sidebarPath: require.resolve("./sidebarsKPIs.js"),
       },
     ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "datasources",
+        path: "DataSources",
+        routeBasePath: "data-sources",
+        sidebarPath: require.resolve("./sidebarsDataSources.js"),
+      },
+    ],
   ],
 
   themes: [
@@ -111,6 +120,11 @@ const config = {
         {
           to: "/dashboards/overview",
           label: "Dashboards",
+          position: "left",
+        },
+        {
+          to: "/data-sources/overview",
+          label: "Data Sources",
           position: "left",
         },
         {
