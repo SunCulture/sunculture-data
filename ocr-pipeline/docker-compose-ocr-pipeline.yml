@@ -12,12 +12,10 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_REGION=${AWS_REGION}
-      - S3_BUCKET=${S3_BUCKET}
-      - ep_stage_db=${ep_stage_db}
-      - ep_stage_db_user=${ep_stage_db_user}
-      - ep_stage_db_password=${ep_stage_db_password}
-      - ep_stage_db_host=${ep_stage_db_host}
-      - ep_stage_db_port=${ep_stage_db_port}
+      - S3_CASH_RELEASE_BUCKET=${S3_CASH_RELEASE_BUCKET}
+      - S3_OCR_PIPELINE_BUCKET=${S3_OCR_PIPELINE_BUCKET}
+      - SQS_QUEUE_URL=${SQS_QUEUE_URL}
+      - SQS_DLQ_URL=${SQS_DLQ_URL}
     volumes:
       - /tmp:/tmp
     networks:
