@@ -1,15 +1,15 @@
-import time
-from simple_salesforce import Salesforce
-from tqdm import tqdm
+import argparse
 import logging
-import sys
-import pandas as pd
-import numpy as np
 import os
 import re
-from dotenv import load_dotenv
-import argparse
+import sys
+import time
 
+import numpy as np
+import pandas as pd
+from dotenv import load_dotenv
+from simple_salesforce import Salesforce
+from tqdm import tqdm
 
 load_dotenv()
 
@@ -22,8 +22,6 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout),
     ],
 )
-
-
 
 
 # Connect to salesforce
@@ -40,14 +38,11 @@ def connect_to_salesforce(username, password, client_id, client_secret, domain="
             domain=domain,
         )
 
-
         logging.info("Successfully connected to Salesforce using OAuth 2.0")
         return sf
     except Exception as e:
         logging.error(f"Failed to connect to Salesforce: {str(e)}")
         return None
-
-
 
 
 def process_full_name(full_name):
@@ -68,9 +63,7 @@ def process_full_name(full_name):
     if pd.isna(full_name) or not full_name:
         return ("N/A", "N/A")
 
-
     name_parts = str(full_name).strip().split()
-
 
     if len(name_parts) == 0:
         return ("N/A", "N/A")
@@ -80,8 +73,6 @@ def process_full_name(full_name):
         first_name = name_parts[0]
         last_name = " ".join(name_parts[1:])
         return (first_name, last_name)
-
-
 
 
 def format_phone_number(phone):
@@ -99,9 +90,7 @@ def format_phone_number(phone):
     if pd.isna(phone) or phone == "" or phone is None:
         return None
 
-
     phone_str = str(phone).strip()
-
 
     if "E" in phone_str or "e" in phone_str:
         try:
@@ -112,15 +101,15 @@ def format_phone_number(phone):
             )
             return None
 
-
     # Remove non-digit characters except for plus sign
     clean_text = re.sub(r"[^\d+]", "", phone_str)
-
 
     if clean_text.startswith("2540"):
         # Remove "2540" prefix and add "0"
         result = "0" + clean_text[4:]
-    elif any(clean_text.startswith(prefix) for prefix in ["254", "255", "+254", "252", "256"]):
+    elif any(
+        clean_text.startswith(prefix) for prefix in ["254", "255", "+254", "252", "256"]
+    ):
         # Remove "254", "255", "+254", or "252" prefix and add "0"
         result = "0" + clean_text[3 if not clean_text.startswith("+") else 4 :]
     elif clean_text.startswith("7") or clean_text.startswith("1"):
@@ -133,7 +122,6 @@ def format_phone_number(phone):
         # Keep as is for other cases
         result = clean_text
 
-
     # Validate the result (should be 10 digits starting with 0)
     if len(result) == 10 and result.startswith("0"):
         return result
@@ -142,8 +130,6 @@ def format_phone_number(phone):
             f"Phone number standardization resulted in invalid format: {phone} → {result}"
         )
         return result
-
-
 
 
 # Read the leads from a Excel File
@@ -165,9 +151,7 @@ def read_leads_from_file(file_path):
         else:
             df = pd.read_csv(file_path, dtype={"Phone Number": str})
 
-
         df.columns = [col.lower().replace(" ", "_") for col in df.columns]
-
 
         expected_columns = {
             "name": "Name",
@@ -177,33 +161,26 @@ def read_leads_from_file(file_path):
             "company": "Company",
         }
 
-
         # Verify expected columns exist or log warnings
         for col in expected_columns:
             if col not in df.columns:
                 logging.warning(f"Expected column '{col}' not found in the file")
 
-
         leads = []
-
 
         for _, row in df.iterrows():
             lead_data = {}
-
 
             phone_field = next(
                 (field for field in df.columns if "phone" in field.lower()), None
             )
 
-
             if not phone_field:
                 logging.warning("No phone number column found in the file!")
                 continue
 
-
             raw_phone = row[phone_field]
             formatted_phone = format_phone_number(raw_phone)
-
 
             if not formatted_phone:
                 logging.warning(
@@ -211,10 +188,8 @@ def read_leads_from_file(file_path):
                 )
                 continue
 
-
             # Add the phone number to the lead data
             lead_data["MobilePhone"] = formatted_phone
-
 
             # Process full name if it exists
             name_field = next(
@@ -224,7 +199,6 @@ def read_leads_from_file(file_path):
                 first_name, last_name = process_full_name(row[name_field])
                 lead_data["FirstName"] = first_name
                 lead_data["LastName"] = last_name
-
 
             else:
                 # If no full name field, look for separate first/last name fields
@@ -245,14 +219,12 @@ def read_leads_from_file(file_path):
                     None,
                 )
 
-
                 if first_name_field and first_name_field in row:
                     lead_data["FirstName"] = (
                         str(row[first_name_field]).strip()
                         if pd.notna(row[first_name_field])
                         else "N/A"
                     )
-
 
                 if last_name_field and last_name_field in row:
                     lead_data["LastName"] = (
@@ -263,7 +235,6 @@ def read_leads_from_file(file_path):
                 elif "FirstName" in lead_data:
                     lead_data["LastName"] = "N/A"
 
-
             field_mapping = {
                 "first_name": "FirstName",
                 "last_name": "LastName",
@@ -272,24 +243,19 @@ def read_leads_from_file(file_path):
                 "company": "Company",
             }
 
-
             for csv_field, sf_field in field_mapping.items():
                 # Skip if column doesn't exist in the CSV
                 if csv_field not in df.columns:
                     continue
 
-
                 value = row[csv_field] if pd.notna(row[csv_field]) else ""
-
 
                 # Add the transformed field to the lead data
                 lead_data[sf_field] = value
 
-
             # Add default fields that may not be in the CSV
             if "Company" not in lead_data:
                 lead_data["Company"] = "N/A"
-
 
             # Ensure required fields are present
             if "FirstName" in lead_data and "MobilePhone" in lead_data:
@@ -297,27 +263,67 @@ def read_leads_from_file(file_path):
                 if "Company" not in lead_data or not lead_data["Company"]:
                     lead_data["Company"] = "N/A"
 
-
                 # Phone number is already validated
                 leads.append(lead_data)
             else:
                 logging.warning(f"Skipping lead due to missing required fields: {row}")
 
-
         logging.info(f"Successfully read {len(leads)} valid leads from {file_path}")
         return leads
-
 
     except Exception as e:
         logging.error(f"Failed to read leads from file: {str(e)}")
         return []
 
 
+def remove_duplicate_phone_numbers(leads):
+    """
+    Remove duplicate leads based on phone numbers, keeping only the first occurrence
+
+    Parameters:
+    - leads: List of lead data dictionaries
+
+    Returns:
+    - tuple: (unique_leads, removed_duplicates_info)
+    """
+    seen_phones = set()
+    unique_leads = []
+    duplicates_removed = []
+
+    for i, lead in enumerate(leads):
+        phone = lead.get("MobilePhone")
+        if phone and phone in seen_phones:
+            # This is a duplicate - record it for logging
+            duplicates_removed.append(
+                {
+                    "original_index": i + 1,
+                    "phone": phone,
+                    "name": f"{lead.get('FirstName', 'Unknown')} {lead.get('LastName', 'N/A')}",
+                }
+            )
+        else:
+            # First occurrence - keep it
+            if phone:
+                seen_phones.add(phone)
+            unique_leads.append(lead)
+
+    if duplicates_removed:
+        logging.info(
+            f"Removed {len(duplicates_removed)} duplicate leads based on phone numbers:"
+        )
+        for dup in duplicates_removed:
+            logging.info(
+                f"  - Removed: {dup['name']} (phone: {dup['phone']}) - was entry #{dup['original_index']}"
+            )
+
+    return unique_leads, duplicates_removed
 
 
 def validate_lead_data(leads):
     """
     Comprehensive validation of all lead data to ensure all conditions are met
+    Now includes automatic duplicate removal based on phone numbers
+    Removes invalid leads instead of stopping the entire process
 
 
     Parameters:
@@ -325,70 +331,65 @@ def validate_lead_data(leads):
 
 
     Returns:
-    - tuple: (is_valid, list of validation errors)
+    - tuple: (is_valid, list of validation warnings, cleaned_leads)
     """
-
-
-    validation_errors = []
-
+    validation_warnings = []
+    valid_leads = []
+    invalid_leads = []
 
     if not leads:
-        validation_errors.append("No valid leads found for processing")
-        return False, validation_errors
+        validation_warnings.append("No valid leads found for processing")
+        return False, validation_warnings, leads
 
+    # Remove duplicates based on phone numbers (keep first occurrence)
+    unique_leads, duplicates_info = remove_duplicate_phone_numbers(leads)
 
-    # Check each lead for all required conditions
-    for i, lead in enumerate(leads):
+    if duplicates_info:
+        logging.info(
+            f"Duplicate removal complete: {len(leads)} original leads → {len(unique_leads)} unique leads"
+        )
+
+    # Check each remaining lead for all required conditions
+    for i, lead in enumerate(unique_leads):
         lead_identifier = f"Lead #{i+1} ({lead.get('FirstName', 'Unknown')} {lead.get('LastName', 'N/A')})"
-
+        is_valid_lead = True
+        lead_issues = []
 
         # Phone number validation (most critical)
         if "MobilePhone" not in lead:
-            validation_errors.append(f"{lead_identifier} is missing a phone number")
+            lead_issues.append("missing phone number")
+            is_valid_lead = False
         else:
             phone = lead["MobilePhone"]
             if not (len(phone) == 10 and phone.startswith("0")):
-                validation_errors.append(
-                    f"{lead_identifier} has invalid phone format: {phone}"
-                )
-
+                lead_issues.append(f"invalid phone format: {phone}")
+                is_valid_lead = False
 
         # First Name validation
         if "FirstName" not in lead or not lead["FirstName"]:
-            validation_errors.append(f"{lead_identifier} is missing a first name")
-
+            lead_issues.append("missing first name")
+            is_valid_lead = False
 
         # Last Name validation (should be 'N/A' if not available)
         if "LastName" not in lead:
-            validation_errors.append(f"{lead_identifier} is missing a last name")
+            lead_issues.append("missing last name")
+            is_valid_lead = False
 
+        if is_valid_lead:
+            valid_leads.append(lead)
+        else:
+            invalid_leads.append(lead)
+            warning_msg = f"{lead_identifier} removed due to: {', '.join(lead_issues)}"
+            validation_warnings.append(warning_msg)
+            logging.warning(f"Removing invalid lead: {warning_msg}")
 
-    # Check for duplicate phone numbers
-    phone_counts = {}
+    if invalid_leads:
+        logging.info(
+            f"Removed {len(invalid_leads)} invalid leads. Proceeding with {len(valid_leads)} valid leads."
+        )
 
-
-    for lead in leads:
-        if "MobilePhone" in lead:
-            phone = lead["MobilePhone"]
-            if phone in phone_counts:
-                phone_counts[phone] += 1
-            else:
-                phone_counts[phone] = 1
-
-
-    duplicates = {phone: count for phone, count in phone_counts.items() if count > 1}
-
-
-    if duplicates:
-        for phone, count in duplicates.items():
-            validation_errors.append(
-                f"Phone number {phone} appears {count} times in the import data"
-            )
-
-
-    return len(validation_errors) == 0, validation_errors
-
-
+    # Return True if we have at least one valid lead to process
+    return len(valid_leads) > 0, validation_warnings, valid_leads
 
 
 def categorize_error(error_message):
@@ -397,7 +398,6 @@ def categorize_error(error_message):
     """
     if isinstance(error_message, dict):
         error_message = str(error_message)
-
 
     if (
         "duplicate value found" in error_message.lower()
@@ -412,8 +412,6 @@ def categorize_error(error_message):
         return "API Error", "Problem with the request format"
     else:
         return "Other Error", error_message
-
-
 
 
 def insert_leads_to_salesforce(sf, leads, delay=30):
@@ -432,58 +430,73 @@ def insert_leads_to_salesforce(sf, leads, delay=30):
     - failed_leads: List of leads that failed to insert
     """
 
-
     successful_leads = []
     failed_leads = []
 
-
-    # Validate data first
-    is_valid, validation_errors = validate_lead_data(leads)
-
+    # Validate data first (this now includes duplicate removal and invalid lead removal)
+    is_valid, validation_warnings, cleaned_leads = validate_lead_data(leads)
 
     if not is_valid:
-        logging.error("VALIDATION FAILED: Cannot proceed with lead insertion")
-        logging.error("The following issues must be fixed before proceeding:")
-        for error in validation_errors:
-            logging.error(f"  - {error}")
-
+        logging.error("VALIDATION FAILED: No valid leads found to process")
+        if validation_warnings:
+            logging.error("Issues encountered during validation:")
+            for warning in validation_warnings:
+                logging.error(f"  - {warning}")
 
         # Validation report file
         try:
-            with open("validation_errors.txt", "w") as f:
-                f.write("LEAD VALIDATION ERRORS\n")
-                f.write("=====================\n\n")
-                f.write(f"Total errors found: {len(validation_errors)}\n\n")
-                for i, error in enumerate(validation_errors):
-                    f.write(f"{i+1}. {error}\n")
+            with open("validation_report.txt", "w") as f:
+                f.write("LEAD VALIDATION REPORT\n")
+                f.write("======================\n\n")
+                f.write(f"Total issues found: {len(validation_warnings)}\n\n")
+                for i, warning in enumerate(validation_warnings):
+                    f.write(f"{i+1}. {warning}\n")
 
-
-            logging.info("Validation errors have been saved to 'validation_errors.txt'")
+            logging.info("Validation report has been saved to 'validation_report.txt'")
         except Exception as e:
             logging.error(f"Failed to write validation report: {str(e)}")
 
-
         return successful_leads, failed_leads
 
+    if validation_warnings:
+        logging.warning(
+            f"Validation completed with {len(validation_warnings)} issues. Invalid leads have been removed."
+        )
+        logging.info("Check 'validation_report.txt' for details on removed leads.")
 
-    logging.info("All leads passed validation checks!")
+        # Save validation report even when proceeding
+        try:
+            with open("validation_report.txt", "w") as f:
+                f.write("LEAD VALIDATION REPORT\n")
+                f.write("======================\n\n")
+                f.write(f"Total leads processed: {len(leads)}\n")
+                f.write(f"Valid leads for insertion: {len(cleaned_leads)}\n")
+                f.write(f"Leads removed due to issues: {len(validation_warnings)}\n\n")
+                f.write("REMOVED LEADS:\n")
+                f.write("-" * 50 + "\n")
+                for i, warning in enumerate(validation_warnings):
+                    f.write(f"{i+1}. {warning}\n")
 
+            logging.info("Validation report has been saved to 'validation_report.txt'")
+        except Exception as e:
+            logging.error(f"Failed to write validation report: {str(e)}")
+    else:
+        logging.info("All leads passed validation checks!")
 
-    total_leads = len(leads)
+    # Use the cleaned leads (with duplicates and invalid leads removed) for processing
+    leads_to_process = cleaned_leads
+
+    total_leads = len(leads_to_process)
     logging.info(f"Starting insertion process for {total_leads} leads")
 
-
     # Process each lead with the required delay
-    for i, lead_data in enumerate(tqdm(leads, desc="Inserting leads")):
+    for i, lead_data in enumerate(tqdm(leads_to_process, desc="Inserting leads")):
         try:
             logging.info(f"Inserting lead {i+1}/{total_leads}: {lead_data}")
 
-
             process_time = time.strftime("%Y-%m-%d %H:%M:%S")
 
-
             response = sf.Lead.create(lead_data)
-
 
             if response.get("success"):
                 lead_id = response.get("id")
@@ -514,12 +527,10 @@ def insert_leads_to_salesforce(sf, leads, delay=30):
                     }
                 )
 
-
             # Add delay between insertions (only if not the last lead)
             if i < total_leads - 1:
                 logging.info(f"Waiting {delay} seconds before inserting next lead...")
                 time.sleep(delay)
-
 
         except Exception as e:
             error_message = str(e)
@@ -528,20 +539,15 @@ def insert_leads_to_salesforce(sf, leads, delay=30):
             )
             failed_leads.append({**lead_data, "Status_Message": error_message})
 
-
     # Final summary
     success_rate = (len(successful_leads) / total_leads) * 100 if total_leads > 0 else 0
-
 
     logging.info(
         f"Insertion process complete: {len(successful_leads)} leads inserted successfully ({success_rate:.2f}%)"
     )
     logging.info(f"Failed insertions: {len(failed_leads)} leads")
 
-
     return successful_leads, failed_leads
-
-
 
 
 def export_results(
@@ -556,19 +562,16 @@ def export_results(
             logging.info("No results to export (no leads were processed).")
             return True
 
-
         # Return successful and failed leads
         if successful_leads:
             successful_df = pd.DataFrame(successful_leads)
         else:
             successful_df = pd.DataFrame(columns=["Status_Message", "Processed_At"])
 
-
         if failed_leads:
             failed_df = pd.DataFrame(failed_leads)
         else:
             failed_df = pd.DataFrame(columns=["Status_Message", "Processed_At"])
-
 
         # Export results
         with pd.ExcelWriter(output_file) as writer:
@@ -589,12 +592,9 @@ def export_results(
                         if col not in failed_df.columns:
                             failed_df[col] = None
 
-
                     results_df = pd.concat([successful_df, failed_df])
 
-
                 results_df.to_excel(writer, sheet_name="All Results", index=False)
-
 
             # Individual sheets
             if not successful_df.empty:
@@ -604,14 +604,11 @@ def export_results(
             if not failed_df.empty:
                 failed_df.to_excel(writer, sheet_name="Failed Leads", index=False)
 
-
         logging.info(f"Results exported to {output_file}")
         return True
     except Exception as e:
         logging.error(f"Failed to export results: {str(e)}")
         return False
-
-
 
 
 def get_most_recent_file(directory="files/", extensions=(".xlsx", ".xls", ".csv")):
@@ -634,22 +631,16 @@ def get_most_recent_file(directory="files/", extensions=(".xlsx", ".xls", ".csv"
             if f.endswith(extensions)
         ]
 
-
         if not files:
             return None
 
-
         files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
 
-
         return files[0]
-
 
     except Exception as e:
         logging.error(f"Error finding files in directory {directory}: {str(e)}")
         return None
-
-
 
 
 def main():
@@ -662,49 +653,37 @@ def main():
     client_id = os.environ.get("consumer_key")
     client_secret = os.environ.get("consumer_secret")
 
-
     # Connect to Salesforce using OAuth 2.0
     sf = connect_to_salesforce(username, password, client_id, client_secret)
-
 
     if not sf:
         return
 
-
     # File containing lead data
     file_path = get_most_recent_file()
-
 
     if not file_path:
         logging.error("No Excel or CSV files found in the 'files' directory.")
         return
 
-
     logging.info(f"Using most recent file: {file_path}")
-
 
     # Read leads from file
     leads = read_leads_from_file(file_path)
-
 
     if not leads:
         logging.error("No valid leads found in the file. Process aborted.")
         return
 
-
     logging.info(f"Processing {len(leads)} leads for insertion")
-
 
     # Request for lead source
     lead_source = input("Enter Lead Source (e.g., Facebook, Meta, WhatsApp, etc.): ")
 
-
     logging.info(f"Using '{lead_source}' as Lead Source for all leads")
-
 
     for lead in leads:
         lead["LeadSource"] = lead_source
-
 
     # Ask for delay time
     try:
@@ -715,23 +694,18 @@ def main():
         delay = 30
         logging.info("Invalid delay value, using default of 30 seconds")
 
-
     # Insert leads into Salesforce
     successful_leads, failed_leads = insert_leads_to_salesforce(sf, leads, delay=delay)
 
-
     export_results(successful_leads, failed_leads)
-
-
+    logging.info("Lead insertion process completed successfully")
 
 
 if __name__ == "__main__":
     start_time = time.time()
     logging.info("Starting Salesforce lead insertion process")
 
-
     main()
-
 
     elapsed_time = time.time() - start_time
     logging.info(f"Process completed in {elapsed_time:.2f} seconds")
