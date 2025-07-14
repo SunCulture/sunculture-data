@@ -4,18 +4,16 @@ title: People & Culture
 sidebar_label: People & Culture
 ---
 
-# 👥 People & Culture KPIs & Metrics
+# 👥 People & Culture Metrics
 
-This section includes metrics around hiring, retention, team growth, and engagement.
+> 📌 <span id="dri">**Directly Responsible Individual (DRI)**: `Njeri Nyindo` (`People and Culture`)</span>  
+> These metric definitions have been set and approved by the DRI above.  
+> For suggested changes, please email the DRI for review and approval.
 
-## 📈 KPI Table
-
-| 🗂️ Topic    | ❓ Business Question                    | 📊 Answer / KPI | 🧮 Calculation                   | 🎯 Benchmark | 💬 Comments |
-| ----------- | --------------------------------------- | --------------- | -------------------------------- | ------------ | ----------- |
-| **TBD** | TBD | TBD      | TBD | TBD          |             |
+---
 
 ---
 
 ## 📝 Notes
 
-> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.
+> 🔄 Got a suggestion or correction? Reach out to the [**DRI listed above**](#dri) to propose a change. All updates must be reviewed and approved by the **DRI**.

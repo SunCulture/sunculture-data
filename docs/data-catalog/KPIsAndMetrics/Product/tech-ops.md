@@ -1,71 +1,69 @@
 ---
-id: product-ops
+id: tech-ops
 title: Tech Ops
-sidebar_label: 4. Product Ops
+sidebar_label: 4. Tech Ops
 ---
 
 # Tech Ops KPIs
 
-> 📌 <span id="dri">**Directly Responsible Individual (DRI)**: `Hillary Kipruto` (`Head Of Tech Ops`)</span>  
+> 📌 <span id="dri">**Directly Responsible Individual (DRI)**: `Hillary Kipruto` | (`Head Of Tech Ops`)</span>  
 > These metric definitions have been set and approved by the DRI above.  
 > For suggested changes, please email the DRI for review and approval.
 
 ---
 
-## 📊 KPIs
+### 1. Incident Resolution Time
 
-### 1.
-
-- **Description**:
+- **Description**: Average time to resolve tech issues.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 2.
+### 2. SLA Compliance
 
-- **Description**:
+- **Description**: Support requests handled within SLA.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 3.
+### 3. Infrastructure Cost Efficiency
 
-- **Description**:
+- **Description**: Cost per compute/storage unit.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 4.
+### 4. Onboarding Time for New Employees
 
-- **Description**:
+- **Description**: Time taken to onboard new hires.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 5.
+### 5. Security Incidents
 
-- **Description**:
+- **Description**: Count of security breaches or policy violations.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 6.
+### 6. Security
 
-- **Description**:
+- **Description**: Completion of Endpoint Management
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 7.
+### 7. Backup & Disaster Recovery
 
-- **Description**:
+- **Description**: Successful Implementation of Backup Strategy
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 8.
+### 8. Process Documentation
 
-- **Description**:
+- **Description**: Completion of Key Process Documentation
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---

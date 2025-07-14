@@ -30,6 +30,11 @@ const sidebars = {
               id: "Operations/customer-experience",
               label: "Customer Experience",
             },
+            {
+              type: "doc",
+              id: "Operations/marketing",
+              label: "Marketing",
+            },
           ],
         },
         {
@@ -58,7 +63,7 @@ const sidebars = {
             { type: "doc", id: "Product/product", label: "Product" },
             { type: "doc", id: "Product/engineering", label: "Engineering" },
             { type: "doc", id: "Product/data", label: "Data" },
-            { type: "doc", id: "Product/product-ops", label: "Product Ops" },
+            { type: "doc", id: "Product/tech-ops", label: "Product Ops" },
             { type: "doc", id: "Product/quality", label: "Quality" },
           ],
         },
