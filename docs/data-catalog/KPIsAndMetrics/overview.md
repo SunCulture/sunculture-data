@@ -71,7 +71,7 @@ All entries are displayed in a **concise, tabular format** for quick consumption
 - [Product](Product/product.md)
 - [Engineering](Product/engineering.md)
 - [Data](Product/data.md)
-- [Product Ops](Product/product-ops.md)
+- [Tech Ops](Product/tech-ops.md)
 - [Quality](Product/quality.md)
 
 ### 👥 People & Culture

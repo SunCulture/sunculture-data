@@ -1,69 +1,69 @@
 ---
-id: product
-title: Product
-sidebar_label: 1. Product
+id: tech-ops
+title: Tech Ops
+sidebar_label: 4. Tech Ops
 ---
 
-# Product KPIs
+# Tech Ops KPIs
 
-> 📌 <span id="dri">**Directly Responsible Individual (DRI)**: `Cliff Anami` | (`Head Of Product`)</span>  
+> 📌 <span id="dri">**Directly Responsible Individual (DRI)**: `Hillary Kipruto` | (`Head Of Tech Ops`)</span>  
 > These metric definitions have been set and approved by the DRI above.  
 > For suggested changes, please email the DRI for review and approval.
 
 ---
 
-### 1. Feature Adoption Rate
+### 1. Incident Resolution Time
 
-- **Description**:
+- **Description**: Average time to resolve tech issues.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 2. Time To Market
+### 2. SLA Compliance
 
-- **Description**:
+- **Description**: Support requests handled within SLA.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 3. Customer Satisfaction Score (CSAT)
+### 3. Infrastructure Cost Efficiency
 
-- **Description**:
+- **Description**: Cost per compute/storage unit.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 4. User Retention Rate
+### 4. Onboarding Time for New Employees
 
-- **Description**:
+- **Description**: Time taken to onboard new hires.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 5. Active Users
+### 5. Security Incidents
 
-- **Description**:
+- **Description**: Count of security breaches or policy violations.
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 6. Release Frequency
+### 6. Security
 
-- **Description**:
+- **Description**: Completion of Endpoint Management
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 7. Customer onboarding time
+### 7. Backup & Disaster Recovery
 
-- **Description**:
+- **Description**: Successful Implementation of Backup Strategy
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---
 
-### 8. Internal Customer Satisfaction
+### 8. Process Documentation
 
-- **Description**:
+- **Description**: Completion of Key Process Documentation
 - **Applicable Time Horizons**: Daily, Weekly, Monthly, Quarterly, Yearly
 
 ---

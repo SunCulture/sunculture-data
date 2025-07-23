@@ -4,18 +4,16 @@ title: Marketing
 sidebar_label: 8. Marketing
 ---
 
-# 📣 Marketing KPIs & Metrics
+# 📣 Marketing Metrics
 
-This section reflects on how marketing efforts drive engagement, conversions, and brand visibility.
+> 📌 **Directly Responsible Individual (DRI)**: `Jon Saunders` (`COO`)  
+> These metric definitions have been set and approved by the DRI above.  
+> For suggested changes, please email the DRI for review and approval.
 
-## 📈 KPI Table
-
-| 🗂️ Topic | ❓ Business Question | 📊 Answer / KPI | 🧮 Calculation | 🎯 Benchmark | 💬 Comments |
-| -------- | -------------------- | --------------- | -------------- | ------------ | ----------- |
-| **TBD**  | TBD                  | TBD             | TBD            | TBD          |             |
+---
 
 ---
 
 ## 📝 Notes
 
-> 🔄 Want to suggest a new KPI or update an existing one? Reach out to the **Data Team** to request additions or edits.
+> 🔄 Got a suggestion or correction? Reach out to the [**DRI listed above**](#dri) to propose a change. All updates must be reviewed and approved by the **DRI**.
