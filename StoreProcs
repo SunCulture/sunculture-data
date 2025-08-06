@@ -91,6 +91,47 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE TRIGGER after_discount_notes_delete
+AFTER DELETE ON amtdb.discount_notes
+FOR EACH ROW
+BEGIN
+    CALL amtdb.log_deleted_record(
+        'discount_notes',
+        CAST(OLD.id AS CHAR),
+        JSON_OBJECT(
+            'id', OLD.id,
+            'accountId', OLD.accountId,
+            'old_account_id', OLD.old_account_id,
+            'discountId', OLD.discountId,
+            'old_discount_id', OLD.old_discount_id,
+            'amount', OLD.amount,
+            'note', OLD.note,
+            'isAdjusted', OLD.isAdjusted,
+            'isXeroPosted', OLD.isXeroPosted,
+            'appsheetId', OLD.appsheetId,
+            'createdAt', OLD.createdAt,
+            'createdBy', OLD.createdBy,
+            'old_created_by', OLD.old_created_by,
+            'updatedAt', OLD.updatedAt,
+            'updatedBy', OLD.updatedBy,
+            'appsheet_id', OLD.appsheet_id,
+            'old_updated_by', OLD.old_updated_by,
+            'netsuiteCreditNoteId', OLD.netsuiteCreditNoteId,
+            'netsuiteCreditNoteDate', OLD.netsuiteCreditNoteDate,
+            'ledgerEntryID', OLD.ledgerEntryID,
+            'isReversed', OLD.isReversed,
+            'reversedAmount', OLD.reversedAmount,
+            'reversalLedgerEntryID', OLD.reversalLedgerEntryID,
+            'reversedBy', OLD.reversedBy,
+            'reversalDate', OLD.reversalDate,
+            'isReversalPosted', OLD.isReversalPosted
+        )
+    );
+END$$
+
+DELIMITER ;
 
 -select Query
 SELECT
