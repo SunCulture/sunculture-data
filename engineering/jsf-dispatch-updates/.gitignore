@@ -1,0 +1,24 @@
+# Environment variables (NEVER COMMIT!)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs and data
+*.log
+logs/
+data/
+backups/
+
+# OS files
+.DS_Store
+Thumbs.db
