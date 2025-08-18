@@ -1,0 +1,161 @@
+CREATE TABLE amtdb.deleted_records_audit (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tableName VARCHAR(255) NOT NULL,
+    recordId VARCHAR(255) NOT NULL,
+    deletedData JSON NOT NULL,
+    deletedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE amtdb.log_deleted_record(
+    IN p_tableName VARCHAR(255),
+    IN p_recordId VARCHAR(255),
+    IN p_deletedData JSON
+)
+BEGIN
+    INSERT INTO amtdb.deleted_records_audit (tableName, recordId, deletedData)
+    VALUES (p_tableName, p_recordId, p_deletedData);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER after_installment_payments_delete
+AFTER DELETE ON amtdb.installment_payments
+FOR EACH ROW
+BEGIN
+    CALL amtdb.log_deleted_record(
+        'installment_payments',
+        CAST(OLD.id AS CHAR),
+        JSON_OBJECT(
+            'id', OLD.id,
+            'accountId', OLD.accountId,
+            'old_account_id', OLD.old_account_id,
+            'instalmentScheduleId', OLD.instalmentScheduleId,
+            'old_instalment_schedule_id', OLD.old_instalment_schedule_id,
+            'paymentId', OLD.paymentId,
+            'old_payment_id', OLD.old_payment_id,
+            'paymentType', OLD.paymentType,
+            'amtPaid', OLD.amtPaid,
+            'amtRefund', OLD.amtRefund,
+            'paidDate', OLD.paidDate,
+            'createdAt', OLD.createdAt,
+            'createdBy', OLD.createdBy,
+            'updatedAt', OLD.updatedAt,
+            'updatedBy', OLD.updatedBy,
+            'ledgerEntryID', OLD.ledgerEntryID,
+            'discountRefunds', OLD.discountRefunds
+        )
+    );
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER after_installment_schedules_delete
+AFTER DELETE ON amtdb.installment_schedules
+FOR EACH ROW
+BEGIN
+    CALL amtdb.log_deleted_record(
+        'installment_schedules',
+        CAST(OLD.id AS CHAR),
+        JSON_OBJECT(
+            'id', OLD.id,
+            'old_id', OLD.old_id,
+            'accountId', OLD.accountId,
+            'old_account_id', OLD.old_account_id,
+            'payPlanId', OLD.payPlanId,
+            'old_payplan_id', OLD.old_payplan_id,
+            'customerId', OLD.customerId,
+            'old_customer_id', OLD.old_customer_id,
+            'installmentType', OLD.installmentType,
+            'paymentSequence', OLD.paymentSequence,
+            'isRevised', OLD.isRevised,
+            'isActive', OLD.isActive,
+            'expectedAmount', OLD.expectedAmount,
+            'expectedDate', OLD.expectedDate,
+            'status', OLD.status,
+            'comment', OLD.comment,
+            'createdAt', OLD.createdAt,
+            'createdBy', OLD.createdBy,
+            'old_created_by', OLD.old_created_by,
+            'updatedAt', OLD.updatedAt,
+            'updatedBy', OLD.updatedBy,
+            'ledgerEntryID', OLD.ledgerEntryID
+        )
+    );
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER after_discount_notes_delete
+AFTER DELETE ON amtdb.discount_notes
+FOR EACH ROW
+BEGIN
+    CALL amtdb.log_deleted_record(
+        'discount_notes',
+        CAST(OLD.id AS CHAR),
+        JSON_OBJECT(
+            'id', OLD.id,
+            'accountId', OLD.accountId,
+            'old_account_id', OLD.old_account_id,
+            'discountId', OLD.discountId,
+            'old_discount_id', OLD.old_discount_id,
+            'amount', OLD.amount,
+            'note', OLD.note,
+            'isAdjusted', OLD.isAdjusted,
+            'isXeroPosted', OLD.isXeroPosted,
+            'appsheetId', OLD.appsheetId,
+            'createdAt', OLD.createdAt,
+            'createdBy', OLD.createdBy,
+            'old_created_by', OLD.old_created_by,
+            'updatedAt', OLD.updatedAt,
+            'updatedBy', OLD.updatedBy,
+            'appsheet_id', OLD.appsheet_id,
+            'old_updated_by', OLD.old_updated_by,
+            'netsuiteCreditNoteId', OLD.netsuiteCreditNoteId,
+            'netsuiteCreditNoteDate', OLD.netsuiteCreditNoteDate,
+            'ledgerEntryID', OLD.ledgerEntryID,
+            'isReversed', OLD.isReversed,
+            'reversedAmount', OLD.reversedAmount,
+            'reversalLedgerEntryID', OLD.reversalLedgerEntryID,
+            'reversedBy', OLD.reversedBy,
+            'reversalDate', OLD.reversalDate,
+            'isReversalPosted', OLD.isReversalPosted
+        )
+    );
+END$$
+
+DELIMITER ;
+
+-select Query
+SELECT
+    id AS auditId,
+    tableName,
+    recordId,
+    deletedAt,
+    deletedData->>'$.id' AS id,
+    deletedData->>'$.accountId' AS accountId,
+    deletedData->>'$.old_account_id' AS oldAccountId,
+    deletedData->>'$.instalmentScheduleId' AS instalmentScheduleId,
+    deletedData->>'$.old_instalment_schedule_id' AS oldInstalmentScheduleId,
+    deletedData->>'$.paymentId' AS paymentId,
+    deletedData->>'$.old_payment_id' AS oldPaymentId,
+    deletedData->>'$.paymentType' AS paymentType,
+    deletedData->>'$.amtPaid' AS amtPaid,
+    deletedData->>'$.amtRefund' AS amtRefund,
+    deletedData->>'$.paidDate' AS paidDate,
+    deletedData->>'$.createdAt' AS createdAt,
+    deletedData->>'$.createdBy' AS createdBy,
+    deletedData->>'$.updatedAt' AS updatedAt,
+    deletedData->>'$.updatedBy' AS updatedBy,
+    deletedData->>'$.ledgerEntryID' AS ledgerEntryID,
+    deletedData->>'$.discountRefunds' AS discountRefunds
+FROM amtdb.deleted_records_audit
+WHERE tableName = 'installment_payments'
+ORDER BY deletedAt DESC;
