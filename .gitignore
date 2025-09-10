@@ -1,8 +1,8 @@
 # Python virtual environments
-windows-venv/
 env/
 venv/
 .venv/
+sd-venv/
 
 # Environment variables
 .env
