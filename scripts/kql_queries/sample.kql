@@ -1,0 +1,28 @@
+union 
+    (
+        CSDirectTelemetry
+        | where EventTime between (datetime({from_date}) .. datetime({to_date})) and MotorCurrent > 0
+        | extend Power = MotorCurrent * PanelVoltage,
+                 Source = "Direct",
+                 EventDate = startofday(EventTime),
+                 MinuteUsed = bin(EventTime, 1m)
+        | project DeviceId, EventDate, Power, Source, MinuteUsed
+    ),
+    (
+        CSBattery1Telemetry
+        | where EventTime between (datetime({from_date}) .. datetime({to_date})) and OutputCurrent > 0
+        | extend Power = OutputCurrent * OutputVoltage,
+                 Source = "Battery",
+                 EventDate = startofday(EventTime),
+                 MinuteUsed = bin(EventTime, 1m)
+        | project DeviceId, EventDate, Power, Source, MinuteUsed
+    )
+| summarize 
+    DistinctMinutes = dcount(MinuteUsed),
+    AvgPower = avg(Power)
+  by DeviceId, EventDate, Source
+| extend 
+    HoursUsed = round(DistinctMinutes, 2),
+    EnergyKWh = round((AvgPower * DistinctMinutes) / 60.0 / 1000.0, 3)
+| project timestamp=EventDate, meterId=DeviceId,timeIntervalMinutes=HoursUsed, energyConsumptionKwh=EnergyKWh
+| where meterId in ({device_id_list})
