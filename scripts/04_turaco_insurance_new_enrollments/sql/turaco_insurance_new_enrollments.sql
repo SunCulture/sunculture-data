@@ -1,0 +1,1 @@
+select COUNT(DISTINCT customerid) from policies p where year(submittedDate)='2025' and month(submittedDate)='08' and companyRegionId=1
