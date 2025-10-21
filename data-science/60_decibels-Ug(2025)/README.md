@@ -1,5 +1,5 @@
 # SunCulture Data Science – 60 Decibels Uganda (2025)
- The script aims at getting an unbiased survey sample to be used by  60 Decibels to conduct an impact report through a structured survey in Uganda
+ The script aims at getting an unbiased survey sample to be used by  60 Decibels to conduct an impact report through a structured survey in Uganda. The Sample selection will focus on impact metrics, particularly those related to carbon verification requirements,
 
 This repository contains a Python-based data processing and Bayesian sampling workflow for the **60 Decibels Uganda 2025** dataset.  
 The script `sample.py` automates data cleaning, exploratory analysis, and stratified sample size planning using Bayesian principles.

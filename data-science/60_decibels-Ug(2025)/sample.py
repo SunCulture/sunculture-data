@@ -552,7 +552,7 @@ if __name__ == "__main__":
     final_sample = select_stratified_sample(
         frame=df_final,
         alloc_df=alloc_df,
-        strata_cols=['Region', 'Gender', 'Account_type', 'Product']
+        strata_cols=['Customer_Id','Region', 'Gender', 'Account_type', 'Product']
     )
 
     print("\n🎯 Script completed successfully!")
