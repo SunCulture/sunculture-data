@@ -3,7 +3,18 @@ const axios = require("axios");
 
 // Sample list of lists
 const dataList = [
-{'accountRef':'28073760','paymentRef':'TJPPI87YCX','payerName':'Pay Bill from 25472****487 - JOSEPH **** KITENGU Acc. 28 073760','paymentAmount':'7000','timeStampMade':'2025-10-25 04:11:37','payerNumber':'25472****487 - JOSEPH **** KITENGU','paymentTypeId':1,'sourceAmountCurrency':'7000','selectedCurrency':{'id':1},'selectedBank':{'id':'15'}}
+  {
+    'accountRef': '',
+    'paymentRef': '',
+    'payerName': '',
+    'paymentAmount': '',
+    'timeStampMade': '',
+    'payerNumber': '',
+    'paymentTypeId': null, // Numeric ID required
+    'sourceAmountCurrency': '',
+    'selectedCurrency': { id: null }, // Numeric ID required
+    'selectedBank': { id: '' }
+  }
 ]
 
 // Iterate over the list of lists and send Axios requests
