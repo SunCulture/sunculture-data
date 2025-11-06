@@ -43,7 +43,7 @@ ENGINEER_RECOMMENDATION = "Installed"
 # Key: customer_id (matches customer_id field in premises table)
 # Value: List of account_ids that belong to this customer
 CUSTOMER_ACCOUNT_MAPPING = {
-    1106: [16497],
+    46826: [23315],
 }
 
 class AccountProcessingError(Exception):
