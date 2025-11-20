@@ -1,0 +1,16 @@
+{
+  "name": "amt-payment-updates",
+  "version": "1.0.0",
+  "description": "This script sends payment records to an API endpoint using environment variables for configuration. It supports batch processing, secure API communication, and simple logging for the success or failure of each payment.",
+  "main": "sendPayments.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.0",
+    "dotenv": "^17.2.3"
+  }
+}
