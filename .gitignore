@@ -9,6 +9,12 @@ sd-venv/
 .env.local
 .env.*.local
 
+# Credentials / service account keys
+secrets/
+
+# Local data pulls for analyses (contain customer PII)
+analysis_and_insights/**/data/
+
 # Log files
 logs/
 *.log
