@@ -14,6 +14,7 @@ secrets/
 
 # Local data pulls for analyses (contain customer PII)
 analysis_and_insights/**/data/
+analysis/**/data/*
 
 # Log files
 logs/
@@ -263,3 +264,6 @@ logs/
 # sqs
 access-policy.json
 >>>>>>> main
+
+# Hand-maintained reference mappings (no PII) — kept in git despite the *.csv and data/ rules above
+!analysis/03_refurbs_vs_new/data/product_groups_v2.csv
