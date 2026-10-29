@@ -7,19 +7,37 @@ How the SunCulture Brand Guidelines (v1.0, April 2019; source in `/_templates/`)
 | Element | Spec |
 |---|---|
 | Canvas | **1280 × 720** (Power BI default; text sizes are tuned to it). Allow vertical scroll for long pages rather than changing width. |
-| Header | 72 px, white. Left to right: logo, divider, page title (+ subtitle `Country · Domain · Period`), page navigator. Right: "Data refreshed" time in EAT. |
+| Sidebar | **Dashboards with more than one page:** a 208 px navigation sidebar on the left of every page. See *Navigation sidebar* below. |
+| Header | 72 px, white. With the sidebar it starts at x = 208: page title (+ subtitle `Country · Domain · Page`) on the left, "Data refreshed" time in EAT on the right; the logo is in the sidebar. **Single-page dashboards** (no sidebar) keep the full-width header with the logo, divider and title. |
 | Accent line | 4 px gradient under the header: `#F3D500 → #62C628 → #00CCC8` (the logo ring). The only gradient on the page. |
-| Grid | 12 columns, 24 px side margins, 16 px gutters, 12 px between rows. |
+| Grid | 12 columns, 16 px gutters, 12 px between rows. Content area: x = 224 to 1256 (1032 px) with the sidebar; x = 24 to 1256 (1232 px) without. |
 | Order | Filter row → KPI row (4–5 cards) → main chart (8 cols) + side chart (4 cols) → table. |
 | Cards | White, 6 px corners, no border, no shadow, padding 14/16 px. |
 | Page background | `#F5F6F4` |
 
-Build the header as a page **background image** (`assets/`) plus a card for the refresh time and a page-navigator button group, so every page is identical.
+Build the header from an image visual (`assets/header-sidebar.png` with the sidebar, 1072 px wide; it carries the accent line) plus a text box for the title and a card for the refresh time, so every page is identical.
+
+## Navigation sidebar
+
+Used on every page of a multi-page dashboard, in place of Power BI's page tabs. Readers should never need the Pages pane.
+
+| Element | Spec |
+|---|---|
+| Panel | 208 px wide, full page height, white `#FFFFFF`, 1 px divider `#DCDFDA` on its right edge |
+| Logo | `assets/sunculture-logo-stacked.png`, 60 px tall, centred at the top (y = 14). Its box keeps the logo's proportions (415 : 402) because Power BI's *Fit* stretches an image to its box |
+| Section labels | Upper case, Arial 8 pt bold, `#636569` (e.g. ENGINEERING, SUPPLY CHAIN). The overview page sits above the first label |
+| Page buttons | One per page, in page order: 184 × 30 px, 6 px corners, 34 px apart. Line icon (`assets/nav-icons/`) on the left in `#636569`; page name Arial 10 pt `#1F2326` |
+| Hover | Button fill `#F5F6F4` |
+| Current page | Fill `#EAF5E1`, name bold and icon in `#2F7D0A`, plus a 3 px brand-green `#49A500` bar on the left edge |
+
+Icons are 24 × 24 line drawings (2 px stroke, round ends) in one style; add new ones to `assets/nav-icons/` in the same style rather than mixing icon sets.
+
+Build it with `tools/sidebar_nav.py` from a `nav.json` next to the `.pbip` (sections, pages and icons); see `README.md`. If you build it by hand, give every sidebar visual **no background, no border and 0 padding**: the theme's default 14/16 px padding leaves a 30 px button about 2 px to draw in, and it shows as a blank box.
 
 ## Logo
 
 - Use `assets/sunculture-logo-stacked.png` as supplied. Do not stretch, recolour or rotate it, and do not place it on a gradient or photo.
-- Minimum **57 px** tall on screen (manual: digital minimum). In the 72 px header it sits at 60 px.
+- Minimum **57 px** tall on screen (manual: digital minimum). It sits at 60 px, in the sidebar or in the 72 px header.
 - Clear space: at least half the ring's height on all sides.
 - To do: ask the brand owner for the **horizontal** logo as SVG/PNG. The manual allows it "where the centered size doesn't work", which suits a dashboard header.
 

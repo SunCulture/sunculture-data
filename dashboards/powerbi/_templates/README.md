@@ -8,12 +8,38 @@ Shared starting points for SunCulture Power BI dashboards.
 | `STANDARDS.md` | Build and review checklist | Ready |
 | `themes/sunculture.json` | Report theme built from the brand manual (colour-blind-tested chart palette, Arial) | Ready |
 | `assets/sunculture-logo-stacked.png` | Primary logo, taken from the SunCulture presentation template | Ready |
+| `assets/header-sidebar.png` | Header bar (white with the brand accent line) for pages with the navigation sidebar, 1072 px wide | Ready |
+| `assets/nav-icons/` | Line icons for sidebar buttons (`currentColor`; the tool colours them) | Ready |
+| `tools/sidebar_nav.py` | Adds or rebuilds the navigation sidebar on every page of a `.pbip` | Ready |
 | `starter/` | Blank .pbip project: Date table, `_Measures` table, theme applied, 1280×720 overview/analysis/detail pages with header background | To do |
-| `tools/` | Review scripts (model size, unused columns, broken references) | To do |
+| `tools/` (review) | Review scripts (model size, unused columns, broken references) | To do |
 
 ## Applying the theme to an existing report
 
 In Power BI Desktop: **View → Themes → Browse for themes** → select `themes/sunculture.json`.
+
+## Adding the navigation sidebar
+
+For any dashboard with more than one page (spec: `BRAND.md`, *Navigation sidebar*):
+
+1. Write a `nav.json` next to the `.pbip` listing the sections in order. Every page must appear once; `icon` is a file name from `assets/nav-icons/` without `.svg`. Example: `../ug/ops/nav.json`.
+
+   ```json
+   {"sections": [
+     {"label": null, "pages": [{"page": "Overview", "icon": "grid"}]},
+     {"label": "ENGINEERING", "pages": [{"page": "Installations", "icon": "wrench"}]}
+   ]}
+   ```
+
+2. Close the report in Power BI Desktop (otherwise Desktop saves its copy over the change), then run from `dashboards/powerbi/`:
+
+   ```
+   python -I _templates/tools/sidebar_nav.py "<country>/<domain>/<Name>.Report" "<country>/<domain>/nav.json"
+   ```
+
+3. Reopen the `.pbip` and check each page.
+
+The first run on a page moves its content into the area right of the sidebar (x = 224 to 1256, widths scaled to fit) and points a full-width header image at `header-sidebar.png`. Later runs only redraw the sidebar, so rerun the tool whenever pages are added, removed or renamed. The tool stops if `nav.json` and the report's pages don't match, or if an icon doesn't exist. Icons available: `assets/nav-icons/`.
 
 ## Starting a new dashboard (once `starter/` exists)
 

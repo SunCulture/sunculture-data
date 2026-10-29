@@ -135,5 +135,13 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 
+# Power BI: .pbix files hold the data model and data in one binary (often >100 MB, GitHub's file limit).
+# Commit the .pbip project instead (File > Save as > Power BI project).
+dashboards/powerbi/**/*.pbix
+
+# Power BI Project local-only files
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
 # Hand-maintained reference mappings (no PII) — kept in git despite the *.csv and data/ rules above
 !analysis/03_refurbs_vs_new/data/product_groups_v2.csv
