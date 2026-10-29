@@ -1,0 +1,1670 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "41c46f603de7a2cf26e1",
+  "position": {
+    "x": 26.645639489039581,
+    "y": 188.94180728591704,
+    "z": 1000,
+    "height": 867.19444882510641,
+    "width": 1870.0394259580507,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "end_month"
+                }
+              },
+              "queryRef": "schedule.end_month",
+              "nativeQueryRef": "Month Year",
+              "displayName": "Month Year"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "customer_id"
+                }
+              },
+              "queryRef": "schedule.customer_id",
+              "nativeQueryRef": "Customer ID",
+              "displayName": "Customer ID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "account_id"
+                }
+              },
+              "queryRef": "schedule.account_id",
+              "nativeQueryRef": "Account ID",
+              "displayName": "Account ID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "account_ref"
+                }
+              },
+              "queryRef": "schedule.account_ref",
+              "nativeQueryRef": "Account Ref",
+              "displayName": "Account Ref"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "customer_names"
+                }
+              },
+              "queryRef": "schedule.customer_names",
+              "nativeQueryRef": "Customer Names",
+              "displayName": "Customer Names"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "installment_date"
+                }
+              },
+              "queryRef": "schedule.installment_date",
+              "nativeQueryRef": "Installment Date",
+              "displayName": "Installment Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "product"
+                }
+              },
+              "queryRef": "schedule.product",
+              "nativeQueryRef": "Product",
+              "displayName": "Product"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "credit_sale"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.credit_sale)",
+              "nativeQueryRef": "Credit Sale",
+              "displayName": "Credit Sale"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "downpayment_amount"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.downpayment_amount)",
+              "nativeQueryRef": "Deposit",
+              "displayName": "Deposit"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "credit_sale_net"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.credit_sale_net)",
+              "nativeQueryRef": "Net Credit",
+              "displayName": "Net Credit"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "installment_amount"
+                }
+              },
+              "queryRef": "Sum(schedule.installment_amount)",
+              "nativeQueryRef": "installment_amount",
+              "displayName": "Installment Amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "total_number_payments"
+                }
+              },
+              "queryRef": "Sum(schedule.total_number_payments)",
+              "nativeQueryRef": "total_number_payments",
+              "displayName": "Total Number Payments"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "cumulative_total_month"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.cumulative_total_month)",
+              "nativeQueryRef": "Total Repaid",
+              "displayName": "Total Repaid"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "net_cumulative_total_month"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.net_cumulative_total_month)",
+              "nativeQueryRef": "Net Repaid",
+              "displayName": "Net Repaid"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "Amount Due"
+                }
+              },
+              "queryRef": "schedule.Amount Due",
+              "nativeQueryRef": "Amount Due1"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "balance"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.balance)",
+              "nativeQueryRef": "Balance",
+              "displayName": "Balance"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "expected_payment"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.expected_payment)",
+              "nativeQueryRef": "Expected PV Receivables",
+              "displayName": "Expected PV Receivables"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "% Repaid"
+                }
+              },
+              "queryRef": "schedule.% Repaid",
+              "nativeQueryRef": "% Repaid"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "arrears"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.arrears)",
+              "nativeQueryRef": "arrears",
+              "displayName": "Arrears"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "days_late"
+                }
+              },
+              "queryRef": "Sum(schedule.days_late)",
+              "nativeQueryRef": "Days Late",
+              "displayName": "Days Late"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "% At Risk"
+                }
+              },
+              "queryRef": "schedule.% At Risk",
+              "nativeQueryRef": "% At Risk"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "#overdue_account"
+                }
+              },
+              "queryRef": "schedule.#overdue_account",
+              "nativeQueryRef": "#overdue_account"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "arrears>30days"
+                }
+              },
+              "queryRef": "schedule.arrears>30days",
+              "nativeQueryRef": "arrears>30days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "#current_no_arrears"
+                }
+              },
+              "queryRef": "schedule.#current_no_arrears",
+              "nativeQueryRef": "#current_no_arrears"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "balance(30 days late)"
+                }
+              },
+              "queryRef": "schedule.balance(30 days late)",
+              "nativeQueryRef": "balance(30 days late)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "expected_amount"
+                }
+              },
+              "queryRef": "schedule.expected_amount",
+              "nativeQueryRef": "expected_amount"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "month_installment_paid2"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.month_installment_paid2)",
+              "nativeQueryRef": "Collections",
+              "displayName": "Collections"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "% Collected"
+                }
+              },
+              "queryRef": "schedule.% Collected",
+              "nativeQueryRef": "% Collected"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "amount_paid_actual"
+                }
+              },
+              "queryRef": "schedule.amount_paid_actual",
+              "nativeQueryRef": "amount_paid_actual"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "status"
+                }
+              },
+              "queryRef": "schedule.status",
+              "nativeQueryRef": "Status",
+              "displayName": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "status_change"
+                }
+              },
+              "queryRef": "schedule.status_change",
+              "nativeQueryRef": "Status Change",
+              "displayName": "Status Change"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "cash_value"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.cash_value)",
+              "nativeQueryRef": "Loan Amount",
+              "displayName": "Loan Amount"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "fpd"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.fpd)",
+              "nativeQueryRef": "FPD",
+              "displayName": "FPD"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "fpd_still"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.fpd_still)",
+              "nativeQueryRef": "FPD Still",
+              "displayName": "FPD Still"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "discount_amount"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.discount_amount)",
+              "nativeQueryRef": "Discount Amount",
+              "displayName": "Discount Amount"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "schedule"
+                        }
+                      },
+                      "Property": "month_payment_amount"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(schedule.month_payment_amount)",
+              "nativeQueryRef": "Month Paid",
+              "displayName": "Month Paid"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "schedule"
+                    }
+                  },
+                  "Property": "writeOffReason"
+                }
+              },
+              "queryRef": "schedule.writeOffReason",
+              "nativeQueryRef": "Write Off Reason",
+              "displayName": "Write Off Reason"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "schedule"
+                      }
+                    },
+                    "Property": "month_payment_amount"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#004D40'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#004D40'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#01B8AA'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#004D40'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FAE6AA'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FAE6AA'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table 1 : Amortization Schedule'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFC20E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "underline": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filterc099a0dc4adb8c701235",
+        "ordinal": 0,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "credit_sale"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eb3e2ac8d8290e37c282",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "period"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter271c859ec9378ad7aa35",
+        "ordinal": 2,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "arrears"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterc41168c1dcb3ce003d38",
+        "ordinal": 3,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "expected_payment"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterae8583620b1403297d58",
+        "ordinal": 4,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "downpayment_amount"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filtercccc5611573cd2a40c40",
+        "ordinal": 5,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "account_id"
+              }
+            },
+            "Function": 2
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter5a227183fdbc81952025",
+        "ordinal": 6,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "cum"
+              }
+            },
+            "Property": "% PAR30"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter9b9b63d4478ec97ce81a",
+        "ordinal": 7,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "credit_sale_net"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter363eb79a4129f96bfaa0",
+        "ordinal": 8,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "cumulative_total_month"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterb0855588637a4a700f69",
+        "ordinal": 9,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "net_cumulative_total_month"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter2f0a8f2d08b4b5f13c82",
+        "ordinal": 10,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "balance"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterf2e572b0bbb3144fbb00",
+        "ordinal": 11,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "cum"
+              }
+            },
+            "Property": "% Repaid"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter89cf74e3ddc1aa27323e",
+        "ordinal": 12,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "cum"
+              }
+            },
+            "Property": "% At Risk"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filteradc29d7f1583a8279c69",
+        "ordinal": 13,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "cum"
+              }
+            },
+            "Property": "#overdue_account"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "13726ce5769502b1d435",
+        "ordinal": 14,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "month_installment_paid2"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "159eab87c1a604ea7998",
+        "ordinal": 15,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "account_ref"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5657ace13f223db7b9dc",
+        "ordinal": 16,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "customer_names"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "fa0c00e679c9a6ca27a3",
+        "ordinal": 17,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "product"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e92e41d4922eef398a67",
+        "ordinal": 18,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "installment_amount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "20bea3a2b1710e54c373",
+        "ordinal": 19,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "installment_date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "6c0f1e3cca0ecf908538",
+        "ordinal": 20,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "total_number_payments"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7613873de6e23b212cff",
+        "ordinal": 21,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "account_id"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a22091dccf89a22de30b",
+        "ordinal": 22,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "status"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "961ca3c4c73a59bb8113",
+        "ordinal": 23,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "days_late"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "s",
+              "Entity": "schedule",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 3,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "s"
+                        }
+                      },
+                      "Property": "days_late"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "30L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "14d93e7c10b1ab254f23",
+        "ordinal": 24,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "customer_id"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a923ebd1da47c55671df",
+        "ordinal": 25,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "fpd"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1fc8ffea1a5e311c8569",
+        "ordinal": 26,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "discount_amount"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5ca8e087b49901a3459d",
+        "ordinal": 27,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "end_month"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "3b382746c57281ed9416",
+        "ordinal": 28,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "% Repaid"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "126e7f3ceca9861b225c",
+        "ordinal": 29,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "% At Risk"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e3b5064ed07e882f8b25",
+        "ordinal": 30,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "#overdue_account"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7c8966e99652b0be8632",
+        "ordinal": 31,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "arrears>30days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "50a271d8ee382683e08b",
+        "ordinal": 32,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "#current_no_arrears"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "8ba0cd917e3c1673ed97",
+        "ordinal": 33,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "balance(30 days late)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0ffdbd0d7ed8feeaaf5d",
+        "ordinal": 34,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "expected_amount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cf7bbc4b321a35e4046b",
+        "ordinal": 35,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "% Collected"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "deb5b39ec714614e64c0",
+        "ordinal": 36,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "amount_paid_actual"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5678bfaf35078d5e89d7",
+        "ordinal": 37,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "fpd_still"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "350c5e2737ab8ec0259d",
+        "ordinal": 38,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "Amount Due"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ef7af509d8d5df889094",
+        "ordinal": 39,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "status_change"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "519bd66a7ca3d6ec0a9e",
+        "ordinal": 40,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "cash_value"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "351b671053ba9c626c4d",
+        "ordinal": 41,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "schedule"
+                  }
+                },
+                "Property": "month_payment_amount"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d19dec539a7cfa9edae5",
+        "ordinal": 42,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "writeOffReason"
+          }
+        },
+        "type": "Categorical"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

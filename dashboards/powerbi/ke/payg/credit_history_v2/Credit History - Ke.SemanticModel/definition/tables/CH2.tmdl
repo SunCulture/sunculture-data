@@ -1,0 +1,149 @@
+table CH2
+	lineageTag: 0cfbde1f-a538-46fb-8f76-112fe1f6231e
+
+	column accountId
+		lineageTag: ef9e590e-89c6-40e1-831d-ccb32a5ab686
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [accountId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column paidDate
+		lineageTag: 921a253b-e89f-4785-a998-07d08a02de87
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [paidDate]
+
+		variation Variation
+			isDefault
+			relationship: ad869763-5359-4bbb-84ef-3dba15c44ec0
+			defaultHierarchy: LocalDateTable_78c5b150-401d-45c9-ad25-9f5703698ce5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequence
+		lineageTag: c5e1b376-03b9-4545-ba0b-06689e3e7df4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [payment_sequence]
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_paid
+		lineageTag: 56a8b1a0-b989-4cda-9131-6343b96dec31
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [aging_paid]
+
+		annotation SummarizationSetBy = Automatic
+
+	column amtPaid
+		lineageTag: 98832f52-b637-4e70-b2d1-861c515ce714
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [amtPaid]
+
+		annotation SummarizationSetBy = Automatic
+
+	column amt_paid_current
+		lineageTag: 64ece70d-d23e-48e2-8ddb-b17e2bfff5a4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [amt_paid_current]
+
+		annotation SummarizationSetBy = Automatic
+
+	column amt_paid_arrears
+		lineageTag: f31d4a4a-ce42-4fdd-83b2-b548d2635fd9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [amt_paid_arrears]
+
+		annotation SummarizationSetBy = Automatic
+
+	column amt_paid_advance
+		lineageTag: 5d39a125-ecac-403d-b228-12450398943c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [amt_paid_advance]
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_paid_parent
+		lineageTag: b849b51c-a5f7-4e31-b0f5-1a7c61d00f43
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [aging_paid_parent]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year' = FORMAT('CH2'[paidDate], "YYYYMM")
+		lineageTag: cb85f07c-44d2-4c7d-b41c-2c806850ec37
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product =
+			LOOKUPVALUE(
+			    'accounts_mv'[product],
+			    'accounts_mv'[account_id],
+			    'CH2'[accountId]
+			)
+		lineageTag: c2ba03c1-8b01-461e-8b84-e05b1946208a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account ref' =
+			LOOKUPVALUE(
+			    'accounts_mv'[accountRef],
+			    'accounts_mv'[account_id],
+			    'CH2'[accountId]
+			)
+		lineageTag: c715db72-c2e2-496f-8c35-1d1250381bcb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account status' =
+			LOOKUPVALUE(
+			    'accounts_mv'[status],
+			    'accounts_mv'[account_id],
+			    'CH2'[accountId]
+			)
+		lineageTag: 8e1b9cc9-9b0b-4062-8afc-0161aa156c2d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPV =
+			LOOKUPVALUE(
+			    'accounts_mv'[tranche],
+			    'accounts_mv'[account_id],
+			    'CH2'[accountId]
+			)
+		lineageTag: 256fcf75-2f26-4bf1-a3a5-796a7b0c6c72
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CH2 = calculated
+		mode: import
+		source =
+				
+				SELECTCOLUMNS(
+				    CH,
+				    "accountId", CH[accountId],
+				    "paidDate", CH[paidDate],
+				    "payment_sequence", CH[payment_sequence],
+				     "aging_paid", CH[aging_paid],
+				     "amtPaid", CH[amtPaid],
+				      "amt_paid_current", CH[amt_paid_current],
+				       "amt_paid_arrears", CH[amt_paid_arrears],
+				        "amt_paid_advance", CH[amt_paid_advance],
+				         "aging_paid_parent", CH[aging_paid_parent]
+				)
+
+	annotation PBI_Id = e035f61f15744a1cb319548491e960b3
+

@@ -1,0 +1,91 @@
+table device_daily_usage
+	isHidden
+	lineageTag: f540c16a-9e59-43ea-80a9-5f98d9b54f43
+
+	column deviceId
+		dataType: string
+		isHidden
+		lineageTag: 62022aa1-fcc4-4117-a693-65618a817296
+		summarizeBy: none
+		sourceColumn: deviceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 30a5f556-50ff-4fd2-9116-f098a72ea57d
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column energyConsumptionKwh
+		dataType: double
+		lineageTag: 0b3966c7-0641-45a9-8184-93bea9768c72
+		summarizeBy: sum
+		sourceColumn: energyConsumptionKwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pumpruntimehrs
+		dataType: double
+		lineageTag: e1beddd8-0ac3-430f-ad63-2e80a9b002af
+		summarizeBy: sum
+		sourceColumn: pumpruntimehrs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Source
+		dataType: string
+		lineageTag: 27d7e7e2-ca2e-440e-8fa2-79f47d1d7369
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column FwVer
+		dataType: string
+		lineageTag: 1d9d3463-4671-4b04-9911-2ff3449ad1f5
+		summarizeBy: none
+		sourceColumn: FwVer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Variant
+		dataType: string
+		lineageTag: a7d93eb2-f518-4510-8ea7-6ba4942ab5a9
+		summarizeBy: none
+		sourceColumn: Variant
+
+		annotation SummarizationSetBy = Automatic
+
+	column _sync_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7353bff7-3661-45fd-a33c-dfe2c1b740b6
+		summarizeBy: none
+		sourceColumn: _sync_at
+
+		annotation SummarizationSetBy = Automatic
+
+	partition device_daily_usage = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"a7e3fc6b-6ae1-4285-8a3b-0949922af07b" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="a7e3fc6b-6ae1-4285-8a3b-0949922af07b"]}[Data],
+				    device_daily_usage_ = #"a7e3fc6b-6ae1-4285-8a3b-0949922af07b"{[entity="device_daily_usage",version=""]}[Data]
+				in
+				    device_daily_usage_
+
+	annotation PBI_ResultType = Table
+

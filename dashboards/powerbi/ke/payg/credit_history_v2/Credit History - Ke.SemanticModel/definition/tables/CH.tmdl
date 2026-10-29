@@ -1,0 +1,306 @@
+table CH
+	lineageTag: 0af15726-a0c9-4839-9a49-657f8638b16f
+
+	measure %collected = ([total_amt_paid]/[total_expected_amount])
+		lineageTag: 487b41bf-d2f0-41b7-9d60-8a9fc6155102
+
+	measure total_amt_paid = SUM(CH[amtPaid])
+		lineageTag: ddef2eb3-f943-4e38-901e-a7f450d75bd0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: ba0181e9-2248-4074-ab00-310b087fc082
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b5c1f61-66d4-4805-82cb-45c01201840f
+		summarizeBy: none
+		sourceColumn: accountId
+
+		annotation SummarizationSetBy = Automatic
+
+	column old_account_id
+		dataType: string
+		lineageTag: 3dded40a-d721-45b1-8a27-4e3ffe4fa9f6
+		summarizeBy: none
+		sourceColumn: old_account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column instalmentScheduleId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e5522db-3d02-44eb-affe-0beeffcdffc0
+		summarizeBy: none
+		sourceColumn: instalmentScheduleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column old_instalment_schedule_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ad50d3fd-bc6c-47da-878a-5ec1c737c433
+		summarizeBy: sum
+		sourceColumn: old_instalment_schedule_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column paymentId
+		dataType: int64
+		formatString: 0
+		lineageTag: d856db94-e472-475a-b648-f52fdff71b35
+		summarizeBy: count
+		sourceColumn: paymentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column old_payment_id
+		dataType: string
+		lineageTag: c615ac64-7e07-433c-85ee-49d1646b263d
+		summarizeBy: none
+		sourceColumn: old_payment_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column paymentType
+		dataType: int64
+		formatString: 0
+		lineageTag: e474934b-cbf5-4570-858b-f9c4cb9d656b
+		summarizeBy: sum
+		sourceColumn: paymentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'amtPaid Ledger'
+		dataType: double
+		lineageTag: 0ad05544-6ad0-46cc-a481-d4e85b0dc5ae
+		summarizeBy: sum
+		sourceColumn: amtPaid Ledger
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amtRefund
+		dataType: double
+		lineageTag: d5cc5eb8-9631-4d21-8482-3155b78e533b
+		summarizeBy: sum
+		sourceColumn: amtRefund
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column paidDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dbaea8d8-a039-45ac-aef3-1a5b3ea3e566
+		summarizeBy: none
+		sourceColumn: paidDate
+
+		variation Variation
+			isDefault
+			relationship: 7ca53d6d-0d5a-4211-8d8b-6f19319d8ea6
+			defaultHierarchy: LocalDateTable_26adb143-0957-4be9-8237-64d18f527cab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 94cd1e6d-146a-45e0-b1be-0f5f6c0c0974
+		summarizeBy: none
+		sourceColumn: createdAt
+
+		variation Variation
+			isDefault
+			relationship: a96ca004-b530-4b17-b08c-4551dd33293a
+			defaultHierarchy: LocalDateTable_6e76145c-feb8-4cfa-b549-e7b1ea083053.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdBy
+		dataType: int64
+		formatString: 0
+		lineageTag: 48f23944-8749-4d3e-a99c-3349630b77eb
+		summarizeBy: sum
+		sourceColumn: createdBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a401a46a-b13a-4631-b32b-d823a283c116
+		summarizeBy: none
+		sourceColumn: updatedAt
+
+		variation Variation
+			isDefault
+			relationship: b34c3022-2c0c-4d4b-863a-7075ee4ba0bf
+			defaultHierarchy: LocalDateTable_1d24404f-fa5a-447b-b35a-4988ed4dc6e3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedBy
+		dataType: int64
+		formatString: 0
+		lineageTag: 8db1af7c-1163-4164-aa69-890bfd4d7edf
+		summarizeBy: sum
+		sourceColumn: updatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column ledgerEntryID
+		dataType: string
+		lineageTag: 3756ea2b-2274-4cc9-96af-699237ed1fa0
+		summarizeBy: none
+		sourceColumn: ledgerEntryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column discountRefunds
+		dataType: double
+		lineageTag: 6a745fe5-2083-48d2-9827-63c24c31ae42
+		summarizeBy: sum
+		sourceColumn: discountRefunds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rnk
+		dataType: double
+		lineageTag: 4f3b0e4b-749b-41df-b992-9029dd83eaf0
+		summarizeBy: sum
+		sourceColumn: rnk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aging_paid = ```
+			
+			IF (CH[paidDate] < DATE(YEAR(CH[expected_date]),MONTH(CH[expected_date]),1),"Advance",
+			IF(EOMONTH(CH[paidDate],0) = EOMONTH(CH[expected_date],0),"Current", 
+			IF(CH[days_to_pay]>0&&CH[days_to_pay]<=30,"1-30 Days Late",
+			IF(CH[days_to_pay]>30&&CH[days_to_pay]<=60,"31-60 Days Late",
+			IF(CH[days_to_pay]>60&&CH[days_to_pay]<=90,"61-90 Days Late",
+			IF(CH[days_to_pay]>90,"91+ Days Late","Advance"))))))
+			```
+		lineageTag: b9ef9197-309a-42fe-b541-311ca950a5cd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_date = RELATED(installment_schedules[expectedDate])
+		formatString: General Date
+		lineageTag: f63343c3-1422-41b1-9222-f2eae402aa94
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: c833438b-7f3a-4970-b08c-814e02f81874
+			defaultHierarchy: LocalDateTable_7fcbca22-e945-4c21-bba0-c050b6e0287b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_to_pay = IF(OR(ISBLANK(CH[paidDate]), ISBLANK(CH[expected_date])),BLANK(),(CH[expected_date] - CH[paiddate])*-1.)
+		lineageTag: c8f62b61-5691-46c4-a3f1-6bba8c510931
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aging_paid_parent =
+			
+			IF (CH[paidDate] < DATE(YEAR(CH[expected_date]),MONTH(CH[expected_date]),1),"Advance",
+			IF(EOMONTH(CH[paidDate],0) = EOMONTH(CH[expected_date],0),"Current",
+			IF(ISBLANK(CH[expected_date]), "Advance",
+			IF(CH[days_to_pay]>0, "Arrears","Advance"))))
+		lineageTag: 175fafc4-bd3d-4195-800d-ec779264de3d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column amt_paid_advance = IF(CH[aging_paid]="Advance",CH[amtPaid],BLANK())
+		lineageTag: 05828714-54e0-47c1-bb4b-e9d261fc4eaa
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_paid_arrears = IF(CH[aging_paid]="1-30 Days Late" || CH[aging_paid]="31-60 Days Late" ||  CH[aging_paid]="61-90 Days Late" ||  CH[aging_paid]="91+ Days Late" ,CH[amtPaid], BLANK())
+		lineageTag: fe524147-fb97-468e-8705-2a1cf9a2bf76
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_paid_current = IF(CH[aging_paid]="Current", CH[amtPaid], BLANK())
+		lineageTag: 98e2dcd9-b45d-4d46-8fe1-c94c9295b58b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amtPaid = CH[amtPaid Ledger]-CH[amtRefund]
+		lineageTag: 946c5097-9243-4416-9d87-2e4eaada8bec
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column end_of_month = EOMONTH(CH[paidDate],0)
+		formatString: General Date
+		lineageTag: a56e7436-f494-423b-87c7-359d4f6684ea
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: e65e7ffc-05df-4964-8fd3-790335f82760
+			defaultHierarchy: LocalDateTable_f822c43c-5143-47f1-99aa-ef063eb8b26b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequence = RELATED(installment_schedules[paymentSequence])
+		formatString: 0
+		lineageTag: 7b98b560-ef7d-429b-b164-17db7da5550a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CH = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"ba27ca22-30fc-4920-82b3-709c7e16e4ad" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="ba27ca22-30fc-4920-82b3-709c7e16e4ad"]}[Data],
+				    installment_payments_ = #"ba27ca22-30fc-4920-82b3-709c7e16e4ad"{[entity="installment_payments",version=""]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(installment_payments_ , each ([amtPaid] <> null)),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"paidDate", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"amtPaid", "amtPaid Ledger"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

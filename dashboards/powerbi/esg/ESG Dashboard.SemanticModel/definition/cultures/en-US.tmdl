@@ -1,0 +1,161 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "calendar.year": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendar",
+			          "ConceptualProperty": "Year"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "country.country": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Country",
+			          "ConceptualProperty": "Country"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Country": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_employees.function": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_employees",
+			          "ConceptualProperty": "Function"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "vw_employees.staff_gender": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_employees",
+			          "ConceptualProperty": "Staff Gender"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "esg_measures.growth_label__customers": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "Growth Label · Customers"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "esg_measures.growth_label__units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "Growth Label · Units"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sdg_summary.sdg_display": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "SDG Summary",
+			          "ConceptualProperty": "SDG Display"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SD Goal": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sdg_summary.kpi": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "SDG Summary",
+			          "ConceptualProperty": "KPI"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Description": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "esg_measures.sdg_baseline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "SDG Baseline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Baseline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "esg_measures.sdg_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "SDG Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SunCulture score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

@@ -1,0 +1,104 @@
+table 'IoT Usage'
+	lineageTag: 6e7553d9-613c-454e-8175-931663f7c839
+
+	column meterId
+		dataType: string
+		lineageTag: cd65c7e0-a10a-4c86-9dfd-c118ac916dbe
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [meterId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: e2815b64-ef7c-4265-9e94-c1f661119e32
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeviceDays
+		dataType: int64
+		formatString: #,0
+		lineageTag: 72efa3c5-dd68-4279-8df2-ee76ad19a1d2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DeviceDays]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaysPumping
+		dataType: int64
+		formatString: #,0
+		lineageTag: f63dfd9a-34fb-44d1-aea6-0761eb8dd401
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DaysPumping]
+
+		annotation SummarizationSetBy = Automatic
+
+	column PumpingHours
+		dataType: double
+		formatString: #,0
+		lineageTag: 6e97befb-5a71-46c0-b7ad-b44e0471e76d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [PumpingHours]
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnergyKWh
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 004a9c02-15f5-4253-96a4-53aa78070803
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [EnergyKWh]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'IoT Usage' = calculated
+		mode: import
+		source =
+				VAR LastDay = MAX ( device_daily_usage[timestamp] )
+				VAR Win =
+				    FILTER (
+				        device_daily_usage,
+				        device_daily_usage[timestamp] > LastDay - 120
+				            && device_daily_usage[deviceId] <> ""
+				            && device_daily_usage[deviceId] <> "000000000000000"
+				    )
+				VAR DaySource =
+				    GROUPBY (
+				        FILTER ( Win, device_daily_usage[Source] IN { "Direct", "Battery" } ),
+				        device_daily_usage[deviceId], device_daily_usage[timestamp], device_daily_usage[Source],
+				        "kWh", MAXX ( CURRENTGROUP (), device_daily_usage[energyConsumptionKwh] ),
+				        "Hrs", MAXX ( CURRENTGROUP (), device_daily_usage[pumpruntimehrs] )
+				    )
+				VAR Valid =
+				    ADDCOLUMNS (
+				        FILTER ( DaySource, NOT ISBLANK ( [kWh] ) && [kWh] >= 0 && [kWh] <= 10 ),
+				        "Month", DATE ( YEAR ( device_daily_usage[timestamp] ), MONTH ( device_daily_usage[timestamp] ), 1 )
+				    )
+				VAR ByMonth =
+				    GROUPBY (
+				        Valid, device_daily_usage[deviceId], [Month],
+				        "DeviceDays", SUMX ( CURRENTGROUP (), 1 ),
+				        "DaysPumping", SUMX ( CURRENTGROUP (), IF ( [kWh] > 0, 1, 0 ) ),
+				        "PumpingHours", SUMX ( CURRENTGROUP (), [Hrs] ),
+				        "EnergyKWh", SUMX ( CURRENTGROUP (), [kWh] )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        ByMonth,
+				        "meterId", device_daily_usage[deviceId],
+				        "Month", [Month],
+				        "DeviceDays", [DeviceDays],
+				        "DaysPumping", [DaysPumping],
+				        "PumpingHours", [PumpingHours],
+				        "EnergyKWh", [EnergyKWh]
+				    )
+

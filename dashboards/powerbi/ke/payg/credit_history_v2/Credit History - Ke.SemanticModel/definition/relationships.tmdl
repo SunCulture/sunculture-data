@@ -1,0 +1,277 @@
+relationship 75de687e-3d22-4aa5-ae27-1210d4740c2a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.end_date
+	toColumn: LocalDateTable_5ab884f1-bd50-4ae2-9c81-7aad3294d15d.Date
+
+relationship 6eeab9f6-768d-47fa-a941-deb91487aa20
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.end_month
+	toColumn: LocalDateTable_447e4535-8c94-4119-929e-63fe3715bc67.Date
+
+relationship 0a323bfd-0875-4499-b5c2-864b7c5a0e91
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.installment_date
+	toColumn: LocalDateTable_58ffa301-2743-4e8f-a879-33691a8b1ea4.Date
+
+relationship b30c1654-c3cb-44e9-ad20-107845d0be88
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.monthly_installment_date
+	toColumn: LocalDateTable_8d239962-e55d-41c1-8047-fd4d16b8a390.Date
+
+relationship 6175b862-be41-4aed-938b-05b7413841dc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar3.Date
+	toColumn: LocalDateTable_b7b76492-0c22-4774-9fdc-b2710a4a9854.Date
+
+relationship 7b16c71a-1b59-4ef8-be63-2cf6b7ac4b6c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar3.WeekstartDate
+	toColumn: LocalDateTable_b5a43740-dd91-4fd2-9753-4b057413eab5.Date
+
+relationship 5f176f6b-f124-4571-9d2d-3830efc0e26f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar3.WeekEndDate
+	toColumn: LocalDateTable_881b5581-e297-40e1-87b9-1392aa1992f6.Date
+
+relationship c56cf4ba-ba4c-41f8-a4af-8b54a3f88789
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar3.StartofMonth
+	toColumn: LocalDateTable_3762000d-98ed-4e58-b189-09ca468873ba.Date
+
+relationship f89c5e9c-a40e-0ae2-0ea3-1c237222081c
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: calendar3.EndofMonth
+	toColumn: schedule.end_month
+
+relationship 8c3c0f40-99e7-466a-adf8-9c97a7175355
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.paid_date
+	toColumn: LocalDateTable_879da708-7de2-41ab-a720-50891f837d46.Date
+
+relationship fc47203c-8596-4812-8c80-95177df83b2d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.as_of
+	toColumn: LocalDateTable_59886745-5494-48fa-8df1-9f016d00a0f9.Date
+
+relationship a80bc828-88f6-4ded-9c46-b843af17d056
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.refresh_time
+	toColumn: LocalDateTable_394b5a9b-7990-47d3-ac59-23359a7bf57a.Date
+
+relationship 7ca53d6d-0d5a-4211-8d8b-6f19319d8ea6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH.paidDate
+	toColumn: LocalDateTable_26adb143-0957-4be9-8237-64d18f527cab.Date
+
+relationship a96ca004-b530-4b17-b08c-4551dd33293a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH.createdAt
+	toColumn: LocalDateTable_6e76145c-feb8-4cfa-b549-e7b1ea083053.Date
+
+relationship b34c3022-2c0c-4d4b-863a-7075ee4ba0bf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH.updatedAt
+	toColumn: LocalDateTable_1d24404f-fa5a-447b-b35a-4988ed4dc6e3.Date
+
+relationship e0f1286b-5a00-44d0-8f9d-386bfc7bf8a2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: installment_schedules.expectedDate
+	toColumn: LocalDateTable_97748a08-b671-4097-9111-4b9252ea61b9.Date
+
+relationship f6ae46d2-2778-4439-849b-d23718bc942e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: installment_schedules.createdAt
+	toColumn: LocalDateTable_02244857-760f-4bed-9381-9e925d154440.Date
+
+relationship 9a89c0d4-5002-438f-82cf-66e0fcfeab39
+	joinOnDateBehavior: datePartOnly
+	fromColumn: installment_schedules.updatedAt
+	toColumn: LocalDateTable_dd2b0f64-bede-4255-a26c-fdd9889f0554.Date
+
+relationship a4eedcaa-ceea-47d0-a196-d5560353fea3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: installment_schedules.sync_at
+	toColumn: LocalDateTable_86e024a9-4fc6-4794-a424-e929df0ef5d7.Date
+
+relationship 0c613321-bbbb-3b9e-c618-42148a575856
+	fromColumn: CH.instalmentScheduleId
+	toColumn: installment_schedules.id
+
+relationship c833438b-7f3a-4970-b08c-814e02f81874
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH.expected_date
+	toColumn: LocalDateTable_7fcbca22-e945-4c21-bba0-c050b6e0287b.Date
+
+relationship e65e7ffc-05df-4964-8fd3-790335f82760
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH.end_of_month
+	toColumn: LocalDateTable_f822c43c-5143-47f1-99aa-ef063eb8b26b.Date
+
+relationship ad869763-5359-4bbb-84ef-3dba15c44ec0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CH2.paidDate
+	toColumn: LocalDateTable_78c5b150-401d-45c9-ad25-9f5703698ce5.Date
+
+relationship 66b94389-cf7a-4336-9f0d-109b14738e37
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.Full_Deposit_Date
+	toColumn: LocalDateTable_5a10b194-0ae5-42c6-bd44-46aa7e66e74e.Date
+
+relationship 1cc5dc72-d9c0-4076-90f0-1b3ba9326672
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.RefundDate
+	toColumn: LocalDateTable_5ab73f72-a728-4048-b57d-fd2c7e1db101.Date
+
+relationship df578f21-f905-4d0e-a1f2-5d836b54f61f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.Repossession_created_at
+	toColumn: LocalDateTable_bd66a22e-999c-4cf6-80af-9960f21b9085.Date
+
+relationship c06a7d2e-d10c-4e84-a4fe-aa7514a1ac1a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv._generated_at
+	toColumn: LocalDateTable_98a6532c-2514-4c59-8459-4fbd4db299ca.Date
+
+relationship a9921a5a-199d-4f3b-baa2-331c973f834a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.cds1_date
+	toColumn: LocalDateTable_ca0e5cd2-4e87-43bc-9ed1-83e91326b200.Date
+
+relationship 607fb48c-2ba4-4b17-9613-47e68d114b8e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.cds2_date
+	toColumn: LocalDateTable_09358b8f-ea65-40c7-8dbb-537113a0ca87.Date
+
+relationship 1403d712-7e3f-4c59-ad71-02a9abca7137
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.createdAt
+	toColumn: LocalDateTable_8d35d3f6-135e-4bce-bd11-4afb47a19210.Date
+
+relationship e31acf7a-4d2c-47d6-abca-c535d5d47d3d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.creditScoreDate
+	toColumn: LocalDateTable_725cd7c2-ca73-462d-b18f-58d44386eb84.Date
+
+relationship 82b6fde0-0c78-4adc-b8fa-4cf305d131e9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.customer_preferred_date
+	toColumn: LocalDateTable_033a3043-44dd-4d2a-a2cd-6df36859ce57.Date
+
+relationship d03ec24d-d392-4c36-9752-a8e8cb971bff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.dispatchDate
+	toColumn: LocalDateTable_3b4c32db-ba97-4513-89b8-bacc3743b6d9.Date
+
+relationship 58c16abb-f085-42cf-8e9c-b7a604b20bf8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.employee_createdAt
+	toColumn: LocalDateTable_a292c481-d0ff-4c23-90cc-c7f8a863be70.Date
+
+relationship 47a0855e-7e40-435f-841f-7febfe6b32ae
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.end_date
+	toColumn: LocalDateTable_ce3799a9-4742-44fc-a214-13bf9c49c126.Date
+
+relationship 7c5d4ca9-7842-462b-a479-dc8987e2d2b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.first_payment_date
+	toColumn: LocalDateTable_59d98ba1-ae6c-4e3b-b51f-485e01e53741.Date
+
+relationship 47e4b9c6-5157-4d8f-8ce9-cce591210407
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.fullDepositDate
+	toColumn: LocalDateTable_7d8f667f-1609-42e2-a851-293ed9c93836.Date
+
+relationship bcb3be08-da49-42f0-ab6b-4255d175d5f6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.installment_date
+	toColumn: LocalDateTable_10c27252-2097-4c6c-959b-cb1199ae485e.Date
+
+relationship c4b39495-1165-49f4-8f6c-51bca07d92a8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.jsfDate
+	toColumn: LocalDateTable_b2da9ad1-80ce-4ca3-bfcf-e088a8687b19.Date
+
+relationship 1c57f84d-591b-4847-8ad7-6fee1f2edad0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.jsf_completed_date
+	toColumn: LocalDateTable_bc2f2c4b-1dd9-4283-ab08-68326c357226.Date
+
+relationship dc44b3dc-b133-4f18-85b0-68c7f3c220ca
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.jsf_date
+	toColumn: LocalDateTable_04bd0937-0892-471d-92e5-1919d5cc7d20.Date
+
+relationship 7c0b0499-0d31-4aa8-a2fb-a6faba74c3b9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.last_modified
+	toColumn: LocalDateTable_6031eedd-4d24-414d-b393-5ffc987cf42c.Date
+
+relationship d2f41102-445f-4570-9ce0-22b199f922ab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.last_payment_date
+	toColumn: LocalDateTable_bd8b08cb-bf2c-4217-b38e-7a83c82b3590.Date
+
+relationship 42e5f7ac-c4d0-4f67-a6ff-9d7c30624023
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.last_updated_at
+	toColumn: LocalDateTable_def09979-6264-47e4-b844-a9e8cdb55df9.Date
+
+relationship 833c6c47-3807-4caa-9def-f0359fb4cb13
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.leadCreatedAt
+	toColumn: LocalDateTable_7e63ab5f-5a1d-424f-b075-2d937024f09c.Date
+
+relationship eec08164-2481-4a50-adce-e81999a13536
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.sale_date
+	toColumn: LocalDateTable_7775eb92-ba73-4192-8f90-5e5538887d50.Date
+
+relationship 99d89976-ee3f-472a-a931-e4c82d3ae5d8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.updatedAt
+	toColumn: LocalDateTable_c691734a-0268-4703-9769-ded97033168d.Date
+
+relationship 059c8aa3-319b-4dfc-9a99-34b279b12a8b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.warranty_expiry_date
+	toColumn: LocalDateTable_0b603b7b-79e2-494c-864b-bbd27ce7f80a.Date
+
+relationship AutoDetected_2492c494-f132-4389-9bf0-ea7473c52308
+	fromColumn: schedule.account_id
+	toColumn: accounts_mv.account_id
+
+relationship 4005710d-949f-d76d-8a17-54b1719dd302
+	fromColumn: CH.accountId
+	toColumn: accounts_mv.account_id
+
+relationship f4a4db40-bd19-5314-e407-70c4b5cc667f
+	fromColumn: CH2.accountId
+	toColumn: accounts_mv.account_id
+
+relationship 9ea86ac0-b59c-4d3b-ab20-b1d35e60ae4a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.snapshot_date
+	toColumn: LocalDateTable_e685217e-5dbc-4cdb-97a8-66b86af9050e.Date
+
+relationship f9f77246-5084-4990-832b-1adaba1cf40e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.boqcreatedAt
+	toColumn: LocalDateTable_1a8a5bd8-7455-4ad0-8eb6-6b1a3748378b.Date
+
+relationship 337c0eff-02a2-4cf5-bb2c-c74b1d05892a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.boqdate
+	toColumn: LocalDateTable_1781f7f2-493e-422b-8c68-8ad10fa7e41f.Date
+
+relationship 0b9f8826-2c29-47fd-967f-5779e57e3fdd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: accounts_mv.dob
+	toColumn: LocalDateTable_d6054da4-e773-4ac8-956f-969edf4dd55c.Date
+
+relationship 4cf258c7-e750-477a-91ad-b951ec7bc281
+	joinOnDateBehavior: datePartOnly
+	fromColumn: schedule.snapshot_day
+	toColumn: LocalDateTable_cacba071-cba6-4117-82cd-a7f9c0ae16a3.Date
+

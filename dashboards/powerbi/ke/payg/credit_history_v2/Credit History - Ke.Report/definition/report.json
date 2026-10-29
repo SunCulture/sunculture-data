@@ -1,0 +1,209 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU02",
+      "reportVersionAtImport": {
+        "visual": "2.6.0",
+        "report": "3.1.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7a7ec653f28bd4054753",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "schedule"
+              }
+            },
+            "Property": "company_region"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "s",
+              "Entity": "schedule",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "s"
+                          }
+                        },
+                        "Property": "company_region"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'kenya'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU02",
+          "path": "BaseThemes/CY26SU02.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "book31400858927443565.png",
+          "path": "book31400858927443565.png",
+          "type": "Image"
+        },
+        {
+          "name": "book39447710079667175.png",
+          "path": "book39447710079667175.png",
+          "type": "Image"
+        },
+        {
+          "name": "book4829562093434039.png",
+          "path": "book4829562093434039.png",
+          "type": "Image"
+        },
+        {
+          "name": "filter5620613438435823.png",
+          "path": "filter5620613438435823.png",
+          "type": "Image"
+        },
+        {
+          "name": "filter5720851772532082.png",
+          "path": "filter5720851772532082.png",
+          "type": "Image"
+        },
+        {
+          "name": "filter9797857466119291.png",
+          "path": "filter9797857466119291.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_sun2844515339388196.png",
+          "path": "logo_sun2844515339388196.png",
+          "type": "Image"
+        },
+        {
+          "name": "pump131083286396940757.jpg",
+          "path": "pump131083286396940757.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump138975066566734196.jpg",
+          "path": "pump138975066566734196.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump16015541816863732.jpg",
+          "path": "pump16015541816863732.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump16204227834657915.jpg",
+          "path": "pump16204227834657915.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump16270057719857145.jpg",
+          "path": "pump16270057719857145.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump18097082469431155.jpg",
+          "path": "pump18097082469431155.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "pump19307382371798.jpg",
+          "path": "pump19307382371798.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "sc_header.png",
+          "path": "sc_header.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

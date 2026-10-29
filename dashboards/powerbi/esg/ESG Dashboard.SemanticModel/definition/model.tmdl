@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["accounts_mv","mart_cds_responses","customers","vw_employees","device_daily_usage"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table accounts_mv
+ref table mart_cds_responses
+ref table customers
+ref table vw_employees
+ref table 'ESG Measures'
+ref table Calendar
+ref table device_daily_usage
+ref table 'IoT Usage'
+ref table 'IoT Connection'
+ref table Country
+ref table 'Product Watts'
+ref table 'SDG Summary'
+
+ref cultureInfo en-US
+

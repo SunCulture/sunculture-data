@@ -1,0 +1,132 @@
+table 'SDG Summary'
+	lineageTag: b65065fb-a49d-4945-a660-f473b8493356
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 29a30e39-cd85-4144-8981-386fceb3275e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SDG No'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1ceabc03-748c-442e-8538-84ecb683d1b1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SDG No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDG
+		dataType: string
+		lineageTag: 0282ccf9-4edf-4a48-b48d-acb4cb8e1b07
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SDG]
+		sortByColumn: 'SDG No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SDG Display'
+		dataType: string
+		lineageTag: 3a1454e3-41cb-4d7e-945e-d18e4c2b3b04
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SDG Display]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KPI
+		dataType: string
+		lineageTag: da8e886f-0215-494b-b700-bb3daee16d45
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KPI]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key
+		dataType: string
+		isHidden
+		lineageTag: 101e4617-72c1-4af7-a397-50aa06488661
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit
+		dataType: string
+		isHidden
+		lineageTag: 7c267a4d-17af-4545-ae3e-79ea57df9aa5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Unit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Basis
+		dataType: string
+		lineageTag: eca91bbb-6489-4cd1-aac6-5aa64586deed
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Basis]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Note
+		dataType: string
+		isHidden
+		lineageTag: 7fe728fc-fd60-476a-8ebc-dde23d40c20f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Note]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'SDG Summary' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Order", INTEGER, "SDG No", INTEGER, "SDG", STRING, "SDG Display", STRING, "KPI", STRING, "Key", STRING, "Unit", STRING, "Basis", STRING, "Note", STRING,
+				    {
+						{ 1, 1, "SDG 1 – No Poverty", "SDG 1 – No Poverty", "% customers accessing PAYG / credit for the first time", "first_time", "%", "Cumulative", "" },
+						{ 2, 1, "SDG 1 – No Poverty", "", "% customers covered by insurance (SunCulture Protect)", "ins_cov", "%", "Snapshot", "" },
+						{ 3, 1, "SDG 1 – No Poverty", "", "Farmers trained on climate resilience", "pending", "", "Pending", "Pending – training records" },
+						{ 4, 2, "SDG 2 – Zero Hunger & SDG 4 – Quality Education", "SDG 2 – Zero Hunger & SDG 4 – Quality Education", "Kilimo Boost customers (input financing)", "kilimo", "#", "Cumulative", "" },
+						{ 5, 2, "SDG 2 – Zero Hunger & SDG 4 – Quality Education", "", "% female field sales agents trained", "pending", "", "Pending", "Pending – training data" },
+						{ 6, 3, "SDG 3 – Good Health & Well-being", "SDG 3 – Good Health & Well-being", "People with health cover (SunCulture Protect)", "insured", "#", "Snapshot", "" },
+						{ 7, 5, "SDG 5 – Gender Equality", "SDG 5 – Gender Equality", "% women sales agents", "women_sales", "%", "Cumulative", "" },
+						{ 8, 5, "SDG 5 – Gender Equality", "", "% female customers", "female_cust", "%", "Cumulative", "" },
+						{ 9, 5, "SDG 5 – Gender Equality", "", "% female customers accessing PAYG finance", "female_payg", "%", "Cumulative", "" },
+						{ 10, 5, "SDG 5 – Gender Equality", "", "Annual recruitment – % of hires who are women", "recruit", "%", "Annual", "" },
+						{ 11, 5, "SDG 5 – Gender Equality", "", "Employee retention – women", "retain_f", "%", "Snapshot", "" },
+						{ 12, 5, "SDG 5 – Gender Equality", "", "Annual promotion by gender", "pending", "", "Pending", "Pending – P&C records" },
+						{ 13, 5, "SDG 5 – Gender Equality", "", "Average daily hours saved through solar irrigation (women)", "hours", "h", "Cumulative", "" },
+						{ 14, 6, "SDG 6 – Clean Water & Sanitation", "SDG 6 – Clean Water & Sanitation", "Water withdrawn & consumed (m³)", "pending", "", "Pending", "Pending – survey" },
+						{ 15, 7, "SDG 7 – Affordable & Clean Energy", "SDG 7 – Affordable & Clean Energy", "Solar irrigation systems deployed", "units", "#", "Cumulative", "" },
+						{ 16, 7, "SDG 7 – Affordable & Clean Energy", "", "Clean energy capacity installed", "kw", "kW", "Cumulative", "" },
+						{ 17, 7, "SDG 7 – Affordable & Clean Energy", "", "Renewable energy generated", "mwh", "MWh", "Cumulative", "" },
+						{ 18, 7, "SDG 7 – Affordable & Clean Energy", "", "% customers replacing diesel / petrol pumps", "diesel", "%", "Cumulative", "" },
+						{ 19, 8, "SDG 8 – Decent Work & Economic Growth", "SDG 8 – Decent Work & Economic Growth", "Employee retention rate", "retention", "%", "Snapshot", "" },
+						{ 20, 8, "SDG 8 – Decent Work & Economic Growth", "", "Employee turnover rate", "turnover", "%", "Snapshot", "" },
+						{ 21, 8, "SDG 8 – Decent Work & Economic Growth", "", "Youth (18–34) representation in workforce", "youth", "%", "Cumulative", "" },
+						{ 22, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees with written contracts", "pending", "", "Pending", "Pending – P&C records" },
+						{ 23, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees covered by social protection", "pending", "", "Pending", "Pending – P&C records" },
+						{ 24, 9, "SDG 9 – Industry, Innovation & Infrastructure", "SDG 9 – Industry, Innovation & Infrastructure", "Device connectivity rate (last 120 days)", "connect", "%", "Snapshot", "" },
+						{ 25, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Device utilization rate (last 120 days)", "util", "%", "Snapshot", "" },
+						{ 26, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Average daily pumping hours (last 120 days)", "pumphrs", "h", "Snapshot", "" },
+						{ 27, 11, "SDG 11 – Sustainable Cities & Communities", "SDG 11 – Sustainable Cities & Communities", "Waste diversion rate", "pending", "", "Pending", "Pending – needs clarity" },
+						{ 28, 13, "SDG 13 – Climate Action", "SDG 13 – Climate Action", "Estimated CO2 emissions avoided", "co2", "t", "Cumulative", "" },
+						{ 29, 13, "SDG 13 – Climate Action", "", "Organisational emissions, Scope 1–3 (tCO2e)", "pending", "", "Pending", "Pending – MRV dashboard" },
+						{ 30, 17, "SDG 17 – Partnerships for the Goals", "SDG 17 – Partnerships for the Goals", "Climate finance mobilised", "pending", "", "Pending", "Pending – MRV dashboard" }
+				    }
+				)
+

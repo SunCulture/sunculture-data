@@ -1,0 +1,16 @@
+table Country
+	lineageTag: 8ec63862-692b-4071-b2d1-99f5e1d12684
+
+	column Country
+		dataType: string
+		lineageTag: 1dd74497-4051-4370-a220-9a1ba56f5843
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Country = calculated
+		mode: import
+		source = DATATABLE ( "Country", STRING, { { "kenya" }, { "uganda" }, { "civ" } } )
+

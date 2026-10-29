@@ -1,0 +1,46 @@
+table analysis_type
+	lineageTag: db4f7754-711c-437f-939c-82d4234d22bd
+
+	column type
+		lineageTag: 67159654-3a5a-446f-bd0b-22426b66bafc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [type]
+
+		annotation SummarizationSetBy = Automatic
+
+	column index
+		formatString: 0
+		lineageTag: 10079eb8-2483-4768-95d5-a7bb754c6b91
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [index]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition analysis_type = calculated
+		mode: import
+		source = ```
+				DATATABLE("type",STRING,
+				                        "index",INTEGER,
+				{       
+				        
+				        { "Counts",1},
+				        { "Amount",2},
+				        { "Averages",3},
+				        { "%Repaid",7},
+				        { "%Default",5},
+				        { "%PAR30",10},
+				        { "Collection Rates",4},
+				        { "Expected PV Receivables Monthly",8},
+				        { "Expected PV Receivables Cumulative",9},
+				        { "%Current",12},
+				        { "Outstanding Balance Cumulative",11},
+				        { "%Default Rate",6},
+				        { "Actual Amount Paid",13},
+				        { "#Clients",14}
+				})
+				```
+
+	annotation PBI_Id = 942245c16b924dcea6ece64a9576d8c4
+
