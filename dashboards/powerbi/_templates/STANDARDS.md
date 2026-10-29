@@ -39,6 +39,8 @@ The checklist every SunCulture dashboard is built and reviewed against. Claude u
 
 - [ ] Theme: `_templates/themes/sunculture.json`; layout, logo and colour rules in `_templates/BRAND.md` (no per-visual colour overrides unless they encode meaning).
 - [ ] One canvas size across all pages: **1280 × 720** (vertical scroll allowed).
+- [ ] Multi-page dashboards: the **navigation sidebar** on every page (`BRAND.md`, built with `tools/sidebar_nav.py` from a `nav.json` next to the `.pbip`), with a button for every page and the current page highlighted. No old menu buttons, page-tab button rows or navigation bookmarks.
+- [ ] After adding, removing or renaming a page: update `nav.json` and rerun the tool, so the sidebar matches the pages.
 - [ ] Chart colours in theme order; one series = slot 1; status colours only with icon + label.
 - [ ] No dual-axis charts.
 - [ ] **≤ 6 slicers per page.** Everything else goes in the filter pane or a drill-through page.
