@@ -1,0 +1,1279 @@
+table accounts_mv
+	lineageTag: c778960b-5357-4d3b-9f05-82451f94d4b3
+
+	column Region
+		dataType: string
+		lineageTag: 87180165-7f68-4d7c-bc08-1feff74c2162
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department_name
+		dataType: string
+		lineageTag: ee4b07a8-4962-4490-ac46-fe7ff92fa407
+		summarizeBy: none
+		sourceColumn: Department_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column District
+		dataType: string
+		lineageTag: 0705ccc5-3099-4786-83c6-c9152c12d0c6
+		summarizeBy: none
+		sourceColumn: District
+
+		annotation SummarizationSetBy = Automatic
+
+	column Full_Deposit_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 93ceda62-284c-40e7-ba58-bb25ee439955
+		summarizeBy: none
+		sourceColumn: Full_Deposit_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadSource
+		dataType: string
+		lineageTag: 1ea67929-9ba1-4b3d-93c9-dfbc24e6bd47
+		summarizeBy: none
+		sourceColumn: LeadSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column Next_of_Kin_Name__c
+		dataType: string
+		lineageTag: f89ba502-6eb4-45c2-951d-ea7e91b5a3d5
+		summarizeBy: none
+		sourceColumn: Next_of_Kin_Name__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Next_of_Kin_Phone_Number__c
+		dataType: string
+		lineageTag: 0bbfc2eb-62d3-43c5-bcd5-5b73d5248893
+		summarizeBy: none
+		sourceColumn: Next_of_Kin_Phone_Number__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column PowerBI_balance
+		dataType: double
+		lineageTag: 9c260ec1-dfac-42f7-ba26-544b58100f3f
+		summarizeBy: sum
+		sourceColumn: PowerBI_balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RSM
+		dataType: string
+		lineageTag: 1fe2e176-98a4-4dd7-b88c-bd304770273c
+		summarizeBy: none
+		sourceColumn: RSM
+
+		annotation SummarizationSetBy = Automatic
+
+	column RSM_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d7f4b8d-5b5b-48a7-9c27-607d3948e72f
+		summarizeBy: sum
+		sourceColumn: RSM_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Referral_ID__c
+		dataType: string
+		lineageTag: 1f9294e0-b574-40d9-8bca-295caa4aa9c5
+		summarizeBy: none
+		sourceColumn: Referral_ID__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Referral_Name__c
+		dataType: string
+		lineageTag: ecffce65-99d4-4810-9fd1-0992a390ead5
+		summarizeBy: none
+		sourceColumn: Referral_Name__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Referral_Phone_Number__c
+		dataType: string
+		lineageTag: fa4827a5-9dc8-4260-9fb6-b0ae0cc35033
+		summarizeBy: none
+		sourceColumn: Referral_Phone_Number__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column RefundDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0cdc6c42-3c93-4941-8378-6f4b834252ae
+		summarizeBy: none
+		sourceColumn: RefundDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Repossession_created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bd7c39bd-cf04-4827-aa65-a4b61d6904af
+		summarizeBy: none
+		sourceColumn: Repossession_created_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column Repossession_type
+		dataType: string
+		lineageTag: dee90a76-4aa8-4bcf-8166-1ce7a99062bc
+		summarizeBy: none
+		sourceColumn: Repossession_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_channel
+		dataType: string
+		lineageTag: 00de4e2a-830e-44ba-9ce5-c305f6bb78a5
+		summarizeBy: none
+		sourceColumn: Sales_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Paid
+		dataType: double
+		lineageTag: 3587cb5a-f80c-4a71-b150-8c0f95456daa
+		summarizeBy: sum
+		sourceColumn: Total_Paid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column _generated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6cbbfee7-3384-4e67-a7da-4dcdd11a31d4
+		summarizeBy: none
+		sourceColumn: _generated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountRef
+		dataType: string
+		lineageTag: 5c79c54a-5a68-4e39-800f-faffe1e6cd69
+		summarizeBy: none
+		sourceColumn: accountRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountType
+		dataType: string
+		lineageTag: 7d802679-991a-4068-ae25-e3f809f05b9c
+		summarizeBy: none
+		sourceColumn: accountType
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_balance
+		dataType: double
+		lineageTag: 5d39eb03-494e-497d-b695-c548aedb0e0b
+		summarizeBy: sum
+		sourceColumn: account_balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5493928d-4e55-42d3-9790-760e37f25127
+		summarizeBy: sum
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_balance
+		dataType: double
+		lineageTag: 5224275c-a11a-4125-a7fa-88fe43dc4ee5
+		summarizeBy: sum
+		sourceColumn: actual_balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column arrears
+		dataType: double
+		lineageTag: 1900d81c-b9b7-48e7-bed4-8b3e3b993c9d
+		summarizeBy: sum
+		sourceColumn: arrears
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column assigned_by_name
+		dataType: string
+		lineageTag: 655188aa-39b2-4c84-b67c-a118b011c32d
+		summarizeBy: none
+		sourceColumn: assigned_by_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column available_balance
+		dataType: double
+		lineageTag: 58e9ba4d-b4e0-41ce-ba12-a9508fcb350a
+		summarizeBy: sum
+		sourceColumn: available_balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column boqcreatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2331e492-9d6a-45d0-adc2-cdedd138d24a
+		summarizeBy: none
+		sourceColumn: boqcreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column boqdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8bdcf7cf-b10a-4ba9-95d2-74a2c734204f
+		summarizeBy: none
+		sourceColumn: boqdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 9e3b9946-a3e9-4f0d-a843-e471e178c732
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds1_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f08607fb-7f23-495b-9777-65636d03777c
+		summarizeBy: none
+		sourceColumn: cds1_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds2_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3bc3adf8-9ed1-4224-856b-29ef2460f389
+		summarizeBy: none
+		sourceColumn: cds2_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: 45a419d1-948f-40ef-a6b1-3eec18cac39c
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column companyRegion
+		dataType: string
+		lineageTag: 9bb08f4c-7b96-4348-ac99-118f9ea8e23f
+		summarizeBy: none
+		sourceColumn: companyRegion
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_name
+		dataType: string
+		lineageTag: e17fc68c-37e9-404b-9d90-cc17f474fead
+		summarizeBy: none
+		sourceColumn: country_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 64a4c23a-8094-4f1a-b425-5c1034a02733
+		summarizeBy: none
+		sourceColumn: createdAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditCheck
+		dataType: string
+		lineageTag: f05bdb5c-c842-4546-8b5d-dc861d45c035
+		summarizeBy: none
+		sourceColumn: creditCheck
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditCheckCustomer
+		dataType: string
+		lineageTag: 5f028381-3742-479d-98a9-c15cc05ac6fd
+		summarizeBy: none
+		sourceColumn: creditCheckCustomer
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditCheckStatus
+		dataType: string
+		lineageTag: 18f75836-6753-4450-95c8-3f97d5b27bb0
+		summarizeBy: none
+		sourceColumn: creditCheckStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditScore
+		dataType: double
+		lineageTag: 140ec42c-8b51-45aa-8fae-de7bb07ea895
+		summarizeBy: sum
+		sourceColumn: creditScore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column creditScoreDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5ea51e39-ead2-417b-b4c3-16114e779d17
+		summarizeBy: none
+		sourceColumn: creditScoreDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerId
+		dataType: int64
+		formatString: 0
+		lineageTag: da9f1d4e-af9b-4d48-b142-f41b0493f2d6
+		summarizeBy: count
+		sourceColumn: customerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerType
+		dataType: string
+		lineageTag: 3bf86863-2bca-412e-883d-b9d18a6695a0
+		summarizeBy: none
+		sourceColumn: customerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: ff0ea610-8470-46e0-854b-4a7e4acdc22e
+		summarizeBy: count
+		sourceColumn: customerTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerWalletIsMigrated
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f859228-9ad7-48bd-9884-73c531c0e281
+		summarizeBy: sum
+		sourceColumn: customerWalletIsMigrated
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: 863dd2c3-10ed-4029-b347-c153bb1e2e38
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f1f092f7-aa38-404a-8bb8-1f8f9971376a
+		summarizeBy: none
+		sourceColumn: customer_preferred_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_schedule_type
+		dataType: string
+		lineageTag: f44b66b1-924c-428d-b8d5-7b4d59aacb62
+		summarizeBy: none
+		sourceColumn: customer_preferred_schedule_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_status
+		dataType: string
+		lineageTag: ec036be9-4b79-48fa-a561-93dd181f2bd9
+		summarizeBy: none
+		sourceColumn: customer_preferred_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_late_current
+		dataType: double
+		lineageTag: 0597b7be-d0e3-4125-927c-b1dd6995a392
+		summarizeBy: sum
+		sourceColumn: days_late_current
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column deviceId
+		dataType: string
+		lineageTag: bda99908-6ca1-4b21-a646-7f46e1736f7e
+		summarizeBy: none
+		sourceColumn: deviceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column device_id
+		dataType: string
+		lineageTag: 85389f87-244d-4a2b-8242-c28464b56c38
+		summarizeBy: none
+		sourceColumn: device_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column discountAmount
+		dataType: double
+		lineageTag: 0be44d80-f004-416a-a99e-02a1e27512ab
+		summarizeBy: sum
+		sourceColumn: discountAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discountCode
+		dataType: string
+		lineageTag: 413e304b-8d15-439d-9156-f51e9e7ea045
+		summarizeBy: none
+		sourceColumn: discountCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column discountContext
+		dataType: string
+		lineageTag: b70da5d8-4b78-4d0a-97d7-79630005fe6c
+		summarizeBy: none
+		sourceColumn: discountContext
+
+		annotation SummarizationSetBy = Automatic
+
+	column discountName
+		dataType: string
+		lineageTag: 9932403c-2031-4893-af39-2ca62cd18053
+		summarizeBy: none
+		sourceColumn: discountName
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatchDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fcb79732-b3fe-4989-b676-a4be6ef9b17f
+		summarizeBy: none
+		sourceColumn: dispatchDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dob
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2be99911-c25e-40ce-8f32-6b24e94c3467
+		summarizeBy: none
+		sourceColumn: dob
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column documentType
+		dataType: string
+		lineageTag: 9ffe0de6-f909-428c-9a44-ac0ce863f813
+		summarizeBy: none
+		sourceColumn: documentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column downpayment_amount
+		dataType: double
+		lineageTag: 0f4e2570-8eda-42a4-a775-13c0db116220
+		summarizeBy: sum
+		sourceColumn: downpayment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column employeePrimaryRole
+		dataType: string
+		lineageTag: 42e60abb-ce58-452d-b598-ea015239e639
+		summarizeBy: none
+		sourceColumn: employeePrimaryRole
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bd7f8695-9634-4cdd-9e6f-41eb8de4c462
+		summarizeBy: none
+		sourceColumn: employee_createdAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_gender
+		dataType: string
+		lineageTag: 5629d75f-b20c-47b4-bd0a-70a476d3538b
+		summarizeBy: none
+		sourceColumn: employee_gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b8b3ebb-20bc-493e-a31f-a081aa3d537b
+		summarizeBy: sum
+		sourceColumn: employee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_identificationNumber
+		dataType: string
+		lineageTag: e6454b23-c63f-42a2-8c3f-0e8816bf2331
+		summarizeBy: none
+		sourceColumn: employee_identificationNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_name
+		dataType: string
+		lineageTag: afe6fa12-9370-4d7e-a045-6e52c186023e
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_phoneNumber
+		dataType: string
+		lineageTag: 382b6efb-0a50-4591-8187-68f4be0e9779
+		summarizeBy: none
+		sourceColumn: employee_phoneNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_status
+		dataType: string
+		lineageTag: 47f07fdf-ae12-465e-982c-7eff95d72585
+		summarizeBy: none
+		sourceColumn: employee_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cf0007ab-c408-4a62-965d-10259d0b9c74
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column engineer_recommendation
+		dataType: string
+		lineageTag: 3985be70-1bad-46ea-8a50-587ca2541246
+		summarizeBy: none
+		sourceColumn: engineer_recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_number_of_payments
+		dataType: int64
+		formatString: 0
+		lineageTag: bcb1cea1-ac8f-4d23-b228-0341a270bdf2
+		summarizeBy: sum
+		sourceColumn: expected_number_of_payments
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_payment_amount
+		dataType: double
+		lineageTag: 1262a7f0-211b-43ba-b529-4fcc7e050772
+		summarizeBy: sum
+		sourceColumn: expected_payment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column expected_payments_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e4cdcb7-f9c1-4d16-be76-82b89b80e2aa
+		summarizeBy: sum
+		sourceColumn: expected_payments_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalId
+		dataType: string
+		lineageTag: c42fabd5-79cc-4f9d-8c05-6455831b3642
+		summarizeBy: none
+		sourceColumn: externalId
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_payment_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 15b75fa8-8924-4a3c-8e0f-5f5d16c20d05
+		summarizeBy: none
+		sourceColumn: first_payment_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column fullDepositDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1597f942-7add-40c6-bdee-30d99e589ec7
+		summarizeBy: none
+		sourceColumn: fullDepositDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column funnel_status
+		dataType: string
+		lineageTag: dca480a9-6791-4c90-972f-5f4d27cc2614
+		summarizeBy: none
+		sourceColumn: funnel_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: 3a69b4dd-9b0e-421a-827a-0c3df0355cf6
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column gps
+		dataType: string
+		lineageTag: 9d9633ed-1ea0-470a-96cd-da714730433f
+		summarizeBy: none
+		sourceColumn: gps
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_signed_carbon_form
+		dataType: string
+		lineageTag: 5afba099-510f-4e6c-9590-848ae8e3db1b
+		summarizeBy: none
+		sourceColumn: has_signed_carbon_form
+
+		annotation SummarizationSetBy = Automatic
+
+	column identification_number
+		dataType: string
+		lineageTag: a28769f3-be1b-454d-b49b-abfc88a731c9
+		summarizeBy: none
+		sourceColumn: identification_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column installment_amount
+		dataType: double
+		lineageTag: bf4b4192-1eb7-4430-bb94-492c4af07f86
+		summarizeBy: sum
+		sourceColumn: installment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column installment_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ee70b1e4-7790-48ff-9925-eb1481995783
+		summarizeBy: none
+		sourceColumn: installment_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsfDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 47492914-ef1a-4b86-a98e-36e2d0840f19
+		summarizeBy: none
+		sourceColumn: jsfDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_completed_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 59e26e95-0983-4f4f-9f3e-82c1d2cc3608
+		summarizeBy: none
+		sourceColumn: jsf_completed_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d2916724-5675-4e47-8535-68bf7e1f4dd3
+		summarizeBy: none
+		sourceColumn: jsf_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_engineer
+		dataType: string
+		lineageTag: d887340e-77dc-431e-9015-49db095e781a
+		summarizeBy: none
+		sourceColumn: jsf_engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_id
+		dataType: string
+		lineageTag: 9e26d02b-da0b-4576-95a5-90016b6a7bfc
+		summarizeBy: none
+		sourceColumn: jsf_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_status
+		dataType: string
+		lineageTag: 06c47abd-3793-4ba1-895f-c9402f07537d
+		summarizeBy: none
+		sourceColumn: jsf_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_type
+		dataType: string
+		lineageTag: 1483d0a9-c28c-4961-80bc-0aae3afa298d
+		summarizeBy: none
+		sourceColumn: jsf_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column kyc_status
+		dataType: string
+		lineageTag: b90bb112-c736-4271-b163-ae5147164bdb
+		summarizeBy: none
+		sourceColumn: kyc_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastPaymentAmount
+		dataType: double
+		lineageTag: 3611256d-bd34-4527-bad7-c27c68b73833
+		summarizeBy: sum
+		sourceColumn: lastPaymentAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column last_modified
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1d6a8311-3eec-4c6c-9095-19df1c4a40db
+		summarizeBy: none
+		sourceColumn: last_modified
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_payment_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1200c47c-db50-4a80-bccb-113c221013a0
+		summarizeBy: none
+		sourceColumn: last_payment_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_updated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d807bf79-e5b3-4be4-8400-2f37158b8dc1
+		summarizeBy: none
+		sourceColumn: last_updated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: string
+		lineageTag: b411e22f-1933-4891-91f2-5f81d645e0ff
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column leadCreatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 62e6ff2f-0ff8-4a61-8c35-fdc6c26250a4
+		summarizeBy: none
+		sourceColumn: leadCreatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column leadId
+		dataType: string
+		lineageTag: b7e96242-b9c7-4608-b039-8b46c83aaca1
+		summarizeBy: none
+		sourceColumn: leadId
+
+		annotation SummarizationSetBy = Automatic
+
+	column longitude
+		dataType: string
+		lineageTag: 4f625205-b9fa-4ce9-ac64-3820aa8008b0
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column nationalIdFrontPic
+		dataType: string
+		lineageTag: 07bd2f6c-3846-44d1-a5a7-7618692716c8
+		summarizeBy: none
+		sourceColumn: nationalIdFrontPic
+
+		annotation SummarizationSetBy = Automatic
+
+	column netsuite_account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a13e35c-2387-42a8-b469-093cb2244f66
+		summarizeBy: sum
+		sourceColumn: netsuite_account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column outcome_reason
+		dataType: string
+		lineageTag: 97468e1d-a45f-4f4d-acb1-29d1003a9858
+		summarizeBy: none
+		sourceColumn: outcome_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column parentAccountId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c5bbda2-7065-4549-85e6-a9a9aae8075c
+		summarizeBy: count
+		sourceColumn: parentAccountId
+
+		annotation SummarizationSetBy = Automatic
+
+	column parish
+		dataType: string
+		lineageTag: 69e36d5b-ad88-4dcb-a9a5-5bbf63e1a194
+		summarizeBy: none
+		sourceColumn: parish
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract1
+		dataType: string
+		lineageTag: 09d62680-afbd-4a35-aa20-2d909fa302b6
+		summarizeBy: none
+		sourceColumn: payg_contract1
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract_number
+		dataType: string
+		lineageTag: f10b1766-8a29-43c3-a315-4bb008a6d5b5
+		summarizeBy: none
+		sourceColumn: payg_contract_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column payplan_id
+		dataType: int64
+		formatString: 0
+		lineageTag: adc9fb10-d543-4b5c-a920-4e39f6fe9c94
+		summarizeBy: sum
+		sourceColumn: payplan_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payplan_name
+		dataType: string
+		lineageTag: 6ed6b55b-5183-4263-9fbc-413cc883bb42
+		summarizeBy: none
+		sourceColumn: payplan_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column phoneNumber
+		dataType: string
+		lineageTag: 3d237642-eb0c-4cca-af34-4f299a460dac
+		summarizeBy: none
+		sourceColumn: phoneNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column premise_id
+		dataType: string
+		lineageTag: 55efb453-a4e1-4e95-9dd5-730979459e53
+		summarizeBy: none
+		sourceColumn: premise_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product
+		dataType: string
+		lineageTag: 2138981a-6881-4604-95db-c75182f62755
+		summarizeBy: none
+		sourceColumn: product
+
+		annotation SummarizationSetBy = Automatic
+
+	column productId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e3cf0b9-3024-4206-b269-21b81f17bf2e
+		summarizeBy: count
+		sourceColumn: productId
+
+		annotation SummarizationSetBy = Automatic
+
+	column productQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 75b2a8e3-0d77-4822-9bd7-66af972be0aa
+		summarizeBy: sum
+		sourceColumn: productQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column referralType
+		dataType: string
+		lineageTag: 27c3cdd2-9094-419f-9de4-39aaef7140a9
+		summarizeBy: none
+		sourceColumn: referralType
+
+		annotation SummarizationSetBy = Automatic
+
+	column refundAmount
+		dataType: double
+		lineageTag: 3b47b8c1-975b-49f6-898c-97a3641fd07f
+		summarizeBy: sum
+		sourceColumn: refundAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'region 1'
+		dataType: string
+		lineageTag: 9bbc8137-fb12-425b-9783-a2e33283decb
+		summarizeBy: none
+		sourceColumn: region 1
+
+		annotation SummarizationSetBy = Automatic
+
+	column relationship_manager
+		dataType: string
+		lineageTag: 75cd6868-1034-4d6a-8ae9-51be3ba401e6
+		summarizeBy: none
+		sourceColumn: relationship_manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column repossession_amount
+		dataType: double
+		lineageTag: ac416df1-8d11-4e45-bf91-bde1dfbc317d
+		summarizeBy: sum
+		sourceColumn: repossession_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column repossessions_reason
+		dataType: string
+		lineageTag: 386b9432-6d8b-45e7-8c81-ff50505bc872
+		summarizeBy: none
+		sourceColumn: repossessions_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 608fb1cd-2eed-464e-b616-b940c7aa4ca3
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesAgents
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c8db8b1-d3ea-480f-9dd7-c47f9775f963
+		summarizeBy: sum
+		sourceColumn: salesAgents
+
+		annotation SummarizationSetBy = Automatic
+
+	column salesOrderNumber
+		dataType: string
+		lineageTag: 2b98d968-9dc3-4af2-86ca-5a319f45567e
+		summarizeBy: none
+		sourceColumn: salesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_type
+		dataType: string
+		lineageTag: 61256c30-2e34-44ca-8239-48d28256b498
+		summarizeBy: none
+		sourceColumn: state_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 48f50d11-f62f-4488-8458-73a246f2cbdc
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcounty
+		dataType: string
+		lineageTag: c02a458c-2422-4ea8-9c21-d1dfefae8bc5
+		summarizeBy: none
+		sourceColumn: subcounty
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bce06ea-9984-4c21-94ca-a8db7f8f0f5c
+		summarizeBy: sum
+		sourceColumn: supervisor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor_name
+		dataType: string
+		lineageTag: 7ea983f5-c15d-4104-a8e2-73e84b7ea80b
+		summarizeBy: none
+		sourceColumn: supervisor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_comment
+		dataType: string
+		lineageTag: 1d5cc7d6-eb37-49fe-b128-494eee3f19a5
+		summarizeBy: none
+		sourceColumn: ticket_comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_number
+		dataType: string
+		lineageTag: 71fc2bfb-19e0-4197-8431-a70449e3ddba
+		summarizeBy: none
+		sourceColumn: ticket_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_number_payments
+		dataType: int64
+		formatString: 0
+		lineageTag: 025edef4-b685-4030-aaa6-6b5e4fef7a0a
+		summarizeBy: sum
+		sourceColumn: total_number_payments
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_payment_minus_deposit
+		dataType: double
+		lineageTag: 8afddb28-7b0b-42a2-98ab-87dc75032327
+		summarizeBy: sum
+		sourceColumn: total_payment_minus_deposit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column town
+		dataType: string
+		lineageTag: ed02cfe1-2483-446a-b040-c2f30787030d
+		summarizeBy: none
+		sourceColumn: town
+
+		annotation SummarizationSetBy = Automatic
+
+	column tranche
+		dataType: string
+		lineageTag: d178ca72-8772-438d-9cc1-41ac06589dca
+		summarizeBy: none
+		sourceColumn: tranche
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6005f415-aa90-4a76-8b7a-346d41713aee
+		summarizeBy: none
+		sourceColumn: updatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column village
+		dataType: string
+		lineageTag: 4a210e93-9ef6-4c5c-99c8-346b5b211bc1
+		summarizeBy: none
+		sourceColumn: village
+
+		annotation SummarizationSetBy = Automatic
+
+	column warranty_card_pic
+		dataType: string
+		lineageTag: aabd6543-c259-4572-a947-a30e1f149c47
+		summarizeBy: none
+		sourceColumn: warranty_card_pic
+
+		annotation SummarizationSetBy = Automatic
+
+	column warranty_expiry_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: af1a5dd5-a0e1-4769-8fc7-ccf470641e7e
+		summarizeBy: none
+		sourceColumn: warranty_expiry_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column writeOffReason
+		dataType: string
+		lineageTag: 94c6c84e-a7d6-4e52-96bc-be70088390a6
+		summarizeBy: none
+		sourceColumn: writeOffReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column writeoffs_amount
+		dataType: double
+		lineageTag: fe887e4d-2990-4e98-b4be-07c9a1a1a424
+		summarizeBy: sum
+		sourceColumn: writeoffs_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Gender label for chart legends
+	column 'Customer Gender' =
+			SWITCH (
+			    TRUE (),
+			    accounts_mv[gender] IN { "F", "Female" }, "Female",
+			    accounts_mv[gender] IN { "M", "Male" }, "Male",
+			    "Not recorded"
+			)
+		dataType: string
+		lineageTag: 3d5bf785-98fa-4124-add7-54527a6ade40
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// SUBSCRIPTION accounts are Insurance KE plans; LEASE accounts are pumps rented monthly
+	column 'Payment Model' = SWITCH ( accounts_mv[accountType], "PAYG", "PAYG (credit)", "CASH", "Cash", "SUBSCRIPTION", "Subscription (insurance)", "LEASE", "Lease", "CREDIT", "Credit", "Not recorded" )
+		dataType: string
+		lineageTag: caab9485-a3ed-47a4-a4b3-0f21614fb5ad
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Account creation date (links to Calendar)
+	column 'Account Date' = DATE ( YEAR ( accounts_mv[createdAt] ), MONTH ( accounts_mv[createdAt] ), DAY ( accounts_mv[createdAt] ) )
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 03b80fe4-ef5f-4b1f-88f6-e976af181d74
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Days since installation (job-sheet completion date, else account date) for installed units
+	column 'Days In Field' =
+			VAR _start = IF ( NOT ISBLANK ( accounts_mv[jsf_completed_date] ), accounts_mv[jsf_completed_date], accounts_mv[createdAt] )
+			RETURN
+			    IF (
+			        accounts_mv[engineer_recommendation] = "Installed" && accounts_mv[jsf_type] = "INSTALLATION",
+			        MAX ( 0, DATEDIFF ( MAX ( _start, DATE ( 2016, 1, 1 ) ), TODAY (), DAY ) )
+			    )
+		dataType: int64
+		formatString: #,0
+		lineageTag: f854312a-a12c-458d-8282-1bfa334cf1a5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Price
+		dataType: double
+		lineageTag: 95ca7963-f163-426e-bb05-c8574e96c18f
+		summarizeBy: sum
+		sourceColumn: Total_Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cash_value
+		dataType: double
+		lineageTag: 4363029f-09d3-42de-8443-1243ae839232
+		summarizeBy: sum
+		sourceColumn: cash_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition accounts_mv = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"e6f716db-6042-41b8-b4b1-633806e1dd39" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="e6f716db-6042-41b8-b4b1-633806e1dd39"]}[Data],
+				    accounts_mv_ = #"e6f716db-6042-41b8-b4b1-633806e1dd39"{[entity="accounts_mv",version=""]}[Data]
+				in
+				    accounts_mv_
+

@@ -1,0 +1,24 @@
+relationship 43e44264-ff90-4133-801f-f8bf540332c4
+	fromColumn: accounts_mv.companyRegion
+	toColumn: Country.Country
+
+relationship 28a2959c-8ec4-4095-bfb0-e24fea5ae8d8
+	fromColumn: vw_employees.Country
+	toColumn: Country.Country
+
+relationship 234162c3-e913-4dd6-9526-9cfaacc8737d
+	fromColumn: accounts_mv.product
+	toColumn: 'Product Watts'.product
+
+relationship 9a8bab76-91a2-4cd7-b59a-c1da4eeb7554
+	fromColumn: accounts_mv.'Account Date'
+	toColumn: Calendar.Date
+
+relationship 3b897e26-9be1-4d17-83f8-ab678d3e7690
+	fromColumn: customers.'Enrolment Date'
+	toColumn: Calendar.Date
+
+relationship 1f31efac-feaa-48a4-8b3c-9ddd12523eaf
+	fromColumn: vw_employees.'Joined Date'
+	toColumn: Calendar.Date
+

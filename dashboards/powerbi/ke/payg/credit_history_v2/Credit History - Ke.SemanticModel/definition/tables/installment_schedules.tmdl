@@ -1,0 +1,221 @@
+table installment_schedules
+	lineageTag: 95765a8b-0101-490e-b7fc-f9b496b3fd66
+
+	measure total_expected_amount = SUM(installment_schedules[expectedAmount])
+		formatString: 0
+		lineageTag: 939e0749-aa74-4ecf-b3d7-32532e6e7b52
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 19f1ed85-7536-4d51-838b-a33a05f8ccb5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountId
+		dataType: int64
+		formatString: 0
+		lineageTag: 858ae294-0a22-4f99-94bb-5d9cdcbd9a7d
+		summarizeBy: count
+		sourceColumn: accountId
+
+		annotation SummarizationSetBy = Automatic
+
+	column payPlanId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d65e5b6-d2c6-42f4-8e5b-5dbbd644913c
+		summarizeBy: count
+		sourceColumn: payPlanId
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerId
+		dataType: int64
+		formatString: 0
+		lineageTag: e5e5702a-010a-43bf-b1e5-6456ba3cca86
+		summarizeBy: count
+		sourceColumn: customerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column installmentType
+		dataType: string
+		lineageTag: 78b286ea-93a9-48b4-9476-3ab0e56d16ce
+		summarizeBy: none
+		sourceColumn: installmentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column paymentSequence
+		dataType: int64
+		formatString: 0
+		lineageTag: ade1e954-766a-4093-bda2-7d7dc0eed323
+		summarizeBy: sum
+		sourceColumn: paymentSequence
+
+		annotation SummarizationSetBy = Automatic
+
+	column isRevised
+		dataType: string
+		lineageTag: 100d3f42-6bab-49e5-bbca-6b5294cd9b31
+		summarizeBy: none
+		sourceColumn: isRevised
+
+		annotation SummarizationSetBy = Automatic
+
+	column isActive
+		dataType: int64
+		formatString: 0
+		lineageTag: ea06e75d-2096-4c20-b480-dff52d3254ce
+		summarizeBy: sum
+		sourceColumn: isActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c592a3c-212c-4808-92d6-034dc35885d5
+		summarizeBy: sum
+		sourceColumn: expectedAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c40ae98b-233e-47d4-ba05-a0052f7b910b
+		summarizeBy: none
+		sourceColumn: expectedDate
+
+		variation Variation
+			isDefault
+			relationship: e0f1286b-5a00-44d0-8f9d-386bfc7bf8a2
+			defaultHierarchy: LocalDateTable_97748a08-b671-4097-9111-4b9252ea61b9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: 79a33822-1117-470a-8d7e-d600b9470f47
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: ce76c653-5a30-4484-8553-8621a378acc1
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 23165744-33dd-4d62-82de-44e0df839290
+		summarizeBy: none
+		sourceColumn: createdAt
+
+		variation Variation
+			isDefault
+			relationship: f6ae46d2-2778-4439-849b-d23718bc942e
+			defaultHierarchy: LocalDateTable_02244857-760f-4bed-9381-9e925d154440.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdBy
+		dataType: int64
+		formatString: 0
+		lineageTag: dbd9cfaf-1216-466d-9421-abe12d9a82bf
+		summarizeBy: sum
+		sourceColumn: createdBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c4be7c02-0812-4932-b00d-237e18b81747
+		summarizeBy: none
+		sourceColumn: updatedAt
+
+		variation Variation
+			isDefault
+			relationship: 9a89c0d4-5002-438f-82cf-66e0fcfeab39
+			defaultHierarchy: LocalDateTable_dd2b0f64-bede-4255-a26c-fdd9889f0554.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedBy
+		dataType: int64
+		formatString: 0
+		lineageTag: 19fb8cf8-9299-4c65-b491-8cbf6ec0d853
+		summarizeBy: sum
+		sourceColumn: updatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column ledgerEntryID
+		dataType: string
+		lineageTag: f15d619f-d169-438e-9b11-6ca403a4c9a0
+		summarizeBy: none
+		sourceColumn: ledgerEntryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column subscription_plan_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7af7bfc6-529f-4aa8-95f6-79dd337e543f
+		summarizeBy: sum
+		sourceColumn: subscription_plan_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sync_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 854138f2-07ab-48f9-add7-6c98b366957f
+		summarizeBy: none
+		sourceColumn: sync_at
+
+		variation Variation
+			isDefault
+			relationship: a4eedcaa-ceea-47d0-a196-d5560353fea3
+			defaultHierarchy: LocalDateTable_86e024a9-4fc6-4794-a424-e929df0ef5d7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column rn
+		dataType: double
+		lineageTag: 36f28801-e2b7-4d16-bc79-99f8e22391f7
+		summarizeBy: sum
+		sourceColumn: rn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition installment_schedules = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"ac0db57c-a636-41c7-aad8-eee9c45d040a" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="ac0db57c-a636-41c7-aad8-eee9c45d040a"]}[Data],
+				    installment_schedules_ = #"ac0db57c-a636-41c7-aad8-eee9c45d040a"{[entity="installment_schedules",version=""]}[Data]
+				in
+				    installment_schedules_
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

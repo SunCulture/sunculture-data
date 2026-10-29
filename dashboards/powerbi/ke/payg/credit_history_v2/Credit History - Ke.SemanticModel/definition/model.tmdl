@@ -1,0 +1,76 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["schedule","CH","installment_schedules","accounts_mv"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table schedule
+ref table DateTableTemplate_4dd2b251-25d8-462b-b976-7c2e980e70c6
+ref table LocalDateTable_5ab884f1-bd50-4ae2-9c81-7aad3294d15d
+ref table LocalDateTable_447e4535-8c94-4119-929e-63fe3715bc67
+ref table LocalDateTable_58ffa301-2743-4e8f-a879-33691a8b1ea4
+ref table LocalDateTable_8d239962-e55d-41c1-8047-fd4d16b8a390
+ref table calendar3
+ref table LocalDateTable_b7b76492-0c22-4774-9fdc-b2710a4a9854
+ref table LocalDateTable_b5a43740-dd91-4fd2-9753-4b057413eab5
+ref table LocalDateTable_881b5581-e297-40e1-87b9-1392aa1992f6
+ref table LocalDateTable_3762000d-98ed-4e58-b189-09ca468873ba
+ref table analysis_type
+ref table LocalDateTable_879da708-7de2-41ab-a720-50891f837d46
+ref table LocalDateTable_59886745-5494-48fa-8df1-9f016d00a0f9
+ref table LocalDateTable_394b5a9b-7990-47d3-ac59-23359a7bf57a
+ref table CH
+ref table LocalDateTable_26adb143-0957-4be9-8237-64d18f527cab
+ref table LocalDateTable_6e76145c-feb8-4cfa-b549-e7b1ea083053
+ref table LocalDateTable_1d24404f-fa5a-447b-b35a-4988ed4dc6e3
+ref table installment_schedules
+ref table LocalDateTable_97748a08-b671-4097-9111-4b9252ea61b9
+ref table LocalDateTable_02244857-760f-4bed-9381-9e925d154440
+ref table LocalDateTable_dd2b0f64-bede-4255-a26c-fdd9889f0554
+ref table LocalDateTable_86e024a9-4fc6-4794-a424-e929df0ef5d7
+ref table LocalDateTable_7fcbca22-e945-4c21-bba0-c050b6e0287b
+ref table LocalDateTable_f822c43c-5143-47f1-99aa-ef063eb8b26b
+ref table CH2
+ref table accounts_mv
+ref table LocalDateTable_78c5b150-401d-45c9-ad25-9f5703698ce5
+ref table LocalDateTable_5a10b194-0ae5-42c6-bd44-46aa7e66e74e
+ref table LocalDateTable_5ab73f72-a728-4048-b57d-fd2c7e1db101
+ref table LocalDateTable_bd66a22e-999c-4cf6-80af-9960f21b9085
+ref table LocalDateTable_98a6532c-2514-4c59-8459-4fbd4db299ca
+ref table LocalDateTable_ca0e5cd2-4e87-43bc-9ed1-83e91326b200
+ref table LocalDateTable_09358b8f-ea65-40c7-8dbb-537113a0ca87
+ref table LocalDateTable_8d35d3f6-135e-4bce-bd11-4afb47a19210
+ref table LocalDateTable_725cd7c2-ca73-462d-b18f-58d44386eb84
+ref table LocalDateTable_033a3043-44dd-4d2a-a2cd-6df36859ce57
+ref table LocalDateTable_3b4c32db-ba97-4513-89b8-bacc3743b6d9
+ref table LocalDateTable_a292c481-d0ff-4c23-90cc-c7f8a863be70
+ref table LocalDateTable_ce3799a9-4742-44fc-a214-13bf9c49c126
+ref table LocalDateTable_59d98ba1-ae6c-4e3b-b51f-485e01e53741
+ref table LocalDateTable_7d8f667f-1609-42e2-a851-293ed9c93836
+ref table LocalDateTable_10c27252-2097-4c6c-959b-cb1199ae485e
+ref table LocalDateTable_b2da9ad1-80ce-4ca3-bfcf-e088a8687b19
+ref table LocalDateTable_bc2f2c4b-1dd9-4283-ab08-68326c357226
+ref table LocalDateTable_04bd0937-0892-471d-92e5-1919d5cc7d20
+ref table LocalDateTable_6031eedd-4d24-414d-b393-5ffc987cf42c
+ref table LocalDateTable_bd8b08cb-bf2c-4217-b38e-7a83c82b3590
+ref table LocalDateTable_def09979-6264-47e4-b844-a9e8cdb55df9
+ref table LocalDateTable_7e63ab5f-5a1d-424f-b075-2d937024f09c
+ref table LocalDateTable_7775eb92-ba73-4192-8f90-5e5538887d50
+ref table LocalDateTable_c691734a-0268-4703-9769-ded97033168d
+ref table LocalDateTable_0b603b7b-79e2-494c-864b-bbd27ce7f80a
+ref table LocalDateTable_e685217e-5dbc-4cdb-97a8-66b86af9050e
+ref table LocalDateTable_1a8a5bd8-7455-4ad0-8eb6-6b1a3748378b
+ref table LocalDateTable_1781f7f2-493e-422b-8c68-8ad10fa7e41f
+ref table LocalDateTable_d6054da4-e773-4ac8-956f-969edf4dd55c
+ref table LocalDateTable_cacba071-cba6-4117-82cd-a7f9c0ae16a3
+
+ref cultureInfo en-US
+

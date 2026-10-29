@@ -1,0 +1,53 @@
+table 'IoT Connection'
+	lineageTag: bf0e4bf0-34fc-4366-a6da-d3746e84b15a
+
+	column meterId
+		dataType: string
+		lineageTag: 4bd1b44b-537c-46df-8244-f80573c1ec86
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [meterId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: 2dfb4b2a-64f2-465a-8d73-484ab61b6b22
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaysReporting
+		dataType: int64
+		formatString: #,0
+		lineageTag: 681873d0-b779-4c09-bbb2-9356007e583a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DaysReporting]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'IoT Connection' = calculated
+		mode: import
+		source =
+				VAR LastDay = MAX ( device_daily_usage[timestamp] )
+				VAR Win =
+				    FILTER (
+				        device_daily_usage,
+				        device_daily_usage[timestamp] > LastDay - 120
+				            && device_daily_usage[deviceId] <> ""
+				            && device_daily_usage[deviceId] <> "000000000000000"
+				    )
+				VAR DeviceDay =
+				    ADDCOLUMNS (
+				        SUMMARIZE ( Win, device_daily_usage[deviceId], device_daily_usage[timestamp] ),
+				        "Month", DATE ( YEAR ( device_daily_usage[timestamp] ), MONTH ( device_daily_usage[timestamp] ), 1 )
+				    )
+				VAR ByMonth =
+				    GROUPBY ( DeviceDay, device_daily_usage[deviceId], [Month], "DaysReporting", SUMX ( CURRENTGROUP (), 1 ) )
+				RETURN
+				    SELECTCOLUMNS ( ByMonth, "meterId", device_daily_usage[deviceId], "Month", [Month], "DaysReporting", [DaysReporting] )
+

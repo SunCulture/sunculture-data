@@ -1,0 +1,156 @@
+table customers
+	lineageTag: 50ba3fb8-be86-48e1-b519-15a42169375d
+
+	column channel
+		dataType: string
+		lineageTag: b75e9fc1-c1d6-473a-9143-5d83332461f8
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b8b6a1ae-4dc3-4a6d-87a3-25e040d0d076
+		summarizeBy: none
+		sourceColumn: createdAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column dateOfBirth
+		dataType: string
+		lineageTag: 5cf3f386-3543-4b31-8ac6-d8b92fb6bb08
+		summarizeBy: none
+		sourceColumn: dateOfBirth
+
+		annotation SummarizationSetBy = Automatic
+
+	column documentType
+		dataType: string
+		lineageTag: 6e78f97c-481e-4994-8cd1-42750cdc9514
+		summarizeBy: none
+		sourceColumn: documentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 8bd414cd-126e-4050-9bf4-5bc94e8363ec
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstName
+		dataType: string
+		lineageTag: 53db2fff-362e-4e41-867a-c8d9d9fc84a7
+		summarizeBy: none
+		sourceColumn: firstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: 26cd5690-f8ef-4486-acd7-2c782989a5c8
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column idNumber
+		dataType: string
+		lineageTag: 7132f160-bb9b-458e-a621-690a5aced513
+		summarizeBy: none
+		sourceColumn: idNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastName
+		dataType: string
+		lineageTag: fc69405b-5719-4955-afe9-e7ca42059ed8
+		summarizeBy: none
+		sourceColumn: lastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: 76642ad7-c974-4fb6-ae0d-320ed0242074
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column middleName
+		dataType: string
+		lineageTag: ff9a3434-d34a-4c30-b06a-6ea32f05748c
+		summarizeBy: none
+		sourceColumn: middleName
+
+		annotation SummarizationSetBy = Automatic
+
+	column mobileNumber
+		dataType: string
+		lineageTag: 7205bbe7-7e20-435a-a5fa-3a9ce94cb196
+		summarizeBy: none
+		sourceColumn: mobileNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column requestReference
+		dataType: string
+		lineageTag: 73b3c6c0-cbd0-48fc-af99-04ce1e4b4f11
+		summarizeBy: none
+		sourceColumn: requestReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 868a1f32-9b39-422d-98f9-095f73d9806f
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column sync_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 56f46e26-8bf8-4870-84e6-59813f681743
+		summarizeBy: none
+		sourceColumn: sync_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column updatedAt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2c9c148a-3c33-4798-849b-be63207a2943
+		summarizeBy: none
+		sourceColumn: updatedAt
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enrolment Date' = DATE ( YEAR ( customers[createdAt] ), MONTH ( customers[createdAt] ), DAY ( customers[createdAt] ) )
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9cdd4947-d94a-40ab-8197-bf153c007a85
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customers = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"]}[Data],
+				    customers_ = #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"{[entity="customers",version=""]}[Data]
+				in
+				    customers_
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,297 @@
+table vw_employees
+	lineageTag: 45eddeba-55d9-41e1-abc7-55e4b7f69aa4
+
+	column created_by_name
+		dataType: string
+		lineageTag: 351f9ec0-98be-470b-9471-d877f0e3a495
+		summarizeBy: none
+		sourceColumn: created_by_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_active_status
+		dataType: string
+		lineageTag: dca928cc-19f1-4924-ae31-42719ce71620
+		summarizeBy: none
+		sourceColumn: employee_active_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_amt_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cdfa76ea-ee9b-45c3-9106-351580c3ea5a
+		summarizeBy: sum
+		sourceColumn: employee_amt_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_created_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c7953cd2-3c0f-4e17-9ea0-e834b637468f
+		summarizeBy: none
+		sourceColumn: employee_created_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column employee_department
+		dataType: string
+		lineageTag: e9fbfd00-a2e9-4361-8d4d-5e735d063b11
+		summarizeBy: none
+		sourceColumn: employee_department
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_dob
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 01519f28-3de9-4161-8dfe-062b3c48aa0f
+		summarizeBy: none
+		sourceColumn: employee_dob
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column employee_email_address
+		dataType: string
+		lineageTag: c4d306bd-6542-43ec-bdca-8e90d5c7e9c3
+		summarizeBy: none
+		sourceColumn: employee_email_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cc0ae918-0b90-4016-ac33-d15211c9d168
+		summarizeBy: none
+		sourceColumn: employee_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column employee_gender
+		dataType: string
+		lineageTag: cb676736-a4dc-49a8-a2e7-094855ddd5f6
+		summarizeBy: none
+		sourceColumn: employee_gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_identification_number
+		dataType: string
+		lineageTag: 941c0c56-567d-4203-adeb-002989d13209
+		summarizeBy: none
+		sourceColumn: employee_identification_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_name
+		dataType: string
+		lineageTag: 875a2426-1e90-4ced-8046-e2c9e4d914c3
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_phone_number
+		dataType: string
+		lineageTag: cca180c7-4854-49f8-86b1-48955098335f
+		summarizeBy: none
+		sourceColumn: employee_phone_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_primary_role_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eb4bc2bb-56e4-4a7f-a424-59310d34671e
+		summarizeBy: sum
+		sourceColumn: employee_primary_role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_primary_role_name
+		dataType: string
+		lineageTag: 7bb9485e-9700-47d3-892f-50671948d970
+		summarizeBy: none
+		sourceColumn: employee_primary_role_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_sales_training_completion_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: eb987281-ce81-4a8f-b4ce-0bdde800e7e5
+		summarizeBy: none
+		sourceColumn: employee_sales_training_completion_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column employee_supervisor_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c083f811-63bc-4288-9581-83e3e77ac419
+		summarizeBy: sum
+		sourceColumn: employee_supervisor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_updated_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 039f01dd-e6e1-4744-a367-9cdc8ee5e963
+		summarizeBy: none
+		sourceColumn: employee_updated_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column referralId
+		dataType: int64
+		formatString: 0
+		lineageTag: c1b36750-6c25-4fda-a733-b32dddc075c9
+		summarizeBy: count
+		sourceColumn: referralId
+
+		annotation SummarizationSetBy = Automatic
+
+	column referralName
+		dataType: string
+		lineageTag: b5a4cc96-7d41-42ad-a9ea-07b98bdf6fe0
+		summarizeBy: none
+		sourceColumn: referralName
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor_name
+		dataType: string
+		lineageTag: b30e38ef-cf74-4802-91c1-d03278677026
+		summarizeBy: none
+		sourceColumn: supervisor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_by_name
+		dataType: string
+		lineageTag: ee6d9824-c9a9-4276-ad4a-bd6a5afff352
+		summarizeBy: none
+		sourceColumn: updated_by_name
+
+		annotation SummarizationSetBy = Automatic
+
+	/// "Homme" (French, Côte d'Ivoire) mapped to Male
+	column 'Staff Gender' =
+			SWITCH (
+			    TRUE (),
+			    vw_employees[employee_gender] = "Female", "Female",
+			    vw_employees[employee_gender] IN { "Male", "Homme" }, "Male",
+			    vw_employees[employee_gender] = "Other", "Other",
+			    "Not recorded"
+			)
+		dataType: string
+		lineageTag: 4efa4deb-6167-4a84-9fad-e1d5a8df7ae1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Joined Date' = DATE ( YEAR ( vw_employees[employee_created_date] ), MONTH ( vw_employees[employee_created_date] ), DAY ( vw_employees[employee_created_date] ) )
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 34098f08-f35c-4e89-9880-0cf3e6b569c7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Implausible birth dates (<16 or >80 years) treated as blank
+	column Age =
+			VAR _d = vw_employees[employee_dob]
+			VAR _a = IF ( ISBLANK ( _d ) || _d > TODAY (), BLANK (), INT ( YEARFRAC ( _d, TODAY () ) ) )
+			RETURN
+			    IF ( _a >= 16 && _a <= 80, _a )
+		dataType: int64
+		formatString: 0
+		lineageTag: c3bcd5ca-599f-4e3d-b3a0-ccf332b6ef44
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band Order' = SWITCH ( TRUE (), ISBLANK ( vw_employees[Age] ), 9, vw_employees[Age] < 25, 1, vw_employees[Age] < 35, 2, vw_employees[Age] < 45, 3, vw_employees[Age] < 55, 4, 5 )
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: beb43e2e-75d8-4405-a576-013804ec7836
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band' = SWITCH ( vw_employees[Age Band Order], 1, "Under 25", 2, "25–34", 3, "35–44", 4, "45–54", 5, "55+", "Not recorded" )
+		dataType: string
+		lineageTag: f026b278-4208-4afb-9144-0f19c4f159e7
+		summarizeBy: none
+		sortByColumn: 'Age Band Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Grouped from employee_department, which is filled for every user
+	column Function =
+			VAR _d = vw_employees[employee_department]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _d IN { "Field Sales", "UG Field Sales", "STL", "ASR" }, "Field sales",
+			        _d IN { "HQ Tele Sales", "UG Telesales", "Yusudi Telesales" }, "Telesales",
+			        _d IN { "SSC" }, "SSC",
+			        _d IN { "ONE ACRE FUND", "Dealer Agents", "Partner Agent", "Partner", "Digital Agent" }, "Partner, dealer & digital agents",
+			        _d IN { "BD Sales Representatives", "Business Development" }, "BD",
+			        _d IN { "Trainees", "Trainers" }, "Trainees & trainers",
+			        _d IN { "Engineers", "UG Engineers" }, "Engineering",
+			        _d IN { "Software Engineering", "TechOps", "I.T", "Data", "QA", "R & D", "Innovation", "Product Management" }, "Product & IT",
+			        _d IN { "After Sales", "PAYG", "Collections", "Schedular" }, "CX",
+			        _d IN { "Accounts", "UG Accounts", "Warehouse", "UG Supply Chain", "Marketing", "Human Resources", "Fleet and Operations management" }, "Finance, supply chain & corporate",
+			        "Other functions"
+			    )
+		dataType: string
+		lineageTag: 636c1421-af42-4f62-bd74-9dcdca1b9044
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// From the phone country code (254 Kenya, 256 Uganda, 225 CIV), else a "UG" department; matches companyRegion values
+	column Country =
+			VAR _phone = SUBSTITUTE ( SUBSTITUTE ( vw_employees[employee_phone_number], "+", "" ), " ", "" )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        LEFT ( _phone, 3 ) = "254", "kenya",
+			        LEFT ( _phone, 3 ) = "256", "uganda",
+			        LEFT ( _phone, 3 ) = "225", "civ",
+			        LEFT ( vw_employees[employee_department], 3 ) = "UG ", "uganda",
+			        "Not recorded"
+			    )
+		dataType: string
+		lineageTag: d80af768-627e-4b73-acda-ad3e860099b9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_employees = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"bb5dc705-9080-4b0e-9632-2578517a380d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="bb5dc705-9080-4b0e-9632-2578517a380d"]}[Data],
+				    vw_employees_ = #"bb5dc705-9080-4b0e-9632-2578517a380d"{[entity="vw_employees",version=""]}[Data]
+				in
+				    vw_employees_
+
+	annotation PBI_ResultType = Table
+

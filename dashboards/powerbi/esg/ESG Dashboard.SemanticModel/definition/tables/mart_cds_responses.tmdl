@@ -1,0 +1,854 @@
+table mart_cds_responses
+	lineageTag: cb6310d5-f09f-4417-99cd-42998f731566
+
+	column Amount_paid_for_getting_water_each_week__c
+		dataType: string
+		lineageTag: e8342497-d85e-492a-8008-65ed616375b7
+		summarizeBy: none
+		sourceColumn: Amount_paid_for_getting_water_each_week__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount_paid_for_water_other_pump_usage__c
+		dataType: string
+		lineageTag: 7811cce7-ca0c-4d45-b602-4707b1432b4f
+		summarizeBy: none
+		sourceColumn: Amount_paid_for_water_other_pump_usage__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Average_monthly_income__c
+		dataType: string
+		lineageTag: 4e43aab2-6113-4b4f-bd67-077f9da79641
+		summarizeBy: none
+		sourceColumn: Average_monthly_income__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Been_living_in_the_same_location_for__c
+		dataType: string
+		lineageTag: 42e8cdb4-28d3-45fa-81b4-9e58db5adc87
+		summarizeBy: none
+		sourceColumn: Been_living_in_the_same_location_for__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Compensation_for_the_help_provided__c
+		dataType: string
+		lineageTag: 08516804-4d0c-476a-8eb6-7dd885f78ce3
+		summarizeBy: none
+		sourceColumn: Compensation_for_the_help_provided__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currently_have_any_outstanding_loans__c
+		dataType: string
+		lineageTag: 411c9777-1086-4ea2-95fc-03338b78ff06
+		summarizeBy: none
+		sourceColumn: Currently_have_any_outstanding_loans__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Depth_of_the_Water_Source__c
+		dataType: string
+		lineageTag: d743d436-b339-4edf-8ca1-44dc3dd733fd
+		summarizeBy: none
+		sourceColumn: Depth_of_the_Water_Source__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Do_they_have_a_registered_business__c
+		dataType: string
+		lineageTag: c02c99d2-3829-42a3-b071-c4c29bdfb49f
+		summarizeBy: none
+		sourceColumn: Do_they_have_a_registered_business__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Do_you_collaborate_with_other_farmers__c
+		dataType: string
+		lineageTag: 435df66d-6897-4630-be51-978b8b1f88df
+		summarizeBy: none
+		sourceColumn: Do_you_collaborate_with_other_farmers__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Do_you_have_a_reliable_market_for_your_p__c
+		dataType: string
+		lineageTag: 3250625a-9947-4f52-903a-61db8291bd3e
+		summarizeBy: none
+		sourceColumn: Do_you_have_a_reliable_market_for_your_p__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Do_you_keep_records_of_farm_performance__c
+		dataType: string
+		lineageTag: db92c2b5-d1d9-4942-894f-fc0768a02187
+		summarizeBy: none
+		sourceColumn: Do_you_keep_records_of_farm_performance__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Do_you_use_agricultural_inputs__c
+		dataType: string
+		lineageTag: c84dee40-8b3d-4ee6-87ef-786305598a2a
+		summarizeBy: none
+		sourceColumn: Do_you_use_agricultural_inputs__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration_of_this_activity__c
+		dataType: string
+		lineageTag: f116f19f-e365-4682-b0a0-9460f677ebbc
+		summarizeBy: none
+		sourceColumn: Duration_of_this_activity__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column During_your_working_peak_season_how_man__c
+		dataType: string
+		lineageTag: 593403df-450b-436c-8bbf-20320f3bd995
+		summarizeBy: none
+		sourceColumn: During_your_working_peak_season_how_man__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Electricity_connectivity__c
+		dataType: string
+		lineageTag: 10b35fbd-268f-4212-b382-7efd289b8472
+		summarizeBy: none
+		sourceColumn: Electricity_connectivity__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Harvest_Cycle_Per_Year__c
+		dataType: string
+		lineageTag: ed9654e7-0d20-4b6f-a1aa-38bcb4a194f8
+		summarizeBy: none
+		sourceColumn: Harvest_Cycle_Per_Year__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hours_spent_fetching_water_every_week__c
+		dataType: string
+		lineageTag: a51af5cd-d7d1-4c22-9a22-e6164717bfec
+		summarizeBy: none
+		sourceColumn: Hours_spent_fetching_water_every_week__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column How_do_you_compensate_them_for_the_help__c
+		dataType: string
+		lineageTag: 9038169d-368d-4dc2-8741-6941b8db8919
+		summarizeBy: none
+		sourceColumn: How_do_you_compensate_them_for_the_help__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column How_long_have_you_been_a_farmer__c
+		dataType: string
+		lineageTag: 0c08652d-0259-4a8d-b497-016f910d128e
+		summarizeBy: none
+		sourceColumn: How_long_have_you_been_a_farmer__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column How_long_have_you_had_the_same_phone_No__c
+		dataType: string
+		lineageTag: 09b0a6bc-f7f4-4a10-bf19-6b0e041d055b
+		summarizeBy: none
+		sourceColumn: How_long_have_you_had_the_same_phone_No__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column In_which_market_do_you_sell__c
+		dataType: string
+		lineageTag: 220c1113-8730-4699-8c12-d7e53ecf4757
+		summarizeBy: none
+		sourceColumn: In_which_market_do_you_sell__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column No_of_jobs_in_the_last_5yrs__c
+		dataType: string
+		lineageTag: 32394560-4de0-419e-9cc2-94cb5d8f2202
+		summarizeBy: none
+		sourceColumn: No_of_jobs_in_the_last_5yrs__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column No_of_months_to_finish_paying_loan_s__c
+		dataType: string
+		lineageTag: 41ec94d7-1f7d-4041-9b2d-00362a3b451b
+		summarizeBy: none
+		sourceColumn: No_of_months_to_finish_paying_loan_s__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column No_of_years_working_with_same_employer__c
+		dataType: string
+		lineageTag: bdeef184-7a21-45a0-9907-12b6bd581d1e
+		summarizeBy: none
+		sourceColumn: No_of_years_working_with_same_employer__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Cows__c
+		dataType: string
+		lineageTag: cd895ccc-de77-459c-872d-cdee9c424caf
+		summarizeBy: none
+		sourceColumn: Number_of_Cows__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Goats__c
+		dataType: string
+		lineageTag: d114f856-9d56-43b1-aea0-6c9fe508af87
+		summarizeBy: none
+		sourceColumn: Number_of_Goats__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Household_Members__c
+		dataType: string
+		lineageTag: f6957cde-31c7-4c3d-8d6a-4f1b0f39e936
+		summarizeBy: none
+		sourceColumn: Number_of_Household_Members__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Outstanding_Loans__c
+		dataType: string
+		lineageTag: 7fc65b2b-3de4-4d25-bcee-e20bb70449b8
+		summarizeBy: none
+		sourceColumn: Number_of_Outstanding_Loans__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Pigs__c
+		dataType: string
+		lineageTag: ee93f734-78d4-4fc2-b079-a08429acb5ec
+		summarizeBy: none
+		sourceColumn: Number_of_Pigs__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_Sheep__c
+		dataType: string
+		lineageTag: 9ce5a8c7-193e-4422-8dc1-37f433fb5393
+		summarizeBy: none
+		sourceColumn: Number_of_Sheep__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_businesses_before__c
+		dataType: string
+		lineageTag: 502cf0ef-33e0-409e-9c7c-39bf0aa2bac1
+		summarizeBy: none
+		sourceColumn: Number_of_businesses_before__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_financial_dependants__c
+		dataType: string
+		lineageTag: a9057488-1945-4a0d-8d38-db65241bd0d3
+		summarizeBy: none
+		sourceColumn: Number_of_financial_dependants__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_loans_taken_in_the_last_2yrs__c
+		dataType: string
+		lineageTag: 3b9dee36-507e-48f1-8575-5f6cabd4dc19
+		summarizeBy: none
+		sourceColumn: Number_of_loans_taken_in_the_last_2yrs__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_pensioners_living_in_the_HH__c
+		dataType: string
+		lineageTag: 4705d6af-b121-4443-8e9d-58f3a90148f4
+		summarizeBy: none
+		sourceColumn: Number_of_pensioners_living_in_the_HH__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Number_of_working_age_adults_in_the_HH__c
+		dataType: string
+		lineageTag: 4c19313f-a814-4eed-b507-95b95edd938b
+		summarizeBy: none
+		sourceColumn: Number_of_working_age_adults_in_the_HH__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Other_machinery_and_equipment_ownership__c
+		dataType: string
+		lineageTag: 64fd4f58-a545-455c-92d2-7ba1d1a113a4
+		summarizeBy: none
+		sourceColumn: Other_machinery_and_equipment_ownership__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Overall_Risk_Assessment__c
+		dataType: string
+		lineageTag: 61d6ee2b-d686-4d6e-bbda-1095bb0063c1
+		summarizeBy: none
+		sourceColumn: Overall_Risk_Assessment__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Own_the_land_for_product_installation__c
+		dataType: string
+		lineageTag: 1c16fcf2-d82d-4770-bf2b-42314fab1466
+		summarizeBy: none
+		sourceColumn: Own_the_land_for_product_installation__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodicity_of_payment__c
+		dataType: string
+		lineageTag: 7b004651-b313-4e48-b42d-74b3b130dc7b
+		summarizeBy: none
+		sourceColumn: Periodicity_of_payment__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodicity_of_the_income__c
+		dataType: string
+		lineageTag: 6ec6b653-53ff-4384-875a-08155349a812
+		summarizeBy: none
+		sourceColumn: Periodicity_of_the_income__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity_of_water_usage_per_week__c
+		dataType: string
+		lineageTag: 5e121511-5cf6-490c-b224-d2c0b559f143
+		summarizeBy: none
+		sourceColumn: Quantity_of_water_usage_per_week__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ready_to_make_the_deposit_on__c
+		dataType: string
+		lineageTag: b0d8f5c7-6570-418c-85b1-05b97cea7f29
+		summarizeBy: none
+		sourceColumn: Ready_to_make_the_deposit_on__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Remaining_Income_after_Expenses__c
+		dataType: string
+		lineageTag: 7241bb6f-4ec9-4c75-8c96-a47d69e6257c
+		summarizeBy: none
+		sourceColumn: Remaining_Income_after_Expenses__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Seasonality_of_the_Water_Source__c
+		dataType: string
+		lineageTag: 0c18decd-21a3-495e-800a-72d0c8b3c276
+		summarizeBy: none
+		sourceColumn: Seasonality_of_the_Water_Source__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Expenses__c
+		dataType: string
+		lineageTag: 9541c494-310f-4861-a035-fa1b34de65a1
+		summarizeBy: none
+		sourceColumn: Total_Expenses__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Income__c
+		dataType: string
+		lineageTag: 49cbc66d-4f08-43e1-8665-2a0153dd15ee
+		summarizeBy: none
+		sourceColumn: Total_Income__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_amount_of_outstanding_loan_s__c
+		dataType: string
+		lineageTag: 28264175-e12d-4490-b27b-74f2c7d362c9
+		summarizeBy: none
+		sourceColumn: Total_amount_of_outstanding_loan_s__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column Water_tank_capacity__c
+		dataType: string
+		lineageTag: 9fc2b059-d3de-4610-9e2b-cf9b6d9936bd
+		summarizeBy: none
+		sourceColumn: Water_tank_capacity__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column What_is_your_main_source_of_knowledge__c
+		dataType: string
+		lineageTag: f7a99b43-a51d-488d-a405-164a938e655f
+		summarizeBy: none
+		sourceColumn: What_is_your_main_source_of_knowledge__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column What_type_of_crops_fruits_and_vegetables__c
+		dataType: string
+		lineageTag: 78d34c23-0061-467b-8800-7789a19bfe5f
+		summarizeBy: none
+		sourceColumn: What_type_of_crops_fruits_and_vegetables__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column _generated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 41ece881-e2bb-4613-bd93-b4afe6697fa1
+		summarizeBy: none
+		sourceColumn: _generated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_left_after_monthly_expenses_c
+		dataType: string
+		lineageTag: 585b348d-719a-4640-9705-c60597a910a7
+		summarizeBy: none
+		sourceColumn: amount_left_after_monthly_expenses_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_farm_inputs_c
+		dataType: string
+		lineageTag: 3eae9ecb-9a10-4b90-b8c1-89c10a9cf96b
+		summarizeBy: none
+		sourceColumn: amount_spent_on_farm_inputs_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_food_c
+		dataType: string
+		lineageTag: 624f2ec8-1476-44ea-8c98-e065b3288399
+		summarizeBy: none
+		sourceColumn: amount_spent_on_food_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_loans_c
+		dataType: string
+		lineageTag: ef9df897-ce1c-41f4-b187-1768493bf5fd
+		summarizeBy: none
+		sourceColumn: amount_spent_on_loans_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_other_c
+		dataType: string
+		lineageTag: f2c38449-568f-4e73-b0c3-beb6b33b02c2
+		summarizeBy: none
+		sourceColumn: amount_spent_on_other_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_rent_c
+		dataType: string
+		lineageTag: 9efb8c6c-45ac-4371-824a-cb1cd99d6660
+		summarizeBy: none
+		sourceColumn: amount_spent_on_rent_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_spent_on_school_fees_c
+		dataType: string
+		lineageTag: 84b8b3cb-942e-4c65-b11c-b1878012b511
+		summarizeBy: none
+		sourceColumn: amount_spent_on_school_fees_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column birth_date_c
+		dataType: string
+		lineageTag: 753a232b-81ca-48a1-9dae-4d7d5a6777d1
+		summarizeBy: none
+		sourceColumn: birth_date_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column carbon_credit_which_pump_type_c
+		dataType: string
+		lineageTag: 196f0388-118a-4803-8266-73d8470f56d6
+		summarizeBy: none
+		sourceColumn: carbon_credit_which_pump_type_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds1CompletionDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e9982bcf-fe29-4d83-a866-f76415c5ea7d
+		summarizeBy: none
+		sourceColumn: cds1CompletionDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds2CompletionDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 508c3182-6fdf-4283-b825-902553989aba
+		summarizeBy: none
+		sourceColumn: cds2CompletionDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column cdsId
+		dataType: string
+		lineageTag: 40adc177-bd1c-4efc-8a7c-0fb746f8f82f
+		summarizeBy: none
+		sourceColumn: cdsId
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditCheckStatus
+		dataType: string
+		lineageTag: ea3649cd-9b24-4665-b583-be378553585a
+		summarizeBy: none
+		sourceColumn: creditCheckStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column creditScore
+		dataType: string
+		lineageTag: b62fbf03-a7aa-4aa3-8466-c91515fcfb37
+		summarizeBy: none
+		sourceColumn: creditScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column currently_have_any_outstanding_loans_c
+		dataType: string
+		lineageTag: affe4dc8-7c39-47e5-86ef-d0e9ffea2fbb
+		summarizeBy: none
+		sourceColumn: currently_have_any_outstanding_loans_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column did_you_previously_own_a_water_pump_c
+		dataType: string
+		lineageTag: 51d10325-dd4a-40e4-8e2e-42d660407b80
+		summarizeBy: none
+		sourceColumn: did_you_previously_own_a_water_pump_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column do_you_have_animals_c
+		dataType: string
+		lineageTag: c06384fd-42d7-49c5-a745-7f6ba64e05c6
+		summarizeBy: none
+		sourceColumn: do_you_have_animals_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column farm_acreage_c
+		dataType: string
+		lineageTag: 136f61ee-87fa-49da-86d8-11e5e5025a06
+		summarizeBy: none
+		sourceColumn: farm_acreage_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column how_do_you_compensate_them_for_the_help_c
+		dataType: string
+		lineageTag: 9bdfc239-e7a7-40d7-b77b-f7fb19a33dae
+		summarizeBy: none
+		sourceColumn: how_do_you_compensate_them_for_the_help_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column how_long_have_you_been_a_farmer
+		dataType: string
+		lineageTag: c524bd1d-1380-4198-869a-9c1bf96517d6
+		summarizeBy: none
+		sourceColumn: how_long_have_you_been_a_farmer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'how_long_have_you_had_the_same_phone_no.'
+		dataType: string
+		lineageTag: 05d797aa-d593-4a14-87d2-a44a30f45f7f
+		summarizeBy: none
+		sourceColumn: how_long_have_you_had_the_same_phone_no.
+
+		annotation SummarizationSetBy = Automatic
+
+	column leadId
+		dataType: string
+		lineageTag: cbcab56c-f014-4aab-b20b-71b99a906197
+		summarizeBy: none
+		sourceColumn: leadId
+
+		annotation SummarizationSetBy = Automatic
+
+	column main_purpose_of_acquiring_the_pump_c
+		dataType: string
+		lineageTag: f6b5e23f-ec63-461e-9a61-80b37a2cac5a
+		summarizeBy: none
+		sourceColumn: main_purpose_of_acquiring_the_pump_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column main_source_of_income_c
+		dataType: string
+		lineageTag: 3c73c1a7-e82e-4fb3-a785-650bf6f430f4
+		summarizeBy: none
+		sourceColumn: main_source_of_income_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column no_of_family_members_friends_helping_c
+		dataType: string
+		lineageTag: d212ce9a-d96f-4836-933e-74161798e0ca
+		summarizeBy: none
+		sourceColumn: no_of_family_members_friends_helping_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column no_of_months_to_finish_paying_loan_s_c
+		dataType: string
+		lineageTag: 2943f08d-a0f4-425b-b2f8-29dc6782064c
+		summarizeBy: none
+		sourceColumn: no_of_months_to_finish_paying_loan_s_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_cows_c
+		dataType: string
+		lineageTag: 7042a2c7-8d72-4a79-8147-abe43f7ddf28
+		summarizeBy: none
+		sourceColumn: number_of_cows_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_goats_c
+		dataType: string
+		lineageTag: 6631266b-59c6-404b-afb9-2be983eec574
+		summarizeBy: none
+		sourceColumn: number_of_goats_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_household_members
+		dataType: string
+		lineageTag: d3168b5a-5726-4578-85bb-251c1f7506e1
+		summarizeBy: none
+		sourceColumn: number_of_household_members
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_household_members_c
+		dataType: string
+		lineageTag: 138bb990-347e-43df-847c-bd94cef00962
+		summarizeBy: none
+		sourceColumn: number_of_household_members_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_loans_taken_in_the_last_2yrs_c
+		dataType: string
+		lineageTag: 40d9e3e8-1ffc-467c-9b75-01aadff68625
+		summarizeBy: none
+		sourceColumn: number_of_loans_taken_in_the_last_2yrs_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_outstanding_loans_c
+		dataType: string
+		lineageTag: f0e7be19-c696-4715-b485-05af5a6f2518
+		summarizeBy: none
+		sourceColumn: number_of_outstanding_loans_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_pigs_c
+		dataType: string
+		lineageTag: b03d0b95-765f-49fd-9cb1-36c7aef6e251
+		summarizeBy: none
+		sourceColumn: number_of_pigs_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_sheep_c
+		dataType: string
+		lineageTag: c135ca56-fa8f-4744-ad7a-245a906cf7d4
+		summarizeBy: none
+		sourceColumn: number_of_sheep_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_sources_of_income_of_the_household_c
+		dataType: string
+		lineageTag: 2f3f729a-dc5e-40eb-9f58-6ea883caaef0
+		summarizeBy: none
+		sourceColumn: other_sources_of_income_of_the_household_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_sources_of_water_c
+		dataType: string
+		lineageTag: 82e03ec6-a9e5-47a6-9c29-4677100a6279
+		summarizeBy: none
+		sourceColumn: other_sources_of_water_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column own_the_land_for_product_installation
+		dataType: string
+		lineageTag: f5fc0273-204f-4fe1-9f36-773836a7751f
+		summarizeBy: none
+		sourceColumn: own_the_land_for_product_installation
+
+		annotation SummarizationSetBy = Automatic
+
+	column pest_disease_control_pest_type_usage_c
+		dataType: string
+		lineageTag: 54e37162-9016-4646-882e-7c811394e870
+		summarizeBy: none
+		sourceColumn: pest_disease_control_pest_type_usage_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_decision_maker_to_buy_product_c
+		dataType: string
+		lineageTag: b1cf60b6-d058-4170-af67-8c612d07df2e
+		summarizeBy: none
+		sourceColumn: primary_decision_maker_to_buy_product_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column ready_to_make_the_deposit_on
+		dataType: string
+		lineageTag: 37acad08-9572-4a7a-beef-9b497c141e8d
+		summarizeBy: none
+		sourceColumn: ready_to_make_the_deposit_on
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_agriculture_c
+		dataType: string
+		lineageTag: 4bfd7bb5-4b77-4aaf-8db7-fc6cf8dcf1a5
+		summarizeBy: none
+		sourceColumn: total_amount_from_agriculture_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_commerce_and_trade_c
+		dataType: string
+		lineageTag: 6cdba4d5-f150-48c7-95b5-4b0448c76108
+		summarizeBy: none
+		sourceColumn: total_amount_from_commerce_and_trade_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_pension_c
+		dataType: string
+		lineageTag: 9bd56cf4-f2ba-4a02-adab-422ec937547c
+		summarizeBy: none
+		sourceColumn: total_amount_from_pension_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_provision_of_services_c
+		dataType: string
+		lineageTag: a6aa3433-c28f-472e-b7b3-ec056237e047
+		summarizeBy: none
+		sourceColumn: total_amount_from_provision_of_services_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_remittances_c
+		dataType: string
+		lineageTag: 8bb30a00-2858-4d13-82a0-f4d92f79f5e4
+		summarizeBy: none
+		sourceColumn: total_amount_from_remittances_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_from_salary_government_c
+		dataType: string
+		lineageTag: 2a98d960-d798-4c1b-b034-e755e50eecf5
+		summarizeBy: none
+		sourceColumn: total_amount_from_salary_government_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount_of_outstanding_loan_s_c
+		dataType: string
+		lineageTag: 4d88fadf-c29d-4286-8af8-52f5fee9ef53
+		summarizeBy: none
+		sourceColumn: total_amount_of_outstanding_loan_s_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amt_from_salary_private_inst_c
+		dataType: string
+		lineageTag: d4928585-f4c0-408a-a6dc-f6c54ba7678a
+		summarizeBy: none
+		sourceColumn: total_amt_from_salary_private_inst_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column type_of_fruits_and_vegetables_grown_c
+		dataType: string
+		lineageTag: 558bf7e0-4301-447b-ac18-325829430f89
+		summarizeBy: none
+		sourceColumn: type_of_fruits_and_vegetables_grown_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column types_of_crops_grown_c
+		dataType: string
+		lineageTag: 6e279d65-4b05-4c79-b86f-8508bef7792a
+		summarizeBy: none
+		sourceColumn: types_of_crops_grown_c
+
+		annotation SummarizationSetBy = Automatic
+
+	/// CDS answer is stored as text; converted to a number (0-168 hours a week)
+	column 'Weekly Hours Fetching Water' =
+			VAR _v = IFERROR ( VALUE ( mart_cds_responses[Hours_spent_fetching_water_every_week__c] ), BLANK () )
+			RETURN
+			    IF ( _v >= 0 && _v <= 168, _v )
+		dataType: double
+		formatString: 0.0
+		lineageTag: f786c774-4517-4de6-801c-c6ea2ea71e5f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// From the CDS question "Number of loans taken in the last 2 years" (two versions of the field)
+	column 'Credit History' =
+			VAR _loans =
+			    IF (
+			        mart_cds_responses[number_of_loans_taken_in_the_last_2yrs_c] <> "",
+			        mart_cds_responses[number_of_loans_taken_in_the_last_2yrs_c],
+			        mart_cds_responses[Number_of_loans_taken_in_the_last_2yrs__c]
+			    )
+			RETURN
+			    SWITCH ( TRUE (), _loans = "", BLANK (), _loans IN { "0", "0 loans" }, "First-time borrower", "Had prior credit" )
+		dataType: string
+		lineageTag: 2576a5b7-8798-469c-886f-42d7b1882218
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition mart_cds_responses = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"381ab5ac-e517-45dd-bbeb-c054b335280d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="381ab5ac-e517-45dd-bbeb-c054b335280d"]}[Data],
+				    mart_cds_responses_ = #"381ab5ac-e517-45dd-bbeb-c054b335280d"{[entity="mart_cds_responses",version=""]}[Data]
+				in
+				    mart_cds_responses_
+

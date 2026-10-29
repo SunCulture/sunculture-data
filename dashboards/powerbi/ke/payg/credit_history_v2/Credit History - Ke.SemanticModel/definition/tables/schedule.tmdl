@@ -1,0 +1,2016 @@
+table schedule
+	lineageTag: 1bde8743-9326-4e32-83ad-860c4fd4c377
+
+	measure #clients =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(schedule[account_id]),
+			    schedule[period] >= 0
+			)
+		formatString: #,0
+		lineageTag: 3e6903da-2bef-4138-bd1e-917a39f9ec23
+
+	measure #current_balance =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(schedule[account_id]),
+			    schedule[period] >= 0,
+			    schedule[balance] > 10
+			)
+		formatString: #,0
+		lineageTag: 66afd253-ebc8-4399-af5e-b399044c0183
+
+	measure #current_no_arrears =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(schedule[account_id]),
+			    schedule[period] >= 0,
+			    schedule[late_client] = 0
+			)
+		formatString: #,0
+		lineageTag: b7a06cf0-cb90-4947-b33c-e4e3cb652283
+
+	measure #loans_past_1st_payment = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[period]>1)
+		formatString: #,0
+		lineageTag: 2a0b58af-05c3-422c-86bb-9888b76f3622
+
+	measure #new_clients =
+			
+			var last_m=CALCULATE(
+			TOTALMTD(COUNT(schedule[account_id]),schedule[end_month]),PARALLELPERIOD(schedule[end_month],-1,MONTH))
+			var prev=CALCULATE (
+			    DISTINCTCOUNT(schedule[account_id]),
+			    FILTER ( ALLSELECTED( schedule ),  schedule[index_month]= MAX ( schedule[index_month] )-1 )
+			)
+			var r=[#clients]-prev
+			var t=CALCULATE(COUNT(schedule[account_id]),schedule[period]=0)
+			return
+			t
+		formatString: #,0
+		lineageTag: 75c4c784-ba0e-4cb3-954a-345f034da19b
+
+	measure #overdue_account =
+			
+			CALCULATE(
+			    SUM(schedule[late_client]),
+			    schedule[period] >= 0
+			)
+		formatString: #,0
+		lineageTag: 4863e458-e568-49c2-8c82-007e32e75b0b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '% At Risk' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        SUM(schedule[arrears]),
+			        schedule[period] >= 0
+			    ),
+			    CALCULATE(
+			        SUM(schedule[balance]),
+			        schedule[period] >= 0
+			    ),
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 073ef396-3062-46d6-88f5-f293bb14d9aa
+
+	measure '% Collected' = DIVIDE(SUM(schedule[month_installment_paid2]),[expected_amount],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e6c106ea-20ae-434d-bd0d-4a93e9712c5b
+
+	measure expected_amount = ```
+			
+			CALCULATE(
+			    SUM(schedule[expected_amount_ovw]),
+			    schedule[period] >= 0
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: df831413-130b-481e-9e82-ff3a515d20e2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '% Repaid' =
+			
+			IFERROR(
+			    CALCULATE(
+			        SUM(schedule[net_cumulative_total_month]),
+			        schedule[period] >= 0
+			    )
+			    /
+			    CALCULATE(
+			        SUM(schedule[credit_sale_net]),
+			        schedule[period] >= 0
+			    ),
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6211f340-3f34-4c2d-a062-747e2a8e8c3e
+
+	measure %collected_cum = DIVIDE([collection_continuous_cum],[expected_amount_cum],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 52c0ed52-9a7d-4391-99e0-0b5c5585de43
+
+	measure expected_amount_cum =
+			
+			var exp=CALCULATE(SUM(schedule[installment_amount]),FILTER(schedule,schedule[period]>0),FILTER(schedule,schedule[monthly_installment_date]<=schedule[end_date]))
+			var cum1=CALCULATE([expected_amount],
+			FILTER(ALLSELECTED(schedule),schedule[end_month]<=MAX(schedule[end_month])))
+			return
+			cum1
+		lineageTag: 2101eed6-b681-407b-abe8-e97fb61f716e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure collection_continuous_cum =
+			
+			var cum1=CALCULATE([collection_continuous],
+			FILTER(ALLSELECTED(schedule),schedule[end_month]<=MAX(schedule[end_month])))
+			return
+			cum1
+		formatString: #,0
+		lineageTag: 3d82968d-e9f8-45e0-a3dd-5ef01af85d46
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure collection_continuous = ```
+			
+			CALCULATE(
+			    SUM(schedule[month_installment_paid]),
+			    schedule[period] >= 0
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: e0901ecd-a23f-4c1e-b7be-71cc64e46f37
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure %expected_amount_paid =
+			
+			var netrepaid=CALCULATE(sum(schedule[net_cumulative_total_month]))
+			var r=DIVIDE([amount_paid_actual],[expected_amount],0)
+			return
+			r
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b433f034-01cc-45bd-996f-60ad3dbaf8d0
+
+	measure amount_paid_actual = ```
+			
+			CALCULATE(
+			    SUM(schedule[actual_amount_paid]),
+			    schedule[period] >= 0
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 05950a5c-79fb-409d-a3b8-d42e40dfe7b3
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure %overdue_accounts =
+			
+			DIVIDE(
+			    CALCULATE(
+			        SUM(schedule[late_client]),
+			        schedule[period] >= 0
+			    ),
+			    CALCULATE(
+			        DISTINCTCOUNT(schedule[account_id]),
+			        schedule[period] >= 0
+			    ),
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: cfb50536-bebf-4d62-bc93-51b1c118107a
+
+	measure '>120 Days' = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[days_late]>120)
+		formatString: #,0
+		lineageTag: 60adebd2-e997-42e5-b0f7-ca1e4ca29758
+
+	measure '0-30 Days' = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[days_late]>0,schedule[days_late]<=30)
+		formatString: #,0
+		lineageTag: c6d73ae3-7fb1-400f-838b-4ba86cd315d3
+
+	measure '30-60 Days' = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[days_late]>30,schedule[days_late]<=60)
+		formatString: #,0
+		lineageTag: c5380654-664a-4306-b66d-f11f0bb0b3eb
+
+	measure '60-90 Days' = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[days_late]>60,schedule[days_late]<=90)
+		formatString: #,0
+		lineageTag: 6c32421d-73af-44b7-9fb6-ecc02d62e4fc
+
+	measure '90-120 Days' = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[days_late]>90,schedule[days_late]<=120)
+		formatString: #,0
+		lineageTag: 33943256-a66a-45bd-a35c-2bd70f9e9982
+
+	measure arrears>30days = CALCULATE(sum(schedule[arrears]),schedule[days_late]>30)
+		formatString: #,0
+		lineageTag: 534d6900-c7a0-480d-a7cb-1efe022548f8
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'balance(30 days late)' = CALCULATE(SUM(schedule[balance]),schedule[days_late]>30)
+		formatString: #,0
+		lineageTag: e5e02de8-4e63-4357-aa96-95bf956914f2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure balance50%&>30days =
+			
+			CALCULATE(SUM(schedule[balance]),schedule[%collection_rate]="<50%"&&schedule[days_late]>30)
+		formatString: #,0
+		lineageTag: 33c11e1f-7e6f-465c-8bf6-a1b7fe05edcb
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure balance50%or>30days =
+			
+			CALCULATE(SUM(schedule[balance]),schedule[%collection_rate]="<50%"||schedule[days_late]>30)
+		formatString: #,0
+		lineageTag: e54da8bf-8c27-4203-a542-4605d2cce019
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '%collection_rate unit' =
+			
+			var a= CALCULATE([%expected_amount_paid],schedule[status_change]="active")
+			var netrepaid=CALCULATE(sum(schedule[net_cumulative_total_month]))
+			var r=DIVIDE([amount_paid_actual],[expected_amount],0)
+			return
+			a
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2bcadd86-117b-4e36-87ef-6762460b6c68
+
+	measure average_credit_period =
+			
+			var a=CALCULATE(SUM(schedule[total_number_payments]),schedule[status_change]="active")
+			var b=CALCULATE(COUNT(schedule[account_id]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		lineageTag: aabbaf7e-563b-476d-b2a9-b1d6672864e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure average_monthly_revenue_user =
+			
+			//var a=CALCULATE(SUM(schedule[month_paid]),schedule[status_change]="active")
+			var b=CALCULATE(COUNT(schedule[account_id]),schedule[status_change]="active")
+			var netrepaid=CALCULATE(SUM(schedule[net_cumulative_total_month]),schedule[status_change]="active")
+			var netrepaid_prev=CALCULATE(SUM(schedule[netrepaid_previous]),schedule[status_change]="active")
+			var r=IF(netrepaid-netrepaid_prev<0,0,netrepaid-netrepaid_prev)
+			var c=DIVIDE(r,b)
+			RETURN
+			c
+		lineageTag: 21edfa5e-e42f-4fb7-ad81-198018e0be9f
+
+	measure average_total_expected_revenue = ```
+			
+			 var a=CALCULATE(SUM(schedule[installment_amount]),FILTER(schedule,schedule[period]>0),FILTER(schedule,schedule[monthly_installment_date]<=schedule[end_date]&&schedule[status_change]="active"))
+			var b=CALCULATE(COUNT(schedule[account_id]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+			```
+		lineageTag: 6b2f2e42-52b5-468d-9647-668845f26e69
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure effective_credit_period =
+			
+			var a=CALCULATE(SUM(schedule[period]),schedule[exited_clients]="yes",schedule[status] IN {"complete","complete - over paid"})
+			var b=CALCULATE(COUNT(schedule[account_id]),schedule[exited_clients]="yes",schedule[status] IN {"complete","complete - over paid"})
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		lineageTag: 1c6965bf-b52e-477d-a1b3-de94c5d2a8e5
+
+	measure fpd_rate =
+			
+			var a=CALCULATE(SUM(schedule[balance]),schedule[fpd]=1&&schedule[status_change]="active")
+			var b=CALCULATE(SUM(schedule[balance]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3da0273f-481e-4d88-959f-73acf617c0f4
+
+	measure outstanding_receivables =
+			
+			var a=CALCULATE(SUM(schedule[balance]),schedule[status_change]="active")
+			RETURN
+			a
+		lineageTag: 051bea1f-d329-4b31-b713-ee44d3d1ecb8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure outstanding_receivables_growth_rate =
+			
+			var a=[outstanding_receivables]
+			var b=CALCULATE(SUM(schedule[balance_previous_active]))
+			var d= a-b
+			var c=DIVIDE(d,b)
+			RETURN
+			c
+		lineageTag: c084f740-36bb-4c84-bd7d-722e8f55b215
+
+	measure remaining_credit_period =
+			
+			var a=CALCULATE(SUM(schedule[total_number_payments])-SUM(schedule[period]),schedule[status_change]="active"&&schedule[period]<=schedule[total_number_payments])
+			var b=CALCULATE(COUNT(schedule[account_id]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		lineageTag: cfbcca18-4f45-4bbc-8d8b-72d25b9cb8be
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure repossession_rate =
+			
+			var a=CALCULATE(SUM(schedule[balance]),schedule[exited_clients]="yes",schedule[status] IN {"repossession"})
+			var b=CALCULATE(SUM(schedule[balance]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		lineageTag: 9873dd11-6972-4693-8fd1-125b4ab2ceda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure write_off_rate =
+			
+			var a=CALCULATE(SUM(schedule[balance]),schedule[exited_clients]="yes",schedule[status] IN {"write off"})
+			var b=CALCULATE(SUM(schedule[balance]),schedule[status_change]="active")
+			var c=DIVIDE(a,b)
+			RETURN
+			c
+		lineageTag: d28c285e-b0c2-4976-8434-7e96b3426988
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure #fpd = CALCULATE(DISTINCTCOUNT(schedule[account_id]),schedule[fpd]=1)
+		formatString: 0
+		lineageTag: ffae73a4-13a4-4af7-a062-e95c1e6ec13d
+
+	measure fpd_arrears = CALCULATE(SUM(schedule[arrears]),schedule[fpd]=1)
+		formatString: #,0
+		lineageTag: f257f348-35ec-4e73-8a16-a752c1a3db2e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure fpd_balance = CALCULATE(SUM(schedule[balance]),schedule[fpd]=1)
+		formatString: #,0
+		lineageTag: 5d014fc4-e24e-4f2f-84e4-8a8ef8fcf7e2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure fpd_total_paid = CALCULATE(SUM(schedule[cumulative_total_month]),schedule[fpd]=1)
+		formatString: #,0
+		lineageTag: ec78e6e2-c205-4e7e-8b4a-3c8bd005ada8
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure fpd_total_paid_cum =
+			
+			var cum1=CALCULATE(SUM(schedule[cumulative_total_month]),schedule[fpd]=1,
+			FILTER(ALLSELECTED(schedule),schedule[monthly_installment_date]<=MAX(schedule[monthly_installment_date])))
+			return
+			cum1
+		formatString: #,0
+		lineageTag: 0d119c77-78fd-45ce-bf81-f8d37b623e31
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure %arrears_growth =
+			
+			VAR a0 =
+			    CALCULATE(
+			        SUM(schedule[arrears]),
+			        schedule[period] >= 0
+			    )
+			VAR a1 =
+			    CALCULATE(
+			        SUM(schedule[arrears_previous]),
+			        schedule[period] >= 0
+			    )
+			VAR result =
+			    DIVIDE(a0 - a1, a1, 0)
+			RETURN
+			    result
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3c1bf429-6dc0-4816-8c9a-6997aafb41cf
+
+	measure %collection_growth =
+			
+			var prev=CALCULATE (
+			    SUM(schedule[month_installment_paid2]),
+			    FILTER ( ALLSELECTED(schedule ),  schedule[index_month]= MAX ( schedule[index_month] )-1 )
+			)
+			var cur=CALCULATE(SUM(schedule[month_installment_paid2]))
+			return
+			DIVIDE(cur-prev,prev,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ff02a29a-27c9-4468-af01-de974a684be7
+
+	measure %credit_growth =
+			
+			VAR prev =
+			    CALCULATE(
+			        SUM(schedule[credit_sale]),
+			        FILTER(
+			            ALLSELECTED(schedule),
+			            schedule[index_month] = MAX(schedule[index_month]) - 1
+			                && schedule[period] >= 0
+			        )
+			    )
+			VAR cur =
+			    CALCULATE(
+			        SUM(schedule[credit_sale]),
+			        schedule[period] >= 0
+			    )
+			RETURN
+			    DIVIDE(cur - prev, prev, 0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 41eac8c1-5739-41bf-bb77-6c4dd0542ba5
+
+	measure '% PAR120' =
+			
+			VAR balance_late_clients = CALCULATE(SUM(schedule[balance]),schedule[days_late]>120)
+			VAR total_balance=CALCULATE(SUM(schedule[balance]))
+			return
+			IFERROR(balance_late_clients/total_balance,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d7a3e18b-db6b-44a1-8597-55de4be20a62
+
+	measure '% PAR15' =
+			
+			VAR balance_late_clients = CALCULATE(SUM(schedule[balance]),schedule[days_late]>15)
+			VAR total_balance=CALCULATE(SUM(schedule[balance]))
+			return
+			IFERROR(balance_late_clients/total_balance,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f7a9a27e-8b30-4d10-8ca5-6868a5244358
+
+	measure '% PAR30' =
+			
+			VAR balance_late_clients = CALCULATE(SUM(schedule[balance]),schedule[days_late]>30)
+			VAR total_balance=CALCULATE(SUM(schedule[balance]))
+			return
+			DIVIDE(balance_late_clients,total_balance,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 745a085d-49d7-4de8-9399-38f8f52c2842
+
+	measure '% PAR60' =
+			
+			VAR balance_late_clients = CALCULATE(SUM(schedule[balance]),schedule[days_late]>60)
+			VAR total_balance=CALCULATE(SUM(schedule[balance]))
+			return
+			IFERROR(balance_late_clients/total_balance,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 202574d0-67e3-4e9c-9696-a60d0275fd6b
+
+	measure '% PAR90' =
+			
+			VAR balance_late_clients = CALCULATE(SUM(schedule[balance]),schedule[days_late]>90)
+			VAR total_balance=CALCULATE(SUM(schedule[balance]))
+			return
+			IFERROR(balance_late_clients/total_balance,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 68066cf0-1c0b-413c-8117-e7ade7389526
+
+	measure receivables_aging =
+			
+			var exp_monthly=CALCULATE(SUM(schedule[installment_amount]),FILTER(schedule,schedule[monthly_installment_date]<=schedule[end_date]),FILTER(schedule,schedule[period]>0))
+			var m_total=IF(MAX(schedule[monthly_installment_date])<=MAX(schedule[end_date])&&MAX(schedule[period])>0,sum(schedule[installment_amount]),0)
+			var exp_cum=CALCULATE(SUM(schedule[expected_payment]))
+			var bal_cum=CALCULATE(SUM(schedule[balance]))
+			var result = SWITCH(
+			    SELECTEDVALUE(analysis_type[index]),
+			8,exp_monthly,
+			9,exp_cum,
+			11,bal_cum,
+			13,[amount_paid_actual],
+			14,[#clients]
+			)
+			return
+			result
+		formatString: #,0
+		lineageTag: 171c0823-1aef-4fa6-bc46-2d148a89a46a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '%collection_rate CUNIT' =
+			
+			var a= CALCULATE([%expected_amount_paid],schedule[status_change]="active")
+			var netrepaid=CALCULATE(sum(schedule[net_cumulative_total_month]))
+			var r=DIVIDE([amount_paid_actual],[expected_amount],0)
+			return
+			a
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 74d71b47-ff72-4a5d-826c-4af24b284b63
+
+	measure %overall = DIVIDE(SUM(schedule[month_payment_amount]),SUM(schedule[monthly_expected_collections]))
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: adeed8e3-bc1d-409e-bbe0-36cbbc00d8e3
+
+	measure %Current = DIVIDE(SUM(schedule[month_payment_amount_current]),SUM(schedule[monthly_expected_collections_current]))
+		formatString: 0%;-0%;0%
+		lineageTag: 57ca366a-0b13-47e3-a4d5-41bfe4da7878
+
+	measure %Arrears = DIVIDE(SUM(schedule[month_payment_amount_arrears]),SUM(schedule[monthly_expected_collections_arrears]))
+		formatString: 0%;-0%;0%
+		lineageTag: d2d0692b-e0d6-405e-90d1-76298eea76fd
+
+	measure 'Weighted Average Sequence Days' =
+			
+			VAR Accounts =
+			    SUMMARIZE(
+			        'schedule',
+			        'schedule'[account_id],
+			        "Sequence", MAX('schedule'[total_number_payments])
+			    )
+			RETURN
+			    SUMX(
+			        Accounts,
+			        DIVIDE(
+			            1,
+			            COUNTROWS(Accounts)
+			        ) * [Sequence] * 30
+			    )
+		formatString: #,0
+		lineageTag: 68ed0172-0833-4d7f-b7f4-da3b66dc2059
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure deposit_amount = CALCULATE(SUM(schedule[downpayment_amount]),FILTER(schedule,schedule[period]=0),FILTER(schedule,schedule[monthly_installment_date]<=schedule[end_date]))
+		formatString: #,0
+		lineageTag: 86e30a5f-0338-4ff0-a097-c10ed1dabbda
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Amount Due' =
+			
+			CALCULATE(
+			    SUM(schedule[Amount Due Column]),
+			    schedule[period] >= 0
+			)
+		lineageTag: 3bb41cd3-92d9-4041-beab-1c5f74fe0efa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Account-months in the snapshot copy for Kenya, from the first to the last installment month of the plan. Denominator of every transition rate (as COUNT(Schedules[accountId]) in PAYG Overview).
+	measure transition_base_rows = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()))
+		displayFolder: Transitions
+		lineageTag: db61230b-56a3-4c6a-92ac-e4dbf0ffe159
+
+	/// Account-months at most 30 days late at both the start and the end of the month.
+	measure retention(<30) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late_previous_month] <= 30), KEEPFILTERS(schedule[days_late] <= 30))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: 87b04a31-3a3f-4a45-9d67-abe28454bfc6
+
+	/// Account-months at most 60 days late at the end of the month. As in PAYG Overview, the start of the month is not checked (start lateness was only split into <=30 and >30).
+	measure retention(<60) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late] <= 60))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: a3d06535-58c8-45fd-9d7e-9be3e50f26f9
+
+	/// Account-months at most 90 days late at the end of the month. As in PAYG Overview, the start of the month is not checked.
+	measure retention(<90) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late] <= 90))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: 019188b4-3066-48ff-a9ec-5ae1dca25b31
+
+	/// Account-months at most 30 days late at the start and 31-60 days late at the end, from the second installment month.
+	measure attrition(<30) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late_previous_month] <= 30), KEEPFILTERS(schedule[days_late] > 30), KEEPFILTERS(schedule[days_late] <= 60), KEEPFILTERS(schedule[period] >= 1))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: 5b07aeaa-ffc0-450b-92ce-d9adc90daf74
+
+	/// Account-months 61-90 days late at the end of the month. As in PAYG Overview, the start of the month is not checked.
+	measure attrition(<60) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late] > 60), KEEPFILTERS(schedule[days_late] <= 90))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: dba88100-1c5d-4813-adea-c9ad4528b597
+
+	/// Account-months 91-120 days late at the end of the month. As in PAYG Overview, the start of the month is not checked.
+	measure attrition(<90) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late] > 90), KEEPFILTERS(schedule[days_late] <= 120))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: 0248e272-5135-405b-b96f-b0a64095d3d1
+
+	/// Account-months more than 30 days late at the start and at most 30 days late at the end, from the third installment month.
+	measure reactivation(<30) = CALCULATE(COUNTROWS(schedule), KEEPFILTERS(schedule[source] = "snapshot"), KEEPFILTERS(schedule[company_region] = "kenya"), KEEPFILTERS(schedule[period] >= 0), KEEPFILTERS(schedule[period] < 100000), KEEPFILTERS(schedule[is_within_plan] = TRUE()), KEEPFILTERS(schedule[days_late_previous_month] > 30), KEEPFILTERS(schedule[days_late] <= 30), KEEPFILTERS(schedule[period] >= 2))
+		formatString: #,0
+		displayFolder: Transitions
+		lineageTag: ce89b241-557d-4411-a436-b27ec24dbe37
+
+	/// [retention(<30)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %retention_rate(<30) = DIVIDE([retention(<30)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: 5e0b4a0b-769e-4c9a-a86e-30fd1975829b
+
+	/// [retention(<60)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %retention_rate(<60) = DIVIDE([retention(<60)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: 9b57d209-c4c6-4688-a6e1-69c9945706ec
+
+	/// [retention(<90)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %retention_rate(<90) = DIVIDE([retention(<90)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: 837953e7-939f-4fa0-a7b4-9193773e98e8
+
+	/// [attrition(<30)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %attrition_rate(<30) = DIVIDE([attrition(<30)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: f6d124ce-794c-4456-bd57-2232f1982276
+
+	/// [attrition(<60)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %attrition_rate(<60) = DIVIDE([attrition(<60)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: 4dd46f04-a35d-4a29-9742-04722cd1e42f
+
+	/// [attrition(<90)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %attrition_rate(<90) = DIVIDE([attrition(<90)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: e03a0274-0d80-4c78-98b3-0509d8474d49
+
+	/// [reactivation(<30)] / [transition_base_rows]. Migrated from PAYG Overview with the original definition.
+	measure %reactivation_rate(<30) = DIVIDE([reactivation(<30)], [transition_base_rows], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Transitions
+		lineageTag: 23e9dc94-f08c-410b-bf41-8a9c6c549a27
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 363df41b-0398-4ff2-9608-bf2d0a2c957c
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_ref
+		dataType: string
+		lineageTag: de1ac60d-43a5-4068-8f0d-bdd0172fad1d
+		summarizeBy: none
+		sourceColumn: account_ref
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_current
+		dataType: string
+		lineageTag: 95ad85c3-6574-4114-9746-5d63a6716eb3
+		summarizeBy: none
+		sourceColumn: aging_current
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_current_index
+		dataType: int64
+		lineageTag: 2c39f235-6b17-489c-b776-e4d608ba91d1
+		summarizeBy: sum
+		sourceColumn: aging_current_index
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aging_previous
+		dataType: string
+		lineageTag: 7276a610-7c83-424f-921b-46871e31a9cf
+		summarizeBy: none
+		sourceColumn: aging_previous
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_previous_index
+		dataType: int64
+		lineageTag: 3265481a-50a7-4918-94d7-7d8fd3a46637
+		summarizeBy: sum
+		sourceColumn: aging_previous_index
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column arrears
+		dataType: double
+		formatString: #,0
+		lineageTag: e45c75ce-c999-49e4-99e2-14aa4ba63eae
+		summarizeBy: sum
+		sourceColumn: arrears
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column arrears_previous
+		dataType: double
+		lineageTag: 4265f2cd-ad2c-4d3b-a04c-7411baf31369
+		summarizeBy: sum
+		sourceColumn: arrears_previous
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column balance
+		dataType: double
+		formatString: #,0
+		lineageTag: 1f495796-ead0-4f33-bc86-037a0edc6775
+		summarizeBy: sum
+		sourceColumn: balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column balance_previous
+		dataType: double
+		lineageTag: 0d3cbfc9-e668-428e-9f3c-17839cebc363
+		summarizeBy: sum
+		sourceColumn: balance_previous
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column classification
+		dataType: string
+		lineageTag: c1455dd5-a88e-4817-8e55-77836885e208
+		summarizeBy: none
+		sourceColumn: classification
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_region
+		dataType: string
+		lineageTag: 5b8fa19b-d9dd-42fe-84c4-eb03d790167f
+		summarizeBy: none
+		sourceColumn: company_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column credit_sale
+		dataType: double
+		formatString: #,0
+		lineageTag: 51f40a29-0269-4f4b-95f8-a37dfaeadeb8
+		summarizeBy: sum
+		sourceColumn: credit_sale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column credit_sale_net
+		dataType: double
+		formatString: #,0
+		lineageTag: ef6ef1b2-101e-4ce5-bb6e-26772bfa2e58
+		summarizeBy: sum
+		sourceColumn: credit_sale_net
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column cumulative_total_month
+		dataType: double
+		formatString: #,0
+		lineageTag: 00ae2eaf-36d5-4766-8550-5240496169b8
+		summarizeBy: sum
+		sourceColumn: cumulative_total_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 61ac26df-b708-4932-b196-651c2b03cc5c
+		summarizeBy: sum
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_names
+		dataType: string
+		lineageTag: 0bbf8fc1-7b17-4e31-9a44-b044c14cbce2
+		summarizeBy: none
+		sourceColumn: customer_names
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_late
+		dataType: double
+		lineageTag: bba0bc6b-dc2a-43c9-b3ff-ab4f692fa57e
+		summarizeBy: sum
+		sourceColumn: days_late
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column days_late_previous_month
+		dataType: double
+		lineageTag: 7a122586-4660-4f2e-9e81-0cca0eb14bcf
+		summarizeBy: sum
+		sourceColumn: days_late_previous_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount
+		dataType: string
+		lineageTag: 61f8446f-d87f-4d1d-9266-69a6efb959c6
+		summarizeBy: none
+		sourceColumn: discount
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amount
+		dataType: double
+		formatString: #,0
+		lineageTag: 5466e610-bf3d-4dea-8f4f-b9e9527c12cb
+		summarizeBy: sum
+		sourceColumn: discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column discount_name
+		dataType: string
+		lineageTag: ef01f450-91ec-4eab-9f31-e959ee1b43be
+		summarizeBy: none
+		sourceColumn: discount_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column downpayment_amount
+		dataType: double
+		formatString: #,0
+		lineageTag: 7368c1b8-a561-48cc-9784-696cb7ee53f3
+		summarizeBy: sum
+		sourceColumn: downpayment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 763ce5f9-b976-4695-9779-856c704cbca2
+		summarizeBy: none
+		sourceColumn: end_date
+
+		variation Variation
+			isDefault
+			relationship: 75de687e-3d22-4aa5-ae27-1210d4740c2a
+			defaultHierarchy: LocalDateTable_5ab884f1-bd50-4ae2-9c81-7aad3294d15d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_month
+		dataType: dateTime
+		formatString: mmmm yyyy
+		lineageTag: 1ac6f675-fcb3-4d9b-8803-7c5b710fabfb
+		summarizeBy: none
+		sourceColumn: end_month
+
+		variation Variation
+			isDefault
+			relationship: 6eeab9f6-768d-47fa-a941-deb91487aa20
+			defaultHierarchy: LocalDateTable_447e4535-8c94-4119-929e-63fe3715bc67.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column expected_payment
+		dataType: double
+		formatString: #,0
+		lineageTag: 431aae6c-48b9-439b-a4f0-80cc639ebd26
+		summarizeBy: sum
+		sourceColumn: expected_payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column fpd
+		dataType: int64
+		formatString: #,0
+		lineageTag: 50a5f7c6-03be-457c-b4a6-a4f1248fdfc6
+		summarizeBy: sum
+		sourceColumn: fpd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column installment_amount
+		dataType: double
+		lineageTag: 0aa3e7bf-9e12-434e-9b64-699e230e256f
+		summarizeBy: sum
+		sourceColumn: installment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column installment_date
+		dataType: dateTime
+		formatString: mm/dd/yyyy
+		lineageTag: 56539c45-0882-4e6a-8295-a7482b4574c4
+		summarizeBy: none
+		sourceColumn: installment_date
+
+		variation Variation
+			isDefault
+			relationship: 0a323bfd-0875-4499-b5c2-864b7c5a0e91
+			defaultHierarchy: LocalDateTable_58ffa301-2743-4e8f-a879-33691a8b1ea4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column late_client
+		dataType: int64
+		lineageTag: 2d44037f-4133-4c7d-9519-d2180f0f0dda
+		summarizeBy: sum
+		sourceColumn: late_client
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column month_installment_paid2
+		dataType: double
+		formatString: #,0
+		lineageTag: fb01a2d4-17bf-413c-895b-2a688dcc3ebc
+		summarizeBy: sum
+		sourceColumn: month_installment_paid2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column month_payment_amount
+		dataType: double
+		formatString: #,0
+		lineageTag: e918c006-27f7-4495-9a48-b8b59b048d23
+		summarizeBy: sum
+		sourceColumn: month_payment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column monthly_installment_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 6e350f90-b8aa-43b0-935b-b234ddf31022
+		summarizeBy: none
+		sourceColumn: monthly_installment_date
+
+		variation Variation
+			isDefault
+			relationship: b30c1654-c3cb-44e9-ad20-107845d0be88
+			defaultHierarchy: LocalDateTable_8d239962-e55d-41c1-8047-fd4d16b8a390.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column net_cumulative_total_month
+		dataType: double
+		formatString: #,0
+		lineageTag: 3b49a9f2-7410-4061-bbff-5ec31b8e9e25
+		summarizeBy: sum
+		sourceColumn: net_cumulative_total_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column netrepaid_previous
+		dataType: double
+		lineageTag: 503322af-10ae-4b59-aad2-687d43ba9c97
+		summarizeBy: sum
+		sourceColumn: netrepaid_previous
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column new_client
+		dataType: string
+		lineageTag: 4961ba7c-59bf-423c-bf74-a9729c576ea5
+		summarizeBy: none
+		sourceColumn: new_client
+
+		annotation SummarizationSetBy = Automatic
+
+	column overpayments
+		dataType: double
+		formatString: #,0
+		lineageTag: e0e7d2cf-d656-46c6-b17e-97c68db3f891
+		summarizeBy: sum
+		sourceColumn: overpayments
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column payment_status
+		dataType: string
+		lineageTag: 2b8706eb-88c9-4554-9896-7515e5358026
+		summarizeBy: none
+		sourceColumn: payment_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column percent_repaid
+		dataType: double
+		lineageTag: 8099e645-4ec2-4a41-a02c-d01651fe01b0
+		summarizeBy: sum
+		sourceColumn: percent_repaid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column period
+		dataType: int64
+		lineageTag: dc98dfe0-c763-450f-a7a1-36b9283a9e59
+		summarizeBy: sum
+		sourceColumn: period
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product
+		dataType: string
+		lineageTag: f5f86c8a-13b8-4b23-823f-7aa37ab441b4
+		summarizeBy: none
+		sourceColumn: product
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 02d3eaea-0e0c-43e7-bc60-9b4779339382
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 633d0e20-763d-4bc6-8e49-c9fe6d8e8e61
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_amount
+		dataType: double
+		lineageTag: 53776bff-47e8-4762-9013-b3731a1dd146
+		summarizeBy: sum
+		sourceColumn: total_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_number_payments
+		dataType: int64
+		formatString: 0
+		lineageTag: 195c6658-7021-4eb3-8c46-45e823abc079
+		summarizeBy: sum
+		sourceColumn: total_number_payments
+
+		annotation SummarizationSetBy = Automatic
+
+	column transition_type
+		dataType: string
+		lineageTag: d06d4b49-566c-47b7-a1fd-f7d4a26419a2
+		summarizeBy: none
+		sourceColumn: transition_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column index_month =
+			
+			var ranx =
+			RANKX(
+			schedule,schedule[month_year_no],,ASC,Dense
+			)
+			return
+			ranx
+		lineageTag: 9fa645a8-b44b-4eb0-a3f1-dd6dd3884eed
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_year_no = FORMAT(schedule[monthly_installment_date],"yyyymm")
+		lineageTag: da0f261d-dd43-4a99-be0f-e365f9bd5a63
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_installment_paid =
+			
+			//var a11=CALCULATE(MAX(payments[cum_net_amount]),FILTER(ALL(payments),payments[account_id]=schedule[account_id]))
+			//var a1=SWITCH(TRUE(),
+			//a11>=schedule[expected_payment],schedule[installment_amount],
+			//schedule[net_cumulative_total_month]>=schedule[expected_payment],schedule[installment_amount],
+			//schedule[installment_amount]-(schedule[expected_payment]-schedule[net_cumulative_total_month]))
+			
+			var a2= SWITCH(TRUE(),
+			schedule[period]=0||schedule[monthly_installment_date]>schedule[end_date],0,
+			schedule[end_month]>=EOMONTH(TODAY(),0),schedule[month_installment_paid2],
+			schedule[total_amount]-schedule[downpayment_amount]>=schedule[expected_payment],schedule[installment_amount],
+			schedule[installment_amount]-(schedule[expected_payment]-(schedule[total_amount]-schedule[downpayment_amount]))<0,0,
+			schedule[installment_amount]-(schedule[expected_payment]-(schedule[total_amount]-schedule[downpayment_amount])))
+			return
+			a2
+		lineageTag: 59a865b6-5ae7-4adc-883b-7533804ca30b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actual_amount_paid = IF(schedule[period]<=0,0,schedule[balance_previous]-schedule[balance])
+		formatString: #,0
+		lineageTag: 9fb6af24-45b5-4db6-9571-41d455dc98ae
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column %collection_rate =
+			
+			var r=DIVIDE(schedule[cumulative_total_month],schedule[expected_payment],0)*100
+			var t=ROUND(r,2)
+			VAR f=IF(t<50,"<50%",
+			IF(t>=50&&t<69,"50-68%",
+			IF(t>=69&&t<=85,"69%-85%",
+			IF(t>85,">85%",BLANK()))))
+			return
+			f
+		lineageTag: ad2c7b3d-d37d-455e-a489-9d477346c8c5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_status_change =
+			
+			VAR CurrentSnapshot =
+			    CALCULATE(
+			        MAX(schedule[as_of]),
+			        ALL(schedule)
+			    )
+			
+			VAR a =
+			    CALCULATE(
+			        MIN(schedule[monthly_installment_date]),
+			        FILTER(
+			            ALLEXCEPT(schedule, schedule[account_id]),
+			            schedule[as_of] = CurrentSnapshot
+			                && schedule[status_change] = "Inactive"
+			        )
+			    )
+			
+			VAR b =
+			    IF(
+			        schedule[as_of] = CurrentSnapshot
+			            && schedule[monthly_installment_date] = a,
+			        1,
+			        0
+			    )
+			
+			RETURN
+			    b
+		formatString: #,0
+		lineageTag: 3644af22-f1fa-4050-80b1-e35ea3157301
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column exited_clients = IF(schedule[first_status_change]=1,"Yes","No")
+		lineageTag: 92090ecb-ae12-492c-bf69-c64cf784796b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column balance_previous_active = ```
+			
+			IF(
+			    schedule[status_change] = "active",
+			    schedule[balance_previous],
+			    BLANK()
+			)
+			
+			```
+		lineageTag: 3491c81e-5c02-4c41-891f-69d1cc500e70
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column current_month_before = IF(FORMAT(schedule[end_month],"yyyymm")<=FORMAT(TODAY(),"yyyymm"),1,0)
+		formatString: 0
+		lineageTag: 6e0a44fc-34be-4399-b12b-d926ef4de9b7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_started = FORMAT(schedule[installment_date],"yyyy-mm")
+		lineageTag: 6a425d0a-243a-45e6-8bd8-13370847dd90
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_30_days =
+			IF(schedule[arrears]=0,"Current",
+			 IF(schedule[days_late]<=30,"0-30",
+			IF(schedule[days_late]>30&&schedule[days_late]<=60,"31-60",
+			IF(schedule[days_late]>60&&schedule[days_late]<=90,"61-90",
+			IF(schedule[days_late]>90&&schedule[days_late]<=120,"91-120",
+			IF(schedule[days_late]>120&&schedule[days_late]<=180,"121-180",
+			IF(schedule[days_late]>180&&schedule[days_late]<=365,"181-365",
+			IF(schedule[days_late]>365,"365 +",BLANK()))))))))
+		lineageTag: 678126f5-453f-49d2-a40b-dd76c9615d4d
+		summarizeBy: none
+		sortByColumn: aging_30_days_index
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_30_days_index =
+			IF(schedule[arrears]=0,1,
+			 IF(schedule[days_late]<=30,2,
+			IF(schedule[days_late]>30&&schedule[days_late]<=60,3,
+			IF(schedule[days_late]>60&&schedule[days_late]<=90,4,
+			IF(schedule[days_late]>90&&schedule[days_late]<=120,5,
+			IF(schedule[days_late]>120&&schedule[days_late]<=180,6,
+			IF(schedule[days_late]>180&&schedule[days_late]<=365,7,
+			IF(schedule[days_late]>365,8,9))))))))
+		formatString: 0
+		lineageTag: d25632a4-302b-47cb-b976-3918f805c8cf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_movement_label =
+			IF(
+			    schedule[transition_type] <> "Invalid",
+			    schedule[aging_prev_label ] & " → " & schedule[aging_current_label],
+			    BLANK()
+			)
+		lineageTag: 33abf219-a317-452e-8608-e2cf06fd0d84
+		summarizeBy: none
+		sortByColumn: aging_movement_sort_label
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'aging_prev_label ' =
+			SWITCH(schedule[aging_previous_index],
+			    1, "Current",
+			    2, "1-30",
+			    3, "31-60",
+			    4, "61-90",
+			    5, "91-120",
+			    6, "121-180",
+			    7, "181-365",
+			    8, "365+",
+			    "Unknown"
+			)
+		lineageTag: 5631290e-8c42-4ff9-aab0-23cc715a8c7d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_current_label =
+			SWITCH(schedule[aging_30_days_index],
+			    1, "Current",
+			    2, "1-30",
+			    3, "31-60",
+			    4, "61-90",
+			    5, "91-120",
+			    6, "121-180",
+			    7, "181-365",
+			    8, "365+",
+			    "Unknown"
+			)
+		lineageTag: d02f662e-2b43-40a6-9341-963850a3067d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_movement_sort = schedule[aging_previous_index] * 10 + schedule[aging_30_days_index]
+		lineageTag: 9aabeee7-58a5-45bc-84e2-5935038867ed
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fpd_still =
+			
+			//clients that have not still made their first payment
+			 VAR a=IF(schedule[net_cumulative_total_month]< schedule[installment_amount] && NOT(ISBLANK(schedule[installment_date])) && schedule[status] = "Arrears" && schedule[arrears]>0,1,0)
+			 VAR b=IF(schedule[period]=1,schedule[fpd],a)
+			 RETURN
+			 b
+		formatString: #,0
+		lineageTag: aee91db8-1690-4e97-9f41-16824683d148
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column months_from_expected_to_current_month =
+			
+			VAR ExpectedDate = 'schedule'[installment_date]
+			RETURN
+			IF(
+			    ExpectedDate > TODAY(),
+			    BLANK(),
+			    DATEDIFF(
+			        ExpectedDate,
+			        TODAY(),
+			        MONTH
+			    )
+			)
+		formatString: 0
+		lineageTag: 58ffa223-9bb6-435d-b728-3cb1a1a96614
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_paid_parent
+		dataType: string
+		lineageTag: d3ad54ed-021f-481a-aea7-4a4f5523212e
+		summarizeBy: none
+		sourceColumn: aging_paid_parent
+
+		annotation SummarizationSetBy = Automatic
+
+	column collections_due
+		dataType: double
+		lineageTag: 800a23d0-573e-4cf0-b663-5f0218b2ef8c
+		summarizeBy: sum
+		sourceColumn: collections_due
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column monthly_expected_collections
+		dataType: double
+		formatString: #,0
+		lineageTag: 0d6198ea-3c65-4f15-b93b-acf1e3d805dd
+		summarizeBy: sum
+		sourceColumn: monthly_expected_collections
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column monthly_expected_collections_arrears
+		dataType: double
+		formatString: #,0
+		lineageTag: 4be47e32-f80b-4fb8-a27b-6b162574e624
+		summarizeBy: sum
+		sourceColumn: monthly_expected_collections_arrears
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column monthly_expected_collections_current
+		dataType: double
+		formatString: #,0
+		lineageTag: c560b8e1-fca3-461e-9aad-332db5717eef
+		summarizeBy: sum
+		sourceColumn: monthly_expected_collections_current
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column paid_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a4e5b809-8c03-4471-9e2c-3ab36a284ee5
+		summarizeBy: none
+		sourceColumn: paid_date
+
+		variation Variation
+			isDefault
+			relationship: 8c3c0f40-99e7-466a-adf8-9c97a7175355
+			defaultHierarchy: LocalDateTable_879da708-7de2-41ab-a720-50891f837d46.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month_payment_amount_advance
+		dataType: double
+		formatString: #,0
+		lineageTag: c75f5675-73b3-4487-897b-7f9e73035aac
+		summarizeBy: sum
+		sourceColumn: month_payment_amount_advance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column month_payment_amount_arrears
+		dataType: double
+		formatString: #,0
+		lineageTag: c1d353fc-a038-4be8-877c-917191ad51da
+		summarizeBy: sum
+		sourceColumn: month_payment_amount_arrears
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column month_payment_amount_current
+		dataType: double
+		formatString: #,0
+		lineageTag: 4a561527-9bb5-4250-aa5e-4c592648dd92
+		summarizeBy: sum
+		sourceColumn: month_payment_amount_current
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column actual_payment_allocated =
+			
+			VAR ThisAccount =
+			    schedule[account_id]
+			
+			VAR ThisDate =
+			    schedule[monthly_installment_date]
+			
+			-- Total actual payment for this client
+			VAR TotalActualPaid =
+			    CALCULATE(
+			        SUM(schedule[actual_amount_paid]),
+			        FILTER(
+			            ALL(schedule),
+			            schedule[account_id] = ThisAccount
+			        )
+			    )
+			
+			-- Expected amount before this schedule
+			VAR ExpectedBefore =
+			    CALCULATE(
+			        SUM(schedule[installment_amount]),
+			        FILTER(
+			            ALL(schedule),
+			            schedule[account_id] = ThisAccount
+			                && schedule[period] > 0
+			                && schedule[monthly_installment_date] < ThisDate
+			                && schedule[monthly_installment_date] <= schedule[end_date]
+			        )
+			    )
+			
+			-- Expected amount for this schedule
+			VAR ExpectedThisSchedule =
+			    IF(
+			        schedule[period] > 0
+			            && schedule[monthly_installment_date] <= schedule[end_date],
+			        schedule[installment_amount],
+			        0
+			    )
+			
+			-- Payment remaining after previous schedules
+			VAR RemainingPayment =
+			    TotalActualPaid - ExpectedBefore
+			
+			RETURN
+			    MAX(
+			        0,
+			        MIN(
+			            ExpectedThisSchedule,
+			            RemainingPayment
+			        )
+			    )
+		formatString: #,0
+		lineageTag: 233a903b-fd27-4c57-9a33-c5ccd8546daf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column product_category
+		dataType: string
+		lineageTag: 94d75930-8d34-4071-967b-59370db15e96
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: f2350f1f-c9af-406b-bf4d-c66b374e262c
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column as_of
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: f350e9ee-f659-4967-96a0-f1a0f51e90c4
+		summarizeBy: none
+		sourceColumn: as_of
+
+		variation Variation
+			isDefault
+			relationship: fc47203c-8596-4812-8c80-95177df83b2d
+			defaultHierarchy: LocalDateTable_59886745-5494-48fa-8df1-9f016d00a0f9.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column days_to_pay
+		dataType: int64
+		formatString: 0
+		lineageTag: 00d6b61f-215d-4c0f-b5c5-b234574c3f16
+		summarizeBy: sum
+		sourceColumn: days_to_pay
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_schedule
+		dataType: int64
+		formatString: 0
+		lineageTag: 349618d4-9ca9-4609-b950-dde2fb960a02
+		summarizeBy: sum
+		sourceColumn: has_schedule
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_installment_payment
+		dataType: double
+		lineageTag: 614572f7-3045-49ee-902f-278279f45c65
+		summarizeBy: sum
+		sourceColumn: month_installment_payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column source
+		dataType: string
+		lineageTag: 6632194d-c872-4537-a958-aea6020a408a
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column tranche
+		dataType: string
+		lineageTag: 1d70a1d5-45a8-42b3-abab-f529349297c9
+		summarizeBy: none
+		sourceColumn: tranche
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Sequence' =
+			
+			CALCULATE(
+			    MAX('schedule'[period]),
+			    ALLEXCEPT('schedule', 'schedule'[account_id])
+			)
+		formatString: 0
+		lineageTag: 24c0499d-955d-435a-be94-24f42a5f6de0
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column >90_>90 = ```
+			
+			IF(
+			    schedule[days_late_previous_month] > 90 &&
+			    schedule[days_late] > 90,
+			    1,
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 6b27a909-60f3-426a-b5a1-e4589fe7b3db
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column >90_<90 =
+			
+			IF(
+			    schedule[period] >= 0 &&
+			    schedule[days_late_previous_month] > 90 &&
+			    schedule[days_late] <= 90,
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: fe1dbcc5-6bd8-4f84-ac8b-c6944190887b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column <90_>90 = IF(schedule[days_late_previous_month]<=90&&schedule[days_late]>90,1,0)
+		formatString: 0
+		lineageTag: 8d4fa0f2-1c02-4a46-9793-85743dd914ca
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column refresh_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fd13fa66-52c8-48c6-834a-59a3a5ae0053
+		summarizeBy: none
+		sourceColumn: refresh_time
+
+		variation Variation
+			isDefault
+			relationship: a80bc828-88f6-4ded-9c46-b843af17d056
+			defaultHierarchy: LocalDateTable_394b5a9b-7990-47d3-ac59-23359a7bf57a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column aging_movement_sort_label =
+			
+			IF(
+			    schedule[transition_type] <> "Invalid",
+			    (schedule[aging_previous_index] * 100)
+			        + schedule[aging_30_days_index],
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 9e83966e-e97c-464b-9e04-374d2f8ed595
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_payment
+		dataType: double
+		formatString: #,0
+		lineageTag: 927b9bdc-6949-400b-863f-5cf0567fe3e9
+		summarizeBy: sum
+		sourceColumn: month_payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Amount Due Column' =
+			
+			[credit_sale_net] - [net_cumulative_total_month]
+		lineageTag: 52c99864-0f89-4ff1-9f9e-6d9faec75ec7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column kilimo_category
+		dataType: string
+		lineageTag: fb70fba6-a7a0-4638-824a-f76e43d72eff
+		summarizeBy: none
+		sourceColumn: kilimo_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_change
+		dataType: string
+		lineageTag: 5c0f495a-1160-4fa3-993d-7411e1edc85d
+		summarizeBy: none
+		sourceColumn: status_change
+
+		annotation SummarizationSetBy = Automatic
+
+	column expected_amount_ovw
+		dataType: double
+		lineageTag: ef69c565-76f1-4c03-91e8-d74ad33ba6e9
+		summarizeBy: sum
+		sourceColumn: expected_amount_ovw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column snapshot_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3728a136-d095-4424-936f-caed7a0a2cec
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+		variation Variation
+			isDefault
+			relationship: 9ea86ac0-b59c-4d3b-ab20-b1d35e60ae4a
+			defaultHierarchy: LocalDateTable_e685217e-5dbc-4cdb-97a8-66b86af9050e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column cash_value
+		dataType: double
+		lineageTag: f3792993-131b-4007-ba02-153a70359a16
+		summarizeBy: sum
+		sourceColumn: cash_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column writeOffReason
+		dataType: string
+		lineageTag: c13b46a1-62bf-4f96-8193-ca8d03097779
+		summarizeBy: none
+		sourceColumn: writeOffReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_selection
+		dataType: string
+		lineageTag: 2242503c-aacb-4be0-b7c0-3a9b00bdbc5a
+		summarizeBy: none
+		sourceColumn: snapshot_selection
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_day
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 51efd47f-8321-4365-abec-407baac46790
+		summarizeBy: none
+		sourceColumn: snapshot_day
+
+		variation Variation
+			isDefault
+			relationship: 4cf258c7-e750-477a-91ad-b951ec7bc281
+			defaultHierarchy: LocalDateTable_cacba071-cba6-4117-82cd-a7f9c0ae16a3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Months between this row's installment month and today. Column axis of the retention, attrition and reactivation pages (was Schedules[Months_From_Expected_To_CurrentMonth] in PAYG Overview).
+	column months_from_installment_to_current =
+			VAR d = schedule[monthly_installment_date]
+			RETURN IF(ISBLANK(d) || d > TODAY(), BLANK(), DATEDIFF(d, TODAY(), MONTH))
+		lineageTag: 16f05051-253b-49bf-89dc-e05c9b2720a9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	/// TRUE for months up to the plan's last installment (end_date). PAYG Overview's Schedules table only had installment months, so the transition measures count these rows only.
+	column is_within_plan = NOT ISBLANK(schedule[end_date]) && schedule[monthly_installment_date] <= schedule[end_date]
+		lineageTag: 3e199ddf-5dbc-4d08-912c-c14c72739377
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	partition schedule = m
+		mode: import
+		source =
+				let
+				    // ============================================================
+				    // 1. Current date and refresh time
+				    // ============================================================
+				    RefreshTime =
+				        DateTimeZone.FixedLocalNow(),
+				
+				    Today =
+				        Date.From(RefreshTime),
+				
+				    PreviousMonthEnd =
+				        Date.EndOfMonth(
+				            Date.AddMonths(Today, -1)
+				        ),
+				
+				    // ============================================================
+				    // 2. Connect to Power Platform Dataflows
+				    // ============================================================
+				    Source =
+				        PowerPlatform.Dataflows(null),
+				
+				    Workspaces =
+				        Source{[Id = "Workspaces"]}[Data],
+				
+				    Workspace =
+				        Workspaces{
+				            [workspaceId = "6b82f3d7-43f9-4345-8122-49f60c0278af"]
+				        }[Data],
+				
+				    // ============================================================
+				    // 3. LIVE
+				    // ============================================================
+				    LiveDataflow =
+				        Workspace{
+				            [dataflowId = "9f956b30-176a-4be3-8717-9193a789c47a"]
+				        }[Data],
+				
+				    Live =
+				        LiveDataflow{
+				            [entity = "vw_credit_schedule", version = ""]
+				        }[Data],
+				
+				    LiveRenamed =
+				        Table.RenameColumns(
+				            Live,
+				            {
+				                {"account_lifecycle_status", "status_change"},
+				                {"expected_amount", "expected_amount_ovw"}
+				            },
+				            MissingField.Ignore
+				        ),
+				
+				    LiveWithSource =
+				        Table.AddColumn(
+				            LiveRenamed,
+				            "source",
+				            each "live",
+				            type text
+				        ),
+				
+				    // Keep the exact refresh timestamp
+				    LiveWithAsOf =
+				        Table.AddColumn(
+				            LiveWithSource,
+				            "as_of",
+				            each RefreshTime,
+				            type datetimezone
+				        ),
+				
+				    // New date-only column: remains the same throughout the day
+				    LiveWithSnapshotDay =
+				        Table.AddColumn(
+				            LiveWithAsOf,
+				            "snapshot_day",
+				            each Today,
+				            type date
+				        ),
+				
+				    // ============================================================
+				    // 4. SNAPSHOT
+				    // ============================================================
+				    SnapshotDataflow =
+				        Workspace{
+				            [dataflowId = "c0688259-1aa8-472a-9bba-18a0a170b110"]
+				        }[Data],
+				
+				    Snapshot =
+				        SnapshotDataflow{
+				            [entity = "credit_schedule", version = ""]
+				        }[Data],
+				
+				    // ============================================================
+				    // 5. Filter snapshot to previous month-end
+				    // ============================================================
+				    SnapshotFiltered =
+				        Table.SelectRows(
+				            Snapshot,
+				            each
+				                [snapshot_date] <> null
+				                and Date.From([snapshot_date]) = PreviousMonthEnd
+				        ),
+				
+				    SnapshotRenamed =
+				        Table.RenameColumns(
+				            SnapshotFiltered,
+				            {
+				                {"account_lifecycle_status", "status_change"},
+				                {"expected_amount", "expected_amount_ovw"}
+				            },
+				            MissingField.Ignore
+				        ),
+				
+				    SnapshotWithSource =
+				        Table.AddColumn(
+				            SnapshotRenamed,
+				            "source",
+				            each "snapshot",
+				            type text
+				        ),
+				
+				    // Preserve the historical snapshot date
+				    SnapshotWithAsOf =
+				        Table.AddColumn(
+				            SnapshotWithSource,
+				            "as_of",
+				            each PreviousMonthEnd,
+				            type date
+				        ),
+				
+				    // Date-only column for consistent slicer selection
+				    SnapshotWithSnapshotDay =
+				        Table.AddColumn(
+				            SnapshotWithAsOf,
+				            "snapshot_day",
+				            each PreviousMonthEnd,
+				            type date
+				        ),
+				
+				    // ============================================================
+				    // 6. Append Live + Snapshot
+				    // ============================================================
+				    Combined =
+				        Table.Combine(
+				            {
+				                LiveWithSnapshotDay,
+				                SnapshotWithSnapshotDay
+				            }
+				        ),
+				
+				    // ============================================================
+				    // 7. Add Refresh Time
+				    // ============================================================
+				    AddedRefreshTime =
+				        Table.AddColumn(
+				            Combined,
+				            "refresh_time",
+				            each RefreshTime,
+				            type datetimezone
+				        ),
+				
+				    // ============================================================
+				    // 8. Add Snapshot Selection
+				    // ============================================================
+				    AddedSnapshotSelection =
+				        Table.AddColumn(
+				            AddedRefreshTime,
+				            "snapshot_selection",
+				            each
+				                if [source] = "live" then
+				                    "Latest (Live)"
+				                else
+				                    "Previous Month-End",
+				            type text
+				        ),
+				
+				    // ============================================================
+				    // 9. Set final data types
+				    // ============================================================
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            AddedSnapshotSelection,
+				            {
+				                {"monthly_installment_date", type date},
+				                {"installment_date", type date},
+				                {"snapshot_day", type date}
+				            }
+				        )
+				
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
