@@ -1,11 +1,11 @@
 # PAYG Dashboards – Ke: Architecture Review
 
 **Files reviewed:**
-- `dashboards/powerbi/ke/payg/PAYG Analysis.pbix` (194 MB, 15 pages)
-- `dashboards/powerbi/ke/payg/PAYG Overview.pbix` (415 MB, 9 pages)
+- `dashboards/powerbi/ke/payg/payg_v1/PAYG Analysis.pbix` (194 MB, 15 pages)
+- `dashboards/powerbi/ke/payg/payg_v1/PAYG Overview.pbix` (415 MB, 9 pages)
 
 **Date:** 2026-10-21
-**Method:** same as the [Sales Dashboard review](../../sales/review/2026-10-20_sales-dashboard-ke_review.md). I extracted the report definitions from each .pbix, opened each file in Power BI Desktop (2.159), and read the live model through the local Analysis Services engine (TOM + storage DMVs). Then I cross-referenced every visual field against the model. No changes were made to either file. Checklist references (e.g. *Model › Auto date/time*) point to [`_templates/STANDARDS.md`](../../../_templates/STANDARDS.md).
+**Method:** same as the [Sales Dashboard review](../../../sales/review/2026-10-20_sales-dashboard-ke_review.md). I extracted the report definitions from each .pbix, opened each file in Power BI Desktop (2.159), and read the live model through the local Analysis Services engine (TOM + storage DMVs). Then I cross-referenced every visual field against the model. No changes were made to either file. Checklist references (e.g. *Model › Auto date/time*) point to [`_templates/STANDARDS.md`](../../../../_templates/STANDARDS.md).
 
 ---
 
@@ -18,7 +18,7 @@ These two dashboards report on the same PAYG book from the same dataflows, but e
 | Size in memory | ~**495 MB** | ~**1,180 MB** |
 | Unused data | `Credit History` (**199 MB**, 1.9M rows) used by nothing; ~123 MB of unused column dictionaries | `installment_payments` (**202 MB**, 1.9M rows) used by nothing; ~320 MB of unused column dictionaries |
 | Auto date/time | **78** hidden tables (~27 MB) | **156** hidden tables (~48 MB) |
-| Broken objects | **9** columns/measures in error (missing `payments` / `collections` tables) → PTP metrics cannot compute; 4 visuals point at fields that no longer exist | 1 column in error (missing `discount_notes`); 2 bookmarks filter on a column that no longer exists |
+| Broken objects | **9** columns/measures in error (missing `payments` / `collections` tables) → PTP metrics cannot compute; 3 visuals point at 4 fields that no longer exist | 1 column in error (missing `discount_notes`); 2 bookmarks filter on a column that no longer exists |
 | Logic in the dashboard | 84 calculated columns on `payg_clients`; RM assignment hard-coded in DAX; CRB submission layout built in DAX | `Vintage_data` (1.6M rows, 57 calc columns) and `Schedules` (70 calc columns), both built row by row in DAX |
 | Relationships | 14: **11 bidirectional**, 2 many-to-many | 24: 4 bidirectional |
 | Report | 226 visuals, **133 slicers/filters**; 12 of 15 pages over the 6-slicer limit; 8 canvas sizes | 152 visuals (63 are nav buttons); 8 of 9 pages hidden behind button navigation; 1 canvas size |
@@ -108,7 +108,7 @@ Ordered by value for effort.
 2. **Analysis has three balances and two arrears figures, and mixes them.** `balance` (DAX), `PowerBI_balance` and `account_balance` (both from `accounts_mv`), `arrears` (source) and `arrears2` (DAX). The *Overview* page plots `arrears` in the combo chart and shows `arrears2` on the cards. The *CRB Report* uses source `arrears` with DAX `balance`. The `Balance Check` / `Balance Status` columns on *PAYG Clients* exist to spot where the DAX and system balances disagree, which **may suggest** known differences. Pick one source of truth (ideally the upstream value) and remove the others.
 3. **PTP metrics are broken.** `ptps[paymentDate]` and `ptps[paidAmount]` reference a `payments` table that is no longer in the model, so 5 dependent columns (`days_late`, `ptp_kept`, `weighted_days_late`, …) are in error. As a result, *PTP kept %*, *collection effective index* and *avg days to pay* cannot compute. The *PTP* page is hidden, which **may suggest** it was hidden because of this. `repossession_cost` (missing `collections` table) and `pending_dispatch` are also in error. *(Report › no visuals pointing to missing fields)*
 4. **Fix or remove broken visual references** *(Report › no visuals pointing to missing fields)*:
-   - Analysis: `collections[collection_id]` (*PTP Details* table), `payg_clients[expected_first_payment_year_month]` (*FPD Rates*), `payg_clients[next_of_kin]` and `[next_of_kin_phone_number]` (*Turaco Clients*, probably renamed to `Next_of_Kin_Name__c` / `…Phone_Number__c`), and 3 slicers bound to a deleted auto-date table (*FPD Rates*, *PTP*, *Turaco Clients*).
+   - Analysis: `collections[collection_id]` (filter on the *PTP Details* table), `payg_clients[expected_first_payment_year_month]` (filter on an *FPD Rates* pivot), and `payg_clients[next_of_kin]` and `[next_of_kin_phone_number]` (*Turaco Clients*, probably renamed to `Next_of_Kin_Name__c` / `…Phone_Number__c`).
    - Overview: `PAYG_clients[Discount Name]` (missing `discount_notes` table); 2 bookmarks filter on `company_region`, but the column is now `companyRegion`, so those bookmarks' Kenya filter **may silently do nothing**.
 5. **Smaller DAX defects** *(DAX checklist)*:
    - `% PAR30(days late) 2`: the denominator includes status "pending repossession on" but the numerator does not, which understates the ratio.

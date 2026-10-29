@@ -1,11 +1,11 @@
 # PAYG Dashboards – Ug: Architecture Review
 
 **Files reviewed:**
-- `dashboards/powerbi/ug/payg/PAYG Analysis - Ug.pbix` (191 MB, 10 pages)
-- `dashboards/powerbi/ug/payg/PAYG Overview - Ug.pbix` (149 MB, 6 pages)
+- `dashboards/powerbi/ug/payg/payg_v1/PAYG Analysis - Ug.pbix` (191 MB, 10 pages)
+- `dashboards/powerbi/ug/payg/payg_v1/PAYG Overview - Ug.pbix` (149 MB, 6 pages)
 
 **Date:** 2026-10-21
-**Method:** same as the [Ke PAYG review](../../../ke/payg/review/2026-10-21_payg-dashboards-ke_review.md). I extracted the report definitions, opened each file in Power BI Desktop and read the live model through TOM and the storage DMVs, then cross-referenced every visual field against the model. I also compared same-named measures and calculated columns with the Kenya files. No changes were made. Checklist references point to [`_templates/STANDARDS.md`](../../../_templates/STANDARDS.md).
+**Method:** same as the [Ke PAYG review](../../../../ke/payg/payg_v1/review/2026-10-21_payg-dashboards-ke_review.md). I extracted the report definitions, opened each file in Power BI Desktop and read the live model through TOM and the storage DMVs, then cross-referenced every visual field against the model. I also compared same-named measures and calculated columns with the Kenya files. No changes were made. Checklist references point to [`_templates/STANDARDS.md`](../../../../_templates/STANDARDS.md).
 
 These two files began as copies of the Kenya PAYG dashboards and have since diverged. Many findings in the Ke review apply here too and are only summarised below. This review focuses on what is different or worse for Uganda.
 
@@ -71,7 +71,7 @@ Dataflows (workspace 6b82f3d7…) — all entities hold every country
    Uganda's *Analysis* and *Overview* therefore count a different set of accounts, and a country comparison of PAR30 or FPD would compare differently defined numbers. The exclusion list in Overview contains names from the Kenya file, which **may suggest** it was copied across without a Uganda equivalent. Any Ugandan test accounts would then still be included. The 28-day month (`basic_measures[days]`) noted in the Ke review is also present here.
 2. **Broken references** *(Report › no visuals pointing to missing fields)*:
    - Analysis: `payg_clients[arrearsX]` in 2 visuals on the *Overview* page.
-   - Overview: `Schedules[monthly_expected_collections]`, `[…_current]` and `[…_arrears]` in 3 visuals on *Collections Over Time* (these columns exist on `Vintage_data`, not `Schedules`). There is also one reference to a deleted auto-date table.
+   - Overview: `Schedules[monthly_expected_collections]`, `[…_current]` and `[…_arrears]` in 3 visuals on *Collections Over Time* (these columns exist on `Vintage_data`, not `Schedules`).
    - Overview: the `Collections_summary` calculated table has 12 columns in error because `Vintage_data[YearMonth2]` no longer exists. No visual uses it, so it can be deleted.
 3. **DAX issues carried over from Kenya**: `% PAR30(days late) 2` uses a different status list in numerator and denominator; ratios use `/` instead of `DIVIDE()`; `Expected_start_pay_date` is a text date; `.[Date]` auto-date syntax in several columns. See Ke review item 5. *(DAX checklist)*
 

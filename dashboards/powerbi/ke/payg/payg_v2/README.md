@@ -2,7 +2,7 @@
 
 **Status:** prototype, built 2026-10-21. It has not been refreshed or published yet. See *Before using it* below.
 
-This project merges **PAYG Analysis** and **PAYG Overview** (Kenya) into one Power BI project. The calculation logic is copied unchanged from the two original files; the changes are listed below. It follows the plan in [`../review/2026-10-21_payg-dashboards-ke_review.md`](../review/2026-10-21_payg-dashboards-ke_review.md) (items 6, 7, 12 and part of 3.1).
+This project merges **PAYG Analysis** and **PAYG Overview** (Kenya) into one Power BI project. The calculation logic is copied unchanged from the two original files; the changes are listed below. It follows the plan in [`../payg_v1/review/2026-10-21_payg-dashboards-ke_review.md`](../payg_v1/review/2026-10-21_payg-dashboards-ke_review.md) (items 6, 7, 12 and part of 3.1).
 
 | | |
 |---|---|
@@ -16,8 +16,8 @@ This project merges **PAYG Analysis** and **PAYG Overview** (Kenya) into one Pow
 
 | Section | Pages | From |
 |---|---|---|
-| Portfolio (snapshot of today's balances) | Overview, PAYG Analysis, PAYG Clients, Written Off Clients, Late PAYG Analysis, RM Performance Matrix, Sales Agent Performance Matrix, FPD Summary, FPD Accounts, FPD Rates, Summary, PTP Details, Turaco Clients | PAYG Analysis |
-| Vintage (month-end cohorts) | Churn Rates, plus 8 pages reached from its menu: Add-ons comparison, Retention / 60 / 90, Attrition / 60 / 90, Reactivation | PAYG Overview |
+| Portfolio (snapshot of today's balances) | Overview, PAYG Analysis, PAYG Clients, Written Off Clients, Late PAYG Analysis, RM Performance Matrix, Sales Agent Performance Matrix, FPD, Summary, PTP Details, Turaco Clients | PAYG Analysis |
+| Vintage (month-end cohorts) | Churn Rates, Add-ons comparison | PAYG Overview |
 
 **Not carried over:**
 - **PTP**: hidden in the original, and its measures could not calculate (they need a `payments` table that is no longer in the model).
@@ -45,10 +45,10 @@ One semantic model (`PAYG Dashboard - Ke.SemanticModel`, Import mode) holding **
 |---|---|---|
 | Question it answers | Where does the book stand today? | How do cohorts behave month by month? |
 | Main table | `clients_snapshot` (one row per account) | `Vintage_data` (one row per account per month-end) |
-| Pages | Overview … Turaco Clients (13) | Churn Rates and its 8 menu pages (9) |
-| Measures | 24 (`clients_snapshot`, `basic_measures`) | 17 (`Vintage_data`, `Schedules`) |
+| Pages | Overview … Turaco Clients (11) | Churn Rates, Add-ons comparison (2) |
+| Measures | 24 (`clients_snapshot`, `basic_measures`) | 10 (`Vintage_data`) |
 
-Model size: 26 tables, 41 measures, 25 relationships, no auto-date tables. All sources are Power BI dataflows in workspace `6b82f3d7…`. Row counts will be added after the next refresh.
+Model size: 26 tables, 34 measures, 25 relationships, no auto-date tables. All sources are Power BI dataflows in workspace `6b82f3d7…`. Row counts will be added after the next refresh.
 
 ### Snapshot side
 
@@ -104,7 +104,7 @@ flowchart LR
 | `PAYG_clients` | Dimension | dataflow `accounts_mv` | One row per Kenya PAYG account with a payment | Excludes refunded/rejected, missing product or installment date, and the 5 named test/staff accounts. Write-off, completion and repossession dates are merged in from the status tables. |
 | `CH` | Fact | dataflow `installment_payments` | One row per payment allocated to an installment | Limited to accounts in `PAYG_clients` (inner join). 11 calculated columns (paid on time / early / late, running totals). |
 | `CH2` | Fact (copy) | DAX `SELECTCOLUMNS(CH, …)` | Same as `CH` | A narrower copy of `CH` related to `PAYG_clients2`. Candidate for removal once visuals point at `CH`. |
-| `Schedules` | Fact | dataflow `installment_schedules` | One row per expected installment | Filtered by merging with `PAYG_clients`. 28 calculated columns: aging at start/end of month, retention/attrition/reactivation flags. |
+| `Schedules` | Fact | dataflow `installment_schedules` | One row per expected installment | Filtered by merging with `PAYG_clients`. 1 calculated column (`date_expected`); the aging, retention, attrition and reactivation columns were removed with their pages. |
 | `Vintage_data` | Fact | DAX `CROSSJOIN(PAYG_clients2, Calendar_vd)` | One row per account per month-end, from the installment month up to 60 months | 23 calculated columns: cumulative expected/paid, balances, days in arrears, churn. **The heaviest table; it drives refresh time.** |
 | `PAYG_clients2` | Dimension | DAX `SUMMARIZE(PAYG_clients)` | One row per account | Account attributes for `Vintage_data`, `Schedules` and `CH2`, plus disbursement month and a 60-month cut-off date for the vintage grid. |
 | `Monthly_collected` | Aggregate | DAX `SUMMARIZE(CH)` | One row per paid date × region | Daily collections. |
@@ -154,11 +154,11 @@ Some queries read from others, so they cannot be split across models without mov
 | Embedded custom visuals removed (heatmap, vdt) | Unused, ~10 MB | None |
 | **Optimisation pass:** removed 80 measures, 147 calculated columns, 497 data columns, 3 user hierarchies, the remaining auto-date tables and 6 tables (`mart_cds_responses`, `aging_start`, `aging_end`, `sch`, `PAYG_clients3`, `Calendar_schedule_paid_date`) that no page, filter, bookmark or remaining calculation uses. Each Power Query table now ends with a *Columns used by the report* step, so only the needed columns load. | Size and refresh time | None: every field the report uses, and everything those fields depend on, is kept |
 
-**Model after optimisation:** 26 tables, 41 measures, 25 relationships. Two checks passed: every report field resolves, and the model compiles with no errors in the Power BI engine.
+**Model after optimisation:** 26 tables, 34 measures, 25 relationships. Two checks passed: every report field resolves, and the model compiles with no errors in the Power BI engine.
 
 ## Layout and theme
 
-Applied to all 22 pages, following [`_templates/BRAND.md`](../../../_templates/BRAND.md) and [`STANDARDS.md`](../../../_templates/STANDARDS.md):
+Applied to all pages (22 at the time; 15 now), following [`_templates/BRAND.md`](../../../_templates/BRAND.md) and [`STANDARDS.md`](../../../_templates/STANDARDS.md):
 
 - **Theme:** `SunCulture.json` (colour-blind-tested chart palette, Arial, `#F5F6F4` page background, white cards with no border or shadow). Literal per-visual fonts and colours were removed so the theme applies. Conditional formatting, queries and visual-level filters are unchanged.
 - **Header on every page:** SunCulture logo and accent line, page title, subtitle (`Kenya · PAYG · Portfolio snapshot` or `… · Vintage (month-end cohorts)`), and a *Data refreshed* card. The old upper-case title banners and the separate refresh card on Overview were replaced.
@@ -166,8 +166,19 @@ Applied to all 22 pages, following [`_templates/BRAND.md`](../../../_templates/B
 - **Filters:** at most 6 slicers per page, in one row under the header, ranked dates → region → county → product → status → RM/agent. **44 lower-priority slicers moved to the filter pane** as page filters (account ref, customer name, town, device ID, tranche, days late, …). The filter pane was hidden report-wide; it is now visible. No slicer had a saved selection, so moving them changes no numbers.
 - **Vintage pages** keep their left-hand menu and tab buttons, scaled to the new width.
 - **Lone score cards removed** from the top of the snapshot detail pages (PAYG Clients, Written Off Clients, Late PAYG Analysis, RM Performance, FPD Accounts, Summary, PTP Details, Turaco Clients), plus two cards on Overview that sat below the old canvas edge and were never visible.
+- **Vintage menu removed** (2026-10-22) from all 9 Vintage pages; their content now spans the full width. The 8 pages that were only reachable from the menu are no longer hidden and appear as normal page tabs. The *<30 / <60 / <90* tab buttons on the Retention and Attrition pages are kept; 6 of the 10 bookmarks are still used by them, and the other 4 (menu only) are left for review.
 - **Gaps closed:** after slicers moved out, each visual moves up until it meets the one above it (labels laid over buttons move with their button).
 - **Titles:** "Chart 1:" / "Table 2:" prefixes removed. Bars coloured by their value (gradients) now use the theme colour, per `BRAND.md`. KPI card values set to 18 pt so they fit.
+
+### Pages removed (2026-10-22)
+
+The team removed 7 Vintage pages: *Retention Rates*, *60/90 Retention Rates*, *Attrition Rates*, *60/90 Attrition Rates* and *Reactivation Rates*. The bookmarks that opened them and 3 stale bookmarks that pointed at pages no longer in the report were deleted (the report now has no bookmarks). A further optimisation pass then removed what only those pages used: 7 measures (the retention, attrition and reactivation rates), 27 calculated columns and 9 data columns. The model compiles with no errors (26 tables, 34 measures, 25 relationships) and is stored as TMDL.
+
+### FPD pages merged (2026-10-22)
+
+*FPD Rates*, *FPD Summary* and *FPD Accounts* are now one page, **FPD** (*First payment default*), in three sections: rates, balances, accounts. One slicer row (Sale Year, Region, County, Product, Status, Sales Agent); the other slicer fields are in the filter pane. Visuals that shared a title were renamed ("FPD rate by region" vs "FPD balance by region").
+
+Every visual keeps the filters it had on its old page: `total_payment > 0` (on all three pages) stays a page filter; `month_before = Yes` (Rates and Summary only) moved onto those 9 visuals; `fpd_client = 1` (Accounts only) moved onto the accounts table. Without this, the accounts-only filter would have pushed every FPD rate towards 100%. Slicers now filter all three sections at once, where before each slicer only filtered its own page. The report has 13 pages.
 
 ## Not done yet (deliberately)
 
