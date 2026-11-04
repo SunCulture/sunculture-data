@@ -1,0 +1,60 @@
+table 'SDG Years'
+	lineageTag: 9d2e7a41-3b6c-4f1e-8a57-5e1de5d0a100
+
+	column 'SDG Years'
+		dataType: string
+		lineageTag: 9d2e7a41-3b6c-4f1e-8a57-5e1de5d0a101
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'SDG Years Order'
+
+		relatedColumnDetails
+			groupByColumn: 'SDG Years Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SDG Years Fields'
+		dataType: string
+		isHidden
+		lineageTag: 9d2e7a41-3b6c-4f1e-8a57-5e1de5d0a102
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'SDG Years Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SDG Years Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9d2e7a41-3b6c-4f1e-8a57-5e1de5d0a103
+		summarizeBy: none
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Field parameter for the year columns of the SDG summary: only years up to today, so the new year appears on the first refresh in January
+	partition 'SDG Years' = calculated
+		mode: import
+		source =
+				FILTER (
+				    {
+				        ( "2024", NAMEOF ( 'ESG Measures'[SDG 2024] ), 2024 ),
+				        ( "2025", NAMEOF ( 'ESG Measures'[SDG 2025] ), 2025 ),
+				        ( "2026", NAMEOF ( 'ESG Measures'[SDG 2026] ), 2026 ),
+				        ( "2027", NAMEOF ( 'ESG Measures'[SDG 2027] ), 2027 ),
+				        ( "2028", NAMEOF ( 'ESG Measures'[SDG 2028] ), 2028 ),
+				        ( "2029", NAMEOF ( 'ESG Measures'[SDG 2029] ), 2029 ),
+				        ( "2030", NAMEOF ( 'ESG Measures'[SDG 2030] ), 2030 )
+				    },
+				    [Value3] <= YEAR ( TODAY () )
+				)
+
+	annotation PBI_Id = 9d2e7a413b6c4f1e8a575e1de5d0a104
+
