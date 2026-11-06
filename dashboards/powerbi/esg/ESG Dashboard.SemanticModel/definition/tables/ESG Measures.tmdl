@@ -7,7 +7,8 @@ table 'ESG Measures'
 		displayFolder: 0 · Portfolio
 		lineageTag: 46d86962-eab4-4908-be1f-debcb123971c
 
-	measure 'Active Customers' = CALCULATE ( DISTINCTCOUNT ( accounts_mv[account_id] ), accounts_mv[funnel_status] = "Active" )
+	/// Accounts whose status counts as active: Complete, Complete - Over Paid, Current, Arrears, Advance, Repossession On Hold, Subscription Active
+	measure 'Active Customers' = CALCULATE ( DISTINCTCOUNT ( accounts_mv[account_id] ), accounts_mv[status] IN { "Complete", "Completed", "Complete - Over Paid", "Complete Overpaid", "Current", "Arrears", "Advance", "Repossession On Hold", "Subscription Active" } )
 		formatString: #,0
 		displayFolder: 0 · Portfolio
 		lineageTag: 5152c742-0954-49cf-9c1f-1aa2e65c4e5d
@@ -45,7 +46,8 @@ table 'ESG Measures'
 		displayFolder: SDG 1 & 3 · Inclusion & insurance
 		lineageTag: a1d27cfc-cb99-4b7f-899a-008af85bb472
 
-	measure 'Kilimo Boost Customers' = CALCULATE ( DISTINCTCOUNT ( accounts_mv[account_id] ), accounts_mv[product] = "Kilimo Boost" ) + 0
+	/// Kilimo Boost input financing is sold as product "Farm Products"
+	measure 'Kilimo Boost Customers' = CALCULATE ( DISTINCTCOUNT ( accounts_mv[account_id] ), accounts_mv[product] = "Farm Products" ) + 0
 		formatString: #,0
 		displayFolder: SDG 2 · Food security
 		lineageTag: 18d21333-b8b2-41b5-9aac-67f38001a822
@@ -208,34 +210,34 @@ table 'ESG Measures'
 		displayFolder: SDG 8 · Workforce
 		lineageTag: d544170f-f236-42e3-9a6e-ca28eed78a71
 
-	/// Value of the KPI on the current SDG Summary row; the date window comes from SDG Baseline / SDG Score
+	/// Value of the KPI on the current SDG Summary row; the date window comes from SDG Year-End / SDG Score
 	measure 'SDG KPI Value' =
 			VAR _k = SELECTEDVALUE ( 'SDG Summary'[Key] )
 			VAR _asOf = MAX ( 'Calendar'[Date] )
-			VAR _unitDays =
-			    SUMX (
-			        CALCULATETABLE ( accounts_mv, accounts_mv[engineer_recommendation] = "Installed", accounts_mv[jsf_type] = "INSTALLATION" ),
-			        VAR _s = IF ( NOT ISBLANK ( accounts_mv[jsf_completed_date] ), accounts_mv[jsf_completed_date], accounts_mv[createdAt] )
-			        VAR _s2 = IF ( _s < DATE ( 2016, 1, 1 ), DATE ( 2016, 1, 1 ), _s )
-			        RETURN IF ( _s2 > _asOf, 0, DATEDIFF ( _s2, _asOf, DAY ) )
-			    )
-			VAR _mwh = CALCULATE ( [Avg kWh per Device-Day], REMOVEFILTERS ( 'Calendar' ) ) * _unitDays / 1000
 			RETURN
 			    SWITCH (
 			        _k,
 			        "first_time", [% First-Time Borrowers],
 			        "ins_cov", [Insurance Coverage %],
 			        "kilimo", [Kilimo Boost Customers],
+			        "active", [Active Customers],
+			        "sales", [Total Sales],
+			        "climate", [% Climate Insurance],
+			        "device", [% Device Insurance],
+			        "hospicash", [Hospicash Customers],
+			        "life", [Life Cover Families],
+			        "other_income", [% Additional Income Source],
 			        "insured", [Insured Customers],
 			        "women_sales", [% Women Sales Agents],
 			        "female_cust", [% Female Customers],
 			        "female_payg", [% Female PAYG Customers],
 			        "recruit", CALCULATE ( [% Women in Workforce], KEEPFILTERS ( 'Calendar'[Year] = YEAR ( _asOf ) ) ),
-			        "retain_f", CALCULATE ( [Retention Rate], vw_employees[employee_gender] = "Female" ),
+			        "women_lead", [% Women in Leadership],
 			        "hours", [Daily Hours Saved per Woman],
+			        "tanks", [Water Tank Customers],
 			        "units", [Installed Units],
 			        "kw", [Clean Energy Capacity (kW)],
-			        "mwh", _mwh,
+			        "mwh", [Clean Energy Generated (MWh)],
 			        "diesel", [% Customers Replacing Fossil-Fuel Pumps],
 			        "retention", [Retention Rate],
 			        "turnover", [Turnover Rate],
@@ -243,23 +245,26 @@ table 'ESG Measures'
 			        "connect", [Device Connectivity Rate],
 			        "util", [Device Utilization Rate],
 			        "pumphrs", [Avg Daily Pumping Hours],
-			        "co2", _mwh * 0.8
+			        "co2", [CO2 Avoided (t)]
 			    )
 		displayFolder: SDG Summary
 		lineageTag: 14529bbc-40c7-4a92-a9a8-2b270662324b
 
-	/// Score = position at the end of the selected year (today if none / current year)
-	measure 'SDG Score' =
-			VAR _k = SELECTEDVALUE ( 'SDG Summary'[Key] )
+	/// Position at 31 Dec of the year in the filter context (today for the current year). Current-status KPIs and Pending notes only show in the current year, because no history is kept
+	measure 'SDG Year-End' =
 			VAR _u = SELECTEDVALUE ( 'SDG Summary'[Unit] )
-			VAR _end = IF ( ISFILTERED ( 'Calendar'[Year] ), MIN ( DATE ( MAX ( 'Calendar'[Year] ), 12, 31 ), TODAY () ), TODAY () )
+			VAR _b = SELECTEDVALUE ( 'SDG Summary'[Basis] )
+			VAR _y = MAX ( 'Calendar'[Year] )
+			VAR _isCurrent = _y = YEAR ( TODAY () )
+			VAR _end = MIN ( DATE ( _y, 12, 31 ), TODAY () )
 			VAR _v = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _end )
 			RETURN
 			    IF (
 			        HASONEVALUE ( 'SDG Summary'[Key] ),
 			        SWITCH (
 			            TRUE (),
-			            _k = "pending", SELECTEDVALUE ( 'SDG Summary'[Note] ),
+			            _b = "Pending", IF ( _isCurrent, SELECTEDVALUE ( 'SDG Summary'[Note] ), "–" ),
+			            _b = "Snapshot" && NOT _isCurrent, "–",
 			            ISBLANK ( _v ), "–",
 			            _u = "%", FORMAT ( _v, "0.0%" ),
 			            _u = "h", FORMAT ( _v, "0.0" ) & " hrs",
@@ -269,41 +274,185 @@ table 'ESG Measures'
 			            FORMAT ( _v, "#,0" )
 			        )
 			    )
-		displayFolder: SDG Summary
-		lineageTag: d0bb19cb-afab-4f57-bdc5-32249feb9b96
-
-	/// Baseline = position at 31 Dec of the year before the Score date; "–" for current-status KPIs with no history
-	measure 'SDG Baseline' =
-			VAR _k = SELECTEDVALUE ( 'SDG Summary'[Key] )
-			VAR _u = SELECTEDVALUE ( 'SDG Summary'[Unit] )
-			VAR _end = IF ( ISFILTERED ( 'Calendar'[Year] ), MIN ( DATE ( MAX ( 'Calendar'[Year] ), 12, 31 ), TODAY () ), TODAY () )
-			VAR _base = DATE ( YEAR ( _end ) - 1, 12, 31 )
-			VAR _v = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _base )
-			RETURN
-			    IF (
-			        HASONEVALUE ( 'SDG Summary'[Key] ),
-			        SWITCH (
-			            TRUE (),
-			            SELECTEDVALUE ( 'SDG Summary'[Basis] ) IN { "Pending", "Snapshot" }, "–",
-			            ISBLANK ( _v ), "–",
-			            _u = "%", FORMAT ( _v, "0.0%" ),
-			            _u = "h", FORMAT ( _v, "0.0" ) & " hrs",
-			            _u = "kW", FORMAT ( _v, "#,0" ) & " kW",
-			            _u = "MWh", FORMAT ( _v, "#,0" ) & " MWh",
-			            _u = "t", FORMAT ( _v, "#,0" ) & " t",
-			            FORMAT ( _v, "#,0" )
-			        )
-			    )
+		isHidden
 		displayFolder: SDG Summary
 		lineageTag: 5c681a4f-5164-41b1-954b-89d33b52e0c9
 
 	measure 'SDG Summary Note' =
 			VAR _end = IF ( ISFILTERED ( 'Calendar'[Year] ), MIN ( DATE ( MAX ( 'Calendar'[Year] ), 12, 31 ), TODAY () ), TODAY () )
 			RETURN
-			    "Baseline = position at " & FORMAT ( DATE ( YEAR ( _end ) - 1, 12, 31 ), "d mmm yyyy" ) & "   ·   Score = position at " & FORMAT ( _end, "d mmm yyyy" )
+			    "Year columns = position at 31 Dec; current year = position at " & FORMAT ( _end, "d mmm yyyy" )
 			        & "   ·   – = current-status KPI (no history kept)   ·   Pending = not yet in AMT, CDS or IoT data"
 		displayFolder: SDG Summary
 		lineageTag: e042e9dd-7ef2-487d-acf4-19c0b915c95a
+
+	/// Fleet IoT kWh per device-day × days each installed unit has been in the field up to the period end (today at most)
+	measure 'Clean Energy Generated (MWh)' =
+			VAR _asOf = MIN ( MAX ( 'Calendar'[Date] ), TODAY () )
+			VAR _unitDays =
+			    CALCULATE (
+			        SUMX (
+			            accounts_mv,
+			            VAR _s = IF ( NOT ISBLANK ( accounts_mv[jsf_completed_date] ), accounts_mv[jsf_completed_date], accounts_mv[createdAt] )
+			            VAR _s2 = IF ( _s < DATE ( 2016, 1, 1 ), DATE ( 2016, 1, 1 ), _s )
+			            RETURN IF ( _s2 > _asOf, 0, DATEDIFF ( _s2, _asOf, DAY ) )
+			        ),
+			        accounts_mv[engineer_recommendation] = "Installed",
+			        accounts_mv[jsf_type] = "INSTALLATION",
+			        REMOVEFILTERS ( 'Calendar' ),
+			        'Calendar'[Date] <= _asOf
+			    )
+			RETURN
+			    CALCULATE ( [Avg kWh per Device-Day], REMOVEFILTERS ( 'Calendar' ) ) * _unitDays / 1000
+		formatString: #,0
+		displayFolder: SDG 7 & 13 · Clean energy & carbon
+		lineageTag: 295406f1-399a-44d9-a619-bdb0a8edcce6
+
+	/// Clean energy × 0.8 t CO2/MWh – UNFCCC AMS-I.A default for displaced diesel generation
+	measure 'CO2 Avoided (t)' = [Clean Energy Generated (MWh)] * 0.8
+		formatString: #,0
+		displayFolder: SDG 7 & 13 · Clean energy & carbon
+		lineageTag: 9aa86828-9ac3-4b43-92f8-694e05ddb85a
+
+	/// One measure per year; the 'SDG Years' field parameter shows those up to the current year. After 2030, copy SDG 2030 and add a row to 'SDG Years'
+	measure 'SDG 2024' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2024 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2024e5d0a024
+
+	measure 'SDG 2025' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2025 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2025e5d0a025
+
+	/// UN colour of the SDG on the current row (conditional formatting)
+	measure 'SDG Colour' = SELECTEDVALUE ( 'SDG Summary'[SDG Colour] )
+		displayFolder: SDG Summary · Colours
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-c010e5d0a004
+
+	/// Blank cell for the coloured bar before the SDG column
+	measure 'SDG Bar' = IF ( HASONEVALUE ( 'SDG Summary'[Key] ), " " )
+		displayFolder: SDG Summary · Colours
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-ba20e5d0a007
+
+	/// Distinct customers with an account for any product whose name contains "tank" (water storage)
+	measure 'Water Tank Customers' = CALCULATE ( DISTINCTCOUNT ( accounts_mv[customerId] ), FILTER ( VALUES ( accounts_mv[product] ), CONTAINSSTRING ( accounts_mv[product], "tank" ) ) ) + 0
+		formatString: #,0
+		displayFolder: SDG 6 · Clean water
+		lineageTag: 4b7e2c91-6a3d-4f58-b0c2-7d1ae5d0a009
+
+	measure 'SDG 2026' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2026 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2026e5d0a026
+
+	measure 'SDG 2027' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2027 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2027e5d0a027
+
+	measure 'SDG 2028' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2028 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2028e5d0a028
+
+	measure 'SDG 2029' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2029 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2029e5d0a029
+
+	measure 'SDG 2030' = CALCULATE ( [SDG Year-End], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Year] = 2030 )
+		displayFolder: SDG Summary · Years
+		lineageTag: 7f3c2a10-5b1e-4c8d-9a21-2030e5d0a030
+
+	/// Leaders = staff whose AMT id is someone's supervisor (employee_supervisor_id); women ÷ all leaders
+	measure '% Women in Leadership' =
+			VAR _supervisorIds = CALCULATETABLE ( VALUES ( vw_employees[employee_supervisor_id] ), REMOVEFILTERS ( vw_employees ) )
+			VAR _leaders = FILTER ( VALUES ( vw_employees[employee_amt_id] ), vw_employees[employee_amt_id] IN _supervisorIds )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( DISTINCTCOUNT ( vw_employees[employee_amt_id] ), _leaders, vw_employees[employee_gender] = "Female" ),
+			        CALCULATE ( DISTINCTCOUNT ( vw_employees[employee_amt_id] ), _leaders )
+			    )
+		formatString: 0.0%
+		displayFolder: SDG 5 · Gender
+		lineageTag: 4b7e2c91-6a3d-4f58-b0c2-7d1ae5d0a010
+
+	/// CDS: customers naming another household income source ÷ customers who answered (blank, "None", "No" and "N/A" count as no other source)
+	measure '% Additional Income Source' =
+			VAR _leads = CALCULATETABLE ( VALUES ( accounts_mv[leadId] ) )
+			VAR _answered = CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[other_sources_of_income_of_the_household_c] <> "", TREATAS ( _leads, mart_cds_responses[leadId] ) )
+			VAR _other =
+			    CALCULATE (
+			        DISTINCTCOUNT ( mart_cds_responses[leadId] ),
+			        mart_cds_responses[other_sources_of_income_of_the_household_c] <> "",
+			        NOT mart_cds_responses[other_sources_of_income_of_the_household_c] IN { "None", "No", "N/A", "NA", "Nil", "0" },
+			        TREATAS ( _leads, mart_cds_responses[leadId] )
+			    )
+			RETURN
+			    DIVIDE ( _other, _answered )
+		formatString: 0.0%
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 4b7e2c91-6a3d-4f58-b0c2-7d1ae5d0a011
+
+	/// A sale is an account with a sale date and a full deposit date, counted on the sale date
+	measure 'Total Sales' =
+			VAR _from = MIN ( 'Calendar'[Date] )
+			VAR _to = MAX ( 'Calendar'[Date] )
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT ( accounts_mv[account_id] ),
+			        REMOVEFILTERS ( 'Calendar' ),
+			        NOT ISBLANK ( accounts_mv[sale_date] ),
+			        NOT ISBLANK ( accounts_mv[fullDepositDate] ) || NOT ISBLANK ( accounts_mv[Full_Deposit_Date] ),
+			        accounts_mv[sale_date] >= _from,
+			        accounts_mv[sale_date] < _to + 1
+			    ) + 0
+		formatString: #,0
+		displayFolder: 0 · Portfolio
+		lineageTag: 3148f847-bd04-4b5e-b553-9a37d912c438
+
+	/// Distinct ID numbers with an ACTIVE policy dated on or before the end of the period; filter policies[Cover Type] to pick the cover
+	measure 'Active Policyholders' =
+			VAR _end = MAX ( 'Calendar'[Date] )
+			RETURN
+			    IF (
+			        ISFILTERED ( Country[Country] ),
+			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[status] = "ACTIVE", policies[Policy Date] <= _end, TREATAS ( CALCULATETABLE ( VALUES ( accounts_mv[identification_number] ), REMOVEFILTERS ( 'Calendar' ) ), policies[idNumber] ) ),
+			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[status] = "ACTIVE", policies[Policy Date] <= _end )
+			    ) + 0
+		formatString: #,0
+		isHidden
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 541b6950-55a5-4701-9b4f-34cb8f032e86
+
+	/// APA, ACRE Africa and El Nino climate cover
+	measure 'Climate Insured Customers' = CALCULATE ( [Active Policyholders], policies[Cover Type] = "Climate" )
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 0c64663e-0851-4b3b-8e0d-fe613726a5e1
+
+	measure '% Climate Insurance' = DIVIDE ( [Climate Insured Customers], [Active Customers] )
+		formatString: 0.0%
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: b3912a48-1782-4135-80d8-74b504576e2a
+
+	/// SunCulture Gadget Insurance
+	measure 'Device Insured Customers' = CALCULATE ( [Active Policyholders], policies[Cover Type] = "Device" )
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 2c78c623-701d-492d-aa16-6ff03b66daca
+
+	measure '% Device Insurance' = DIVIDE ( [Device Insured Customers], [Active Customers] )
+		formatString: 0.0%
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: d7612ff2-8e28-42de-a37f-3ba06ec5b24d
+
+	/// Basic Family Care Cover (KE & UG), underwritten by Turaco
+	measure 'Hospicash Customers' = CALCULATE ( [Active Policyholders], policies[Cover Type] = "Hospicash" )
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 02778c15-e49c-41a3-9820-920e24de0676
+
+	/// Credit Linked cover (KE & UG)
+	measure 'Life Cover Families' = CALCULATE ( [Active Policyholders], policies[Cover Type] = "Life" )
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 31ee91ad-1d7e-408c-b135-ccf62c304753
 
 	column Placeholder
 		dataType: string
