@@ -1,32 +1,7 @@
 table policies
 	lineageTag: 36072268-cff9-4846-8709-5f57b73d4b5b
 
-	column createdAt
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 07652ccd-517c-4836-9803-f29bcc48092f
-		summarizeBy: none
-		sourceColumn: createdAt
-
-		annotation SummarizationSetBy = Automatic
-
-	column customerId
-		dataType: string
-		lineageTag: 80d8ca22-8d7c-43f9-bad5-18196a35e178
-		summarizeBy: none
-		sourceColumn: customerId
-
-		annotation SummarizationSetBy = Automatic
-
-	column dateActivated
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 664a7754-cefd-4b69-8110-bfd79f1a1c8d
-		summarizeBy: none
-		sourceColumn: dateActivated
-
-		annotation SummarizationSetBy = Automatic
-
+	/// Insurance customer ID number (matched to accounts_mv[identification_number] when a country is picked)
 	column idNumber
 		dataType: string
 		lineageTag: 1124256c-f46a-465a-9563-93c541c72277
@@ -35,56 +10,22 @@ table policies
 
 		annotation SummarizationSetBy = Automatic
 
-	column policyType
+	/// Hospicash (Family Care), Life (Credit Linked), Device (Gadget), Climate, Other or Unmatched, from the product name
+	column 'Cover Type'
 		dataType: string
-		lineageTag: 870b0a9b-b1ae-4e23-b05a-e6f6d19f732c
-		summarizeBy: none
-		sourceColumn: policyType
-
-		annotation SummarizationSetBy = Automatic
-
-	column productId
-		dataType: string
-		lineageTag: 95722a9d-5b7d-4770-ba1d-368f00478a26
-		summarizeBy: none
-		sourceColumn: productId
-
-		annotation SummarizationSetBy = Automatic
-
-	column status
-		dataType: string
-		lineageTag: 1d5a15c5-bee6-4e28-9775-b45c111603cb
-		summarizeBy: none
-		sourceColumn: status
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Cover the policy's product belongs to, from products[name]: Basic Family Care = Hospicash (Turaco), Credit Linked = Life, Gadget = Device, APA / ACRE / El Nino = Climate
-	column 'Cover Type' =
-			VAR _name = MAXX ( FILTER ( products, products[id] = TRIM ( policies[productId] ) ), products[name] )
-			RETURN
-			    SWITCH (
-			        TRUE (),
-			        CONTAINSSTRING ( _name, "Family Care" ), "Hospicash",
-			        CONTAINSSTRING ( _name, "Credit Linked" ), "Life",
-			        CONTAINSSTRING ( _name, "Gadget" ), "Device",
-			        CONTAINSSTRING ( _name, "Climate" ), "Climate",
-			        ISBLANK ( _name ), "Unmatched",
-			        "Other"
-			    )
 		lineageTag: dcc1c2e7-adac-4ad7-90ce-e432e774b695
 		summarizeBy: none
+		sourceColumn: Cover Type
 
 		annotation SummarizationSetBy = Automatic
 
-	/// First start of the cover (activation date, or creation date when not activated), used for the year-end cut-off
-	column 'Policy Date' =
-			VAR _d = COALESCE ( policies[dateActivated], policies[createdAt] )
-			RETURN
-			    IF ( NOT ISBLANK ( _d ), DATE ( YEAR ( _d ), MONTH ( _d ), DAY ( _d ) ) )
+	/// First start of this cover for the person (activation date, else created date)
+	column 'Policy Date'
+		dataType: dateTime
 		formatString: Long Date
 		lineageTag: b215bb35-8e89-403e-9622-a51e1ad95b2f
 		summarizeBy: none
+		sourceColumn: Policy Date
 
 		annotation SummarizationSetBy = Automatic
 
@@ -97,17 +38,26 @@ table policies
 				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
 				    #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"]}[Data],
 				    policies_ = #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"{[entity="policies",version=""]}[Data],
-				    // Only the columns the ESG measures use; the rest made the table too big
-				    #"Kept Columns" = Table.SelectColumns ( policies_, {"customerId", "idNumber", "productId", "policyType", "status", "createdAt", "dateActivated"} ),
+				    // Only the columns needed to place each person's cover
+				    #"Kept Columns" = Table.SelectColumns ( policies_, {"idNumber", "productId", "status", "createdAt", "dateActivated"} ),
 				    // The dashboard only counts ACTIVE cover
 				    #"Active Only" = Table.SelectRows ( #"Kept Columns", each [status] <> null and Text.Upper ( Text.Trim ( [status] ) ) = "ACTIVE" ),
-				    #"With Start" = Table.AddColumn ( #"Active Only", "policyStart", each if [dateActivated] <> null then [dateActivated] else [createdAt] ),
-				    // Hospicash and Life add a row at every renewal; keep one row per person and product, dated from the first start
-				    #"One Row per Cover" = Table.Group ( #"With Start", {"idNumber", "customerId", "productId", "policyType", "status"}, {
-				        {"dateActivated", each List.Min ( [policyStart] ), type nullable datetime},
-				        {"createdAt", each List.Min ( [createdAt] ), type nullable datetime}
-				    } ),
-				    #"Typed" = Table.TransformColumnTypes ( #"One Row per Cover", {{"dateActivated", type datetime}, {"createdAt", type datetime}} )
+				    // Cover type from the product name (was a DAX column worked out row by row)
+				    ProductNames = Table.Buffer ( Table.SelectColumns ( products, {"id", "name"} ) ),
+				    #"With Key" = Table.AddColumn ( #"Active Only", "pid", each if [productId] = null then null else Text.Trim ( Text.From ( [productId] ) ), type nullable text ),
+				    #"With Product" = Table.NestedJoin ( #"With Key", {"pid"}, ProductNames, {"id"}, "p", JoinKind.LeftOuter ),
+				    #"With Name" = Table.ExpandTableColumn ( #"With Product", "p", {"name"}, {"productName"} ),
+				    #"With Cover" = Table.AddColumn ( #"With Name", "Cover Type", each
+				        if [productName] = null then "Unmatched"
+				        else if Text.Contains ( [productName], "Family Care", Comparer.OrdinalIgnoreCase ) then "Hospicash"
+				        else if Text.Contains ( [productName], "Credit Linked", Comparer.OrdinalIgnoreCase ) then "Life"
+				        else if Text.Contains ( [productName], "Gadget", Comparer.OrdinalIgnoreCase ) then "Device"
+				        else if Text.Contains ( [productName], "Climate", Comparer.OrdinalIgnoreCase ) then "Climate"
+				        else "Other", type text ),
+				    #"With Start" = Table.AddColumn ( #"With Cover", "start", each if [dateActivated] <> null then [dateActivated] else [createdAt] ),
+				    // One row per person and cover type, dated from the first start (renewals and repeat products collapse)
+				    #"One Row per Person and Cover" = Table.Group ( #"With Start", {"idNumber", "Cover Type"}, {{"Policy Date", each Date.From ( List.Min ( [start] ) ), type nullable date}} ),
+				    #"Typed" = Table.TransformColumnTypes ( #"One Row per Person and Cover", {{"idNumber", type text}, {"Cover Type", type text}, {"Policy Date", type date}} )
 				in
 				    #"Typed"
 

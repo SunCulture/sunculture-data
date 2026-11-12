@@ -25,6 +25,7 @@ ref table Country
 ref table 'Product Watts'
 ref table 'SDG Summary'
 ref table 'SDG Years'
+ref table 'SDG Period'
 ref table policies
 ref table products
 

@@ -102,6 +102,9 @@ table 'SDG Summary'
 
 		annotation SummarizationSetBy = Automatic
 
+
+
+
 	partition 'SDG Summary' = calculated
 		mode: import
 		source =
@@ -109,46 +112,69 @@ table 'SDG Summary'
 				DATATABLE (
 				    "Order", INTEGER, "SDG No", INTEGER, "SDG", STRING, "SDG Display", STRING, "KPI", STRING, "Key", STRING, "Unit", STRING, "Basis", STRING, "Note", STRING,
 				    {
-						{ 1, 1, "SDG 1 – No Poverty", "SDG 1 – No Poverty", "% customers accessing PAYG / credit for the first time", "first_time", "%", "Cumulative", "" },
-						{ 2, 1, "SDG 1 – No Poverty", "", "% customers covered under climate insurance (APA, ACRE, El Niño)", "climate", "%", "Cumulative", "" },
-						{ 3, 1, "SDG 1 – No Poverty", "", "% customers covered under device insurance (SunCulture Gadget)", "device", "%", "Cumulative", "" },
-						{ 4, 1, "SDG 1 – No Poverty", "", "% farmers trained on climate resilience (LearnInk)", "pending", "", "Pending", "Pending – LearnInk training data" },
-						{ 5, 1, "SDG 1 – No Poverty", "", "% customers with an additional source of household income", "other_income", "%", "Cumulative", "" },
-						{ 6, 2, "SDG 2 – Zero Hunger", "SDG 2 – Zero Hunger", "Active customers", "active", "#", "Snapshot", "" },
-						{ 7, 2, "SDG 2 – Zero Hunger", "", "Total sales (sale date + full deposit)", "sales", "#", "Cumulative", "" },
-						{ 8, 2, "SDG 2 – Zero Hunger", "", "Kilimo Boost customers (input financing)", "kilimo", "#", "Cumulative", "" },
-						{ 9, 3, "SDG 3 – Good Health & Well-being", "SDG 3 – Good Health & Well-being", "Hospicash insurance – customers with active cover (Turaco)", "hospicash", "#", "Cumulative", "" },
-						{ 10, 3, "SDG 3 – Good Health & Well-being", "", "Life insurance – families with life benefit cover unlocked", "life", "#", "Cumulative", "" },
-						{ 11, 5, "SDG 5 – Gender Equality", "SDG 5 – Gender Equality", "% women sales agents", "women_sales", "%", "Cumulative", "" },
-						{ 12, 5, "SDG 5 – Gender Equality", "", "% female customers", "female_cust", "%", "Cumulative", "" },
-						{ 13, 5, "SDG 5 – Gender Equality", "", "% female customers accessing PAYG finance", "female_payg", "%", "Cumulative", "" },
-						{ 14, 5, "SDG 5 – Gender Equality", "", "Annual recruitment – % of hires who are women", "recruit", "%", "Annual", "" },
-						{ 15, 5, "SDG 5 – Gender Equality", "", "% women in leadership (staff who supervise others)", "women_lead", "%", "Snapshot", "" },
-						{ 16, 6, "SDG 6 – Clean Water & Sanitation", "SDG 6 – Clean Water & Sanitation", "Customers who bought a water storage tank", "tanks", "#", "Cumulative", "" },
-						{ 17, 6, "SDG 6 – Clean Water & Sanitation", "", "Water withdrawn & consumed (m³)", "pending", "", "Pending", "Pending – survey" },
-						{ 18, 7, "SDG 7 – Affordable & Clean Energy", "SDG 7 – Affordable & Clean Energy", "Solar irrigation systems deployed", "units", "#", "Cumulative", "" },
-						{ 19, 7, "SDG 7 – Affordable & Clean Energy", "", "Clean energy capacity installed", "kw", "kW", "Cumulative", "" },
-						{ 20, 7, "SDG 7 – Affordable & Clean Energy", "", "Renewable energy generated", "mwh", "MWh", "Cumulative", "" },
-						{ 21, 7, "SDG 7 – Affordable & Clean Energy", "", "% customers replacing diesel / petrol pumps", "diesel", "%", "Cumulative", "" },
-						{ 22, 8, "SDG 8 – Decent Work & Economic Growth", "SDG 8 – Decent Work & Economic Growth", "Employee retention rate", "retention", "%", "Snapshot", "" },
-						{ 23, 8, "SDG 8 – Decent Work & Economic Growth", "", "Employee turnover rate", "turnover", "%", "Snapshot", "" },
-						{ 24, 8, "SDG 8 – Decent Work & Economic Growth", "", "Youth (18–34) representation in workforce", "youth", "%", "Cumulative", "" },
-						{ 25, 8, "SDG 8 – Decent Work & Economic Growth", "", "Average daily hours saved through solar irrigation (women)", "hours", "h", "Cumulative", "" },
-						{ 26, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees with written contracts", "pending", "", "Pending", "Pending – P&C records" },
-						{ 27, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees covered by social protection", "pending", "", "Pending", "Pending – P&C records" },
-						{ 28, 9, "SDG 9 – Industry, Innovation & Infrastructure", "SDG 9 – Industry, Innovation & Infrastructure", "Device connectivity rate (last 120 days)", "connect", "%", "Snapshot", "" },
-						{ 29, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Device utilization rate (last 120 days)", "util", "%", "Snapshot", "" },
-						{ 30, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Average daily pumping hours (last 120 days)", "pumphrs", "h", "Snapshot", "" },
-						{ 31, 11, "SDG 11 – Sustainable Cities & Communities", "SDG 11 – Sustainable Cities & Communities", "Waste diversion rate", "pending", "", "Pending", "Pending – needs clarity" },
-						{ 32, 13, "SDG 13 – Climate Action", "SDG 13 – Climate Action", "Estimated CO2 emissions avoided", "co2", "t", "Cumulative", "" },
-						{ 33, 13, "SDG 13 – Climate Action", "", "Organisational emissions, Scope 1–3 (tCO2e)", "pending", "", "Pending", "Pending – MRV dashboard" },
-						{ 34, 17, "SDG 17 – Partnerships for the Goals", "SDG 17 – Partnerships for the Goals", "Climate finance mobilised", "pending", "", "Pending", "Pending – MRV dashboard" }
+						{ 1, 1, "SDG 1 – No Poverty", "SDG 1 – No Poverty", "Farmers accessing credit (PAYG sales)", "payg_sales", "#", "Cumulative", "" },
+						{ 2, 1, "SDG 1 – No Poverty", "", "Farmers accessing credit for the first time", "first_time_n", "#", "Cumulative", "" },
+						{ 3, 1, "SDG 1 – No Poverty", "", "% PAYG customers accessing credit for the first time", "first_time", "%", "Cumulative", "" },
+						{ 4, 1, "SDG 1 – No Poverty", "", "Income saved by displacing fuel purchases", "pending", "", "Pending", "Waiting survey" },
+						{ 5, 1, "SDG 1 – No Poverty", "", "% customers covered under device insurance (SunCulture Gadget)", "device", "%", "Cumulative", "" },
+						{ 6, 1, "SDG 1 – No Poverty", "", "% customers with an additional source of household income", "other_income", "%", "Cumulative", "" },
+						{ 7, 2, "SDG 2 – Zero Hunger", "SDG 2 – Zero Hunger", "Active customers", "active", "#", "Snapshot", "" },
+						{ 8, 2, "SDG 2 – Zero Hunger", "", "Total sales (sale date + full deposit)", "sales", "#", "Cumulative", "" },
+						{ 9, 2, "SDG 2 – Zero Hunger", "", "Kilimo Boost customers (input financing)", "kilimo", "#", "Cumulative", "" },
+						{ 10, 3, "SDG 3 – Good Health & Well-being", "SDG 3 – Good Health & Well-being", "Hospicash insurance – customers with active cover (Turaco)", "hospicash", "#", "Cumulative", "" },
+						{ 11, 3, "SDG 3 – Good Health & Well-being", "", "Life insurance – families with life benefit cover unlocked", "life", "#", "Cumulative", "" },
+						{ 12, 5, "SDG 5 – Gender Equality", "SDG 5 – Gender Equality", "% women sales agents", "women_sales", "%", "Cumulative", "" },
+						{ 13, 5, "SDG 5 – Gender Equality", "", "% female customers", "female_cust", "%", "Cumulative", "" },
+						{ 14, 5, "SDG 5 – Gender Equality", "", "% female customers accessing PAYG finance", "female_payg", "%", "Cumulative", "" },
+						{ 15, 5, "SDG 5 – Gender Equality", "", "Women reached through productive-use products sold to women", "women_pue", "#", "Cumulative", "" },
+						{ 16, 5, "SDG 5 – Gender Equality", "", "Women accessing credit for the first time", "female_first", "#", "Cumulative", "" },
+						{ 17, 5, "SDG 5 – Gender Equality", "", "Direct jobs – women (active agents & staff)", "direct_f", "#", "Snapshot", "" },
+						{ 18, 5, "SDG 5 – Gender Equality", "", "Direct jobs – men (active agents & staff)", "direct_m", "#", "Snapshot", "" },
+						{ 19, 5, "SDG 5 – Gender Equality", "", "Indirect jobs – women (1 per sale to a woman)", "indirect_f", "#", "Cumulative", "" },
+						{ 20, 5, "SDG 5 – Gender Equality", "", "Indirect jobs – men (1 per sale to a man)", "indirect_m", "#", "Cumulative", "" },
+						{ 21, 5, "SDG 5 – Gender Equality", "", "Annual recruitment – % of hires who are women", "recruit", "%", "Annual", "" },
+						{ 22, 5, "SDG 5 – Gender Equality", "", "% women in leadership (staff who supervise others)", "women_lead", "%", "Snapshot", "" },
+						{ 23, 6, "SDG 6 – Clean Water & Sanitation", "SDG 6 – Clean Water & Sanitation", "Customers who bought a water storage tank", "tanks", "#", "Cumulative", "" },
+						{ 24, 6, "SDG 6 – Clean Water & Sanitation", "", "Water withdrawn & consumed (m³)", "pending", "", "Pending", "Waiting survey" },
+						{ 25, 6, "SDG 6 – Clean Water & Sanitation", "", "Customers with water purification systems", "pending", "", "Pending", "Waiting survey" },
+						{ 26, 7, "SDG 7 – Affordable & Clean Energy", "SDG 7 – Affordable & Clean Energy", "Solar irrigation systems deployed (installed)", "units", "#", "Cumulative", "" },
+						{ 27, 7, "SDG 7 – Affordable & Clean Energy", "", "Clean energy capacity installed", "kw", "kW", "Cumulative", "" },
+						{ 28, 7, "SDG 7 – Affordable & Clean Energy", "", "Renewable energy generated", "mwh", "MWh", "Cumulative", "" },
+						{ 29, 7, "SDG 7 – Affordable & Clean Energy", "", "% customers replacing diesel / petrol pumps", "diesel", "%", "Cumulative", "" },
+						{ 30, 8, "SDG 8 – Decent Work & Economic Growth", "SDG 8 – Decent Work & Economic Growth", "Direct jobs – active agents & staff", "staff_total", "#", "Snapshot", "" },
+						{ 31, 8, "SDG 8 – Decent Work & Economic Growth", "", "% women in active workforce", "pct_female_staff", "%", "Snapshot", "" },
+						{ 32, 8, "SDG 8 – Decent Work & Economic Growth", "", "Full-time vs part-time staff (total, women, men)", "pending", "", "Pending", "Pending – P&C records" },
+						{ 33, 8, "SDG 8 – Decent Work & Economic Growth", "", "Indirect jobs (1 per sale)", "indirect", "#", "Cumulative", "" },
+						{ 34, 8, "SDG 8 – Decent Work & Economic Growth", "", "Employee retention rate", "retention", "%", "Snapshot", "" },
+						{ 35, 8, "SDG 8 – Decent Work & Economic Growth", "", "Employee turnover rate", "turnover", "%", "Snapshot", "" },
+						{ 36, 8, "SDG 8 – Decent Work & Economic Growth", "", "Female employee turnover rate", "female_turnover", "%", "Snapshot", "" },
+						{ 37, 8, "SDG 8 – Decent Work & Economic Growth", "", "Youth (18–34) representation in workforce", "youth", "%", "Cumulative", "" },
+						{ 38, 8, "SDG 8 – Decent Work & Economic Growth", "", "Average daily hours saved through solar irrigation (women)", "hours", "h", "Cumulative", "" },
+						{ 39, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees with written contracts", "pending", "", "Pending", "Pending – P&C records" },
+						{ 40, 8, "SDG 8 – Decent Work & Economic Growth", "", "% employees covered by social protection", "pending", "", "Pending", "Pending – P&C records" },
+						{ 41, 9, "SDG 9 – Industry, Innovation & Infrastructure", "SDG 9 – Industry, Innovation & Infrastructure", "Device connectivity rate (last 120 days)", "connect", "%", "Snapshot", "" },
+						{ 42, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Device utilization rate (last 120 days)", "util", "%", "Snapshot", "" },
+						{ 43, 9, "SDG 9 – Industry, Innovation & Infrastructure", "", "Average daily pumping hours (last 120 days)", "pumphrs", "h", "Snapshot", "" },
+						{ 44, 11, "SDG 11 – Sustainable Cities & Communities", "SDG 11 – Sustainable Cities & Communities", "Waste diversion rate", "pending", "", "Pending", "Pending – needs clarity" },
+						{ 45, 12, "SDG 12 – Responsible Consumption & Production", "SDG 12 – Responsible Consumption & Production", "Second-life opportunities (refurbished units sold)", "refurb", "#", "Cumulative", "" },
+						{ 46, 13, "SDG 13 – Climate Action", "SDG 13 – Climate Action", "Cumulative GHG emissions avoided (tCO2e)", "co2", "t", "Cumulative", "" },
+						{ 47, 13, "SDG 13 – Climate Action", "", "Solar energy generated in the calendar year (MJ)", "mj", "MJ", "Annual", "" },
+						{ 48, 13, "SDG 13 – Climate Action", "", "% customers covered under climate insurance (APA, ACRE, El Niño)", "climate", "%", "Cumulative", "" },
+						{ 49, 13, "SDG 13 – Climate Action", "", "% farmers trained on climate resilience (LearnInk)", "pending", "", "Pending", "Waiting survey" },
+						{ 50, 13, "SDG 13 – Climate Action", "", "Annual tCO2 avoided by pumps sold in the period", "pending", "", "Pending", "Waiting survey" },
+						{ 51, 13, "SDG 13 – Climate Action", "", "tCO2 avoided by all active pumps in the period", "pending", "", "Pending", "Waiting survey" },
+						{ 52, 13, "SDG 13 – Climate Action", "", "Lifetime tCO2 avoided by pumps installed in the period", "pending", "", "Pending", "Waiting survey" },
+						{ 53, 13, "SDG 13 – Climate Action", "", "Litres of petrol avoided", "pending", "", "Pending", "Waiting survey" },
+						{ 54, 13, "SDG 13 – Climate Action", "", "Diesel consumed before switching to solar (MJ)", "pending", "", "Pending", "Waiting survey" },
+						{ 55, 13, "SDG 13 – Climate Action", "", "Organisational emissions, Scope 1–3 (tCO2e)", "pending", "", "Pending", "Pending – MRV dashboard" },
+						{ 56, 13, "SDG 13 – Climate Action", "", "Carbon credits generated & sold", "pending", "", "Pending", "Pending – carbon registry" },
+						{ 57, 17, "SDG 17 – Partnerships for the Goals", "SDG 17 – Partnerships for the Goals", "Climate finance mobilised", "pending", "", "Pending", "Pending – MRV dashboard" }
 				    }
 				)
 				// Official UN SDG colours (un.org/sustainabledevelopment/news/communications-material)
 				RETURN
 				    ADDCOLUMNS (
 				        _rows,
-				        "SDG Colour", SWITCH ( [SDG No], 1, "#E5243B", 2, "#DDA63A", 3, "#4C9F38", 5, "#FF3A21", 6, "#26BDE2", 7, "#FCC30B", 8, "#A21942", 9, "#FD6925", 11, "#FD9D24", 13, "#3F7E44", 17, "#19486A", "#A0918A" )
+				        "SDG Colour", SWITCH ( [SDG No], 1, "#E5243B", 2, "#DDA63A", 3, "#4C9F38", 5, "#FF3A21", 6, "#26BDE2", 7, "#FCC30B", 8, "#A21942", 9, "#FD6925", 11, "#FD9D24", 12, "#BF8B2E", 13, "#3F7E44", 17, "#19486A", "#A0918A" )
 				    )
 

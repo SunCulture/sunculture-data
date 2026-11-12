@@ -84,11 +84,12 @@ table 'ESG Measures'
 		displayFolder: SDG 5 · Gender
 		lineageTag: 7298c00a-4947-4deb-b7a2-57140d1a47fe
 
+	/// CDS: customers who said they owned a pump before AND named diesel or petrol (answers of "No" with a fuel type are not counted)
 	measure 'Fossil-Fuel Pumps Replaced' =
 			IF (
 			    ISFILTERED ( Country[Country] ) || ISFILTERED ( 'Calendar' ),
-			    CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[carbon_credit_which_pump_type_c] IN { "Diesel", "Petrol" }, TREATAS ( CALCULATETABLE ( VALUES ( accounts_mv[leadId] ) ), mart_cds_responses[leadId] ) ),
-			    CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[carbon_credit_which_pump_type_c] IN { "Diesel", "Petrol" } )
+			    CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[carbon_credit_which_pump_type_c] IN { "Diesel", "Petrol" }, mart_cds_responses[did_you_previously_own_a_water_pump_c] = "Yes", TREATAS ( CALCULATETABLE ( VALUES ( accounts_mv[leadId] ) ), mart_cds_responses[leadId] ) ),
+			    CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[carbon_credit_which_pump_type_c] IN { "Diesel", "Petrol" }, mart_cds_responses[did_you_previously_own_a_water_pump_c] = "Yes" )
 			) + 0
 		formatString: #,0
 		displayFolder: SDG 7 & 13 · Clean energy & carbon
@@ -245,19 +246,36 @@ table 'ESG Measures'
 			        "connect", [Device Connectivity Rate],
 			        "util", [Device Utilization Rate],
 			        "pumphrs", [Avg Daily Pumping Hours],
-			        "co2", [CO2 Avoided (t)]
+			        "co2", [CO2 Avoided (t)],
+			        "payg_sales", [PAYG Sales],
+			        "first_time_n", [First-Time Borrowers],
+			        "female_first", [Female First-Time Borrowers],
+			        "women_pue", [Female PUE Sales],
+			        "indirect", [Indirect Jobs],
+			        "indirect_f", [Indirect Jobs Women],
+			        "indirect_m", [Indirect Jobs Men],
+			        "direct_f", [Direct Jobs Women],
+			        "direct_m", [Direct Jobs Men],
+			        "staff_total", [Active Agents & Staff],
+			        "pct_female_staff", [% Women in Active Workforce],
+			        "female_turnover", [Female Turnover Rate],
+			        "refurb", [Second-Life Sales],
+			        "mj", [Solar Energy in Year (MJ)]
 			    )
 		displayFolder: SDG Summary
 		lineageTag: 14529bbc-40c7-4a92-a9a8-2b270662324b
 
-	/// Position at 31 Dec of the year in the filter context (today for the current year). Current-status KPIs and Pending notes only show in the current year, because no history is kept
+	/// Position at 31 Dec of the year in the filter context (today for the current year); with 'SDG Period' = In the year, cumulative counts show only what was added that year. Current-status KPIs and Pending notes only show in the current year, because no history is kept
 	measure 'SDG Year-End' =
 			VAR _u = SELECTEDVALUE ( 'SDG Summary'[Unit] )
 			VAR _b = SELECTEDVALUE ( 'SDG Summary'[Basis] )
 			VAR _y = MAX ( 'Calendar'[Year] )
 			VAR _isCurrent = _y = YEAR ( TODAY () )
 			VAR _end = MIN ( DATE ( _y, 12, 31 ), TODAY () )
-			VAR _v = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _end )
+			VAR _mode = SELECTEDVALUE ( 'SDG Period'[Period], "Cumulative to date" )
+			VAR _v0 = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _end )
+			VAR _inYear = _mode = "In the year" && _b = "Cumulative" && _u IN { "#", "kW", "MWh", "t" }
+			VAR _v = IF ( _inYear, _v0 - CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= DATE ( _y - 1, 12, 31 ) ), _v0 )
 			RETURN
 			    IF (
 			        HASONEVALUE ( 'SDG Summary'[Key] ),
@@ -271,6 +289,7 @@ table 'ESG Measures'
 			            _u = "kW", FORMAT ( _v, "#,0" ) & " kW",
 			            _u = "MWh", FORMAT ( _v, "#,0" ) & " MWh",
 			            _u = "t", FORMAT ( _v, "#,0" ) & " t",
+			            _u = "MJ", FORMAT ( _v, "#,0" ) & " MJ",
 			            FORMAT ( _v, "#,0" )
 			        )
 			    )
@@ -282,7 +301,8 @@ table 'ESG Measures'
 			VAR _end = IF ( ISFILTERED ( 'Calendar'[Year] ), MIN ( DATE ( MAX ( 'Calendar'[Year] ), 12, 31 ), TODAY () ), TODAY () )
 			RETURN
 			    "Year columns = position at 31 Dec; current year = position at " & FORMAT ( _end, "d mmm yyyy" )
-			        & "   ·   – = current-status KPI (no history kept)   ·   Pending = not yet in AMT, CDS or IoT data"
+			        & "   ·   – = current-status KPI (no history kept)   ·   Waiting survey = will come from the SDG impact survey   ·   Pending = data not yet available"
+			        & IF ( SELECTEDVALUE ( 'SDG Period'[Period] ) = "In the year", "   ·   Counts show only what was added in each year", "   ·   Counts are cumulative to the date shown" )
 		displayFolder: SDG Summary
 		lineageTag: e042e9dd-7ef2-487d-acf4-19c0b915c95a
 
@@ -412,8 +432,8 @@ table 'ESG Measures'
 			RETURN
 			    IF (
 			        ISFILTERED ( Country[Country] ),
-			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[status] = "ACTIVE", policies[Policy Date] <= _end, TREATAS ( CALCULATETABLE ( VALUES ( accounts_mv[identification_number] ), REMOVEFILTERS ( 'Calendar' ) ), policies[idNumber] ) ),
-			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[status] = "ACTIVE", policies[Policy Date] <= _end )
+			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[Policy Date] <= _end, TREATAS ( CALCULATETABLE ( VALUES ( accounts_mv[identification_number] ), REMOVEFILTERS ( 'Calendar' ) ), policies[idNumber] ) ),
+			        CALCULATE ( DISTINCTCOUNT ( policies[idNumber] ), policies[Policy Date] <= _end )
 			    ) + 0
 		formatString: #,0
 		isHidden
@@ -463,6 +483,91 @@ table 'ESG Measures'
 		sourceColumn: [Placeholder]
 
 		annotation SummarizationSetBy = Automatic
+
+	/// PAYG accounts with a sale date and a full deposit (Total Sales rules)
+	measure 'PAYG Sales' = CALCULATE ( [Total Sales], accounts_mv[accountType] = "PAYG" ) + 0
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: b8216f2c-df7a-45c7-9736-ffb3ca685ebf
+
+	/// PAYG customers who told CDS they had never taken a loan (survey respondents only)
+	measure 'First-Time Borrowers' =
+			VAR _paygLeads = CALCULATETABLE ( VALUES ( accounts_mv[leadId] ), accounts_mv[accountType] = "PAYG" )
+			RETURN
+			    CALCULATE ( DISTINCTCOUNT ( mart_cds_responses[leadId] ), mart_cds_responses[Credit History] = "First-time borrower", TREATAS ( _paygLeads, mart_cds_responses[leadId] ) ) + 0
+		formatString: #,0
+		displayFolder: SDG 1 & 3 · Inclusion & insurance
+		lineageTag: 8006578e-e50b-4496-8aa6-27cc4c74f579
+
+	/// First-time borrowers whose account is in a woman's name
+	measure 'Female First-Time Borrowers' = CALCULATE ( [First-Time Borrowers], accounts_mv[gender] IN { "F", "Female" } ) + 0
+		formatString: #,0
+		displayFolder: SDG 5 · Gender
+		lineageTag: 6400e1a5-83b7-42e6-a1fb-51fd0567effc
+
+	/// Sales to women of productive-use products (pumps, solar kits, irrigation); TVs, tanks, insurance, farm inputs and service lines excluded
+	measure 'Female PUE Sales' = CALCULATE ( [Total Sales], accounts_mv[gender] IN { "F", "Female" }, FILTER ( VALUES ( accounts_mv[product] ), NOT accounts_mv[product] IN { "TV", "TV Refurbished", "Insurance KE", "Farm Products", "UG Extra Items", "UG AfterSales", "Intervention Technicien", "Jifungulie Self Service", "TSR", "TSR Uganda" } && NOT CONTAINSSTRING ( accounts_mv[product], "tank" ) ) ) + 0
+		formatString: #,0
+		displayFolder: SDG 5 · Gender
+		lineageTag: 1f7c46d0-9f11-4a14-ac48-6204770f11f0
+
+	/// Assumption: 1 indirect job per sale
+	measure 'Indirect Jobs' = [Total Sales]
+		formatString: #,0
+		displayFolder: SDG 8 · Jobs
+		lineageTag: 30964c53-a468-4fb0-9fdf-411fe4effea6
+
+	/// 1 indirect job per sale to a female customer
+	measure 'Indirect Jobs Women' = CALCULATE ( [Total Sales], accounts_mv[gender] IN { "F", "Female" } ) + 0
+		formatString: #,0
+		displayFolder: SDG 8 · Jobs
+		lineageTag: c61196a5-d786-4192-9eb2-413df6364536
+
+	/// 1 indirect job per sale to a male customer
+	measure 'Indirect Jobs Men' = CALCULATE ( [Total Sales], accounts_mv[gender] IN { "M", "Male" } ) + 0
+		formatString: #,0
+		displayFolder: SDG 8 · Jobs
+		lineageTag: 87ff16bb-1d33-45ae-a453-983dee59c687
+
+	/// Active agents and staff who are women
+	measure 'Direct Jobs Women' = CALCULATE ( [Active Agents & Staff], vw_employees[employee_gender] = "Female" ) + 0
+		formatString: #,0
+		displayFolder: SDG 8 · Jobs
+		lineageTag: 1e66171e-d1a6-4a6d-878d-77a050adb16c
+
+	/// Active agents and staff who are men
+	measure 'Direct Jobs Men' = CALCULATE ( [Active Agents & Staff], vw_employees[employee_gender] IN { "Male", "Homme" } ) + 0
+		formatString: #,0
+		displayFolder: SDG 8 · Jobs
+		lineageTag: 67f5a166-7277-4aff-b2d7-6233010f5f6a
+
+	/// Active women ÷ all active agents and staff
+	measure '% Women in Active Workforce' = DIVIDE ( [Direct Jobs Women], [Active Agents & Staff] )
+		formatString: 0.0%
+		displayFolder: SDG 8 · Jobs
+		lineageTag: 89c83d85-0532-4d22-b9e8-8da260d4ec27
+
+	/// Women who have left ÷ all women ever on the staff list
+	measure 'Female Turnover Rate' = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( vw_employees[employee_amt_id] ), vw_employees[employee_active_status] = "InActive", vw_employees[employee_gender] = "Female" ), [Female Employees] )
+		formatString: 0.0%
+		displayFolder: SDG 8 · Jobs
+		lineageTag: d4b6a4f1-6c69-499c-8720-8842f0e6895c
+
+	/// Sales of refurbished products (product name says Refurb / Refurbished or ends in - R)
+	measure 'Second-Life Sales' = CALCULATE ( [Total Sales], FILTER ( VALUES ( accounts_mv[product] ), CONTAINSSTRING ( accounts_mv[product], "refurb" ) || RIGHT ( accounts_mv[product], 4 ) = " - R" || CONTAINSSTRING ( accounts_mv[product], "-R " ) ) ) + 0
+		formatString: #,0
+		displayFolder: SDG 12 · Circularity
+		lineageTag: 62222617-21d7-4ab8-b8a3-8d4c49ead5bb
+
+	/// Renewable energy generated in the calendar year (MWh at period end − MWh at the previous 31 Dec) × 3,600
+	measure 'Solar Energy in Year (MJ)' =
+			VAR _asOf = MIN ( MAX ( 'Calendar'[Date] ), TODAY () )
+			VAR _prev = CALCULATE ( [Clean Energy Generated (MWh)], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= DATE ( YEAR ( _asOf ) - 1, 12, 31 ) )
+			RETURN
+			    ( [Clean Energy Generated (MWh)] - _prev ) * 3600
+		formatString: #,0
+		displayFolder: SDG 7 & 13 · Clean energy & carbon
+		lineageTag: 5c2d0d7d-7ce2-4d40-b14c-547f6ac8991f
 
 	partition 'ESG Measures' = calculated
 		mode: import

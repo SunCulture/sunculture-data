@@ -1,14 +1,6 @@
 table vw_employees
 	lineageTag: 45eddeba-55d9-41e1-abc7-55e4b7f69aa4
 
-	column created_by_name
-		dataType: string
-		lineageTag: 351f9ec0-98be-470b-9471-d877f0e3a495
-		summarizeBy: none
-		sourceColumn: created_by_name
-
-		annotation SummarizationSetBy = Automatic
-
 	column employee_active_status
 		dataType: string
 		lineageTag: dca928cc-19f1-4924-ae31-42719ce71620
@@ -56,46 +48,11 @@ table vw_employees
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column employee_email_address
-		dataType: string
-		lineageTag: c4d306bd-6542-43ec-bdca-8e90d5c7e9c3
-		summarizeBy: none
-		sourceColumn: employee_email_address
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_end_date
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: cc0ae918-0b90-4016-ac33-d15211c9d168
-		summarizeBy: none
-		sourceColumn: employee_end_date
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
 	column employee_gender
 		dataType: string
 		lineageTag: cb676736-a4dc-49a8-a2e7-094855ddd5f6
 		summarizeBy: none
 		sourceColumn: employee_gender
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_identification_number
-		dataType: string
-		lineageTag: 941c0c56-567d-4203-adeb-002989d13209
-		summarizeBy: none
-		sourceColumn: employee_identification_number
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_name
-		dataType: string
-		lineageTag: 875a2426-1e90-4ced-8046-e2c9e4d914c3
-		summarizeBy: none
-		sourceColumn: employee_name
 
 		annotation SummarizationSetBy = Automatic
 
@@ -107,82 +64,12 @@ table vw_employees
 
 		annotation SummarizationSetBy = Automatic
 
-	column employee_primary_role_id
-		dataType: int64
-		formatString: 0
-		lineageTag: eb4bc2bb-56e4-4a7f-a424-59310d34671e
-		summarizeBy: sum
-		sourceColumn: employee_primary_role_id
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_primary_role_name
-		dataType: string
-		lineageTag: 7bb9485e-9700-47d3-892f-50671948d970
-		summarizeBy: none
-		sourceColumn: employee_primary_role_name
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_sales_training_completion_date
-		dataType: dateTime
-		formatString: Long Date
-		lineageTag: eb987281-ce81-4a8f-b4ce-0bdde800e7e5
-		summarizeBy: none
-		sourceColumn: employee_sales_training_completion_date
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
 	column employee_supervisor_id
 		dataType: int64
 		formatString: 0
 		lineageTag: c083f811-63bc-4288-9581-83e3e77ac419
 		summarizeBy: sum
 		sourceColumn: employee_supervisor_id
-
-		annotation SummarizationSetBy = Automatic
-
-	column employee_updated_date
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 039f01dd-e6e1-4744-a367-9cdc8ee5e963
-		summarizeBy: none
-		sourceColumn: employee_updated_date
-
-		annotation SummarizationSetBy = Automatic
-
-	column referralId
-		dataType: int64
-		formatString: 0
-		lineageTag: c1b36750-6c25-4fda-a733-b32dddc075c9
-		summarizeBy: count
-		sourceColumn: referralId
-
-		annotation SummarizationSetBy = Automatic
-
-	column referralName
-		dataType: string
-		lineageTag: b5a4cc96-7d41-42ad-a9ea-07b98bdf6fe0
-		summarizeBy: none
-		sourceColumn: referralName
-
-		annotation SummarizationSetBy = Automatic
-
-	column supervisor_name
-		dataType: string
-		lineageTag: b30e38ef-cf74-4802-91c1-d03278677026
-		summarizeBy: none
-		sourceColumn: supervisor_name
-
-		annotation SummarizationSetBy = Automatic
-
-	column updated_by_name
-		dataType: string
-		lineageTag: ee6d9824-c9a9-4276-ad4a-bd6a5afff352
-		summarizeBy: none
-		sourceColumn: updated_by_name
 
 		annotation SummarizationSetBy = Automatic
 
@@ -289,9 +176,11 @@ table vw_employees
 				    Workspaces = Source{[Id="Workspaces"]}[Data],
 				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
 				    #"bb5dc705-9080-4b0e-9632-2578517a380d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="bb5dc705-9080-4b0e-9632-2578517a380d"]}[Data],
-				    vw_employees_ = #"bb5dc705-9080-4b0e-9632-2578517a380d"{[entity="vw_employees",version=""]}[Data]
+				    vw_employees_ = #"bb5dc705-9080-4b0e-9632-2578517a380d"{[entity="vw_employees",version=""]}[Data],
+				    // Only the columns the ESG dashboard uses (the full view is 100+ columns, incl. photos and personal data)
+				    #"Kept Columns" = Table.SelectColumns ( vw_employees_, {"employee_active_status", "employee_amt_id", "employee_created_date", "employee_department", "employee_dob", "employee_gender", "employee_phone_number", "employee_supervisor_id"}, MissingField.Ignore )
 				in
-				    vw_employees_
+				    #"Kept Columns"
 
 	annotation PBI_ResultType = Table
 
