@@ -1,0 +1,87 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "e39f2c51803b900f9a3a",
+  "position": {
+    "x": 456,
+    "y": 46,
+    "z": 9124,
+    "height": 34,
+    "width": 216,
+    "tabOrder": 9124
+  },
+  "visual": {
+    "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+    "query": {
+      "queryState": {
+        "field": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "accountRef"
+                }
+              },
+              "queryRef": "points.accountRef",
+              "nativeQueryRef": "Account Ref",
+              "displayName": "Account Ref"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Account ref'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F4E53'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "paneGrp9631e777"
+}

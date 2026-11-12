@@ -1,0 +1,618 @@
+table points
+	lineageTag: 266a8c80-79d7-416a-a592-8d6cbaaf6278
+
+	column status
+		dataType: string
+		lineageTag: e3d6718b-7578-4c63-ae7e-5ed2aadb37d3
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: string
+		lineageTag: ba72e2b3-1f05-498f-8b28-5fbbad93d796
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date = DATEVALUE(points[sale_date])
+		formatString: dd/mm/yyyy
+		lineageTag: 47185e89-eafd-4d7b-8df5-d5d0ec21243e
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column product
+		dataType: string
+		lineageTag: 35f81049-bac5-4996-a754-583e65ef0fe2
+		summarizeBy: none
+		sourceColumn: product
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_status_form_id =
+			
+			
+			VAR LatestRecord =
+			    TOPN(
+			        1,
+			        FILTER(
+			            ALL(vw_jsf),
+			            vw_jsf[account_id] = points[account_id] &&
+			            DATEVALUE(vw_jsf[jsf_date]) = DATEVALUE(points[jsf_date])
+			        ),
+			        vw_jsf[jsf_completed_date], DESC
+			    )
+			
+			RETURN
+			    MAXX(LatestRecord, vw_jsf[jsf_id])
+		lineageTag: 5a46fd29-9fc7-464c-8d93-c64a7f162be5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column identification_number
+		dataType: string
+		lineageTag: 3f6746c2-f988-4724-ad4d-09b7c6548605
+		summarizeBy: none
+		sourceColumn: identification_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_engineer =
+			
+			var v1=CALCULATE(MAX(vw_jsf[Assignment_Engineer]),FILTER(ALL(vw_jsf),DATEVALUE(vw_jsf[assignment_date])=DATEVALUE(points[Assign_date])&&vw_jsf[account_id]=points[account_id]))
+			
+			RETURN
+			V1
+		lineageTag: 6b1dd357-0bb9-415c-bc62-1214d0e6ccd2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatchdate = points[dispatch_date]
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 73d0902a-a1c3-438c-82e2-8882e70b001b
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column installment_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: e6d74656-e7ab-454a-88e1-90892394b677
+		summarizeBy: none
+		sourceColumn: installment_date
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column jsf_date1 =
+			
+			//var jsf_date2 = CALCULATE(FIRSTNONBLANK(vw_jsf[jsf_date],1),FILTER(ALL(vw_jsf),vw_jsf[account_id]=points[account_id]),'points'[Engineer_Recommendation] IN{"Installed","N/A"},vw_jsf[customer_preferred_schedule_type]IN {"INSTALLATION","ADDON_INSTALLATION"}||ISBLANK(vw_jsf[customer_preferred_schedule_type]))
+			//var r=IF(points[Engineer_Recommendation]="Not Installed",BLANK(),DATEVALUE(points[jsf_date]))
+			//return
+			//r
+			points[jsf_date]
+		formatString: dd/mm/yyyy
+		lineageTag: 59a79deb-5b5b-4366-9d97-118363ca55c7
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column days_to_install_courier =
+			IF(ISBLANK(points[account_id])||ISBLANK(points[jsf_date])||points[Assign_date]>points[jsf_date],BLANK(),
+			DATEDIFF(points[Assign_date],points[jsf_date],DAY))
+		formatString: 0
+		lineageTag: d19ee862-1196-4a90-a469-6a52c128f46e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column payplan_name
+		dataType: string
+		lineageTag: 14256844-f28a-441f-afb6-a032b31a880a
+		summarizeBy: none
+		sourceColumn: payplan_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column downpayment_amount
+		dataType: double
+		lineageTag: 03e79374-e114-4bb6-bdb2-62454dcebe71
+		summarizeBy: sum
+		sourceColumn: downpayment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column totalprice =
+			
+			var sa=CALCULATE(SUM(points[downpayment_amount])+SUM(points[installment_amount])*SUM(points[total_number_payments]))
+			return
+			sa
+		formatString: #,0
+		lineageTag: b33060a3-e167-488f-a7e4-8dff302685ca
+		summarizeBy: sum
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column repossession_date = CALCULATE(MAX(status_change[status_date]),FILTER(ALL(status_change),status_change[account_id]=points[account_id]&&status_change[current_status]="repossession"))
+		formatString: dd/mm/yyyy
+		lineageTag: 3d82c847-8758-4da9-98b9-07fe8fd67f03
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column installation_date =
+			
+			var product = points[product]
+			var dispatch_date=points[dispatch_date]
+			var inst_date=points[installment_date]
+			VAR sale_date=points[sale_date]
+			var jsf_date2 = CALCULATE(MIN(vw_jsf[jsf_date]))
+			var jsf_date=IF(ISBLANK(inst_date)&&ISBLANK(dispatch_date)&&ISBLANK(jsf_date2),sale_date,
+			IF(ISBLANK(inst_date)&&ISBLANK(jsf_date2),dispatch_date,
+			IF(ISBLANK(jsf_date2),inst_date,jsf_date2)))
+			return
+			DATEVALUE(jsf_date)
+		formatString: General Date
+		lineageTag: de9ac2c5-969a-44ea-a013-07c0101e5b09
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column units =
+			
+			
+			var r=IF(points[productQty]<1||ISBLANK(points[productQty]),1,points[productQty])
+			return
+			r
+		formatString: #,0
+		lineageTag: e0672b9d-6ce7-4f41-9cd1-c7d38d7f2610
+		summarizeBy: sum
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column warranty_status = ```
+			
+			var a=points[warranty_expiry_date]
+			var b=IF((points[status] in {"full deposit","partial deposit","repossession", "write off","on hold","pending repossession on","rejected","partial refunded","refunded","no deposit"}),BLANK(),IF(ISBLANK(a), BLANK(),IF( a>TODAY(),"Under Warranty","Out of Warranty")))
+			return  
+			b
+			```
+		lineageTag: 312866a7-aded-4ca2-9376-eea4cddfa904
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_source =
+			
+			//CALCULATE(MAX('Customer'[AccountSource]),FILTER(ALL('Customer'),Customer[AMT_Customer_Id__c]=points[customer_id]))
+			points[LeadSource]
+		lineageTag: f9ce4389-0305-4e2b-b048-d280ed601d71
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_id
+		dataType: string
+		lineageTag: 9cac73ed-9874-4ab1-aa00-aaeff898d095
+		summarizeBy: none
+		sourceColumn: employee_id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column installment_amount
+		dataType: double
+		formatString: 0
+		lineageTag: 74cd0aa2-b1cf-41dd-b4e2-b6ed36d18db3
+		summarizeBy: sum
+		sourceColumn: installment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days to warranty expiry' = DATEDIFF(TODAY(),points[warranty_expiry_date],DAY)
+		formatString: 0
+		lineageTag: 88ff02ee-01ca-45fd-b618-a76dc2066846
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Untill Expiry' =
+			SWITCH(TRUE(),
+			points[Days to warranty expiry]>=0&& points[Days to warranty expiry]<=10,"10",
+			points[Days to warranty expiry]>10&&points[Days to warranty expiry]<=30,"30",
+			points[Days to warranty expiry]>30&&points[Days to warranty expiry]<=60,"60",
+			points[Days to warranty expiry]>60&&points[Days to warranty expiry]<=90,"90",
+			points[Days to warranty expiry]>90&&points[Days to warranty expiry]<=120,"120",
+			points[Days to warranty expiry]>120&&points[Days to warranty expiry]<=180,"180",
+			points[Days to warranty expiry]>180&&points[Days to warranty expiry]<=270,"270",
+			points[Days to warranty expiry]>270&&points[Days to warranty expiry]<=360,"360",
+			">360")
+		lineageTag: 2bfea164-a614-4cc9-ad11-086a1dcf671d
+		summarizeBy: none
+		sortByColumn: 'days untill expiry seq'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days after Expiry' =
+			SWITCH(TRUE(),
+			points[Days to warranty expiry]>=-30&&points[Days to warranty expiry]<0,"30",
+			points[Days to warranty expiry]>=-60&&points[Days to warranty expiry]<-30,"60",
+			points[Days to warranty expiry]>=-90&&points[Days to warranty expiry]<-60,"90",
+			points[Days to warranty expiry]>=-180&&points[Days to warranty expiry]<-90,"180",
+			points[Days to warranty expiry]>=-365&&points[Days to warranty expiry]<-180,"1 year",
+			points[Days to warranty expiry]>=-730&&points[Days to warranty expiry]<-365,"2 years",
+			points[Days to warranty expiry]>=-1095&&points[Days to warranty expiry]<-730,"3 years",
+			points[Days to warranty expiry]<-1095,"4 years and above",
+			"4 years and above")
+		lineageTag: aab4e476-c8a8-44dc-8e9f-64bbc5c29e05
+		summarizeBy: none
+		sortByColumn: 'Days after Expiry seq'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'days untill expiry seq' =
+			SWITCH(TRUE(),
+			points[Days to warranty expiry]>=0&& points[Days to warranty expiry]<=10,"1",
+			points[Days to warranty expiry]>10&&points[Days to warranty expiry]<=30,"2",
+			points[Days to warranty expiry]>30&&points[Days to warranty expiry]<=60,"3",
+			points[Days to warranty expiry]>60&&points[Days to warranty expiry]<=90,"4",
+			points[Days to warranty expiry]>90&&points[Days to warranty expiry]<=120,"5",
+			points[Days to warranty expiry]>120&&points[Days to warranty expiry]<=180,"6",
+			points[Days to warranty expiry]>180&&points[Days to warranty expiry]<=270,"7",
+			points[Days to warranty expiry]>270&&points[Days to warranty expiry]<=360,"8",
+			"9")
+		lineageTag: 4ede7fa2-b400-46e0-8b82-2d7e725c1eae
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days after Expiry seq' =
+			SWITCH(TRUE(),
+			points[Days to warranty expiry]>=-30&&points[Days to warranty expiry]<0,"1",
+			points[Days to warranty expiry]>=-60&&points[Days to warranty expiry]<-30,"2",
+			points[Days to warranty expiry]>=-90&&points[Days to warranty expiry]<-60,"3",
+			points[Days to warranty expiry]>=-180&&points[Days to warranty expiry]<-90,"4",
+			points[Days to warranty expiry]>=-365&&points[Days to warranty expiry]<-180,"5",
+			points[Days to warranty expiry]>=-730&&points[Days to warranty expiry]<-365,"6",
+			points[Days to warranty expiry]>=-1095&&points[Days to warranty expiry]<-730,"7",
+			points[Days to warranty expiry]<-1095,"8",
+			"8")
+		lineageTag: de8da68f-0923-4a04-a6ca-1743ec25b593
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_status_all =
+			
+			VAR V1=CALCULATE(MAX(vw_jsf[jsf_status]),FILTER(ALL(vw_jsf),vw_jsf[jsf_id]=points[job_status_form_id]))
+			RETURN
+			V1
+		lineageTag: 140ed2d1-22f0-4a3b-b0dd-e2559494404a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assign_date = ```
+			
+			//var jsf_date2 = CALCULATE(MAX(vw_jsf[assignment_date]),FILTER(ALL('vw_jsf'),'vw_jsf'[account_id]=points[account_id]),'vw_jsf'[customer_preferred_schedule_type]="INSTALLATION"||'vw_jsf'[customer_preferred_schedule_type]="ADDON_INSTALLATION"||ISBLANK('vw_jsf'[customer_preferred_schedule_type]))
+			//var r=DATEVALUE(jsf_date2)
+			var assign_date1=CALCULATE(MAX(vw_jsf[assignment_date]),FILTER(ALL(vw_jsf),vw_jsf[account_id]=points[account_id]&&('vw_jsf'[customer_preferred_schedule_type]="INSTALLATION"||'vw_jsf'[customer_preferred_schedule_type]="ADDON_INSTALLATION"||ISBLANK('vw_jsf'[customer_preferred_schedule_type]))))
+			var r=DATEVALUE(assign_date1)
+			return
+			r
+			
+			```
+		formatString: dd/mm/yyyy
+		lineageTag: 78abbc2e-1ec6-4612-ab65-69d11428174a
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Department_name
+		dataType: string
+		lineageTag: 3a6c7db0-f978-4884-9715-88f59b31f37b
+		summarizeBy: none
+		sourceColumn: Department_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadSource
+		dataType: string
+		lineageTag: 74e2e985-dd25-438f-be0f-98d3366ab720
+		summarizeBy: none
+		sourceColumn: LeadSource
+
+		annotation SummarizationSetBy = Automatic
+
+	column RefundDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f84da9d8-efe6-4baf-a3c5-27ecda4bb715
+		summarizeBy: none
+		sourceColumn: RefundDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountRef
+		dataType: string
+		lineageTag: 69a39f29-3cf5-4a49-86a0-4a7d86ed7c05
+		summarizeBy: none
+		sourceColumn: accountRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountType
+		dataType: string
+		lineageTag: 94b2c5b3-0837-4aeb-bc5f-613438ddfdf1
+		summarizeBy: none
+		sourceColumn: accountType
+
+		annotation SummarizationSetBy = Automatic
+
+	column companyRegion
+		dataType: string
+		lineageTag: c76972eb-6ad6-4efc-976e-f712bd773a3f
+		summarizeBy: none
+		sourceColumn: companyRegion
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerType
+		dataType: string
+		lineageTag: 9deeb1b1-db22-462a-b642-7243d2dbc24c
+		summarizeBy: none
+		sourceColumn: customerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: b25324c5-5e54-4440-b29e-94fed53ef8fd
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatch_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 273e33e1-fde9-4a63-8b73-d9febac83624
+		summarizeBy: none
+		sourceColumn: dispatch_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column employee_name
+		dataType: string
+		lineageTag: 457c77aa-27a1-4dcf-bc70-ab0175840dd3
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column phoneNumber
+		dataType: string
+		lineageTag: 990ea0b9-4e6b-4c93-ba55-d5e95aa38332
+		summarizeBy: none
+		sourceColumn: phoneNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column productQty
+		dataType: int64
+		formatString: #,0
+		lineageTag: b4f57ed8-8623-45cb-8285-9724252ac3b7
+		summarizeBy: sum
+		sourceColumn: productQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a067b42f-136a-46c4-bbe1-fda1c1f98e00
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_number_payments
+		dataType: int64
+		formatString: 0
+		lineageTag: f2de8670-5aa1-4f3c-8b91-e6a6a3f6d26d
+		summarizeBy: sum
+		sourceColumn: total_number_payments
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceId
+		dataType: string
+		lineageTag: 299bddf5-6d9e-43d5-b49b-5edbc4223b0a
+		summarizeBy: none
+		sourceColumn: deviceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column warranty_expiry_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b5a5bd24-53c7-4858-b504-58882c8ed220
+		summarizeBy: none
+		sourceColumn: warranty_expiry_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds2_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 33a5a150-bb13-4065-82bb-333102dd2131
+		summarizeBy: none
+		sourceColumn: cds2_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column county
+		dataType: string
+		lineageTag: 4f7099f8-ea78-43f4-977a-f9b9d8bd9a9b
+		summarizeBy: none
+		sourceColumn: county
+
+		annotation SummarizationSetBy = Automatic
+
+	column gps
+		dataType: string
+		lineageTag: 00a163bc-195d-4951-91f3-8a1b27161a3d
+		summarizeBy: none
+		sourceColumn: gps
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 974bbc1f-02b6-46c2-a89f-b420e1da2229
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column town
+		dataType: string
+		lineageTag: 0a0eb6e0-914c-4252-a322-16688107ec5a
+		summarizeBy: none
+		sourceColumn: town
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 317336b8-b639-410c-8186-c8c57d2f739f
+		summarizeBy: none
+		sourceColumn: customer_preferred_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column funnel_status
+		dataType: string
+		lineageTag: b6c77289-9247-4b00-85fc-e34740070b21
+		summarizeBy: none
+		sourceColumn: funnel_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b08f474e-6b7b-4d09-9162-27b1d4f7e24f
+		summarizeBy: none
+		sourceColumn: jsf_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column jsf_engineer
+		dataType: string
+		lineageTag: a73241e1-ef62-40f8-a2c0-095a081e98f3
+		summarizeBy: none
+		sourceColumn: jsf_engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Installed when the account has a completed INSTALLATION JSF with recommendation Installed (same rule as the failure rates).
+	column 'Install Status' = IF ( COUNTROWS ( FILTER ( RELATEDTABLE ( vw_jsf ), vw_jsf[Install Outcome] = "Installed" ) ) > 0, "Installed", BLANK () )
+		lineageTag: 5849b7c5-20d2-4ef3-81c8-37ae0530cb0f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sale month for the overview tables, e.g. Nov 2026.
+	column 'Sale Month' = IF ( ISBLANK ( points[sale_date] ), BLANK (), FORMAT ( points[sale_date], "mmm yyyy" ) )
+		lineageTag: dad89a4e-cfea-4163-9470-417ed76b9024
+		summarizeBy: none
+		sortByColumn: 'Sale Month No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sale Month No' = IF ( ISBLANK ( points[sale_date] ), BLANK (), YEAR ( points[sale_date] ) * 100 + MONTH ( points[sale_date] ) )
+		isHidden
+		formatString: 0
+		lineageTag: 00ffb0e0-c360-4a77-b4fd-dfe76f829844
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	partition points-c744424c-50c1-4000-a740-33934ffc2b9c = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"e6f716db-6042-41b8-b4b1-633806e1dd39" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="e6f716db-6042-41b8-b4b1-633806e1dd39"]}[Data],
+				    accounts_mv_ = #"e6f716db-6042-41b8-b4b1-633806e1dd39"{[entity="accounts_mv",version=""]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(accounts_mv_,{{"account_id", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each true),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows",{ {"dispatchDate", "dispatch_date"}, {"sale_date", "sale_date_clickhouse"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns1", {"account_id"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Duplicates",{{"gender", "Gender"}, {"sale_date_clickhouse", "sale_date"}, {"category", "Category"}, {"Region", "county"}, {"region 1", "region"}, {"customer_preferred_date", "customer_preferred_date"}, {"customer_preferred_schedule_type", "customer_preferred_schedule_type"}, {"customer_preferred_status", "customer_preferred_status_pp"}, {"engineer_recommendation", "Engineer_Recommendation"}, {"funnel_status", "funnel_status"}, {"jsf_date", "jsf_date"}, {"jsf_engineer", "jsf_engineer"}, {"jsf_status", "jsf_status"}, {"outcome_reason", "Outcome_Reason"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"jsf_date", type date}}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Changed Type1", {"Department_name", "LeadSource", "RefundDate", "accountRef", "accountType", "account_id", "cds2_date", "companyRegion", "county", "customerType", "customer_name", "customer_preferred_date", "deviceId", "dispatch_date", "downpayment_amount", "employee_id", "employee_name", "funnel_status", "gps", "identification_number", "installment_amount", "installment_date", "jsf_date", "jsf_engineer", "payplan_name", "phoneNumber", "product", "productQty", "region", "sale_date", "status", "total_number_payments", "town", "warranty_expiry_date"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

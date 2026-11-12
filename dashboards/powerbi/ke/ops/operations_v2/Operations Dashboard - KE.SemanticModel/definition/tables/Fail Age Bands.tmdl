@@ -1,0 +1,24 @@
+/// Disconnected axis for the survival view: cumulative share of units that have failed by a given age.
+table 'Fail Age Bands'
+	lineageTag: 749c4ba4-95a4-4d29-b844-95b9b16337a4
+
+	column 'Age Band'
+		lineageTag: c38d9a28-4b22-4b3f-98cd-2867c1b714a2
+		isNameInferred
+		sourceColumn: [Age Band]
+		sortByColumn: 'Band Order'
+
+	column 'Max Days'
+		lineageTag: 1d82faa0-bc96-47a4-b6cd-4951ab8186aa
+		isNameInferred
+		sourceColumn: [Max Days]
+
+	column 'Band Order'
+		lineageTag: 5a04af5b-e80c-4bf9-84f5-97b2b56645bc
+		isNameInferred
+		sourceColumn: [Band Order]
+
+	partition 'Fail Age Bands' = calculated
+		mode: import
+		source = DATATABLE ( "Age Band", STRING, "Max Days", INTEGER, "Band Order", INTEGER, { { "30 Days", 30, 1 }, { "60 Days", 60, 2 }, { "90 Days", 90, 3 }, { "6 Months", 182, 4 }, { "1 Year", 365, 5 }, { "18 Months", 547, 6 }, { "2 Years", 730, 7 }, { "3 Years", 1095, 8 } } )
+

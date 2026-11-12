@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – Product Failure Occurrences",
+  "name": "bmHide18f31f4a3a66",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "grp086222828f98b3",
+      "ffd57ab472cc41c7389b",
+      "fa069180c9eff15a77d8",
+      "5bbc8cf0c52278ec4778",
+      "069a334630c44ab137aa",
+      "7234c30a181d2dfdd138",
+      "cf54a9e3e2738c298378",
+      "1738debc14e07590573a",
+      "vbaecd7eb8da148e",
+      "v44cdf279d110196",
+      "v78100cc78894a73"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "as02failureoccur0002",
+    "sections": {
+      "as02failureoccur0002": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "grp086222828f98b3": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

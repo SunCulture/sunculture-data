@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Operations Dashboard - KE"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "689ec365-c9ea-4d69-b69e-f0dc95e8f1fa"
+  }
+}

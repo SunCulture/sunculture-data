@@ -1,0 +1,18 @@
+{"sections": [
+  {"label": null, "pages": [
+    {"page": "ALL JSFs", "icon": "grid"}
+  ]},
+  {"label": "ENGINEERING", "pages": [
+    {"page": "Engineer SLA", "icon": "users"},
+    {"page": "CCRP JSFs", "icon": "clipboard-check"},
+    {"page": "Cash Release Reconciliation", "icon": "wallet"}
+  ]},
+  {"label": "AFTERSALES", "pages": [
+    {"page": "Warranty Status", "icon": "shield-check"},
+    {"page": "All Aftersale Tickets", "icon": "headset"},
+    {"page": "Testing & Repairs Aftersale Tickets", "icon": "wrench"},
+    {"page": "Installations & Failures", "icon": "hammer"},
+    {"page": "Product Failure Occurrences", "icon": "alert-triangle"},
+    {"page": "Product Failure Rate", "icon": "trending-up"}
+  ]}
+]}

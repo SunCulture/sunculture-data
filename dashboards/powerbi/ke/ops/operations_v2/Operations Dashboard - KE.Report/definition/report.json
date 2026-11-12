@@ -1,0 +1,310 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.2.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY18SU07",
+      "reportVersionAtImport": {
+        "visual": "1.8.36",
+        "report": "2.0.36",
+        "page": "1.3.36"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "SunCulture.json",
+      "reportVersionAtImport": {
+        "visual": "1.8.36",
+        "report": "2.0.36",
+        "page": "1.3.36"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2806627badbbbdddc3bc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "points"
+              }
+            },
+            "Property": "customer_name"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "p",
+              "Entity": "points",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "Contains": {
+                      "Left": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "p"
+                            }
+                          },
+                          "Property": "customer_name"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "'test'"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "37ee93c5b99eac84c68b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "points"
+              }
+            },
+            "Property": "companyRegion"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "p",
+              "Entity": "points",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "p"
+                          }
+                        },
+                        "Property": "companyRegion"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'kenya'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "textFilter25A4896A83E0487089E2B90C9AE57C8A"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY18SU07",
+          "path": "BaseThemes/CY18SU07.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "header-sidebar.png",
+          "path": "header-sidebar.png",
+          "type": "Image"
+        },
+        {
+          "name": "nav-alert-triangle-dim.svg",
+          "path": "nav-alert-triangle-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-alert-triangle-on.svg",
+          "path": "nav-alert-triangle-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-clipboard-check-dim.svg",
+          "path": "nav-clipboard-check-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-clipboard-check-on.svg",
+          "path": "nav-clipboard-check-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-grid-dim.svg",
+          "path": "nav-grid-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-grid-on.svg",
+          "path": "nav-grid-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-hammer-dim.svg",
+          "path": "nav-hammer-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-hammer-on.svg",
+          "path": "nav-hammer-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-headset-on.svg",
+          "path": "nav-headset-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-shield-check-dim.svg",
+          "path": "nav-shield-check-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-shield-check-on.svg",
+          "path": "nav-shield-check-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-trending-up-dim.svg",
+          "path": "nav-trending-up-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-trending-up-on.svg",
+          "path": "nav-trending-up-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-users-dim.svg",
+          "path": "nav-users-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-users-on.svg",
+          "path": "nav-users-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-wallet-dim.svg",
+          "path": "nav-wallet-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-wallet-on.svg",
+          "path": "nav-wallet-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-wrench-dim.svg",
+          "path": "nav-wrench-dim.svg",
+          "type": "Image"
+        },
+        {
+          "name": "nav-wrench-on.svg",
+          "path": "nav-wrench-on.svg",
+          "type": "Image"
+        },
+        {
+          "name": "sunculture-logo-stacked.png",
+          "path": "sunculture-logo-stacked.png",
+          "type": "Image"
+        },
+        {
+          "name": "SunCulture.json",
+          "path": "SunCulture.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "isPersistentUserStateDisabled": true,
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "useCrossReportDrillthrough": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": false
+  },
+  "slowDataSourceSettings": {
+    "isCrossHighlightingDisabled": false,
+    "isSlicerSelectionsButtonEnabled": false,
+    "isFilterSelectionsButtonEnabled": false,
+    "isFieldWellButtonEnabled": false,
+    "isApplyAllButtonEnabled": false
+  }
+}

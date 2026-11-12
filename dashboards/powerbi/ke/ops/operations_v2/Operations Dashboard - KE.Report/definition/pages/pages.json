@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json",
+  "pageOrder": [
+    "ReportSection913da680b6d69a886e60",
+    "7d3d64f04c4f9631e777",
+    "e053354049c4b0447a72",
+    "ReportSectiondf5c7db3921a0dc0d141",
+    "6b7bdc181de8b08b015b",
+    "3cdad90195a0ecc85d80",
+    "f1149976e8b782d332a4",
+    "as01installkpis0001",
+    "as02failureoccur0002",
+    "as03failurerates0003"
+  ],
+  "activePageName": "ReportSection913da680b6d69a886e60"
+}

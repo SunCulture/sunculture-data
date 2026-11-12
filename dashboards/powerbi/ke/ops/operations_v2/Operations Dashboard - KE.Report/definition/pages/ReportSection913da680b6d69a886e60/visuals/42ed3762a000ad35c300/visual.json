@@ -1,0 +1,600 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "42ed3762a000ad35c300",
+  "position": {
+    "x": 224,
+    "y": 1256,
+    "z": 2900,
+    "height": 420,
+    "width": 1032,
+    "tabOrder": 2900
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "jsf_date"
+                }
+              },
+              "queryRef": "vw_jsf.jsf_date",
+              "nativeQueryRef": "JSF Date",
+              "displayName": "JSF Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "assignment_date"
+                }
+              },
+              "queryRef": "vw_jsf.assignment_date",
+              "nativeQueryRef": "Assignment Date",
+              "displayName": "Assignment Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "accountRef"
+                }
+              },
+              "queryRef": "points.accountRef",
+              "nativeQueryRef": "Account Ref",
+              "displayName": "Account Ref"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "account_id"
+                }
+              },
+              "queryRef": "vw_jsf.account_id",
+              "nativeQueryRef": "Account ID",
+              "displayName": "Account ID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "outcome_reason"
+                }
+              },
+              "queryRef": "vw_jsf.outcome_reason",
+              "nativeQueryRef": "Outcome Reason",
+              "displayName": "Outcome Reason"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "comment"
+                }
+              },
+              "queryRef": "vw_jsf.comment",
+              "nativeQueryRef": "Comment",
+              "displayName": "Comment"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Customer Name"
+                }
+              },
+              "queryRef": "vw_jsf.Customer Name",
+              "nativeQueryRef": "Customer Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "phoneNumber"
+                }
+              },
+              "queryRef": "points.phoneNumber",
+              "nativeQueryRef": "Phone Number",
+              "displayName": "Phone Number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "accountType"
+                }
+              },
+              "queryRef": "points.accountType",
+              "nativeQueryRef": "Account Type",
+              "displayName": "Account Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "sale_date"
+                }
+              },
+              "queryRef": "points.sale_date",
+              "nativeQueryRef": "Sale Date",
+              "displayName": "Sale Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "payplan_name"
+                }
+              },
+              "queryRef": "points.payplan_name",
+              "nativeQueryRef": "Payplan Name",
+              "displayName": "Payplan Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "jsf_engineer"
+                }
+              },
+              "queryRef": "vw_jsf.jsf_engineer",
+              "nativeQueryRef": "JSF Engineer",
+              "displayName": "JSF Engineer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "jsf_status"
+                }
+              },
+              "queryRef": "vw_jsf.jsf_status",
+              "nativeQueryRef": "JSF Status",
+              "displayName": "JSF Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "schedule_type"
+                }
+              },
+              "queryRef": "vw_jsf.schedule_type",
+              "nativeQueryRef": "JSF Type",
+              "displayName": "JSF Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "rm_2_device_id"
+                }
+              },
+              "queryRef": "vw_jsf.rm_2_device_id",
+              "nativeQueryRef": "rm_2_device_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "gps"
+                }
+              },
+              "queryRef": "points.gps",
+              "nativeQueryRef": "gps1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "region"
+                }
+              },
+              "queryRef": "points.region",
+              "nativeQueryRef": "region1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "county"
+                }
+              },
+              "queryRef": "points.county",
+              "nativeQueryRef": "county1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "points"
+                    }
+                  },
+                  "Property": "Department_name"
+                }
+              },
+              "queryRef": "points.Department_name",
+              "nativeQueryRef": "Department_name"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "111.94761668473086D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "points.region"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "206.91610504959627D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.outcome_reason"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "239.77328749127076D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.comment"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#018EB1'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table 4: Completed JSFs'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "underline": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter541451326339764ec029",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "points"
+              }
+            },
+            "Property": "jsf_status_all"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "p",
+              "Entity": "points",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "p"
+                              }
+                            },
+                            "Property": "jsf_status_all"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

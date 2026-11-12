@@ -1,0 +1,478 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "3b4c6e35f3caff5b421d",
+  "position": {
+    "x": 224.02196293754292,
+    "y": 490.21276595744683,
+    "z": 1500,
+    "height": 741.4687714481812,
+    "width": 1032.258064516129,
+    "tabOrder": 1500
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Customer Name"
+                }
+              },
+              "queryRef": "vw_jsf.Customer Name",
+              "nativeQueryRef": "Customer Name",
+              "displayName": "Customer Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "account_id"
+                }
+              },
+              "queryRef": "vw_jsf.account_id",
+              "nativeQueryRef": "Account ID",
+              "displayName": "Account ID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "JSF Date (Day)"
+                }
+              },
+              "queryRef": "vw_jsf.JSF Date (Day)",
+              "nativeQueryRef": "JSF Date",
+              "displayName": "JSF Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "jsf_type"
+                }
+              },
+              "queryRef": "vw_jsf.jsf_type",
+              "nativeQueryRef": "JSF Type",
+              "displayName": "JSF Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Install Product"
+                }
+              },
+              "queryRef": "vw_jsf.Install Product",
+              "nativeQueryRef": "Product",
+              "displayName": "Product"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Install Build Type"
+                }
+              },
+              "queryRef": "vw_jsf.Install Build Type",
+              "nativeQueryRef": "Build Type",
+              "displayName": "Build Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "jsf_engineer"
+                }
+              },
+              "queryRef": "vw_jsf.jsf_engineer",
+              "nativeQueryRef": "Engineer",
+              "displayName": "Engineer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "engineer_recommendation"
+                }
+              },
+              "queryRef": "vw_jsf.engineer_recommendation",
+              "nativeQueryRef": "Engineer Recommendation",
+              "displayName": "Engineer Recommendation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Install Failure Reason"
+                }
+              },
+              "queryRef": "vw_jsf.Install Failure Reason",
+              "nativeQueryRef": "Outcome Reason",
+              "displayName": "Outcome Reason"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "Install Failure Category"
+                }
+              },
+              "queryRef": "vw_jsf.Install Failure Category",
+              "nativeQueryRef": "Failure Category",
+              "displayName": "Failure Category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_jsf"
+                    }
+                  },
+                  "Property": "comment"
+                }
+              },
+              "queryRef": "vw_jsf.comment",
+              "nativeQueryRef": "Engineer Comment",
+              "displayName": "Engineer Comment"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Installation Visits"
+                }
+              },
+              "queryRef": "_Measures.Installation Visits",
+              "nativeQueryRef": "Visits",
+              "displayName": "Visits"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Installation Visits"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#018EB1'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "239D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.Customer Name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "114D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.account_id"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "98D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.JSF Date (Day)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "129D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.Install Product"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "117D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.Install Build Type"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "181D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.jsf_engineer"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "216D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.engineer_recommendation"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "227D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Installation Visits"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "313D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "vw_jsf.comment"
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table 1: Installation JSF Details'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "underline": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

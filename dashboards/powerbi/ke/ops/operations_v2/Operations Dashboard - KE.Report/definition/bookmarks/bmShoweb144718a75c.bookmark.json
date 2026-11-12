@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Show Slicer Pane – Installations & Failures",
+  "name": "bmShoweb144718a75c",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "grp8f6f72cd663a6d",
+      "0600f707414a6344935e",
+      "b4816697d1cd4c145063",
+      "17ee3763be1a4bf9e905",
+      "2514973b2e31df7c6ce1",
+      "4184dad17348bfb9c33f",
+      "5ca4659850273fbb4ee9",
+      "dbd849c410fa245f784a",
+      "v778de3776bb7c24",
+      "vfd2dcea5bb6e788",
+      "va54a45fda1dadd1"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "as01installkpis0001",
+    "sections": {
+      "as01installkpis0001": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "grp8f6f72cd663a6d": {
+            "isHidden": false
+          }
+        }
+      }
+    }
+  }
+}

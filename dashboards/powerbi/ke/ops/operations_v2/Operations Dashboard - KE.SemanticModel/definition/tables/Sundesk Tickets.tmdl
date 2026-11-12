@@ -1,0 +1,513 @@
+table 'Sundesk Tickets'
+	lineageTag: 4adb1b9c-c026-42b7-b95b-6802dc12d5b2
+
+	column full_name
+		dataType: string
+		lineageTag: 61a53981-3eb8-45fd-9a1a-472be2cc4758
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: d6bcd866-40b2-497d-a14d-10ac6d504d64
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column close_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d9ea0131-3f38-4e0a-839e-62aa0e001051
+		summarizeBy: none
+		sourceColumn: close_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdby
+		dataType: string
+		lineageTag: 9c0450f3-262e-413d-9346-ae67cf723246
+		summarizeBy: none
+		sourceColumn: createdby
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f8f57414-20b6-4ee8-948e-ead9250e1af6
+		summarizeBy: none
+		sourceColumn: created_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: dd82bdfa-beff-48b3-844d-89203e6f34b0
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column failure_cause
+		dataType: string
+		lineageTag: 7c69d55e-1ea1-44aa-8ecc-0f5d1e65f9e3
+		summarizeBy: none
+		sourceColumn: failure_cause
+
+		annotation SummarizationSetBy = Automatic
+
+	column nationalid
+		dataType: string
+		lineageTag: fc87f5d2-9cc2-4601-9c89-3b9d632ee31d
+		summarizeBy: none
+		sourceColumn: nationalid
+
+		annotation SummarizationSetBy = Automatic
+
+	column priority
+		dataType: string
+		lineageTag: f072ee2e-e93a-4138-b11e-3dba88469da7
+		summarizeBy: none
+		sourceColumn: priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_type
+		dataType: string
+		lineageTag: f8c6fede-7e74-4eb1-a002-90c3c3d69227
+		summarizeBy: none
+		sourceColumn: product_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_state
+		dataType: string
+		lineageTag: b9ff1094-d4c8-45d8-a533-8833626caf7b
+		summarizeBy: none
+		sourceColumn: ticket_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column subcategory
+		dataType: string
+		lineageTag: f2ee0a00-5fa8-4ed5-bcf7-53e0a9ac3e5b
+		summarizeBy: none
+		sourceColumn: subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column testing_and_repair_resolution
+		dataType: string
+		lineageTag: eb73c700-680c-44f8-96eb-ce7e37710583
+		summarizeBy: none
+		sourceColumn: testing_and_repair_resolution
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_group
+		dataType: string
+		lineageTag: 70307927-c887-4f71-91d8-7187d57a1854
+		summarizeBy: none
+		sourceColumn: ticket_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column number
+		dataType: string
+		lineageTag: 8ebd55da-0004-473e-8ea8-38f33311d438
+		summarizeBy: none
+		sourceColumn: number
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3612aa1b-67c1-4882-a7b5-201f68175541
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column title
+		dataType: string
+		lineageTag: 29603bb4-c11e-4ac3-82ea-d434605e89fa
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 41433b68-7a62-470c-8277-8588574e1f91
+		summarizeBy: none
+		sourceColumn: updated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_updated_by
+		dataType: string
+		lineageTag: 46b81ab6-1d32-4c9b-b98c-5dff66170337
+		summarizeBy: none
+		sourceColumn: last_updated_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountRef = ```
+			
+			VAR NID = 'Sundesk Tickets'[nationalid]
+			VAR ViaNationalId =
+			    IF (
+			        LEN ( NID ) > 3,
+			        CALCULATE ( MAX ( points[accountRef] ), points[identification_number] = NID )
+			    )
+			VAR ViaTicketNumber =
+			    MAXX ( RELATEDTABLE ( vw_jsf ), RELATED ( points[accountRef] ) )
+			RETURN
+			    COALESCE ( ViaNationalId, ViaTicketNumber )
+			
+			```
+		lineageTag: c9b6bd06-956b-4c15-8672-72ae56cdd0aa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceid = ```
+			
+			VAR NID = 'Sundesk Tickets'[nationalid]
+			VAR ViaNationalId =
+			    IF (
+			        LEN ( NID ) > 3,
+			        CALCULATE ( MAX ( points[deviceId] ), points[identification_number] = NID )
+			    )
+			VAR ViaTicketNumber =
+			    MAXX ( RELATEDTABLE ( vw_jsf ), RELATED ( points[deviceId] ) )
+			RETURN
+			    COALESCE ( ViaNationalId, ViaTicketNumber )
+			
+			```
+		lineageTag: 7c0e8803-b07e-4ead-a187-d3d07a6dc48f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'JSF Assignment ID' =
+			
+			MAXX(
+			    RELATEDTABLE(vw_jsf),
+			    vw_jsf[installation_id]
+			)
+		lineageTag: 373296c6-1ff3-48ff-8737-b8abb3ece53b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'JSF Engineer' =
+			
+			MAXX(
+			    RELATEDTABLE(vw_jsf),
+			    vw_jsf[jsf_engineer])
+		lineageTag: 8c2547a4-7710-4270-95a4-d63804c05ce1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'JSF ID' =
+			
+			MAXX(
+			    RELATEDTABLE(vw_jsf),
+			    vw_jsf[jsf_id]
+			)
+		lineageTag: 2bf19b9d-7864-4b09-ad9b-6f1388d43e47
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'JSF Ticket' =
+			
+			MAXX(
+			    RELATEDTABLE(vw_jsf),
+			    vw_jsf[ticket_number]
+			)
+		lineageTag: d80da35a-82f4-4981-be2b-1820d6d0851e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Targeted_TAT =
+			
+			SWITCH (
+			    TRUE(),
+			    'Sundesk Tickets'[type] = "Aftersales (Field)", 3,
+			    'Sundesk Tickets'[type] = "AMT Update", 2,
+			    'Sundesk Tickets'[type] = "Customer Request", 2,
+			    'Sundesk Tickets'[type] = "Customer Request/ Inquiry", 1,
+			    'Sundesk Tickets'[type] = "Delayed Dispatch", 1,
+			    'Sundesk Tickets'[type] = "Finance", 1,
+			    'Sundesk Tickets'[type] = "Incident/ Complaint", 1,
+			    'Sundesk Tickets'[type] = "Installation", 5,
+			    'Sundesk Tickets'[type] = "Locked Device", 2,
+			    'Sundesk Tickets'[type] = "Problem/Failure", 1,
+			    'Sundesk Tickets'[type] = "Refund Request", 3,
+			    'Sundesk Tickets'[type] = "Repossession",14,
+			    2
+			)
+		formatString: 0
+		lineageTag: 873c99c1-8f7c-4bd5-abbd-4ba4dabeaf99
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ticket_SLA_Status =
+			
+			IF (
+			    NOT ISBLANK ( 'Sundesk Tickets'[Time_Taken_To_Close])
+			        && NOT ISBLANK ( 'Sundesk Tickets'[Targeted_TAT]),
+			    IF ( 'Sundesk Tickets'[Time_Taken_To_Close] <= 'Sundesk Tickets'[Targeted_TAT], "Resolved within SLA", "Resolved outside SLA" ),
+			    BLANK()
+			)
+		lineageTag: f3264e7c-d187-4cdc-89ee-e7f601dc3c7d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time_Taken_To_Close = DATEDIFF('Sundesk Tickets'[created_at],'Sundesk Tickets'[close_at],DAY)
+		formatString: 0
+		lineageTag: c23da3bf-1195-41a2-9ca3-e266c7cbd308
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Readable failure cause parsed from the JSON in [failure_cause] (recorded by Testing & Repairs).
+	column 'Failure Cause' =
+			VAR S = 'Sundesk Tickets'[failure_cause]
+			VAR P = SEARCH ( """label"": """, S, 1, 0 )
+			VAR Rest = IF ( P = 0, BLANK (), MID ( S, P + 10, 300 ) )
+			VAR E = IF ( ISBLANK ( Rest ), 0, SEARCH ( """", Rest, 1, 0 ) )
+			RETURN IF ( E = 0, BLANK (), TRIM ( LEFT ( Rest, E - 1 ) ) )
+		displayFolder: Failure Analysis
+		lineageTag: a84f3730-a825-47e3-ba12-96a818aa292a
+
+	/// Failing component parsed from the JSON in [product_type] (e.g. CSD_AMT, CSB1, RM2C-K).
+	column Component =
+			VAR S = 'Sundesk Tickets'[product_type]
+			VAR P = SEARCH ( """label"": """, S, 1, 0 )
+			VAR Rest = IF ( P = 0, BLANK (), MID ( S, P + 10, 300 ) )
+			VAR E = IF ( ISBLANK ( Rest ), 0, SEARCH ( """", Rest, 1, 0 ) )
+			VAR Parsed = IF ( E = 0, BLANK (), TRIM ( LEFT ( Rest, E - 1 ) ) )
+			RETURN COALESCE ( Parsed, IF ( TRIM ( S ) IN { "", "{}" }, BLANK (), TRIM ( S ) ) )
+		displayFolder: Failure Analysis
+		lineageTag: ad2f85fe-8a33-4cdf-979f-1914bfb22b86
+
+	/// Product Fault = hardware issue in the field (fault/failure/issue/aftersale ticket types, or any ticket where Testing & Repairs recorded a failure cause). Technical Service = assessments, installs, warranty admin, swaps. Commercial & Admin = payments, accounts, logistics, refunds. Unclassified = legacy tickets with no type.
+	column 'Fault Class' =
+			VAR T = LOWER ( TRIM ( 'Sundesk Tickets'[type] ) )
+			VAR SC = LOWER ( 'Sundesk Tickets'[subcategory] )
+			VAR HasCause = NOT ISBLANK ( 'Sundesk Tickets'[Failure Cause] ) && NOT ( 'Sundesk Tickets'[Failure Cause] IN { "Device Locked:Arrears" } )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        CONTAINSSTRING ( SC, "arrears" ) || SC IN { "no water source" }, "Commercial & Admin",
+			        T IN { "low flow rate", "controller", "battery", "faulty sensor" }, "Product Fault",
+			        CONTAINSSTRING ( T, "fault" ) || CONTAINSSTRING ( T, "failure" ) || CONTAINSSTRING ( T, "issue" ) || CONTAINSSTRING ( T, "aftersale" ), "Product Fault",
+			        HasCause, "Product Fault",
+			        ISBLANK ( T ) || T = "", "Unclassified",
+			        CONTAINSSTRING ( T, "assessment" ) || CONTAINSSTRING ( T, "warranty" ) || CONTAINSSTRING ( T, "install" ) || CONTAINSSTRING ( T, "upgrade" ) || CONTAINSSTRING ( T, "swap" ) || CONTAINSSTRING ( T, "tsr" ), "Technical Service",
+			        "Commercial & Admin"
+			    )
+		displayFolder: Failure Analysis
+		lineageTag: 4f8d83e1-51e9-44b9-9cbe-9997eac07d8a
+
+	/// Failing component grouped into Controller (CSD/CSB/Falcon), Battery, Pump, Panel, Switch & Sensor, Cables & Connectors, TV. Falls back to the ticket type/subcategory when Testing & Repairs did not record a component.
+	column 'Component Group' =
+			
+			VAR C = UPPER ( 'Sundesk Tickets'[Component] )
+			VAR X = UPPER ( 'Sundesk Tickets'[type] & " " & 'Sundesk Tickets'[subcategory] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        CONTAINSSTRING ( C, "BATTERY" ), "Battery",
+			        CONTAINSSTRING ( C, "CABLE" ), "Cable",
+			        CONTAINSSTRING ( C, "CONNECT" ) || CONTAINSSTRING ( C, "MC4" ), "Connector",
+			        CONTAINSSTRING ( C, "SWITCH" ), "Switch",
+			        CONTAINSSTRING ( C, "SENSOR" ), "Sensor",
+			        CONTAINSSTRING ( C, "PANEL" ), "Panel",
+			        CONTAINSSTRING ( C, "TV" ), "TV",
+			        CONTAINSSTRING ( C, "CSD" ) || CONTAINSSTRING ( C, "CSB" ) || CONTAINSSTRING ( C, "FALCON" ), "Controller",
+			        CONTAINSSTRING ( C, "RM" ) || CONTAINSSTRING ( C, "PUMP" ), "Pump",
+			        NOT ISBLANK ( C ), "Other",
+			        CONTAINSSTRING ( X, "SWITCH" ), "Switch",
+			        CONTAINSSTRING ( X, "SENSOR" ), "Sensor",
+			        CONTAINSSTRING ( X, "CABLE" ), "Cable",
+			        CONTAINSSTRING ( X, "CONNECT" ) || CONTAINSSTRING ( X, "MC4" ), "Connector",
+			        CONTAINSSTRING ( X, "BATTERY" ) || CONTAINSSTRING ( X, "CHARGING" ) || CONTAINSSTRING ( X, "DISCHARGE" ), "Battery",
+			        CONTAINSSTRING ( X, "PANEL" ) || CONTAINSSTRING ( X, "SOLAR" ), "Panel",
+			        CONTAINSSTRING ( X, "TV" ), "TV",
+			        CONTAINSSTRING ( X, "CONTROLLER" ) || CONTAINSSTRING ( X, "POWERING" ) || CONTAINSSTRING ( X, "REBOOT" ) || CONTAINSSTRING ( X, "SCREEN" ) || CONTAINSSTRING ( X, "LOCKED" ) || CONTAINSSTRING ( X, "DEVICE" ), "Controller",
+			        CONTAINSSTRING ( X, "PUMP" ) || CONTAINSSTRING ( X, "FLOW" ) || CONTAINSSTRING ( X, "DRY RUN" ), "Pump",
+			        "Not Recorded"
+			    )
+		displayFolder: Failure Analysis
+		lineageTag: 10a48b99-74ba-4bf9-aa3b-591e3a795d0a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// What actually broke, grouped from the Testing & Repairs failure cause: Controller Electronics, Switch Failure, Battery & Charging, Connectors & Wiring, Pump Motor & Mechanics, Panel, Lock / Network / Firmware, Water & Physical Damage, No Fault Found, TV, Other. 'Not Diagnosed' means no failure cause was recorded.
+	column 'Failure Mode' =
+			VAR F = UPPER ( 'Sundesk Tickets'[Failure Cause] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( F ), "Not Diagnosed",
+			        CONTAINSSTRING ( F, "NO FAULT" ), "No Fault Found",
+			        CONTAINSSTRING ( F, "WATER DAMAGE" ) || CONTAINSSTRING ( F, "PHYSICAL" ) || CONTAINSSTRING ( F, "TAMPER" ), "Water & Physical Damage",
+			        CONTAINSSTRING ( F, "TV" ), "TV",
+			        CONTAINSSTRING ( F, "SWITCH" ), "Switch Failure",
+			        CONTAINSSTRING ( F, "LOCKED" ) || CONTAINSSTRING ( F, "SIM" ) || CONTAINSSTRING ( F, "NETWORK" ) || CONTAINSSTRING ( F, "FIRMWARE" ) || CONTAINSSTRING ( F, "ANTENNA" ) || CONTAINSSTRING ( F, "RF PORT" ), "Lock / Network / Firmware",
+			        CONTAINSSTRING ( F, "LI-ION" ) || CONTAINSSTRING ( F, "BAT" ) || CONTAINSSTRING ( F, "LVD" ) || CONTAINSSTRING ( F, "CHARGING" ) || CONTAINSSTRING ( F, "DISCHARGE" ), "Battery & Charging",
+			        CONTAINSSTRING ( F, "MC4" ) || CONTAINSSTRING ( F, "SCREW" ) || CONTAINSSTRING ( F, "CABLE" ) || CONTAINSSTRING ( F, "LOOSE" ) || CONTAINSSTRING ( F, "CONNECT" ) || CONTAINSSTRING ( F, "C13" ) || CONTAINSSTRING ( F, "JACKPIN" ) || CONTAINSSTRING ( F, "SOCKET" ) || CONTAINSSTRING ( F, "DISCONTUITY" ), "Connectors & Wiring",
+			        CONTAINSSTRING ( F, "PANEL" ), "Panel",
+			        CONTAINSSTRING ( F, "WINDING" ) || CONTAINSSTRING ( F, "SHAFT" ) || CONTAINSSTRING ( F, "BLDC" ) || CONTAINSSTRING ( F, "IMPELLA" ) || CONTAINSSTRING ( F, "PUMPING" ) || CONTAINSSTRING ( F, "VALVE" ) || CONTAINSSTRING ( F, "BEARING" ) || CONTAINSSTRING ( F, "COOLANT" ) || CONTAINSSTRING ( F, "MOTOR" ) || CONTAINSSTRING ( F, "PUMP" ) || CONTAINSSTRING ( F, "FLOW" ) || CONTAINSSTRING ( F, "STATOR" ), "Pump Motor & Mechanics",
+			        CONTAINSSTRING ( F, "ESP32" ) || CONTAINSSTRING ( F, "LCD" ) || CONTAINSSTRING ( F, "AMT" ) || CONTAINSSTRING ( F, "A4964" ) || CONTAINSSTRING ( F, "GD32" ) || CONTAINSSTRING ( F, "PCB" ) || CONTAINSSTRING ( F, "LTC" ) || CONTAINSSTRING ( F, "ATMEGA" ) || CONTAINSSTRING ( F, "STM32" ) || CONTAINSSTRING ( F, "OVERVOLTAGE" ) || CONTAINSSTRING ( F, "OVERHEAT" ) || CONTAINSSTRING ( F, "FROZEN" ) || CONTAINSSTRING ( F, "CSD" ) || CONTAINSSTRING ( F, "CSB" ) || CONTAINSSTRING ( F, "SHORT" ) || CONTAINSSTRING ( F, "REBOOT" ) || CONTAINSSTRING ( F, "USB" ) || CONTAINSSTRING ( F, "I2C" ) || CONTAINSSTRING ( F, "LED" ) || CONTAINSSTRING ( F, "DRY RUN" ) || CONTAINSSTRING ( F, "DRYRUN" ) || CONTAINSSTRING ( F, "GLITCH" ) || CONTAINSSTRING ( F, "SIMCOM" ) || CONTAINSSTRING ( F, "DIODE" ), "Controller Electronics",
+			        "Other"
+			    )
+		displayFolder: Failure Analysis
+		lineageTag: c49ee7c9-798c-44c1-be6e-46c6d582fbf0
+
+	/// account_id of the customer's most recent Kenyan installed unit (non-refunded, non-rejected) installed on or before the ticket date, matched on national ID; falls back to the account on the JSF raised against the ticket. Blank = could not be tied to an installed unit.
+	column 'Linked Account' = COALESCE ( LOOKUPVALUE ( 'Ticket Unit Link'[Account], 'Ticket Unit Link'[TicketId], 'Sundesk Tickets'[id] ), MAXX ( RELATEDTABLE ( vw_jsf ), vw_jsf[account_id] ) )
+		dataType: string
+		displayFolder: Linked Unit
+		lineageTag: b3d035c0-1c2f-41cc-87ef-055a87b8fcdc
+
+	/// Product of the linked unit (points[product]).
+	column 'Linked Product' = LOOKUPVALUE ( points[product], points[account_id], 'Sundesk Tickets'[Linked Account] )
+		dataType: string
+		displayFolder: Linked Unit
+		lineageTag: e5faf40b-b692-4d19-b637-9de37352b866
+
+	/// Installation (JSF) date of the linked unit, truncated to the day.
+	column 'Linked Install Date' = VAR D = LOOKUPVALUE ( points[jsf_date], points[account_id], 'Sundesk Tickets'[Linked Account] ) RETURN IF ( ISBLANK ( D ), BLANK (), DATE ( YEAR ( D ), MONTH ( D ), DAY ( D ) ) )
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		displayFolder: Linked Unit
+		lineageTag: 4db99bef-97f6-43c2-87b5-83cf4c7233f2
+
+	/// Refurb / Non-Refurb from the linked unit's product name (contains 'refurb', or ends in ' - R' / '-R'). Unlinked = ticket could not be tied to an installed unit. Use this as the Refurb filter on the Aftersale Tickets page.
+	column 'Build Type' =
+			VAR P = LOWER ( TRIM ( 'Sundesk Tickets'[Linked Product] ) )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( P ) || P = "", "Unlinked",
+			        CONTAINSSTRING ( P, "refurb" ) || RIGHT ( P, 4 ) = " - r" || RIGHT ( P, 2 ) = "-r" || CONTAINSSTRING ( P, "-r " ), "Refurb",
+			        "Non-Refurb"
+			    )
+		dataType: string
+		displayFolder: Linked Unit
+		lineageTag: b8220dd6-098d-464e-bcc5-36f026e0c10d
+
+	/// Days the linked unit had been in the field when the ticket was raised (install date to ticket date).
+	column 'Days to Failure' = VAR D = 'Sundesk Tickets'[Linked Install Date] RETURN IF ( ISBLANK ( D ), BLANK (), MAX ( 0, DATEDIFF ( D, 'Sundesk Tickets'[created_at], DAY ) ) )
+		dataType: int64
+		formatString: #,0
+		displayFolder: Failure Analysis
+		lineageTag: 16d00d39-e7aa-4711-a3b4-c692b52de998
+
+	/// Sort key for Days to Fail Band.
+	column 'Days to Fail Order' = VAR D = 'Sundesk Tickets'[Days to Failure] RETURN SWITCH ( TRUE (), ISBLANK ( D ), 99, D <= 30, 1, D <= 60, 2, D <= 90, 3, D <= 180, 4, D <= 365, 5, D <= 730, 6, D <= 1095, 7, 8 )
+		dataType: int64
+		isHidden
+		formatString: 0
+		displayFolder: Failure Analysis
+		lineageTag: 24838e9a-e5da-4ab4-9f8d-3360139ad756
+
+	/// Days to Failure in life-stage bands (same bands as the Salesforce days_to_fail groups).
+	column 'Days to Fail Band' = VAR D = 'Sundesk Tickets'[Days to Failure] RETURN SWITCH ( TRUE (), ISBLANK ( D ), "Unlinked", D <= 30, "0-30 Days", D <= 60, "31-60 Days", D <= 90, "2-3 Months", D <= 180, "3-6 Months", D <= 365, "6-12 Months", D <= 730, "1-2 Years", D <= 1095, "2-3 Years", "Over 3 Years" )
+		dataType: string
+		displayFolder: Failure Analysis
+		lineageTag: 798c245d-e3ee-4c65-b891-94bb3037415e
+		sortByColumn: 'Days to Fail Order'
+
+	/// Town of the linked unit (points[town]).
+	column 'Linked Town' = LOOKUPVALUE ( points[town], points[account_id], 'Sundesk Tickets'[Linked Account] )
+		dataType: string
+		displayFolder: Linked Unit
+		lineageTag: 5aa03811-c474-46b9-86a8-f6e007567a5d
+
+	/// A product failure is confirmed only when the ticket reached Testing & Repairs, is COMPLETED, carries a recorded failure cause, that cause is not No Fault Found, and the ticket is a hardware fault (Fault Class = Product Fault, which excludes arrears locks). This is the definition behind every product-failure and failure-rate figure.
+	column 'Confirmed Failure' =
+			VAR IsHardware = 'Sundesk Tickets'[Fault Class] = "Product Fault"
+			VAR IsTR   = 'Sundesk Tickets'[ticket_group] = "Operations_KE::Testing & Repairs_KE"
+			VAR IsDone = 'Sundesk Tickets'[ticket_state] = "COMPLETED"
+			VAR HasCause = NOT ISBLANK ( 'Sundesk Tickets'[Failure Cause] )
+			VAR NotNFF = 'Sundesk Tickets'[Failure Mode] <> "No Fault Found"
+			RETURN
+			    SWITCH ( TRUE (),
+			        IsTR && HasCause && NotNFF, "Confirmed Failure",
+			        IsTR && HasCause && NOT NotNFF, "No Fault Found",
+			        IsTR && IsDone, "Assessed - No Cause Recorded",
+			        IsTR, "At Bench - Open",
+			        "Not Assessed" )
+		dataType: string
+		displayFolder: Failure Analysis
+		lineageTag: 6a059eaa-9a1f-4fbb-b395-2eba535af38c
+
+	/// Date-only ticket creation date. Active key to 'Ticket Date'.
+	column 'Created Date' = DATEVALUE ( 'Sundesk Tickets'[created_at] )
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 8e166d3d-a8cf-4710-b3ca-c73d1552a86f
+		summarizeBy: none
+
+	/// Date the ticket was actually closed. Blank unless the ticket state is closed, because close_at mirrors updated_at on open tickets. Inactive key to 'Ticket Date'.
+	column 'Closed Date' = IF ( 'Sundesk Tickets'[ticket_state] IN { "COMPLETED", "CLOSED", "RESOLVED" } && NOT ISBLANK ( 'Sundesk Tickets'[close_at] ), DATEVALUE ( 'Sundesk Tickets'[close_at] ) )
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: cf66f05d-3571-4f58-b643-052df299a34d
+		summarizeBy: none
+
+	/// The part that broke, from the Testing & Repairs failure cause. Controller includes everything in the controller box: electronics, battery, switch, SIM / modem and firmware.
+	column 'Failed Part' = SWITCH ( 'Sundesk Tickets'[Failure Mode], "Pump Motor & Mechanics", "Pump", "Panel", "Panel", "Controller Electronics", "Controller", "Battery & Charging", "Controller", "Switch Failure", "Controller", "Lock / Network / Firmware", "Controller", "TV", "TV", "Connectors & Wiring", "Cables & connectors", "Water & Physical Damage", "Water / physical damage", "No Fault Found", BLANK (), "Not Diagnosed", BLANK (), "Other" )
+		dataType: string
+		displayFolder: Failure Analysis
+		lineageTag: 890cf7da-7d84-49bc-b53a-f4dfde8021fb
+		summarizeBy: none
+
+	partition 'Sundesk Tickets' = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"4ac9f4f4-9bce-41e4-97dc-1929b1823dc5" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="4ac9f4f4-9bce-41e4-97dc-1929b1823dc5"]}[Data],
+				    mart_all_tickets_ = #"4ac9f4f4-9bce-41e4-97dc-1929b1823dc5"{[entity="mart_all_tickets",version=""]}[Data],
+				    #"Renamed DF type" = Table.RenameColumns(mart_all_tickets_, {{"type", "sub_type"}}, MissingField.Ignore),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed DF type", each Text.Contains([ticket_group], "_KE")),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows", {
+				        {"ticketsId", "id"},
+				        {"ticket_number", "number"},
+				        {"case_type", "type"},
+				        {"status", "ticket_state"},
+				        {"created_date", "created_at"},
+				        {"created_by", "createdby"},
+				        {"updated_by", "last_updated_by"},
+				        {"assigned_to", "full_name"}
+				    }, MissingField.Ignore),
+				    #"Truncated created_at" = Table.TransformColumns(#"Renamed Columns", {{"created_at", each if _ = null then null else DateTime.From(Date.From(_)), type datetime}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Truncated created_at", {"number"}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Removed Duplicates", {"close_at", "created_at", "createdby", "customer_name", "failure_cause", "full_name", "id", "last_updated_by", "nationalid", "number", "priority", "product_type", "subcategory", "testing_and_repair_resolution", "ticket_group", "ticket_state", "title", "type", "updated_at"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

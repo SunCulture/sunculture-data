@@ -1,0 +1,37 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	maxParallelismPerRefresh: 8
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["points","status_change","engineers","vw_jsf","vw_employees","Sundesk Tickets","Last Refresh"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","MCP-PBIModeling","DevMode"]
+
+annotation __TEdtr = 1
+
+ref table calendar
+ref table points
+ref table status_change
+ref table engineers
+ref table KPIs
+ref table vw_jsf
+ref table vw_employees
+ref table 'Sundesk Tickets'
+ref table 'Ticket Unit Link'
+ref table 'AS Calendar'
+ref table 'Unit Failures'
+ref table _Measures
+ref table 'Fail Age Bands'
+ref table 'Ticket Date'
+ref table 'Last Refresh'
+ref table 'Unit Parts'
+
+ref cultureInfo en-US
+

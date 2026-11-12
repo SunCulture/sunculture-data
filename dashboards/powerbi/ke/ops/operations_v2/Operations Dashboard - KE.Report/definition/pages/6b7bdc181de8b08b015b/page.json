@@ -1,0 +1,207 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "6b7bdc181de8b08b015b",
+  "displayName": "Cash Release Reconciliation",
+  "displayOption": "FitToWidth",
+  "height": 1544,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "beb26040d1a00434b009",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "vw_jsf"
+              }
+            },
+            "Property": "jsf_date"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "v",
+              "Entity": "vw_jsf",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "v"
+                              }
+                            },
+                            "Property": "jsf_date"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "40e11c79545027d870e7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "points"
+              }
+            },
+            "Property": "companyRegion"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "p",
+              "Entity": "points",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "p"
+                          }
+                        },
+                        "Property": "companyRegion"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'kenya'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "89e9d34ea2b1c692dc47",
+    "type": "Default",
+    "parameters": []
+  },
+  "visualInteractions": [
+    {
+      "source": "8109bf6695d49d40d7be",
+      "target": "66d143ed3122b0b20793",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8109bf6695d49d40d7be",
+      "target": "e5e66cdc3069d0ee351d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "e5e66cdc3069d0ee351d",
+      "target": "66d143ed3122b0b20793",
+      "type": "DataFilter"
+    },
+    {
+      "source": "e5e66cdc3069d0ee351d",
+      "target": "a9abe3c79151525805dd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "66d143ed3122b0b20793",
+      "target": "e5e66cdc3069d0ee351d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "66d143ed3122b0b20793",
+      "target": "a9abe3c79151525805dd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8109bf6695d49d40d7be",
+      "target": "a9abe3c79151525805dd",
+      "type": "DataFilter"
+    }
+  ],
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F6F4'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
