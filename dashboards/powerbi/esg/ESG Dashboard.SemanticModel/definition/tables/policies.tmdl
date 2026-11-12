@@ -29,6 +29,8 @@ table policies
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	partition policies = m
 		mode: import
 		source =
@@ -43,7 +45,8 @@ table policies
 				    // The dashboard only counts ACTIVE cover
 				    #"Active Only" = Table.SelectRows ( #"Kept Columns", each [status] <> null and Text.Upper ( Text.Trim ( [status] ) ) = "ACTIVE" ),
 				    // Cover type from the product name (was a DAX column worked out row by row)
-				    ProductNames = Table.Buffer ( Table.SelectColumns ( products, {"id", "name"} ) ),
+				    // Read products from the same dataflow here (referencing the products query trips the Formula.Firewall)
+				    ProductNames = Table.Buffer ( Table.TransformColumns ( Table.SelectColumns ( #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"{[entity="products",version=""]}[Data], {"id", "name"} ), {{"id", each if _ = null then null else Text.Trim ( Text.From ( _ ) ), type nullable text}} ) ),
 				    #"With Key" = Table.AddColumn ( #"Active Only", "pid", each if [productId] = null then null else Text.Trim ( Text.From ( [productId] ) ), type nullable text ),
 				    #"With Product" = Table.NestedJoin ( #"With Key", {"pid"}, ProductNames, {"id"}, "p", JoinKind.LeftOuter ),
 				    #"With Name" = Table.ExpandTableColumn ( #"With Product", "p", {"name"}, {"productName"} ),
@@ -56,8 +59,10 @@ table policies
 				        else "Other", type text ),
 				    #"With Start" = Table.AddColumn ( #"With Cover", "start", each if [dateActivated] <> null then [dateActivated] else [createdAt] ),
 				    // One row per person and cover type, dated from the first start (renewals and repeat products collapse)
-				    #"One Row per Person and Cover" = Table.Group ( #"With Start", {"idNumber", "Cover Type"}, {{"Policy Date", each Date.From ( List.Min ( [start] ) ), type nullable date}} ),
-				    #"Typed" = Table.TransformColumnTypes ( #"One Row per Person and Cover", {{"idNumber", type text}, {"Cover Type", type text}, {"Policy Date", type date}} )
+				    #"One Row per Person and Cover" = Table.Group ( #"With Start", {"idNumber", "Cover Type"}, {{"Policy Date", each List.Min ( [start] )}} ),
+				    // Same conversion as before (the dates can arrive as text): first to date-time, then to date
+				    #"As DateTime" = Table.TransformColumnTypes ( #"One Row per Person and Cover", {{"idNumber", type text}, {"Cover Type", type text}, {"Policy Date", type datetime}} ),
+				    #"Typed" = Table.TransformColumnTypes ( #"As DateTime", {{"Policy Date", type date}} )
 				in
 				    #"Typed"
 

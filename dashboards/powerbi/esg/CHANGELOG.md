@@ -8,7 +8,6 @@
 - **Added** KPIs: PAYG sales and first-time borrowers (SDG 1); productive-use sales to women, women first-time borrowers, direct and indirect jobs by gender (SDG 5); direct jobs, % women in active workforce, indirect jobs, female turnover (SDG 8); second-life refurbished sales (new SDG 12); solar MJ generated in the year (SDG 13).
 - **Changed** climate insurance and climate-resilience training moved from SDG 1 to SDG 13; added SDG 13 rows for tCO₂ (pumps sold, active pumps, lifetime), petrol avoided, diesel MJ and carbon credits; SDG 6 water purification.
 - **Added** *Waiting survey* status for KPIs the SDG survey will collect; other gaps say *Pending – <source>*. No individual names in the report.
-- **Added** **Show** slicer (table `SDG Period`): cumulative to date or in the year.
 - **Changed** questionnaire (version 2026111202): Not sure and Prefer not to say separated; post-harvest loss question removed; food access labels Easier / Harder; well / borehole running-dry questions; fuel type and weekly fuel spend; new Water use section (source, pumping days, water pumped per day, uses, water purification system); `dashboard_methodology` sheet with every KPI's formula, source and status.
 
 ## 2026-11-04

@@ -16,7 +16,7 @@ SunCulture's KPIs against the UN Sustainable Development Goals: one table with a
 
 | Page | Purpose |
 |---|---|
-| SDG Summary | One row per KPI, grouped by SDG (1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 17) with the UN colour of each goal as a thin bar before the SDG name. One column per year; **Show** and **Country** slicers in the header. The report stays a single page; the methodology lives in the questionnaire workbook (`dashboard_methodology` sheet). |
+| SDG Summary | One row per KPI, grouped by SDG (1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 17) with the UN colour of each goal as a thin bar before the SDG name. One column per year; a **Country** slicer in the header. The report stays a single page; the methodology lives in the questionnaire workbook (`dashboard_methodology` sheet). |
 
 ### Year columns
 
@@ -32,11 +32,10 @@ Each cell is the KPI's value at 31 December of that year (today for the current 
 | Waiting survey | Will come from the SDG impact survey (questions in `kpi_mapping`) |
 | Pending | Data not yet available from a non-survey source (P&C records, MRV dashboard, carbon registry); the current-year cell says which |
 
-**Show** (table `SDG Period`): *Cumulative to date* (default) or *In the year*. In the year shows, for cumulative count rows (#, kW, MWh, t), only what was added in that year (year-end value minus the previous year-end value); percentages and snapshots are unchanged.
 
 ## Data model
 
-16 tables, 72 measures (table `ESG Measures`), 6 relationships, Import mode.
+15 tables, 72 measures (table `ESG Measures`), 6 relationships, Import mode.
 
 | Table | Grain | Notes |
 |---|---|---|
@@ -48,7 +47,6 @@ Each cell is the KPI's value at 31 December of that year (today for the current 
 | `policies` | One row per person per cover type | Three columns: `idNumber`, `Cover Type`, `Policy Date`. **Active policies only**; cover type (Climate / Device / Hospicash / Life / Other / Unmatched) worked out in Power Query from the product name; renewals and repeat products collapsed to the first start date. Refresh still downloads the whole dataflow table (~1.3 GB, ~2.8M rows) because dataflow tables don't fold; see open questions |
 | `products` | One row per insurance product | `id` comes through the dataflow as text (cast with `toString` in the ClickHouse query) |
 | `SDG Summary` | One row per KPI (57) | Calculated table: SDG, KPI, key, unit, basis, pending note, UN colour |
-| `SDG Period` | 2 rows | Disconnected table for the Show slicer |
 | `SDG Years` | One row per year | Field parameter for the year columns |
 | `Calendar`, `Country`, `Product Watts` | Lookups | `Product Watts` holds the pump wattage per product for kW and MWh |
 

@@ -265,17 +265,14 @@ table 'ESG Measures'
 		displayFolder: SDG Summary
 		lineageTag: 14529bbc-40c7-4a92-a9a8-2b270662324b
 
-	/// Position at 31 Dec of the year in the filter context (today for the current year); with 'SDG Period' = In the year, cumulative counts show only what was added that year. Current-status KPIs and Pending notes only show in the current year, because no history is kept
+	/// Position at 31 Dec of the year in the filter context (today for the current year). Current-status KPIs and Pending notes only show in the current year, because no history is kept
 	measure 'SDG Year-End' =
 			VAR _u = SELECTEDVALUE ( 'SDG Summary'[Unit] )
 			VAR _b = SELECTEDVALUE ( 'SDG Summary'[Basis] )
 			VAR _y = MAX ( 'Calendar'[Year] )
 			VAR _isCurrent = _y = YEAR ( TODAY () )
 			VAR _end = MIN ( DATE ( _y, 12, 31 ), TODAY () )
-			VAR _mode = SELECTEDVALUE ( 'SDG Period'[Period], "Cumulative to date" )
-			VAR _v0 = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _end )
-			VAR _inYear = _mode = "In the year" && _b = "Cumulative" && _u IN { "#", "kW", "MWh", "t" }
-			VAR _v = IF ( _inYear, _v0 - CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= DATE ( _y - 1, 12, 31 ) ), _v0 )
+			VAR _v = CALCULATE ( [SDG KPI Value], REMOVEFILTERS ( 'Calendar' ), 'Calendar'[Date] <= _end )
 			RETURN
 			    IF (
 			        HASONEVALUE ( 'SDG Summary'[Key] ),
@@ -301,8 +298,7 @@ table 'ESG Measures'
 			VAR _end = IF ( ISFILTERED ( 'Calendar'[Year] ), MIN ( DATE ( MAX ( 'Calendar'[Year] ), 12, 31 ), TODAY () ), TODAY () )
 			RETURN
 			    "Year columns = position at 31 Dec; current year = position at " & FORMAT ( _end, "d mmm yyyy" )
-			        & "   ·   – = current-status KPI (no history kept)   ·   Waiting survey = will come from the SDG impact survey   ·   Pending = data not yet available"
-			        & IF ( SELECTEDVALUE ( 'SDG Period'[Period] ) = "In the year", "   ·   Counts show only what was added in each year", "   ·   Counts are cumulative to the date shown" )
+			        & "   ·   – = current-status KPI (no history kept)   ·   Waiting survey = will come from the SDG impact survey   ·   Pending = data not yet available   ·   Counts are cumulative to the date shown"
 		displayFolder: SDG Summary
 		lineageTag: e042e9dd-7ef2-487d-acf4-19c0b915c95a
 
@@ -474,16 +470,6 @@ table 'ESG Measures'
 		displayFolder: SDG 1 & 3 · Inclusion & insurance
 		lineageTag: 31ee91ad-1d7e-408c-b135-ccf62c304753
 
-	column Placeholder
-		dataType: string
-		isHidden
-		lineageTag: 8a5aebb4-6261-4980-b798-ca23cb2483e8
-		summarizeBy: none
-		isNameInferred
-		sourceColumn: [Placeholder]
-
-		annotation SummarizationSetBy = Automatic
-
 	/// PAYG accounts with a sale date and a full deposit (Total Sales rules)
 	measure 'PAYG Sales' = CALCULATE ( [Total Sales], accounts_mv[accountType] = "PAYG" ) + 0
 		formatString: #,0
@@ -568,6 +554,16 @@ table 'ESG Measures'
 		formatString: #,0
 		displayFolder: SDG 7 & 13 · Clean energy & carbon
 		lineageTag: 5c2d0d7d-7ce2-4d40-b14c-547f6ac8991f
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: 8a5aebb4-6261-4980-b798-ca23cb2483e8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
 
 	partition 'ESG Measures' = calculated
 		mode: import

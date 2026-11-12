@@ -102,9 +102,6 @@ table 'SDG Summary'
 
 		annotation SummarizationSetBy = Automatic
 
-
-
-
 	partition 'SDG Summary' = calculated
 		mode: import
 		source =
