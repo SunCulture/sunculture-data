@@ -3,10 +3,10 @@
   "name": "4372ff0c8b49e1c70843",
   "position": {
     "x": 8,
-    "y": 8,
+    "y": 4,
     "z": 9100,
     "width": 216,
-    "height": 112,
+    "height": 76,
     "tabOrder": 9100
   },
   "visual": {
@@ -82,18 +82,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1F4E53'"
+                      "Value": "'#636569'"
                     }
                   }
                 }
@@ -131,7 +120,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#DDF4F4'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -148,6 +137,17 @@
               "expr": {
                 "Literal": {
                   "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2326'"
+                    }
+                  }
                 }
               }
             }
@@ -201,6 +201,40 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

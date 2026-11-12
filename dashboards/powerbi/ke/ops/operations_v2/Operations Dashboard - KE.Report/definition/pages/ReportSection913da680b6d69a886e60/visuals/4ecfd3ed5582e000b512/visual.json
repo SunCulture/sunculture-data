@@ -3,9 +3,9 @@
   "name": "4ecfd3ed5582e000b512",
   "position": {
     "x": 456,
-    "y": 68,
+    "y": 44,
     "z": 9124,
-    "height": 52,
+    "height": 36,
     "width": 216,
     "tabOrder": 9124
   },
@@ -71,9 +71,43 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F4E53'"
+                      "Value": "'#636569'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
