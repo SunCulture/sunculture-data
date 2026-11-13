@@ -1,0 +1,539 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – Testing & Repairs Aftersale Tickets",
+  "name": "bmReset0d141c8eca4d",
+  "options": {
+    "targetVisualNames": [
+      "0bd4bbc3dda0f6672ed3",
+      "148fd2f2c3f84fe9d922",
+      "3f74dc17166af3d565da",
+      "61ac205889b0ecb13050",
+      "661ecd4655d4276a8ca2",
+      "6fc876fb186e808b9451",
+      "989df758faf296ffdcb7",
+      "as00refurbslicer001",
+      "c99913534a766066dd45",
+      "d198cb65e3f5ab471eee",
+      "f357a5eac4a934ce55c3"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "f1149976e8b782d332a4",
+    "sections": {
+      "f1149976e8b782d332a4": {
+        "visualContainers": {
+          "0bd4bbc3dda0f6672ed3": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Failure Cause"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "82b5fca7a33aa850159c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Failure Cause"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "148fd2f2c3f84fe9d922": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "ticket_state"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "33527bee4585d50b8d2c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "ticket_state"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "3f74dc17166af3d565da": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "createdby"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fbcc5a2e308486dd22ec",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "createdby"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "61ac205889b0ecb13050": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Linked Town"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f31d8620698a3eb79e58",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Linked Town"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "661ecd4655d4276a8ca2": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "product_type"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d32451b3bfa76e08179b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "product_type"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "6fc876fb186e808b9451": {
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          },
+          "989df758faf296ffdcb7": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Ticket Date"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1bdd839506d1fcc769aa",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Ticket Date"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "as00refurbslicer001": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Build Type"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e9b036914dd47eb39e8b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Build Type"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "c99913534a766066dd45": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "JSF Engineer"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c4bc3a3596817bd30592",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "JSF Engineer"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "d198cb65e3f5ab471eee": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "title"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "70a4d5e9bee83f55e18b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "title"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "f357a5eac4a934ce55c3": {
+            "singleVisual": {
+              "visualType": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+              "objects": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

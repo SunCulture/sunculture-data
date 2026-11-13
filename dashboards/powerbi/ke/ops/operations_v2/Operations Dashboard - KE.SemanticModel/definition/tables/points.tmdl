@@ -354,15 +354,6 @@ table points
 
 		annotation PBI_FormatHint = {"isDateTimeCustom":true}
 
-	/// Product category from the source: Unit (pump kits), Add-On, Financial Service or Service. Sales and installations count Unit only.
-	column Category
-		dataType: string
-		lineageTag: 91920feb-bb18-407f-a92b-65bd6081c1ef
-		summarizeBy: none
-		sourceColumn: Category
-
-		annotation SummarizationSetBy = Automatic
-
 	column Department_name
 		dataType: string
 		lineageTag: 3a6c7db0-f978-4884-9715-88f59b31f37b
@@ -600,6 +591,15 @@ table points
 		summarizeBy: none
 
 		annotation SummarizationSetBy = User
+
+	/// Product category from the source: Unit (pump kits), Add-On, Financial Service or Service. Sales and installations count Unit only.
+	column Category
+		dataType: string
+		lineageTag: 91920feb-bb18-407f-a92b-65bd6081c1ef
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
 
 	partition points-c744424c-50c1-4000-a740-33934ffc2b9c = m
 		mode: import

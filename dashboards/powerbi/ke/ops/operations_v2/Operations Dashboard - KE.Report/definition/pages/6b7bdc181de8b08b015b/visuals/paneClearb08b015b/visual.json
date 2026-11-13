@@ -52,7 +52,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Clear Filters'"
+                  "Value": "'Reset Filters'"
                 }
               }
             },
@@ -188,7 +188,14 @@
             "type": {
               "expr": {
                 "Literal": {
-                  "Value": "'ClearAllSlicers'"
+                  "Value": "'Bookmark'"
+                }
+              }
+            },
+            "bookmark": {
+              "expr": {
+                "Literal": {
+                  "Value": "'bmReset90c01de0e7a4'"
                 }
               }
             }

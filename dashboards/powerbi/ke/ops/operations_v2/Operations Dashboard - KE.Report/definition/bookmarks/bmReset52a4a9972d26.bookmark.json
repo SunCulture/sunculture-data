@@ -1,0 +1,349 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – Warranty Status",
+  "name": "bmReset52a4a9972d26",
+  "options": {
+    "targetVisualNames": [
+      "031891d66c8769042ca3",
+      "201c90c0de1012925588",
+      "4fb0810dbab03c27d0ab",
+      "7301a90eba6050b90e6c",
+      "e157603b974c0110ea9b",
+      "ee7f44cb950e4ec72702"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "e053354049c4b0447a72",
+    "sections": {
+      "e053354049c4b0447a72": {
+        "visualContainers": {
+          "031891d66c8769042ca3": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "83ec731cf61c661ca78e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "region"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "201c90c0de1012925588": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "sale_date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "9e406a70fb539eef5b98",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "sale_date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "4fb0810dbab03c27d0ab": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountRef"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "55a343d61c44f58782c6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountRef"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "7301a90eba6050b90e6c": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "warranty_status"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f443ddf4278ce3a7ee24",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "warranty_status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "e157603b974c0110ea9b": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountType"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "42e0eaf4d04bc9a7d336",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountType"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "ee7f44cb950e4ec72702": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "warranty_expiry_date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f27e0492a53bd32b7031",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "warranty_expiry_date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

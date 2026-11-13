@@ -897,7 +897,7 @@ table _Measures
 		lineageTag: 5c856c97-cc1e-455f-8684-4e3faefeb2c1
 
 	/// Units sold, not yet dispatched or installed.
-	measure '# Pending Dispatch' = [# Sales] - COALESCE ( [# Shipped], 0 )
+	measure '# Pending Dispatch' = IF ( ISBLANK ( [# Sales] ), BLANK (), [# Sales] - COALESCE ( [# Shipped], 0 ) )
 		formatString: #,0
 		displayFolder: Overview
 		lineageTag: 3e7cf693-dff4-408a-a0f7-15e36e7a62dd
@@ -909,13 +909,13 @@ table _Measures
 		lineageTag: 6168a5c5-a7cd-4a53-9238-ade52dd0517f
 
 	/// Units sold, not yet installed.
-	measure '# Pending Installation' = [# Sales] - COALESCE ( [# Installed], 0 )
+	measure '# Pending Installation' = IF ( ISBLANK ( [# Sales] ), BLANK (), [# Sales] - COALESCE ( [# Installed], 0 ) )
 		formatString: #,0
 		displayFolder: Overview
 		lineageTag: 5b34002c-57c7-48cc-a5ef-46c00816fc0e
 
 	/// Units dispatched, not yet installed.
-	measure '# Pending Installation After Dispatch' = COALESCE ( [# Shipped], 0 ) - COALESCE ( [# Installed], 0 )
+	measure '# Pending Installation After Dispatch' = IF ( ISBLANK ( [# Sales] ), BLANK (), COALESCE ( [# Shipped], 0 ) - COALESCE ( [# Installed], 0 ) )
 		formatString: #,0
 		displayFolder: Overview
 		lineageTag: 246d0ecb-5efc-4a5c-aaa6-7acae0913b06
