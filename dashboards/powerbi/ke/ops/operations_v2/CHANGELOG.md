@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-13
+
+- **Changed** slicer pane on every page: opens over the header band only (104 px, two 46 px rows), quieter styling (grey labels, white boxes, thin teal outline, outline buttons); page content starts under it so it never covers the score cards. *Warranty Status* and *CCRP JSFs* header cards moved into a card row; *ALL JSFs* cards in one row.
+- **Changed** *Clear Filters* → **Reset Filters** (one bookmark per page): filters go back to their defaults (JSF Date from 1 Jan 2025 on *ALL JSFs* and *Engineer SLA*) instead of being wiped; full history stays selectable.
+- **Changed** `# Sales` (Tables 1–3): Category = Unit only, not Refunded / Rejected, `points[units]`; same as the Sales Funnel. Restored `points[Category]` (dropped by the column trim). Tables 1–3 now follow the page Date filter on the sale date.
+- **Fixed** pending measures return blank for months with no sales (no rows of zeros before 2025).
+- **Added** `METRIC_GUIDE.md`: what every number on *ALL JSFs* and the aftersales pages means.
+
 ## 2026-11-12
 
 - **Added** `Operations Dashboard - KE.pbip`, from `Operations Dashboard - KE.pbix` (see `../operations_v1/review/`).

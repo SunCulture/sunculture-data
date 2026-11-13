@@ -14,7 +14,9 @@ Kenya operations: installation job status forms (JSFs), engineer SLA, warranty s
 
 ## Pages
 
-All pages are 1280 wide with the SunCulture header, the left sidebar (`nav.json`) and a hideable slicer pane: **Filter Here →** opens it, the number next to it counts active filters, and the "Data refreshed" time sits under the sidebar.
+All pages are 1280 wide with the SunCulture header, the left sidebar (`nav.json`) and a hideable slicer pane: **Filter Here →** opens it over the header band only (two rows of filters, so the score cards stay visible), the number next to it counts active filters, **Reset Filters** puts every filter back to its default (JSF Date from 1 Jan 2025 on ALL JSFs and Engineer SLA, everything else cleared), and the "Data refreshed" time sits under the sidebar. Score cards sit in one row on every page.
+
+What every number on ALL JSFs and the aftersales pages means: [METRIC_GUIDE.md](METRIC_GUIDE.md).
 
 | Page | What it shows |
 |---|---|
@@ -57,6 +59,17 @@ All pages are 1280 wide with the SunCulture header, the left sidebar (`nav.json`
 | Installation TAT | Average Days Taken |
 | Installation TAT (Median) | Median Days Taken for Installed / Not Installed visits; replaces "TAT (Without Outliers)", whose filter kept only three outcome reasons |
 
+**Units sold, dispatched and installed (ALL JSFs Tables 1–3)**
+
+| Measure | Definition |
+|---|---|
+| # Sales | `points[units]` (product quantity, at least 1) with a sale date, `Category` = Unit (pump kits; add-ons, financial services and TSR excluded), not Refunded / Rejected. Same definition as the Sales Funnel (13 Nov 2026: 31 units on 12 Nov, 339 in November, 26,896 since 1 Jan 2025 in both). When the page Date filter is set, only sales whose sale date is inside that range count |
+| # Shipped | Sold units with a dispatch date or an Installed JSF |
+| # Installed | Sold units whose account has an Installed JSF |
+| Pending columns | Sales − Shipped / Installed; blank for months with no sales |
+
+Rows are sale months; Installed means units from that month's sales installed by now, whenever that happened.
+
 **Product failures**
 
 - **Confirmed failure:** a Testing & Repairs ticket with a recorded failure cause other than No Fault Found. The Product Failure Occurrences ticket count equals the Testing & Repairs page filtered the same way.
@@ -74,6 +87,9 @@ Follows `_templates/BRAND.md` with one exception: the report uses **Segoe UI** (
 
 ## Open questions
 
+- **Do not publish over the current "Operations Dashboard - KE" yet.** The published Sales Funnel live-connects to that model and uses `basic[count_sales_funnel]`, `[count_funnel]`, `[active_sales_funnel]`, 13 `points` columns (incl. `cds_done`, `schedule_status`, `Engineer_Name`), `vw_jsf[customer_preferred_status]` and `leads_tunda`, which v2 does not have. Restore them (brings back customer and staff phone numbers) or repoint the Sales Funnel first. v2 is published to a personal workspace for review.
+- **Sales Dashboard alignment:** its Sales Overview counts every category except TSR (369 in Nov 2026 vs 339 here). Decide whether it switches to Unit only (`basic[# Sales Units]`).
+- **Date default on open:** Power BI Desktop does not apply the JSF Date slicer's saved 1 Jan 2025 selection when the file opens, so the page opens on all history; click **Reset Filters**. Check the behaviour in the Service after publishing.
 - **Kit assumptions:** RainMaker 2.0 is treated as RM2S (1 panel). Climate Smart Direct kits (about 13,800 units) have no pump in the product name and are counted as 1 panel. Needs confirmation from aftersales.
 - **First failure only on Product Failure Occurrences:** that page still counts every failure ticket (workload view). Decide whether it should switch to first failures.
 - **Warranty Status:** proposed: donut shows Under vs Out only with a separate "Not covered" card; warranty expiry slicer open-ended; the status `"pending repossession on"` in `points[warranty_status]` looks like a typo for `"pending repossession"`.
