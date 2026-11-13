@@ -354,6 +354,15 @@ table points
 
 		annotation PBI_FormatHint = {"isDateTimeCustom":true}
 
+	/// Product category from the source: Unit (pump kits), Add-On, Financial Service or Service. Sales and installations count Unit only.
+	column Category
+		dataType: string
+		lineageTag: 91920feb-bb18-407f-a92b-65bd6081c1ef
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
 	column Department_name
 		dataType: string
 		lineageTag: 3a6c7db0-f978-4884-9715-88f59b31f37b
@@ -608,7 +617,7 @@ table points
 				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Duplicates",{{"gender", "Gender"}, {"sale_date_clickhouse", "sale_date"}, {"category", "Category"}, {"Region", "county"}, {"region 1", "region"}, {"customer_preferred_date", "customer_preferred_date"}, {"customer_preferred_schedule_type", "customer_preferred_schedule_type"}, {"customer_preferred_status", "customer_preferred_status_pp"}, {"engineer_recommendation", "Engineer_Recommendation"}, {"funnel_status", "funnel_status"}, {"jsf_date", "jsf_date"}, {"jsf_engineer", "jsf_engineer"}, {"jsf_status", "jsf_status"}, {"outcome_reason", "Outcome_Reason"}}),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"jsf_date", type date}}),
 				    // Only the columns this report uses
-				    #"Kept Columns" = Table.SelectColumns(#"Changed Type1", {"Department_name", "LeadSource", "RefundDate", "accountRef", "accountType", "account_id", "cds2_date", "companyRegion", "county", "customerType", "customer_name", "customer_preferred_date", "deviceId", "dispatch_date", "downpayment_amount", "employee_id", "employee_name", "funnel_status", "gps", "identification_number", "installment_amount", "installment_date", "jsf_date", "jsf_engineer", "payplan_name", "phoneNumber", "product", "productQty", "region", "sale_date", "status", "total_number_payments", "town", "warranty_expiry_date"}, MissingField.Ignore)
+				    #"Kept Columns" = Table.SelectColumns(#"Changed Type1", {"Category", "Department_name", "LeadSource", "RefundDate", "accountRef", "accountType", "account_id", "cds2_date", "companyRegion", "county", "customerType", "customer_name", "customer_preferred_date", "deviceId", "dispatch_date", "downpayment_amount", "employee_id", "employee_name", "funnel_status", "gps", "identification_number", "installment_amount", "installment_date", "jsf_date", "jsf_engineer", "payplan_name", "phoneNumber", "product", "productQty", "region", "sale_date", "status", "total_number_payments", "town", "warranty_expiry_date"}, MissingField.Ignore)
 				in
 				    #"Kept Columns"
 

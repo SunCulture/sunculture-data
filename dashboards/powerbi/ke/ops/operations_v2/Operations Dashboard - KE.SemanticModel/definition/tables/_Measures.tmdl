@@ -872,8 +872,20 @@ table _Measures
 		displayFolder: Report
 		lineageTag: 76937e55-dad0-4966-8347-ef8398f6b541
 
-	/// Units sold (productQty) with a sale date.
-	measure '# Sales' = CALCULATE ( SUM ( points[productQty] ), NOT ISBLANK ( points[sale_date] ) )
+	/// Units sold: Kenya filters from the page; Category = Unit (pump kits only, no add-ons, financial services or TSR); not Refunded / Rejected; same definition as the Sales Funnel.
+	/// When the page Date filter is set, only sales whose sale date falls in that date range count.
+	measure '# Sales' =
+			VAR _dated = ISFILTERED ( vw_jsf[jsf_date] )
+			VAR _from = CALCULATE ( MIN ( vw_jsf[jsf_date] ), ALLSELECTED ( vw_jsf ) )
+			VAR _to = CALCULATE ( MAX ( vw_jsf[jsf_date] ), ALLSELECTED ( vw_jsf ) )
+			RETURN
+			    CALCULATE (
+			        SUM ( points[units] ),
+			        NOT ISBLANK ( points[sale_date] ),
+			        points[Category] = "Unit",
+			        NOT points[status] IN { "Refunded", "Rejected" },
+			        FILTER ( ALL ( points[sale_date] ), NOT _dated || ( points[sale_date] >= _from && points[sale_date] < _to + 1 ) )
+			    )
 		formatString: #,0
 		displayFolder: Overview
 		lineageTag: 5dea20f5-c1e1-43ae-aeb1-d133fbf42abd
