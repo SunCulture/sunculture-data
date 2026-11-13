@@ -1,0 +1,59 @@
+table vw_employees
+	lineageTag: 0bb3c9fa-3f0b-48d5-86b1-fed546fa947c
+
+	column employee_amt_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b1a214c-f761-4966-a8ff-f711004193ce
+		summarizeBy: none
+		sourceColumn: employee_amt_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_name
+		dataType: string
+		lineageTag: cc4329e0-9ce7-4a88-92ae-df149e0a0e76
+		summarizeBy: none
+		sourceColumn: employee_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_primary_role_name
+		dataType: string
+		lineageTag: ad04b28d-c1fd-45e4-8da8-1523d0a427be
+		summarizeBy: none
+		sourceColumn: employee_primary_role_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_supervisor_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9efa625c-cdec-4b85-b2a2-3ff1f860d7ef
+		summarizeBy: sum
+		sourceColumn: employee_supervisor_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor_name
+		dataType: string
+		lineageTag: 4b1e74ae-42af-49e5-9a7d-d0d14e50d0e9
+		summarizeBy: none
+		sourceColumn: supervisor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_employees = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"bb5dc705-9080-4b0e-9632-2578517a380d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="bb5dc705-9080-4b0e-9632-2578517a380d"]}[Data],
+				    vw_employees_ = #"bb5dc705-9080-4b0e-9632-2578517a380d"{[entity="vw_employees",version=""]}[Data],
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(vw_employees_, {"employee_amt_id", "employee_name", "employee_primary_role_name", "employee_supervisor_id", "supervisor_name"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+

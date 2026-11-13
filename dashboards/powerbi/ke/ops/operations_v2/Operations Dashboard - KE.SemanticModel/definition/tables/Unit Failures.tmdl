@@ -1,0 +1,160 @@
+/// One row per installed account: first completed INSTALLATION JSF with recommendation Installed (Kenya), joined to its confirmed failures (T&R tickets with a failure cause other than No Fault Found).
+table 'Unit Failures'
+	lineageTag: 8db1708e-0a4f-4058-8950-cce915e9b9b9
+
+	column Account
+		lineageTag: bb382c0a-647e-4091-ae76-90e5c9206996
+		isNameInferred
+		sourceColumn: [Account]
+
+	column Product
+		lineageTag: 51e46104-032e-464e-a2be-89be9ff6fa38
+		isNameInferred
+		sourceColumn: [Product]
+
+	column 'Install Date'
+		lineageTag: c0533569-aa1a-4138-9652-e633f026d64c
+		isNameInferred
+		sourceColumn: [Install Date]
+
+	column Units
+		lineageTag: 438a13b4-3612-4c76-bb4d-4f3eb76ec589
+		isNameInferred
+		sourceColumn: [Units]
+
+	column 'Fault Tickets'
+		lineageTag: 1fd1f341-90c0-479a-87c5-7a128c07433e
+		isNameInferred
+		sourceColumn: [Fault Tickets]
+
+	column 'First Fault Date'
+		lineageTag: 58f48370-4127-4f1b-bfe4-d28ce5a28d2d
+		isNameInferred
+		sourceColumn: [First Fault Date]
+
+	column 'Build Type'
+		lineageTag: db903ceb-2726-4e17-8ee7-c3ac7fdf66a6
+		isNameInferred
+		sourceColumn: [Build Type]
+
+	column Faults
+		lineageTag: c448a1f7-c8b6-4820-b721-d733cbd11085
+		isNameInferred
+		sourceColumn: [Faults]
+
+	column 'Has Faulted'
+		lineageTag: 18262d21-2a15-47c6-82c0-7116912612c9
+		isNameInferred
+		sourceColumn: [Has Faulted]
+
+	column 'Days to First Fault'
+		lineageTag: 6c2f3c8d-6684-4d81-bc88-bb7382d29f6c
+		isNameInferred
+		sourceColumn: [Days to First Fault]
+
+	column 'Days in Field'
+		lineageTag: 48cf1e6e-4094-4bf1-839b-2cdfca805a6d
+		isNameInferred
+		sourceColumn: [Days in Field]
+
+	column 'First Fault Order' = VAR D = 'Unit Failures'[Days to First Fault] RETURN SWITCH ( TRUE (), ISBLANK ( D ), 99, D <= 30, 1, D <= 60, 2, D <= 90, 3, D <= 180, 4, D <= 365, 5, D <= 730, 6, D <= 1095, 7, 8 )
+		dataType: int64
+		isHidden
+		lineageTag: 02ab0c26-9613-4e07-a66c-ab3d9fea2bb0
+
+	/// Age of the unit when it first faulted.
+	column 'First Fault Band' = VAR D = 'Unit Failures'[Days to First Fault] RETURN SWITCH ( TRUE (), ISBLANK ( D ), "Never Faulted", D <= 30, "0-30 Days", D <= 60, "31-60 Days", D <= 90, "2-3 Months", D <= 180, "3-6 Months", D <= 365, "6-12 Months", D <= 730, "1-2 Years", D <= 1095, "2-3 Years", "Over 3 Years" )
+		dataType: string
+		lineageTag: 7d1cc52c-dbc7-4ec4-bb82-181828787594
+		sortByColumn: 'First Fault Order'
+
+	/// Pump family, read from the product name. RM2CK (incl. Kubwa, FM1, FR2, Falcon) and surface pumps (SP, SR1, Hydromax) run 2 panels; RM2S / RainMaker 2 runs 1. 'Unknown pump' = controller-only names such as Climate Smart Direct.
+	column 'Pump Type' =
+			VAR P = UPPER ( 'Unit Failures'[Product] ) RETURN SWITCH ( TRUE (),
+			CONTAINSSTRING ( P, "RM2CK" ) || CONTAINSSTRING ( P, "KUBWA" ) || CONTAINSSTRING ( P, "RM2C" ) || CONTAINSSTRING ( P, "RM 2C" ) || CONTAINSSTRING ( P, "FALCON" ) || CONTAINSSTRING ( P, "FM1" ) || CONTAINSSTRING ( P, "FR2" ), "RM2CK",
+			CONTAINSSTRING ( P, "HYDROMAX" ) || CONTAINSSTRING ( P, "SURFACE" ) || CONTAINSSTRING ( P, "+SP" ) || CONTAINSSTRING ( P, "+ SP" ) || LEFT ( P, 3 ) = "SP-" || CONTAINSSTRING ( P, "SR1" ), "Surface",
+			CONTAINSSTRING ( P, "RM2S" ) || CONTAINSSTRING ( P, "RAINMAKER" ) || CONTAINSSTRING ( P, "RM2" ) || CONTAINSSTRING ( P, "RM 2" ), "RM2S",
+			CONTAINSSTRING ( P, "(BATTERY)" ), "Controller only",
+			CONTAINSSTRING ( P, "CLIMATE SMART DIRECT" ) || CONTAINSSTRING ( P, "CSD" ) || CONTAINSSTRING ( P, "GD32" ) || LEFT ( P, 2 ) = "CS", "Unknown pump",
+			"No pump" )
+		dataType: string
+		displayFolder: Parts
+		lineageTag: bd5278df-386c-440f-bc92-ec49ec37e949
+
+	/// Panels in the kit: 2 for RM2CK and surface pumps, 1 for RM2S. Unknown pump counted as 1 (the minimum).
+	column Panels = SWITCH ( 'Unit Failures'[Pump Type], "RM2CK", 2, "Surface", 2, "RM2S", 1, "Unknown pump", 1, 0 )
+		dataType: int64
+		displayFolder: Parts
+		lineageTag: 7661fee1-409d-4981-8ed4-0826512067cc
+		summarizeBy: sum
+
+	column Pumps = IF ( 'Unit Failures'[Pump Type] IN { "RM2CK", "Surface", "RM2S", "Unknown pump" }, 1, 0 )
+		dataType: int64
+		displayFolder: Parts
+		lineageTag: 42a3bdc3-8cfb-45a0-9ee0-0d6496dd96a5
+		summarizeBy: sum
+
+	column Controllers = IF ( 'Unit Failures'[Pump Type] IN { "RM2CK", "Surface", "RM2S", "Unknown pump", "Controller only" }, 1, 0 )
+		dataType: int64
+		displayFolder: Parts
+		lineageTag: 147126b3-f3ac-4bf4-aed7-824221ae89f7
+		summarizeBy: sum
+
+	column TVs = IF ( CONTAINSSTRING ( UPPER ( 'Unit Failures'[Product] ), "TV" ), 1, 0 )
+		dataType: int64
+		displayFolder: Parts
+		lineageTag: 74160ea2-da8e-4b3e-b9c2-15d022a9d65e
+		summarizeBy: sum
+
+	/// The kit's factor: panels + pump + controller (4 for RM2CK and surface pumps, 3 for RM2S).
+	column 'Parts per Unit' = 'Unit Failures'[Panels] + 'Unit Failures'[Pumps] + 'Unit Failures'[Controllers]
+		dataType: int64
+		displayFolder: Parts
+		lineageTag: 7565917a-7930-47c3-a81c-5311eed6c897
+		summarizeBy: none
+
+	/// The part that broke on the unit's FIRST confirmed failure. Later failures of the same unit are not counted.
+	column 'First Failed Part' =
+			VAR T = FILTER ( RELATEDTABLE ( 'Sundesk Tickets' ), 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" )
+			VAR F = TOPN ( 1, T, 'Sundesk Tickets'[created_at], ASC, 'Sundesk Tickets'[id], ASC )
+			RETURN MAXX ( F, 'Sundesk Tickets'[Failed Part] )
+		dataType: string
+		displayFolder: Parts
+		lineageTag: 4116cb62-3607-4653-8cb1-df1179be5e85
+		summarizeBy: none
+
+	partition 'Unit Failures' = calculated
+		mode: import
+		source =
+				VAR FaultsByUnit =
+				    GROUPBY (
+				        FILTER ( SELECTCOLUMNS ( FILTER ( 'Sundesk Tickets', 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" && NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ), "Account", 'Sundesk Tickets'[Linked Account] & "", "TDate", 'Sundesk Tickets'[created_at] + 0 ), TRUE () ),
+				        [Account],
+				        "Fault Tickets", COUNTX ( CURRENTGROUP (), 1 ),
+				        "First Fault Date", MINX ( CURRENTGROUP (), [TDate] )
+				    )
+				VAR Installs = FILTER ( vw_jsf, vw_jsf[Install Outcome] = "Installed" && NOT ISBLANK ( vw_jsf[JSF Date (Day)] ) )
+				VAR Units =
+				    SELECTCOLUMNS (
+				        GROUPBY (
+				            SELECTCOLUMNS ( Installs, "Account", vw_jsf[account_id] & "", "IDate", vw_jsf[JSF Date (Day)], "Prod", vw_jsf[Install Product] & "" ),
+				            [Account],
+				            "First Install", MINX ( CURRENTGROUP (), [IDate] ),
+				            "Prod Max", MAXX ( CURRENTGROUP (), [Prod] )
+				        ),
+				        "Account", [Account],
+				        "Product", [Prod Max],
+				        "Install Date", [First Install],
+				        "Units", 1
+				    )
+				VAR Joined = NATURALLEFTOUTERJOIN ( Units, FaultsByUnit )
+				RETURN
+				    ADDCOLUMNS (
+				        Joined,
+				        "Build Type", VAR P = LOWER ( TRIM ( [Product] ) ) RETURN IF ( CONTAINSSTRING ( P, "refurb" ) || RIGHT ( P, 4 ) = " - r" || RIGHT ( P, 2 ) = "-r" || CONTAINSSTRING ( P, "-r " ), "Refurb", "Non-Refurb" ),
+				        "Faults", COALESCE ( [Fault Tickets], 0 ),
+				        "Has Faulted", IF ( COALESCE ( [Fault Tickets], 0 ) > 0, "Faulted", "No Fault" ),
+				        "Days to First Fault", IF ( ISBLANK ( [First Fault Date] ), BLANK (), MAX ( 0, DATEDIFF ( [Install Date], [First Fault Date], DAY ) ) ),
+				        "Days in Field", DATEDIFF ( [Install Date], TODAY (), DAY )
+				    )
+

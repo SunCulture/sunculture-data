@@ -1,0 +1,486 @@
+table vw_jsf
+	lineageTag: b3242da5-7ca0-4ee2-8a9b-db5fda4a12e9
+
+	column installation_id
+		dataType: string
+		lineageTag: d20dbdff-2acf-4a8a-a659-7fa9eb7399dd
+		summarizeBy: none
+		sourceColumn: installation_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_schedule_type
+		dataType: string
+		lineageTag: 783c93a6-ced8-4f36-a176-de0d30f8e9bf
+		summarizeBy: none
+		sourceColumn: customer_preferred_schedule_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_id
+		dataType: string
+		lineageTag: 6c3d2f26-60c1-4c58-a404-5e3f6474c5ca
+		summarizeBy: none
+		sourceColumn: jsf_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_status
+		dataType: string
+		lineageTag: 9740ec62-0adb-4ef7-8c53-ea6b9091d535
+		summarizeBy: none
+		sourceColumn: jsf_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_type
+		dataType: string
+		lineageTag: 0602454f-0249-4b83-9704-c1a77d88debc
+		summarizeBy: none
+		sourceColumn: jsf_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column assignment_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3ec4cbb2-48cc-4396-826f-81ee11ac7fea
+		summarizeBy: none
+		sourceColumn: assignment_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column engineer_recommendation
+		dataType: string
+		lineageTag: 51b8e491-ff26-45d0-a677-012fc1d7f467
+		summarizeBy: none
+		sourceColumn: engineer_recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column outcome_reason
+		dataType: string
+		lineageTag: cd7d23df-79e9-4572-a13e-4c57f142ca59
+		summarizeBy: none
+		sourceColumn: outcome_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f35a0fd5-3baf-4fb2-91dd-752658f46354
+		summarizeBy: none
+		sourceColumn: jsf_date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_completed_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: faaae3b0-b38a-4d1a-b235-4ab465a9b0b0
+		summarizeBy: none
+		sourceColumn: jsf_completed_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column rm_2_device_id
+		dataType: string
+		lineageTag: fc324e28-b769-4592-909b-9841b096978a
+		summarizeBy: none
+		sourceColumn: rm_2_device_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column meal_costings
+		dataType: int64
+		formatString: 0
+		lineageTag: c63778f3-a270-4d3e-a905-c5459cb625e5
+		summarizeBy: sum
+		sourceColumn: meal_costings
+
+		annotation SummarizationSetBy = Automatic
+
+	column accommodation_cost
+		dataType: int64
+		formatString: 0
+		lineageTag: 231f9a31-8216-4ca0-ac9c-980001553cb2
+		summarizeBy: sum
+		sourceColumn: accommodation_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column casual_pay
+		dataType: int64
+		formatString: 0
+		lineageTag: fdba515a-e780-4078-bca3-171f15a6f75c
+		summarizeBy: sum
+		sourceColumn: casual_pay
+
+		annotation SummarizationSetBy = Automatic
+
+	column costings
+		dataType: int64
+		formatString: 0
+		lineageTag: 69a78c63-aa3a-49b2-bbe2-89909e221735
+		summarizeBy: sum
+		sourceColumn: costings
+
+		annotation SummarizationSetBy = Automatic
+
+	column transport_costs
+		dataType: int64
+		formatString: 0
+		lineageTag: f34b016b-9566-490c-8753-335959de0200
+		summarizeBy: sum
+		sourceColumn: transport_costs
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: 75462038-ffb6-400b-9523-7ab01067d47f
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_number
+		dataType: string
+		lineageTag: 111c44d0-8f4c-4595-b587-6c7bb7fa4148
+		summarizeBy: none
+		sourceColumn: ticket_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name' =
+			
+			VAR V1=CALCULATE(MAX(points[customer_name]),FILTER(ALL(points),vw_jsf[account_id]=points[account_id]))
+			RETURN
+			V1
+		lineageTag: 431cc8de-3833-436f-8086-b7d5be8d4a16
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Company Region' =
+			
+			VAR V1=CALCULATE(MAX(points[companyRegion]),FILTER(ALL(points),vw_jsf[account_id]=points[account_id]))
+			RETURN
+			V1
+		lineageTag: 501fc613-f589-4693-99a3-63333f420dd2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedule_type = IF(vw_jsf[customer_preferred_schedule_type] IN {"INSTALLATION","ADDON_INSTALLATION"},"INSTALLATION",vw_jsf[customer_preferred_schedule_type])
+		lineageTag: 81bf01f4-c807-44bc-baf3-8f79c547d79d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sale Date' =
+			VAR V1=CALCULATE(MAX(points[sale_date]),FILTER(ALL(points),vw_jsf[account_id]=points[account_id]))
+			RETURN
+			V1
+		formatString: General Date
+		lineageTag: d2bb81a2-8346-436e-9758-24adeec57c45
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_engineer =
+			
+			//CALCULATE(MAX(employee[name]),FILTER(ALL(employee),employee[id]=vw_jsf[created_by]))
+			vw_jsf[jsf_engineer2]
+		lineageTag: 0301ab92-cbd6-43e4-b60a-ea9a4f0c1ae3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'employee.supervisor_name' = CALCULATE(MAX(vw_employees[supervisor_name]),FILTER(ALL(vw_employees),vw_employees[employee_amt_id]=vw_jsf[engineer_id]))
+		lineageTag: 367c653b-e423-4038-802f-19c1b016f6b9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assignment_Engineer = CALCULATE(MAX(vw_employees[employee_name]),FILTER(ALL(vw_employees),vw_employees[employee_amt_id]=vw_jsf[engineer_id]))
+		lineageTag: ece495dc-1dce-4f05-91b7-4942e205e67f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_engineer2
+		dataType: string
+		lineageTag: b149cdcc-7f81-4542-814f-4a29f93e1f11
+		summarizeBy: none
+		sourceColumn: jsf_engineer2
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: string
+		lineageTag: 89c66618-b371-43c7-b9d9-30df20ef5936
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column engineer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d20b983-4af6-4401-9cb1-fd1a306e0121
+		summarizeBy: sum
+		sourceColumn: engineer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Taken' =
+			
+			DATEDIFF(
+			    vw_jsf[assignment_date],
+			    vw_jsf[jsf_date],
+			    DAY
+			)
+		formatString: 0
+		lineageTag: d8853767-8f93-42dc-a119-a5b065611623
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SLA Status' =
+			
+			SWITCH(
+			    TRUE(),
+			
+			    vw_jsf[schedule_type] = "INSTALLATION"
+			        && vw_jsf[Days Taken] <= 5,
+			        "Within SLA",
+			
+			    vw_jsf[schedule_type] = "AFTERSALE"
+			        && vw_jsf[Days Taken] <= 2,
+			        "Within SLA",
+			
+			    "Out of SLA"
+			)
+		lineageTag: c839ef12-93d6-4623-8cf1-924db3268106
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Jsf Account Type' =
+			
+			LOOKUPVALUE(
+			    'points'[accountType],
+			    'points'[account_id],
+			    'vw_jsf'[account_id]
+			)
+		lineageTag: 9037acf5-f656-4e43-9f10-90589ca5deae
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supervisor Name' =
+			
+			VAR EngineerID = vw_jsf[engineer_id]
+			
+			VAR EngineerSupervisorID =
+			    CALCULATE(
+			        MAX(vw_employees[employee_supervisor_id]),
+			        FILTER(
+			            ALL(vw_employees),
+			            vw_employees[employee_amt_id] = EngineerID
+			        )
+			    )
+			
+			VAR EngineerSupervisorName =
+			    CALCULATE(
+			        MAX(vw_employees[supervisor_name]),
+			        FILTER(
+			            ALL(vw_employees),
+			            vw_employees[employee_amt_id] = EngineerID
+			        )
+			    )
+			
+			VAR SupervisorOfSupervisorName =
+			    CALCULATE(
+			        MAX(vw_employees[supervisor_name]),
+			        FILTER(
+			            ALL(vw_employees),
+			            vw_employees[employee_amt_id] = EngineerSupervisorID
+			        )
+			    )
+			
+			RETURN
+			    IF(
+			        EngineerSupervisorID IN {780, 798},
+			        EngineerSupervisorName,
+			        SupervisorOfSupervisorName
+			    )
+		lineageTag: 055db497-5260-4719-a3bf-e507703604b6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// jsf_date truncated to midnight so it can join to a date table (raw jsf_date carries a time component).
+	column 'JSF Date (Day)' = VAR D = vw_jsf[jsf_date] RETURN IF ( ISBLANK ( D ), BLANK (), DATE ( YEAR ( D ), MONTH ( D ), DAY ( D ) ) )
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		displayFolder: Installation Outcome
+		lineageTag: 6ce03c4a-ec13-4dde-bc9a-7fb17231b39b
+
+	/// Installed / Not Installed for COMPLETED installation JSFs in Kenya, from the engineer recommendation. Blank for every other JSF (aftersale, repossession, survey, in-progress, other countries).
+	column 'Install Outcome' =
+			VAR R = vw_jsf[engineer_recommendation]
+			RETURN
+			    IF (
+			        vw_jsf[jsf_type] = "INSTALLATION"
+			            && vw_jsf[jsf_status] = "COMPLETED"
+			            && vw_jsf[Company Region] = "kenya"
+			            && R IN { "Installed", "Not Installed" },
+			        R,
+			        BLANK ()
+			    )
+		displayFolder: Installation Outcome
+		lineageTag: 41648bfe-427f-42b7-8578-803b4d0371e2
+
+	/// Cleaned outcome reason for Not Installed visits (normalises case/typos such as AGGED_FOR_REPOSSESSIO). Blank when the unit was installed.
+	column 'Install Failure Reason' =
+			
+			VAR R = UPPER ( SUBSTITUTE ( TRIM ( vw_jsf[outcome_reason] ), " ", "_" ) )
+			RETURN
+			    IF (
+			        vw_jsf[Install Outcome] <> "Not Installed",
+			        BLANK (),
+			        SWITCH (
+			            TRUE (),
+			            CONTAINSSTRING ( R, "PRODUCT_FAIL" ), "Product Fault",
+			            CONTAINSSTRING ( R, "PUMP_FAULT" ), "Pump Fault",
+			            CONTAINSSTRING ( R, "PUMP_SWAP" ), "Pump Swap",
+			            CONTAINSSTRING ( R, "PANEL_SWAP" ), "Panel Swap",
+			            CONTAINSSTRING ( R, "KIT_CHANGE" ), "Kit Change",
+			            CONTAINSSTRING ( R, "UNSUITABLE" ), "Unsuitable Product",
+			            CONTAINSSTRING ( R, "CLIENT_NOT_VISITED" ), "Client Not Visited",
+			            CONTAINSSTRING ( R, "NOT_READY" ), "Client Not Ready",
+			            CONTAINSSTRING ( R, "LOW_WATER" ), "Low Water Levels",
+			            CONTAINSSTRING ( R, "NO_WATER" ), "No Water Source",
+			            CONTAINSSTRING ( R, "REPOSSESS" ), "Tagged For Repossession",
+			            CONTAINSSTRING ( R, "ON_HOLD" ), "On Hold",
+			            CONTAINSSTRING ( R, "SCHEDULE" ), "Rescheduled"
+			        )
+			    )
+		displayFolder: Installation Outcome
+		lineageTag: 3922aff8-55d5-4051-9f39-bf578582ec65
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Who owns the failed visit: Product / Pump Fault (the installation failure KPI), Kit & Product Mismatch, Customer & Site, Commercial, Scheduling & Other.
+	column 'Install Failure Category' =
+			
+			VAR F = vw_jsf[Install Failure Reason]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( F ) || F = "", BLANK (),
+			        F IN { "Product Fault", "Pump Fault" }, "Product Fault",
+			        F IN { "Pump Swap", "Panel Swap" }, "Pump/Panel Swap",
+			        F = "Kit Change", "Kit Change",
+			        F = "Unsuitable Product", "Unsuitable Product",
+			        F IN { "Client Not Visited", "Client Not Ready", "Low Water Levels", "No Water Source" }, "Customer & Site",
+			        F = "Tagged For Repossession", "Repossession",
+			        F = "On Hold", "On Hold",
+			        "Other"
+			    )
+		displayFolder: Installation Outcome
+		lineageTag: b7d5a05a-07ba-4344-b3af-8a9fc1ec549a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Product on the account this JSF belongs to (points[product]).
+	column 'Install Product' = RELATED ( points[product] )
+		displayFolder: Installation Outcome
+		lineageTag: f4ebb7df-0b1f-4922-ace5-424f9cf1c9ca
+
+	/// Refurb / Non-Refurb from the account product name (contains 'refurb', or ends in ' - R' / '-R'). Same rule as the ticket and unit tables.
+	column 'Install Build Type' =
+			VAR P = LOWER ( TRIM ( RELATED ( points[product] ) ) )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( P ) || P = "", "Unlinked",
+			        CONTAINSSTRING ( P, "refurb" ) || RIGHT ( P, 4 ) = " - r" || RIGHT ( P, 2 ) = "-r" || CONTAINSSTRING ( P, "-r " ), "Refurb",
+			        "Non-Refurb"
+			    )
+		displayFolder: Installation Outcome
+		lineageTag: 665742ed-d187-458d-9b14-325d934fccff
+
+	column 'Engineer Role' = ```
+			
+			VAR EngineerID = vw_jsf[engineer_id]
+			RETURN
+			CALCULATE(
+			    MAX(vw_employees[employee_primary_role_name]),
+			    FILTER(
+			        ALL(vw_employees),
+			        vw_employees[employee_amt_id] = EngineerID
+			    )
+			)
+			
+			```
+		lineageTag: c81799f7-f1e1-4a6d-a7f6-d72b6084b8e0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Year of the JSF date (replaces the old auto date hierarchy)
+	column 'JSF Year' = YEAR(vw_jsf[jsf_date])
+		formatString: 0
+		lineageTag: 83373422-eb6c-4846-8887-5172b47d682c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'JSF Month No' = MONTH(vw_jsf[jsf_date])
+		isHidden
+		formatString: 0
+		lineageTag: 8bf4c1d5-578d-4ffa-8cd6-8c6c83002608
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'JSF Month' = FORMAT(vw_jsf[jsf_date], "MMMM")
+		lineageTag: 1209d869-e44c-4cb6-a919-b77cea15bbb5
+		summarizeBy: none
+		sortByColumn: 'JSF Month No'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_jsf = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="5f59e9d3-ee70-4895-ab17-9c36a0f94aea"]}[Data],
+				    jsf_mv_ = #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea"{[entity="jsf_mv",version=""]}[Data],
+				    #"Removed Duplicates" = Table.Distinct(jsf_mv_),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Duplicates",{{"created_at", type date}, {"transport_costs", Int64.Type}, {"costings", Int64.Type}, {"casual_pay", Int64.Type}, {"accommodation_cost", Int64.Type}, {"meal_costings", Int64.Type}, {"account_id", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type2",{{"jsf_engineer", "jsf_engineer2"}}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Renamed Columns", {"accommodation_cost", "account_id", "assignment_date", "casual_pay", "comment", "costings", "customer_preferred_schedule_type", "engineer_id", "engineer_recommendation", "installation_id", "jsf_completed_date", "jsf_date", "jsf_engineer2", "jsf_id", "jsf_status", "jsf_type", "meal_costings", "outcome_reason", "rm_2_device_id", "ticket_number", "transport_costs"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

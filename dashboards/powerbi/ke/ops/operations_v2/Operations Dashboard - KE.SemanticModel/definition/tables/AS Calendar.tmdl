@@ -1,0 +1,39 @@
+/// Date table for the aftersales failure pages. Deliberately not related to points, so the sale-date relationship on points cannot leak into installation or ticket counts. All joins are inactive and switched on inside each measure with USERELATIONSHIP.
+table 'AS Calendar'
+	lineageTag: 0d9a6e19-98cb-4c29-ba22-f18e2b00815e
+
+	column Date
+		lineageTag: 138233dd-1b9f-40e4-b727-b95f29dba854
+		isNameInferred
+		sourceColumn: [Date]
+
+	column Year
+		lineageTag: 0ce835f4-5e1c-4deb-bf73-f0725be36016
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Month Start'
+		lineageTag: b3531e75-8bd2-4aa1-b02e-aa8aaa5a2b92
+		isNameInferred
+		sourceColumn: [Month Start]
+
+	column Month
+		lineageTag: 3b62b22b-9ace-4834-b904-e303312095fd
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: 'Month Sort'
+
+	column 'Month Sort'
+		lineageTag: 4d52020c-f6be-400e-a59e-e35c46c6e282
+		isNameInferred
+		sourceColumn: [Month Sort]
+
+	column Quarter
+		lineageTag: 1966ce1a-b9f2-4a75-a14a-24a88679362b
+		isNameInferred
+		sourceColumn: [Quarter]
+
+	partition 'AS Calendar' = calculated
+		mode: import
+		source = ADDCOLUMNS ( CALENDAR ( DATE ( 2018, 1, 1 ), TODAY () ), "Year", YEAR ( [Date] ), "Month Start", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ), "Month", FORMAT ( [Date], "mmm yyyy" ), "Month Sort", YEAR ( [Date] ) * 100 + MONTH ( [Date] ), "Quarter", "Q" & QUARTER ( [Date] ) & " " & YEAR ( [Date] ) )
+

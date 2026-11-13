@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Show Slicer Pane – ALL JSFs",
+  "name": "bmShow9c78f845b2a5",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp9a886e60",
+      "433bcc56c394b586f8c5",
+      "4ecfd3ed5582e000b512",
+      "67716e230b89b340a1d4",
+      "7b2f591a0e021e6750b9",
+      "bdd03872a7bb0d4cc31a",
+      "e9b500299323d58c174a",
+      "paneBg9a886e60",
+      "paneClear9a886e60",
+      "paneHide9a886e60"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "ReportSection913da680b6d69a886e60",
+    "sections": {
+      "ReportSection913da680b6d69a886e60": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp9a886e60": {
+            "isHidden": false
+          }
+        }
+      }
+    }
+  }
+}

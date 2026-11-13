@@ -1,0 +1,1024 @@
+/// All report measures, in display folders by page area. Aftersales holds the SunDesk + JSF rebuild of the Salesforce aftersales logic.
+table _Measures
+	lineageTag: ee964bca-0f3d-4f89-93ff-447e6118581e
+
+	/// Completed installation JSFs (Kenya) where the engineer recommendation is Installed. Dated by JSF date.
+	measure 'Installs Completed' = CALCULATE ( COUNTROWS ( vw_jsf ), KEEPFILTERS ( vw_jsf[Install Outcome] = "Installed" ), USERELATIONSHIP ( vw_jsf[JSF Date (Day)], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 49e6ca01-5e98-4f59-8f55-91097466b356
+
+	/// Completed installation JSFs where the engineer recommendation is Not Installed, for any reason.
+	measure 'Not Installed Visits' = CALCULATE ( COUNTROWS ( vw_jsf ), KEEPFILTERS ( vw_jsf[Install Outcome] = "Not Installed" ), USERELATIONSHIP ( vw_jsf[JSF Date (Day)], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 705aefde-5d5d-4c56-b440-588295c0a4cd
+
+	/// All completed installation visits with an outcome (Installed + Not Installed). Denominator for the installation rates. Same as #jsf_fma in the Salesforce report.
+	measure 'Installation Visits' = CALCULATE ( COUNTROWS ( vw_jsf ), KEEPFILTERS ( vw_jsf[Install Outcome] IN { "Installed", "Not Installed" } ), USERELATIONSHIP ( vw_jsf[JSF Date (Day)], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 46008dba-17a3-4f2e-85ef-be8d751a22c9
+
+	/// Not Installed visits whose outcome reason is Product Failure or a Pump swap - the unit could not be installed because the product itself was faulty. This is the installation failure KPI.
+	measure 'Install Failures (Product/Pump)' =
+			
+			CALCULATE (
+			    COUNTROWS ( vw_jsf ),
+			    KEEPFILTERS ( vw_jsf[Install Failure Category] IN { "Product Fault"} ),
+			    USERELATIONSHIP ( vw_jsf[JSF Date (Day)], 'AS Calendar'[Date] )
+			)
+		formatString: #,0
+		displayFolder: Aftersales\1 Installations
+		lineageTag: e083466d-9e5d-499d-b107-a6248470d0b5
+
+	/// Product/Pump-fault installation failures as a share of all installation visits. Headline installation-failure KPI.
+	measure 'Installation Failure Rate' = DIVIDE ( [Install Failures (Product/Pump)], [Installation Visits] )
+		formatString: 0.00%
+		displayFolder: Aftersales\1 Installations
+		lineageTag: bb2e759d-1750-4bdd-9bba-25d61d1ef4d9
+
+	/// Share of installation visits that ended Not Installed for any reason (Salesforce %jsf_not_installed).
+	measure 'Not Installed Rate' = DIVIDE ( [Not Installed Visits], [Installation Visits] )
+		formatString: 0.0%
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 2e883865-7d40-4528-a37c-8cb700735c7e
+
+	/// Share of all Not Installed visits in the current selection (use with the failure reason / category axis).
+	measure 'Share of Not Installed' = DIVIDE ( [Not Installed Visits], CALCULATE ( [Not Installed Visits], REMOVEFILTERS ( vw_jsf[Install Failure Reason] ), REMOVEFILTERS ( vw_jsf[Install Failure Category] ) ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 1a648b8e-5f30-49d6-9063-d94963ae11f1
+
+	/// Installation visits per unit actually installed. 1.00 = every unit installed on the first trip.
+	measure 'Visits per Install' = DIVIDE ( [Installation Visits], [Installs Completed] )
+		formatString: 0.00
+		displayFolder: Aftersales\1 Installations
+		lineageTag: 56f98d90-0606-4b45-8620-e06ee01cd418
+
+	/// Confirmed product failures: tickets Testing & Repairs completed with a recorded cause other than No Fault Found. Dated by ticket creation date.
+	measure 'Fault Tickets' =
+			CALCULATE ( DISTINCTCOUNT ( 'Sundesk Tickets'[id] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" ),
+			    USERELATIONSHIP ( 'Sundesk Tickets'[created_at], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: b348895a-dc87-4208-a8b5-0981ce039e91
+
+	/// Fault tickets tied to an installed unit, so they carry product, build type and days-to-failure.
+	measure 'Fault Tickets (Linked)' = CALCULATE ( [Fault Tickets], KEEPFILTERS ( NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 4cce99ec-5ffc-45a8-942e-5e95abac03cf
+
+	/// Distinct installed units with at least one confirmed failure in the period.
+	measure 'Units With Faults' =
+			CALCULATE ( DISTINCTCOUNT ( 'Sundesk Tickets'[Linked Account] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" ),
+			    KEEPFILTERS ( NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ),
+			    USERELATIONSHIP ( 'Sundesk Tickets'[created_at], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: fffa7304-f50a-4e1f-bcf7-ac7293755db8
+
+	/// Share of fault tickets in the current selection, ignoring component / failure-mode / cause breakdowns (use on those axes).
+	measure 'Share of Fault Tickets' = DIVIDE ( [Fault Tickets], CALCULATE ( [Fault Tickets], REMOVEFILTERS ( 'Sundesk Tickets'[Component Group] ), REMOVEFILTERS ( 'Sundesk Tickets'[Component] ), REMOVEFILTERS ( 'Sundesk Tickets'[Failure Mode] ), REMOVEFILTERS ( 'Sundesk Tickets'[Failure Cause] ), REMOVEFILTERS ( 'Sundesk Tickets'[Days to Fail Band] ) ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: adecbfe7-6dd4-4c33-aac6-e5bdbe36a795
+
+	/// Median age of the unit, in days since install, when the confirmed failure was raised.
+	measure 'Median Days to Failure' =
+			CALCULATE (
+			    MEDIANX ( FILTER ( 'Sundesk Tickets', NOT ISBLANK ( 'Sundesk Tickets'[Days to Failure] ) ),
+			              'Sundesk Tickets'[Days to Failure] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" ),
+			    USERELATIONSHIP ( 'Sundesk Tickets'[created_at], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: f2a9600b-5922-48e8-bb27-d04828e7db5a
+
+	/// Fault tickets raised within 30 days of installation - points at quality at dispatch or installation workmanship.
+	measure 'Early Failures (0-30 Days)' = CALCULATE ( [Fault Tickets], KEEPFILTERS ( 'Sundesk Tickets'[Days to Fail Band] = "0-30 Days" ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 5369567b-afd9-4648-8ae5-43f8d1579cdf
+
+	/// Share of linked fault tickets raised in the unit's first 30 days.
+	measure 'Early Failure %' = DIVIDE ( [Early Failures (0-30 Days)], [Fault Tickets (Linked)] )
+		formatString: 0.0%
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: d79b24df-71d9-4fe6-9b8a-d537a368e6ae
+
+	/// Fault tickets in the current and previous two calendar months (Salesforce '3 Months Product Failure Comparison').
+	measure 'Fault Tickets (Last 3 Months)' = VAR StartM = EOMONTH ( TODAY (), -3 ) + 1 RETURN CALCULATE ( [Fault Tickets], KEEPFILTERS ( 'AS Calendar'[Date] >= StartM ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: f6b93cf5-cef1-4bf9-8c28-20522d251d15
+
+	/// Installed Kenyan units (excl. refunded/rejected), dated by install (JSF) date. Salesforce 'installations'.
+	measure 'Units Installed' = CALCULATE ( SUM ( 'Unit Failures'[Units] ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: a7a34c66-3a0e-48e9-aaaf-e3550d2ac51f
+
+	/// Units with at least one CONFIRMED failure - Testing & Repairs completed the ticket and recorded a cause other than No Fault Found. Dated by install date, so a date slicer picks the install cohort.
+	measure 'Units Failed' =
+			CALCULATE ( SUM ( 'Unit Failures'[Units] ),
+			    KEEPFILTERS ( 'Unit Failures'[Has Faulted] = "Faulted" ),
+			    USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 0de25b3d-f6d6-437e-829c-add240a24c27
+
+	/// Observation-window rate: of the units in the field, the share with a confirmed bench failure during the diagnosis window. Not a lifetime rate - it covers only the months Testing & Repairs has been diagnosing, so always read it alongside the Observation Window label.
+	measure 'Product Failure Rate' = VAR U = [Units Installed] RETURN IF ( ISBLANK ( U ) || U = 0, BLANK (), DIVIDE ( COALESCE ( [Units Failed], 0 ), U ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: effe87d7-338b-4543-b7fa-baf228afae1d
+
+	/// Installed base to the end of the period (today for the current month).
+	measure 'Units Installed Cum' = VAR DateS = MIN ( MAX ( 'AS Calendar'[Date] ), TODAY () ) RETURN CALCULATE ( SUM ( 'Unit Failures'[Units] ), 'AS Calendar'[Date] <= DateS, REMOVEFILTERS ( 'AS Calendar' ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 2bef2be4-0f24-4f71-b4e2-ab9a1d1158bb
+
+	/// Units in the installed base at period end that had already had their first fault by that date (true as-at logic).
+	measure 'Units Failed Cum' = VAR DateS = MIN ( MAX ( 'AS Calendar'[Date] ), TODAY () ) RETURN CALCULATE ( SUM ( 'Unit Failures'[Units] ), 'AS Calendar'[Date] <= DateS, REMOVEFILTERS ( 'AS Calendar' ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ), KEEPFILTERS ( FILTER ( ALL ( 'Unit Failures'[First Fault Date] ), NOT ISBLANK ( 'Unit Failures'[First Fault Date] ) && 'Unit Failures'[First Fault Date] <= DateS ) ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 62e0c06e-8bcf-411a-8256-80c11380d764
+
+	/// Of every unit installed up to this point, the share that had failed by this point (Salesforce %_failure_rate_fail_category_cum, unit-based). Rising = fleet degrading; flattening = fleet maturing healthily.
+	measure 'Cumulative Failure Rate' = VAR R = DIVIDE ( [Units Failed Cum], [Units Installed Cum] ) RETURN IF ( ISBLANK ( R ), BLANK (), MIN ( R, 1 ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: c0b3c7dc-5bae-4cf7-8ed5-8abb957371df
+
+	/// Of units installed since bench diagnosis began, and with at least 90 days in the field, the share with a confirmed failure inside their first 90 days. Same exposure window for every product and month - the fairest number for ranking products.
+	measure 'Failure Rate (First 90 Days)' =
+			VAR WindowStart = [Confirmation Window Start]
+			RETURN CALCULATE (
+			    VAR Eligible = FILTER ( 'Unit Failures',
+			        'Unit Failures'[Days in Field] >= 90 && 'Unit Failures'[Install Date] >= WindowStart )
+			    VAR Base = SUMX ( Eligible, 'Unit Failures'[Units] )
+			    VAR F = SUMX ( FILTER ( Eligible,
+			        NOT ISBLANK ( 'Unit Failures'[Days to First Fault] )
+			            && 'Unit Failures'[Days to First Fault] <= 90 ), 'Unit Failures'[Units] )
+			    RETURN IF ( ISBLANK ( Base ) || Base = 0, BLANK (), DIVIDE ( COALESCE ( F, 0 ), Base ) ),
+			    USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 0884363b-2231-4af9-ab19-a53db932926d
+
+	/// Months of field exposure accumulated by the selected units (install date to today).
+	measure 'Unit Months in Field' = CALCULATE ( SUMX ( 'Unit Failures', 'Unit Failures'[Units] * DIVIDE ( 'Unit Failures'[Days in Field], 30.44 ) ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 84838fe1-0467-4cee-bd89-43eac7a0c6dd
+
+	/// Exposure-adjusted failure intensity: lifetime fault tickets of the selected units per 1,000 months in the field. Use to compare products of different ages.
+	measure 'Faults per 1,000 Unit-Months' = DIVIDE ( CALCULATE ( SUM ( 'Unit Failures'[Faults] ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) ) * 1000, [Unit Months in Field] )
+		formatString: #,0.0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 4e758f00-9ac9-4745-9185-5787ff3655d0
+
+	/// Median days from install to first fault, for units that have faulted.
+	measure 'Median Days to First Fault' = CALCULATE ( MEDIANX ( FILTER ( 'Unit Failures', NOT ISBLANK ( 'Unit Failures'[Days to First Fault] ) ), 'Unit Failures'[Days to First Fault] ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 7c038221-867f-47f8-9db5-cb1755ec282c
+
+	/// Units with a confirmed bench failure on the component / failure mode on the axis, during the observation window.
+	measure 'Units Failed (Component)' =
+			CALCULATE ( DISTINCTCOUNT ( 'Sundesk Tickets'[Linked Account] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" ),
+			    KEEPFILTERS ( NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ),
+			    USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 8580aedd-80e1-449a-8d7b-d1e53264ec38
+
+	/// Units with a confirmed failure on this component as a share of ALL units in the field during the observation window. Numerator follows the component axis; the denominator stays the whole installed base, so this reads as share of fleet affected, not a per-component reliability rate.
+	measure 'Component Failure Rate' = DIVIDE ( [Units Failed (Component)], [Units Installed] )
+		formatString: 0.00%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: b7f40514-a1bc-448d-bf52-08787b57ace7
+
+	/// Salesforce failure_rate_fail_category: of units that have failed, the share whose FIRST fault fell in each age band. Use with Unit Failures[First Fault Band] on the axis.
+	measure 'Share of Failed Units by First-Fault Age' = DIVIDE ( [Units Failed], CALCULATE ( [Units Failed], REMOVEFILTERS ( 'Unit Failures'[First Fault Band] ), REMOVEFILTERS ( 'Unit Failures'[First Fault Order] ) ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: b67d692c-0002-4739-95cb-feebf831c954
+
+	/// Survival view on the Fail Age Bands axis: of units installed since bench diagnosis began and old enough to have reached that age, the share with a confirmed failure by then.
+	measure 'Cumulative % Failed by Age' =
+			VAR M = MAX ( 'Fail Age Bands'[Max Days] )
+			VAR WindowStart = [Confirmation Window Start]
+			RETURN CALCULATE (
+			    VAR Eligible = FILTER ( 'Unit Failures',
+			        'Unit Failures'[Days in Field] >= M && 'Unit Failures'[Install Date] >= WindowStart )
+			    VAR Base = SUMX ( Eligible, 'Unit Failures'[Units] )
+			    VAR F = SUMX ( FILTER ( Eligible,
+			        NOT ISBLANK ( 'Unit Failures'[Days to First Fault] )
+			            && 'Unit Failures'[Days to First Fault] <= M ), 'Unit Failures'[Units] )
+			    RETURN IF ( ISBLANK ( Base ) || Base = 0, BLANK (), DIVIDE ( COALESCE ( F, 0 ), Base ) ),
+			    USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 36e671b5-4e4c-42e0-9dcb-156410133055
+
+	/// Product Failure Rate for refurbished units.
+	measure 'Refurb Failure Rate' = CALCULATE ( [Product Failure Rate], KEEPFILTERS ( 'Unit Failures'[Build Type] = "Refurb" ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\4 Refurb vs Non-Refurb
+		lineageTag: 4e027a12-abe4-4ee6-b99a-40c4ec6b9211
+
+	/// Product Failure Rate for new (non-refurbished) units.
+	measure 'Non-Refurb Failure Rate' = CALCULATE ( [Product Failure Rate], KEEPFILTERS ( 'Unit Failures'[Build Type] = "Non-Refurb" ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\4 Refurb vs Non-Refurb
+		lineageTag: 6ed4b38d-86ed-42f3-967c-c0d78e36f2f0
+
+	/// Refurb failure rate minus non-refurb failure rate, in percentage points. Positive = refurbs fail more often.
+	measure 'Refurb vs Non-Refurb Gap' = VAR R = [Refurb Failure Rate] VAR N = [Non-Refurb Failure Rate] RETURN IF ( ISBLANK ( R ) || ISBLANK ( N ), BLANK (), ( R - N ) * 100 )
+		formatString: +0.0 "pp";-0.0 "pp";0.0 "pp"
+		displayFolder: Aftersales\4 Refurb vs Non-Refurb
+		lineageTag: 9f556a28-b18f-4938-826f-5b3422995422
+
+	/// Share of linked fault tickets that come from refurbished units.
+	measure 'Refurb Share of Tickets' = DIVIDE ( CALCULATE ( [Fault Tickets], KEEPFILTERS ( 'Sundesk Tickets'[Build Type] = "Refurb" ) ), [Fault Tickets (Linked)] )
+		formatString: 0.0%
+		displayFolder: Aftersales\4 Refurb vs Non-Refurb
+		lineageTag: 11104ee3-2bfb-4e42-bfbf-afab5b33da4a
+
+	/// Number of slicers in the pane currently narrowing the Installations & Failures page. Ignores the page filter on Install Outcome.
+	measure 'Active Filters (Installations)' =
+			VAR SelD = FILTERS ( 'AS Calendar'[Date] )
+			VAR AllD = ALL ( 'AS Calendar'[Date] )
+			VAR FDate =
+			    INT (
+			        ISFILTERED ( 'AS Calendar'[Date] )
+			            && ( MINX ( SelD, 'AS Calendar'[Date] ) > MINX ( AllD, 'AS Calendar'[Date] )
+			                || MAXX ( SelD, 'AS Calendar'[Date] ) < MAXX ( AllD, 'AS Calendar'[Date] ) )
+			    )
+			VAR FOutcome = INT ( COUNTROWS ( FILTERS ( vw_jsf[Install Outcome] ) ) < 2 )
+			RETURN
+			    FDate + FOutcome
+			        + INT ( ISFILTERED ( vw_jsf[Install Failure Reason] ) )
+			        + INT ( ISFILTERED ( vw_jsf[Install Failure Category] ) )
+			        + INT ( ISFILTERED ( vw_jsf[Install Build Type] ) )
+			        + INT ( ISFILTERED ( vw_jsf[Install Product] ) )
+			        + INT ( ISFILTERED ( vw_jsf[jsf_engineer] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: fe23ddcc-6174-4cba-9a60-3f933fd6b9d8
+
+	/// Number of slicers in the pane currently narrowing the Product Failure Occurrences page.
+	measure 'Active Filters (Failure Occurrences)' =
+			VAR SelD = FILTERS ( 'AS Calendar'[Date] )
+			VAR AllD = ALL ( 'AS Calendar'[Date] )
+			VAR FDate =
+			    INT (
+			        ISFILTERED ( 'AS Calendar'[Date] )
+			            && ( MINX ( SelD, 'AS Calendar'[Date] ) > MINX ( AllD, 'AS Calendar'[Date] )
+			                || MAXX ( SelD, 'AS Calendar'[Date] ) < MAXX ( AllD, 'AS Calendar'[Date] ) )
+			    )
+			RETURN
+			    FDate
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Days to Fail Band] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Failure Mode] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Linked Product] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Component] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Component Group] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Build Type] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: bf8e9ec4-28af-468d-98b9-f8e043fe9d86
+
+	/// Number of slicers in the pane currently narrowing the Failure Rates page.
+	measure 'Active Filters (Failure Rates)' =
+			VAR SelD = FILTERS ( 'AS Calendar'[Date] )
+			VAR AllD = ALL ( 'AS Calendar'[Date] )
+			VAR FDate =
+			    INT (
+			        ISFILTERED ( 'AS Calendar'[Date] )
+			            && ( MINX ( SelD, 'AS Calendar'[Date] ) > MINX ( AllD, 'AS Calendar'[Date] )
+			                || MAXX ( SelD, 'AS Calendar'[Date] ) < MAXX ( AllD, 'AS Calendar'[Date] ) )
+			    )
+			RETURN
+			    FDate
+			        + INT ( ISFILTERED ( 'Unit Failures'[Product] ) )
+			        + INT ( ISFILTERED ( 'Unit Failures'[Has Faulted] ) )
+			        + INT ( ISFILTERED ( 'Unit Failures'[Build Type] ) )
+			        + INT ( ISFILTERED ( 'Unit Failures'[First Fault Band] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Component Group] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: e8ef094c-43e1-4a65-94a5-4c6ebf48c009
+
+	/// Number of slicers in the pane currently narrowing the Testing & Repairs Aftersale Tickets page. Ignores the page filter on ticket_group.
+	measure 'Active Filters (T&R Tickets)' =
+			VAR SelD = FILTER ( FILTERS ( 'Sundesk Tickets'[created_at] ), NOT ISBLANK ( 'Sundesk Tickets'[created_at] ) )
+			VAR AllD = FILTER ( ALL ( 'Sundesk Tickets'[created_at] ), NOT ISBLANK ( 'Sundesk Tickets'[created_at] ) )
+			VAR FDate =
+			    INT (
+			        ISFILTERED ( 'Sundesk Tickets'[created_at] )
+			            && ( MINX ( SelD, 'Sundesk Tickets'[created_at] ) > MINX ( AllD, 'Sundesk Tickets'[created_at] )
+			                || MAXX ( SelD, 'Sundesk Tickets'[created_at] ) < MAXX ( AllD, 'Sundesk Tickets'[created_at] ) )
+			    )
+			RETURN
+			    FDate
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[customer_name] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[ticket_state] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[createdby] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Linked Town] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[product_type] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Build Type] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[JSF Engineer] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[title] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[number] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[JSF ID] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: aac0cba3-85ab-4262-8c77-97fd0228ec92
+
+	/// Number of slicers in the pane currently narrowing the All Aftersale Tickets page. Ignores the page filter on ticket type.
+	measure 'Active Filters (All Tickets)' =
+			VAR SelD = FILTER ( FILTERS ( 'Sundesk Tickets'[created_at] ), NOT ISBLANK ( 'Sundesk Tickets'[created_at] ) )
+			VAR AllD = FILTER ( ALL ( 'Sundesk Tickets'[created_at] ), NOT ISBLANK ( 'Sundesk Tickets'[created_at] ) )
+			VAR FDate =
+			    INT (
+			        ISFILTERED ( 'Sundesk Tickets'[created_at] )
+			            && ( MINX ( SelD, 'Sundesk Tickets'[created_at] ) > MINX ( AllD, 'Sundesk Tickets'[created_at] )
+			                || MAXX ( SelD, 'Sundesk Tickets'[created_at] ) < MAXX ( AllD, 'Sundesk Tickets'[created_at] ) )
+			    )
+			RETURN
+			    FDate
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[customer_name] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[ticket_state] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[createdby] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[ticket_group] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[product_type] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[Build Type] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[JSF Engineer] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[title] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[number] ) )
+			        + INT ( ISFILTERED ( 'Sundesk Tickets'[JSF ID] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: cdba204c-0074-4925-a1dc-3d99d3b647ca
+
+	/// First date on which Testing & Repairs recorded a diagnosis. Everything before this is invisible to the confirmed-failure basis.
+	measure 'Confirmation Window Start' =
+			CALCULATE ( MIN ( 'Sundesk Tickets'[created_at] ), REMOVEFILTERS (),
+			    'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" )
+		isHidden
+		displayFolder: Aftersales\0 Basis
+		lineageTag: 97cb3726-3dbc-4e7b-8091-7f6a62349fd1
+
+	/// Every hardware ticket that reached the Testing & Repairs bench, whatever the outcome. Denominator of the confirmation rate.
+	measure 'T&R Tickets Assessed' =
+			CALCULATE ( DISTINCTCOUNT ( 'Sundesk Tickets'[id] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[ticket_group] = "Operations_KE::Testing & Repairs_KE" ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Fault Class] = "Product Fault" ),
+			    REMOVEFILTERS ( 'Sundesk Tickets'[Confirmed Failure] ),
+			    USERELATIONSHIP ( 'Sundesk Tickets'[created_at], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 3e49aa9f-c9db-48eb-9e2a-95e3f0d0e696
+
+	/// Share of bench assessments that ended in a confirmed hardware failure. The rest tested clean, had no cause recorded, or are still open.
+	measure 'Confirmation Rate' = DIVIDE ( [Fault Tickets], [T&R Tickets Assessed] )
+		formatString: 0.0%
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 9e10f161-f0bc-4c3c-9b91-fe8f95db34dc
+
+	/// Units returned to the bench that tested clean - a diagnosis-at-source cost, not a product cost.
+	measure 'No Fault Found' =
+			CALCULATE ( DISTINCTCOUNT ( 'Sundesk Tickets'[id] ),
+			    KEEPFILTERS ( 'Sundesk Tickets'[Confirmed Failure] = "No Fault Found" ),
+			    REMOVEFILTERS ( 'Sundesk Tickets'[Confirmed Failure] ),
+			    USERELATIONSHIP ( 'Sundesk Tickets'[created_at], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 78165856-a2a0-48b0-9eb6-a6cdf44ad66b
+
+	/// Share of bench assessments that tested clean.
+	measure 'No Fault Found %' = DIVIDE ( [No Fault Found], [T&R Tickets Assessed] )
+		formatString: 0.0%
+		displayFolder: Aftersales\2 Product Failures
+		lineageTag: 867d41f9-cc7f-4293-aaa8-bdb8e7697f52
+
+	measure 'Units First Failed in Period' =
+			
+			VAR D1 = MIN ( 'AS Calendar'[Date] )
+			VAR D2 = MIN ( MAX ( 'AS Calendar'[Date] ), TODAY () )
+			RETURN
+			CALCULATE (
+			    SUM ( 'Unit Failures'[Units] ),
+			    REMOVEFILTERS ( 'AS Calendar' ),
+			    KEEPFILTERS (
+			        FILTER (
+			            ALL ( 'Unit Failures'[First Fault Date] ),
+			            NOT ISBLANK ( 'Unit Failures'[First Fault Date] )
+			                && 'Unit Failures'[First Fault Date] >= D1
+			                && 'Unit Failures'[First Fault Date] <= D2
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 4aa1ca2f-1a6c-4d98-9ef0-0d9482c2e268
+
+	measure 'Monthly Failure Rate' =
+			
+			VAR F = [Units First Failed in Period]
+			VAR B = [Units Installed Cum]
+			RETURN
+			IF ( ISBLANK ( B ) || B = 0, BLANK (), DIVIDE ( COALESCE ( F, 0 ), B ) )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: a28d24d8-6210-49e3-a325-6a2376191b92
+
+	measure loan_end_date = EDATE(SELECTEDVALUE(points[installment_date]),SELECTEDVALUE(points[total_number_payments]))
+		formatString: dd/mm/yyyy
+		displayFolder: Cash Release Reconciliation
+		lineageTag: 46fe8261-48a7-4621-be67-fb9f9e9b50f3
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure aftersale =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_type]="aftersale")
+			RETURN
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 555daca7-002d-4e14-8279-8103de3e463c
+
+	measure installation =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_type]="installation")
+			RETURN
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 1957d1a5-48fb-48c6-9db2-7fcf28d7f5db
+
+	measure repossession =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_type]="repossession")
+			RETURN
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: e8598fe0-0e4a-4be0-a3ec-fedd5e85f80d
+
+	measure technical_survey =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_type]="technical_survey")
+			RETURN
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 757306fa-efd2-413a-9696-614ab73bfa9f
+
+	measure successful_tasks =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_status]="completed"&&NOT(CONTAINSSTRING(vw_jsf[engineer_recommendation] ,"not")))
+			return
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: eff2f7ec-7f0c-489d-aeee-3f4f18dd8b4b
+
+	measure failed_tasks =
+			
+			var a=CALCULATE(DISTINCTCOUNT(vw_jsf[jsf_id]),vw_jsf[jsf_status]="completed"&&CONTAINSSTRING(vw_jsf[engineer_recommendation] ,"not"))
+			return
+			a
+		formatString: 0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 9f7211a0-3acb-4bb1-b3aa-f8db252dbe3f
+
+	measure total_tasks = [successful_tasks]+[failed_tasks]
+		formatString: #,0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 14eda750-135e-4179-8184-e4d7c9f3e2fc
+
+	measure total_costs_vw_jsf = CALCULATE(SUM(vw_jsf[meal_costings]))+CALCULATE(SUM(vw_jsf[accommodation_cost]))+CALCULATE(SUM(vw_jsf[casual_pay]))+CALCULATE(SUM(vw_jsf[transport_costs]))+CALCULATE(SUM(vw_jsf[costings]))
+		formatString: #,0
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 58b77d99-e422-4ffc-9a22-3b10ec7ff134
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure cost_per_task = DIVIDE([total_costs_vw_jsf],[total_tasks])
+		formatString: #,0.00
+		displayFolder: Cash Release Reconciliation\cash_release_reconciliation
+		lineageTag: 761e0298-e0db-4569-aa4c-10c65111b734
+
+	measure 'installed aftersale' =
+			
+			var i=CALCULATE(SUM(points[units]),
+			                       USERELATIONSHIP('calendar'[Date],points[jsf_date]),
+			                            NOT(ISBLANK(points[jsf_date])),
+			                                NOT(points[status] in {"refunded","rejected"})
+			                                                        )
+			
+			return
+			i
+		formatString: #,0
+		displayFolder: Installations SLA
+		lineageTag: 8f298ca1-e6f2-4561-a4df-93772466527f
+
+	measure installations_within_sla_aftersale =
+			
+			CALCULATE(SUM(points[units]),USERELATIONSHIP('calendar'[Date],points[jsf_date]),
+			                        NOT(ISBLANK(points[sale_date])),
+			                                NOT(points[status] in {"refunded","rejected"}),
+			                                         NOT(ISBLANK(points[jsf_date])),
+			                                            points[days_to_install_courier]>=0&&points[days_to_install_courier]<=5)
+		formatString: #,0
+		displayFolder: Installations SLA
+		lineageTag: ffe3f24f-061d-443d-8731-824f5020904d
+
+	measure installations_beyond_sla_aftersale =
+			
+			CALCULATE(SUM(points[units]),USERELATIONSHIP('calendar'[Date],points[jsf_date]),
+			                        NOT(ISBLANK(points[sale_date])),
+			                                NOT(points[status] in {"refunded","rejected"}),
+			                                         NOT(ISBLANK(points[jsf_date])),
+			                                            points[days_to_install_courier]>5)
+		formatString: #,0
+		displayFolder: Installations SLA
+		lineageTag: 592ff27f-f92a-4156-8229-77a12eda20dc
+
+	measure Total_aftersale_tickets = DISTINCTCOUNT('Sundesk Tickets'[id])
+		formatString: #,0
+		displayFolder: Tickets
+		lineageTag: fc20967d-3e9f-4411-8dd1-a5789e9d3da3
+
+	measure Tickets_Within_SLA =
+			
+			CALCULATE (
+			    COUNTROWS ( 'Sundesk Tickets' ),
+			    'Sundesk Tickets'[Ticket_SLA_Status] = "Resolved within SLA"
+			)
+		formatString: #,0
+		displayFolder: Tickets
+		lineageTag: f6fca40f-ac8d-4705-a9b1-13bf9da0449d
+
+	measure Tickets_Beyond_SLA =
+			
+			CALCULATE (
+			    COUNTROWS ( 'Sundesk Tickets' ),
+			    'Sundesk Tickets'[Ticket_SLA_Status] = "Resolved outside SLA"
+			)
+		formatString: #,0
+		displayFolder: Tickets
+		lineageTag: 696ff7db-7abe-436c-bd68-e306bcbc45e9
+
+	/// Tickets created in the selected Ticket Date period.
+	measure 'Tickets Raised' = [Total_aftersale_tickets]
+		formatString: #,##0
+		displayFolder: Tickets\Period KPIs
+		lineageTag: fbd7c714-2031-4821-bbc1-1533bdbbad6b
+
+	/// Tickets actually closed inside the selected Ticket Date period - the work done in that period, whenever the ticket was raised. With no period selected it counts every ticket that has ever been closed.
+	measure 'Tickets Closed' =
+			CALCULATE (
+			    [Total_aftersale_tickets],
+			    USERELATIONSHIP ( 'Sundesk Tickets'[Closed Date], 'Ticket Date'[Date] ),
+			    KEEPFILTERS ( NOT ISBLANK ( 'Sundesk Tickets'[Closed Date] ) )
+			)
+		formatString: #,##0
+		displayFolder: Tickets\Period KPIs
+		lineageTag: f905e33a-b1ae-4877-9a71-e9d4d11cdebf
+
+	/// Backlog carried out of the period: everything raised up to the period end that had not been closed by the period end.
+	measure 'Open at Period End' =
+			VAR LastD = MAX ( 'Ticket Date'[Date] )
+			VAR DatesToDate =
+			    FILTER ( ALL ( 'Ticket Date'[Date] ), NOT ISBLANK ( 'Ticket Date'[Date] ) && 'Ticket Date'[Date] <= LastD )
+			VAR RaisedToDate =
+			    CALCULATE ( [Total_aftersale_tickets], REMOVEFILTERS ( 'Ticket Date' ), DatesToDate )
+			VAR ClosedToDate =
+			    CALCULATE (
+			        [Total_aftersale_tickets],
+			        REMOVEFILTERS ( 'Ticket Date' ),
+			        DatesToDate,
+			        USERELATIONSHIP ( 'Sundesk Tickets'[Closed Date], 'Ticket Date'[Date] )
+			    )
+			RETURN
+			    RaisedToDate - ClosedToDate
+		formatString: #,##0
+		displayFolder: Tickets\Period KPIs
+		lineageTag: b3e48260-41cc-4b7a-8509-4df3581caaa6
+
+	/// Of the tickets closed in the period, those closed inside the target turnaround.
+	measure 'Closed Within SLA' =
+			CALCULATE (
+			    [Tickets_Within_SLA],
+			    USERELATIONSHIP ( 'Sundesk Tickets'[Closed Date], 'Ticket Date'[Date] )
+			)
+		formatString: #,##0
+		displayFolder: Tickets\Period KPIs
+		lineageTag: 25bf9c51-029b-47ee-bb88-b16cf34b5901
+
+	/// Of the tickets closed in the period, those closed outside the target turnaround.
+	measure 'Closed Beyond SLA' =
+			CALCULATE (
+			    [Tickets_Beyond_SLA],
+			    USERELATIONSHIP ( 'Sundesk Tickets'[Closed Date], 'Ticket Date'[Date] )
+			)
+		formatString: #,##0
+		displayFolder: Tickets\Period KPIs
+		lineageTag: 8e9b924b-fa01-483e-80ce-e6f52ae8240d
+
+	/// Of the tickets closed in the period, the share closed inside target. Denominator is tickets closed in the period, so open tickets no longer drag the figure down.
+	measure 'SLA Adherence (Closed)' = DIVIDE ( [Closed Within SLA], [Closed Within SLA] + [Closed Beyond SLA] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Tickets\Period KPIs
+		lineageTag: 284b4a6b-a142-4518-972b-2a9f30cc2e81
+
+	measure '# of completed jsfs' = CALCULATE(DISTINCTCOUNT(vw_jsf[installation_id]),NOT(vw_jsf[jsf_status]) IN {"INPROGRESS","N/A"})
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: e84e9f42-86a6-4b16-b534-3c905f175f22
+
+	measure '# of jsfs' = CALCULATE(DISTINCTCOUNT(vw_jsf[installation_id]),ALL(vw_jsf[jsf_date]))
+		formatString: 0
+		displayFolder: JSFs
+		lineageTag: a9a760ce-127c-47e3-aa47-d7f43d454bb6
+
+	measure 'JSFs Syncing Rate' = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( vw_jsf[installation_id] ), KEEPFILTERS ( vw_jsf[jsf_status] = "COMPLETED" ) ), DISTINCTCOUNT ( vw_jsf[installation_id] ) )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: JSFs
+		lineageTag: 04b9115d-e4b4-46af-b83b-2883de27b9d4
+
+	measure 'Installation Total' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "INSTALLATION"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: 40fb9257-c3be-4035-a974-8192f981ba98
+
+	measure 'Installation Within SLA' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "INSTALLATION",
+			    vw_jsf[SLA Status] = "Within SLA"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: a31388db-e4fc-4075-a53b-f0537a48ac6c
+
+	measure 'Installation SLA %' =
+			
+			DIVIDE(
+			    [Installation Within SLA],
+			    [Installation Total],
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: JSFs
+		lineageTag: 54e309fe-01d6-489a-92d7-c82a627f919b
+
+	measure 'Installation Out of SLA' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "INSTALLATION",
+			    vw_jsf[SLA Status] = "Out of SLA"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: ecaf1f88-6557-4fa8-ab7f-f444730c00af
+
+	measure 'Aftersale Total' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "AFTERSALE"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: 478b5393-954c-4156-97d3-f1fd6f74a294
+
+	measure 'Aftersale Within SLA' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "AFTERSALE",
+			    vw_jsf[SLA Status] = "Within SLA"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: a01fb520-b7f0-4e79-8411-f4c1e0b28f32
+
+	measure 'Aftersale Out of SLA' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "AFTERSALE",
+			    vw_jsf[SLA Status] = "Out of SLA"
+			)
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: 92edb029-587f-4d83-a200-44f427fd787c
+
+	measure 'Aftersale SLA %' =
+			
+			DIVIDE(
+			    [Aftersale Within SLA],
+			    [Aftersale Total],
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: JSFs
+		lineageTag: d29f2ddc-6e8a-410b-aa8a-ef78d8e540f1
+
+	measure 'Overall SLA %' =
+			
+			DIVIDE(
+			    [Installation Within SLA] + [Aftersale Within SLA],
+			    [Installation Total] + [Aftersale Total],
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: JSFs
+		lineageTag: 92954d28-60db-4c44-93c6-95c7e7eed628
+
+	measure 'Installed PAYG' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "INSTALLATION",
+			    vw_jsf[engineer_recommendation] = "INSTALLED",
+			    vw_jsf[Jsf Account Type] = "PAYG"
+			)
+		formatString: 0
+		displayFolder: JSFs
+		lineageTag: a2c80fb5-f610-4e01-83ed-849b0d36f11b
+
+	measure 'Installed Cash' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(vw_jsf[installation_id]),
+			    vw_jsf[schedule_type] = "INSTALLATION",
+			    vw_jsf[engineer_recommendation] = "INSTALLED",
+			    vw_jsf[Jsf Account Type] = "CASH"
+			)
+		formatString: 0
+		displayFolder: JSFs
+		lineageTag: bf7fa027-93e3-48cb-bae1-6df1ae90b189
+
+	/// Distinct JSFs (installation_id). The ALL JSFs count cards add their own status filter.
+	measure 'JSF Count' = DISTINCTCOUNT(vw_jsf[installation_id])
+		formatString: #,0
+		displayFolder: JSFs
+		lineageTag: cbfe0a7c-4455-4941-8e85-196e80429e6c
+
+	/// Number of slicers in the pane currently narrowing the All JSFs page.
+	measure 'Active Filters (All JSFs)' =
+			INT ( ISFILTERED ( vw_jsf[jsf_date] ) && ( MINX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) > MINX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) || MAXX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) < MAXX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) ) )
+			+ INT ( ISFILTERED ( points[region] ) )
+			+ INT ( ISFILTERED ( vw_jsf[jsf_engineer2] ) )
+			+ INT ( ISFILTERED ( vw_jsf[schedule_type] ) )
+			+ INT ( ISFILTERED ( vw_jsf[engineer_recommendation] ) )
+			+ INT ( ISFILTERED ( points[accountRef] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: 8bf17c6b-1a97-4892-91e6-ce01f36a209f
+
+	/// Number of slicers in the pane currently narrowing the Engineer SLA page.
+	measure 'Active Filters (Engineer SLA)' =
+			INT ( ISFILTERED ( vw_jsf[jsf_date] ) && ( MINX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) > MINX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) || MAXX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) < MAXX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) ) )
+			+ INT ( ISFILTERED ( points[region] ) )
+			+ INT ( ISFILTERED ( vw_jsf[jsf_engineer] ) )
+			+ INT ( ISFILTERED ( vw_jsf[Supervisor Name] ) )
+			+ INT ( ISFILTERED ( vw_jsf[schedule_type] ) )
+			+ INT ( ISFILTERED ( points[accountRef] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: af4ff79f-4924-4b9a-86eb-4f52dae75abb
+
+	/// Number of slicers in the pane currently narrowing the Warranty Status page.
+	measure 'Active Filters (Warranty Status)' =
+			INT ( ISFILTERED ( points[warranty_expiry_date] ) && ( MINX ( FILTER ( FILTERS ( points[warranty_expiry_date] ), NOT ISBLANK ( points[warranty_expiry_date] ) ), points[warranty_expiry_date] ) > MINX ( FILTER ( ALL ( points[warranty_expiry_date] ), NOT ISBLANK ( points[warranty_expiry_date] ) ), points[warranty_expiry_date] ) || MAXX ( FILTER ( FILTERS ( points[warranty_expiry_date] ), NOT ISBLANK ( points[warranty_expiry_date] ) ), points[warranty_expiry_date] ) < MAXX ( FILTER ( ALL ( points[warranty_expiry_date] ), NOT ISBLANK ( points[warranty_expiry_date] ) ), points[warranty_expiry_date] ) ) )
+			+ INT ( ISFILTERED ( points[sale_date] ) && ( MINX ( FILTER ( FILTERS ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) > MINX ( FILTER ( ALL ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) || MAXX ( FILTER ( FILTERS ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) < MAXX ( FILTER ( ALL ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) ) )
+			+ INT ( ISFILTERED ( points[region] ) )
+			+ INT ( ISFILTERED ( points[warranty_status] ) )
+			+ INT ( ISFILTERED ( points[accountType] ) )
+			+ INT ( ISFILTERED ( points[accountRef] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: 07c6de41-d642-4a41-8b20-3a112cc417e3
+
+	/// Card value with a thousands separator (sum of units).
+	measure Units = SUM ( points[units] )
+		formatString: #,0
+		displayFolder: Report
+		lineageTag: c172f04f-79ab-4ae8-9843-0dd3517d0a70
+
+	/// Number of slicers in the pane currently narrowing the CCRP JSFs page.
+	measure 'Active Filters (CCRP JSFs)' =
+			INT ( ISFILTERED ( vw_jsf[jsf_date] ) && ( MINX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) > MINX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) || MAXX ( FILTER ( FILTERS ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) < MAXX ( FILTER ( ALL ( vw_jsf[jsf_date] ), NOT ISBLANK ( vw_jsf[jsf_date] ) ), vw_jsf[jsf_date] ) ) )
+			+ INT ( ISFILTERED ( points[sale_date] ) && ( MINX ( FILTER ( FILTERS ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) > MINX ( FILTER ( ALL ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) || MAXX ( FILTER ( FILTERS ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) < MAXX ( FILTER ( ALL ( points[sale_date] ), NOT ISBLANK ( points[sale_date] ) ), points[sale_date] ) ) )
+			+ INT ( ISFILTERED ( points[product] ) )
+			+ INT ( ISFILTERED ( points[accountType] ) )
+			+ INT ( ISFILTERED ( points[Department_name] ) )
+			+ INT ( ISFILTERED ( points[accountRef] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: a32d1468-1fad-476d-bf12-ef40bd1fcb53
+
+	/// Card value with a thousands separator (count of jsf_id).
+	measure 'JSF ID Count' = COUNT ( vw_jsf[jsf_id] )
+		formatString: #,0
+		displayFolder: Report
+		lineageTag: 8b1d51b2-ad39-4eb3-9e62-caf8097ca954
+
+	/// Number of slicers in the pane currently narrowing the Cash Release page.
+	measure 'Active Filters (Cash Release)' =
+			INT ( ISFILTERED ( calendar[Date] ) && ( MINX ( FILTER ( FILTERS ( calendar[Date] ), NOT ISBLANK ( calendar[Date] ) ), calendar[Date] ) > MINX ( FILTER ( ALL ( calendar[Date] ), NOT ISBLANK ( calendar[Date] ) ), calendar[Date] ) || MAXX ( FILTER ( FILTERS ( calendar[Date] ), NOT ISBLANK ( calendar[Date] ) ), calendar[Date] ) < MAXX ( FILTER ( ALL ( calendar[Date] ), NOT ISBLANK ( calendar[Date] ) ), calendar[Date] ) ) )
+			+ INT ( ISFILTERED ( vw_jsf[jsf_engineer] ) )
+			+ INT ( ISFILTERED ( vw_jsf[jsf_type] ) )
+			+ INT ( ISFILTERED ( vw_jsf[jsf_status] ) )
+			+ INT ( ISFILTERED ( vw_jsf[engineer_recommendation] ) )
+		formatString: 0
+		displayFolder: Aftersales\0 Slicer Pane
+		lineageTag: 7619bed8-baaa-4003-a2a6-dfca782b2cc2
+
+	/// Card value with a thousands separator (count of JSF ID).
+	measure 'Ticket JSF Count' = COUNT ( 'Sundesk Tickets'[JSF ID] )
+		formatString: #,0
+		displayFolder: Report
+		lineageTag: 911ba926-edc0-43e5-a4da-f37273341460
+
+	/// Card value with a thousands separator (count of JSF Assignment ID).
+	measure 'Ticket Assignment Count' = COUNT ( 'Sundesk Tickets'[JSF Assignment ID] )
+		formatString: #,0
+		displayFolder: Report
+		lineageTag: 2fe3cadf-b3af-4fc8-827b-0222006126d6
+
+	/// Header text: last model refresh in EAT.
+	measure 'Data refreshed' = "Data refreshed " & FORMAT(MAX('Last Refresh'[Refreshed]), "d mmm yyyy, HH:mm") & " EAT"
+		displayFolder: Report
+		lineageTag: 76937e55-dad0-4966-8347-ef8398f6b541
+
+	/// Units sold: Kenya filters from the page; Category = Unit (pump kits only, no add-ons, financial services or TSR); not Refunded / Rejected; same definition as the Sales Funnel.
+	/// When the page Date filter is set, only sales whose sale date falls in that date range count.
+	measure '# Sales' =
+			VAR _dated = ISFILTERED ( vw_jsf[jsf_date] )
+			VAR _from = CALCULATE ( MIN ( vw_jsf[jsf_date] ), ALLSELECTED ( vw_jsf ) )
+			VAR _to = CALCULATE ( MAX ( vw_jsf[jsf_date] ), ALLSELECTED ( vw_jsf ) )
+			RETURN
+			    CALCULATE (
+			        SUM ( points[units] ),
+			        NOT ISBLANK ( points[sale_date] ),
+			        points[Category] = "Unit",
+			        NOT points[status] IN { "Refunded", "Rejected" },
+			        FILTER ( ALL ( points[sale_date] ), NOT _dated || ( points[sale_date] >= _from && points[sale_date] < _to + 1 ) )
+			    )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 5dea20f5-c1e1-43ae-aeb1-d133fbf42abd
+
+	/// Units sold that have been dispatched or installed.
+	measure '# Shipped' = CALCULATE ( [# Sales], FILTER ( points, NOT ISBLANK ( points[dispatch_date] ) || points[Install Status] = "Installed" ) )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 5c856c97-cc1e-455f-8684-4e3faefeb2c1
+
+	/// Units sold, not yet dispatched or installed.
+	measure '# Pending Dispatch' = IF ( ISBLANK ( [# Sales] ), BLANK (), [# Sales] - COALESCE ( [# Shipped], 0 ) )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 3e7cf693-dff4-408a-a0f7-15e36e7a62dd
+
+	/// Units sold whose account has an Installed JSF.
+	measure '# Installed' = CALCULATE ( [# Sales], points[Install Status] = "Installed" )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 6168a5c5-a7cd-4a53-9238-ade52dd0517f
+
+	/// Units sold, not yet installed.
+	measure '# Pending Installation' = IF ( ISBLANK ( [# Sales] ), BLANK (), [# Sales] - COALESCE ( [# Installed], 0 ) )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 5b34002c-57c7-48cc-a5ef-46c00816fc0e
+
+	/// Units dispatched, not yet installed.
+	measure '# Pending Installation After Dispatch' = IF ( ISBLANK ( [# Sales] ), BLANK (), COALESCE ( [# Shipped], 0 ) - COALESCE ( [# Installed], 0 ) )
+		formatString: #,0
+		displayFolder: Overview
+		lineageTag: 246d0ecb-5efc-4a5c-aaa6-7acae0913b06
+
+	/// Share of units sold that have been dispatched.
+	measure '% Dispatched vs Sales' = DIVIDE ( [# Shipped], [# Sales] )
+		formatString: 0.00%
+		displayFolder: Overview
+		lineageTag: f9ddce44-0cff-4a86-b84b-0e7ef53f0cc3
+
+	/// Share of dispatched units that are installed.
+	measure '% Installed vs Dispatch' = DIVIDE ( [# Installed], [# Shipped] )
+		formatString: 0.00%
+		displayFolder: Overview
+		lineageTag: 7e20d4ba-4dd0-49e5-86c9-9e53fa7c23f0
+
+	/// Share of units sold that are installed.
+	measure '% Installed vs Sales' = DIVIDE ( [# Installed], [# Sales] )
+		formatString: 0.00%
+		displayFolder: Overview
+		lineageTag: c2a9803a-fe20-439f-a3d6-f66b1675f73c
+
+	/// Share of dispatched units still waiting for installation.
+	measure '% Pending Installation vs Dispatched' = DIVIDE ( [# Pending Installation After Dispatch], [# Shipped] )
+		formatString: 0.00%
+		displayFolder: Overview
+		lineageTag: 0cef1ec5-c858-4c86-9b85-be2d3c4b84d1
+
+	/// Share of units sold still waiting for installation.
+	measure '% Pending Installation vs Sales' = DIVIDE ( [# Pending Installation], [# Sales] )
+		formatString: 0.00%
+		displayFolder: Overview
+		lineageTag: b709f249-aa32-49cb-a9e0-7964a69e7f8b
+
+	/// Card text for First 90 Days. 'Too early' when no selected unit has been in the field 90 days yet; 'No data' when the units were installed before bench diagnosis began.
+	measure 'First 90 Days (Card)' =
+			VAR R = [Failure Rate (First 90 Days)]
+			VAR Oldest = CALCULATE ( MAX ( 'Unit Failures'[Days in Field] ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+			RETURN IF ( NOT ISBLANK ( R ), FORMAT ( R, "0.0%" ), IF ( Oldest < 90, "Too early", "No data" ) )
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: d9628d97-7bbc-4706-9abe-c26aeded3b29
+
+	/// How many of this part are out in the field (units installed in the period x parts per kit). Blank for causes that are not a counted part.
+	measure 'Parts in Field' = VAR P = SELECTEDVALUE ( 'Unit Parts'[Part] ) RETURN CALCULATE ( IF ( HASONEVALUE ( 'Unit Parts'[Part] ), SWITCH ( P, "Pump", SUM ( 'Unit Failures'[Pumps] ), "Controller", SUM ( 'Unit Failures'[Controllers] ), "Panel", SUM ( 'Unit Failures'[Panels] ), "TV", SUM ( 'Unit Failures'[TVs] ) ), SUM ( 'Unit Failures'[Pumps] ) + SUM ( 'Unit Failures'[Controllers] ) + SUM ( 'Unit Failures'[Panels] ) + SUM ( 'Unit Failures'[TVs] ) ), USERELATIONSHIP ( 'Unit Failures'[Install Date], 'AS Calendar'[Date] ) )
+		formatString: #,0
+		displayFolder: Aftersales\5 Parts
+		lineageTag: 8ad20668-dae9-467b-9b56-1402f6cacd8f
+
+	/// Units whose FIRST confirmed failure was this part. Each unit counted once.
+	measure 'Parts Failed' = CALCULATE ( [Units Failed], TREATAS ( VALUES ( 'Unit Parts'[Part] ), 'Unit Failures'[First Failed Part] ) )
+		formatString: #,0
+		displayFolder: Aftersales\5 Parts
+		lineageTag: f5bf50f5-acc1-4a1d-ab19-dfd495979b1e
+
+	/// Parts Failed / Parts in Field.
+	measure 'Part Failure Rate' = DIVIDE ( [Parts Failed], [Parts in Field] )
+		formatString: 0.00%
+		displayFolder: Aftersales\5 Parts
+		lineageTag: 406742fe-2cce-49a6-a437-e2741a08fde0
+
+	/// This part's share of all first failures.
+	measure 'Share of Failures' = DIVIDE ( [Parts Failed], CALCULATE ( [Parts Failed], REMOVEFILTERS ( 'Unit Parts' ) ) )
+		formatString: 0.0%
+		displayFolder: Aftersales\5 Parts
+		lineageTag: 8e9803cc-969a-49c7-968d-8baac1104c6d
+
+	/// Part Failure Rate said as '1 in every N'.
+	measure 'Part Rate in Words' = VAR R = [Part Failure Rate] RETURN IF ( ISBLANK ( R ) || R = 0, BLANK (), "1 in " & FORMAT ( ROUND ( 1 / R, 0 ), "#,0" ) )
+		displayFolder: Aftersales\5 Parts
+		lineageTag: 0651e3db-55f5-417c-89cd-d9f82d99255e
+
+	/// Card subtitle: [Cumulative Failure Rate] said as '1 in every N units'.
+	measure 'Cumulative Rate in Words' = VAR R = [Cumulative Failure Rate] RETURN IF ( ISBLANK ( R ), "", IF ( R = 0, "No failures yet", "1 in every " & FORMAT ( ROUND ( 1 / R, 0 ), "#,0" ) & " units" ) )
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 9d98b1f3-9ca6-431d-8340-ca2e1b68193f
+
+	/// Card subtitle: [Product Failure Rate] said as '1 in every N units'.
+	measure 'Failure Rate in Words' = VAR R = [Product Failure Rate] RETURN IF ( ISBLANK ( R ), "", IF ( R = 0, "No failures yet", "1 in every " & FORMAT ( ROUND ( 1 / R, 0 ), "#,0" ) & " units" ) )
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: 5ceac7a5-4753-4607-bb6f-bf36cbf86494
+
+	/// Card subtitle: [Refurb Failure Rate] said as '1 in every N units'.
+	measure 'Refurb Rate in Words' = VAR R = [Refurb Failure Rate] RETURN IF ( ISBLANK ( R ), "", IF ( R = 0, "No failures yet", "1 in every " & FORMAT ( ROUND ( 1 / R, 0 ), "#,0" ) & " units" ) )
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: f6cd8cd1-d49a-4894-b8ce-df951eec7168
+
+	/// Card subtitle: [Non-Refurb Failure Rate] said as '1 in every N units'.
+	measure 'Non-Refurb Rate in Words' = VAR R = [Non-Refurb Failure Rate] RETURN IF ( ISBLANK ( R ), "", IF ( R = 0, "No failures yet", "1 in every " & FORMAT ( ROUND ( 1 / R, 0 ), "#,0" ) & " units" ) )
+		displayFolder: Aftersales\3 Failure Rates
+		lineageTag: d3ecb504-37e9-4232-944b-548b787188fd
+
+	/// Typical days from assignment to JSF (median), so a few very long jobs do not drag the number up.
+	measure 'Installation TAT (Median)' = MEDIAN ( vw_jsf[Days Taken] )
+		formatString: 0.0
+		displayFolder: JSFs
+		lineageTag: 94d9ff3f-914d-4990-8695-da6d299c6887
+
+	column 'Aftersales KPIs'
+		lineageTag: 3e2b3604-fae7-485e-b161-45cf90afa062
+		isNameInferred
+		sourceColumn: [Aftersales KPIs]
+
+	partition 'Aftersales KPIs' = calculated
+		mode: import
+		source = ROW ( "Aftersales KPIs", BLANK () )
+

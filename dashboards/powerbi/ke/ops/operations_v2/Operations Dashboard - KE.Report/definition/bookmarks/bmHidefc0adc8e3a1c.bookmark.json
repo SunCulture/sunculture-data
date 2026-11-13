@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – CCRP JSFs",
+  "name": "bmHidefc0adc8e3a1c",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp0dc0d141",
+      "351d5c4d86aec9589b40",
+      "3cac44a4671a663a3abf",
+      "4372ff0c8b49e1c70843",
+      "567524b235083a9a919a",
+      "c118f7b9a8492c35c12a",
+      "cbeb28710e921c54d135",
+      "paneBg0dc0d141",
+      "paneClear0dc0d141",
+      "paneHide0dc0d141"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "ReportSectiondf5c7db3921a0dc0d141",
+    "sections": {
+      "ReportSectiondf5c7db3921a0dc0d141": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp0dc0d141": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

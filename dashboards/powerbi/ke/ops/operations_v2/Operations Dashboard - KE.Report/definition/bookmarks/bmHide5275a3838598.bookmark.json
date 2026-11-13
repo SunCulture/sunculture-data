@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – Testing & Repairs Aftersale Tickets",
+  "name": "bmHide5275a3838598",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "grp72f700b7ba011d",
+      "3f74dc17166af3d565da",
+      "0bd4bbc3dda0f6672ed3",
+      "661ecd4655d4276a8ca2",
+      "c99913534a766066dd45",
+      "6fc876fb186e808b9451",
+      "989df758faf296ffdcb7",
+      "148fd2f2c3f84fe9d922",
+      "61ac205889b0ecb13050",
+      "as00refurbslicer001",
+      "d198cb65e3f5ab471eee",
+      "f357a5eac4a934ce55c3",
+      "ved55626d9b1d536",
+      "v2c29d69f82a27dc",
+      "v884226afceb11ee"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "f1149976e8b782d332a4",
+    "sections": {
+      "f1149976e8b782d332a4": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "grp72f700b7ba011d": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – All Aftersale Tickets",
+  "name": "bmHide1afceb22c1c0",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "grpa0f1fb9c470ad0",
+      "5510d1becc11c794a903",
+      "84e6f8cb172136ce629e",
+      "2a331df4b50380904842",
+      "71e1adb242d080b06277",
+      "f89e6f2e7da66d8de80d",
+      "072df8ba983905014904",
+      "65436ea0280a6e0a22d5",
+      "b2c74b64d0470ea29000",
+      "0b068f7a75401e043392",
+      "541a0fdb75b477b19a24",
+      "e467a93134c2722a8023",
+      "v79cc3958697f8c2",
+      "v8a44c3fc5206de6",
+      "v7588b938cb476da"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "3cdad90195a0ecc85d80",
+    "sections": {
+      "3cdad90195a0ecc85d80": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "grpa0f1fb9c470ad0": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

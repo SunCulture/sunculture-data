@@ -1,0 +1,179 @@
+table calendar
+	lineageTag: 4e7aa6d2-5eeb-46a3-980f-24ac8b90ad54
+
+	column Date
+		formatString: General Date
+		lineageTag: 31dc7e63-aa55-4440-ac04-d93bad87148b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		lineageTag: c56d6a19-f1a9-4bba-9a2e-8a7cab9d9e76
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		formatString: 0
+		lineageTag: f5d357c9-2eb8-4360-8ed7-5144a412160f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 7be219fb-7a12-4dc9-90cb-a8e3e4878fe7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 4e95996b-91e7-4ad9-a7e2-7cec81ca5203
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekdayNo
+		formatString: 0
+		lineageTag: 8d84d130-c461-482e-b30b-7920c904c6ed
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WeekdayNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday
+		lineageTag: dd6d806b-1e4c-4800-bfdc-7160a62bcd19
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Weekday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNo
+		formatString: 0
+		lineageTag: ad26e1ad-d290-4b60-aead-9b921426e6c6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WeekNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week
+		lineageTag: ebc5dc39-0a99-49a0-a871-3710cad77074
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		lineageTag: 080068f9-e369-486b-81d2-2048598b4592
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthYear]
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndofMonth
+		formatString: General Date
+		lineageTag: 8c7ba92a-8347-4789-8e87-56b237a1085c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [EndofMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartofMonth
+		formatString: General Date
+		lineageTag: c549ccbe-e323-4095-917b-34b7119875d3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [StartofMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		lineageTag: b9fa72c4-a606-4f13-98df-8699397fd11f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YearMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearWeekNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 455f33dd-3348-41d7-b685-3d458b59348d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [YearWeekNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekInMonth
+		lineageTag: 04eb43f5-21e7-4248-ac97-55cdbe5cd0bf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekInMonth]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekInMonth2
+		lineageTag: 34e8c4a0-2b3a-42cf-b1ab-7c63a2f54c12
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekInMonth2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthIndex =
+			
+			YEAR('Calendar'[Date]) * 100 + MONTH('Calendar'[Date])
+		formatString: 0
+		lineageTag: 19552158-14c9-4568-adb6-50e385d420dd
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthCode =
+			
+			FORMAT('Calendar'[Date],"yyyy") & "/" &
+			FORMAT(MONTH('Calendar'[Date]),"000")
+		lineageTag: 936a3caf-37a1-48eb-96e5-bb8f7b27ab92
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition calendar-10b39411-3c31-40ec-a73f-902c789dc6c7 = calculated
+		mode: import
+		source = ```
+				ADDCOLUMNS (CALENDAR("2016-1-1",TODAY()),
+				    "Year", FORMAT([Date], "yyyy"), 
+				    "MonthNo", MONTH([Date]), 
+				    "Month", FORMAT([Date],"MMM"),
+				    "Quarter", FORMAT([Date],"\QQ"),
+				    "MonthYear", FORMAT([Date],"MMM-YYYY"), 
+				    "YearMonth", FORMAT([Date],"YYYYMM"), 
+				    "WeekdayNo", WEEKDAY([Date],2), //1-Sun..Sat, 2-Mon..Sat
+				    "Weekday", FORMAT([Date],"ddd"), 
+				    "WeekNo", WEEKNUM([Date], 2),
+				    "Week", "Week " & WEEKNUM([Date], 2),
+				    "WeekInMonth","W" &ROUNDUP(DIVIDE(DAY([Date]), 7), 0),
+				    "WeekInMonth2","W"&  WEEKNUM ([Date]-1)-WEEKNUM(EOMONTH([Date],-1)+1),
+				    "YearWeekNo",FORMAT([Date],"YYYY")&""&WEEKNUM([Date], 2),
+				"StartofMonth",EOMONTH([Date],-1)+1,
+				"EndofMonth",EOMONTH([Date],0))
+				```
+
