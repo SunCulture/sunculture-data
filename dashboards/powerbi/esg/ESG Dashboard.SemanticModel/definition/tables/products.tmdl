@@ -1,118 +1,11 @@
 table products
 	lineageTag: d6bc2893-bf45-47fd-9ed7-74e901af51c7
 
-	column alias
-		dataType: string
-		lineageTag: 55003b86-c1d4-4bb3-a259-ae655476a23e
-		summarizeBy: none
-		sourceColumn: alias
-
-		annotation SummarizationSetBy = Automatic
-
-	column createdAt
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: d873e424-7c52-4cb3-ab98-6d3396134826
-		summarizeBy: none
-		sourceColumn: createdAt
-
-		annotation SummarizationSetBy = Automatic
-
-	column createdBy
-		dataType: string
-		lineageTag: c16785ff-75bd-48e3-b3bc-3274e4e49156
-		summarizeBy: none
-		sourceColumn: createdBy
-
-		annotation SummarizationSetBy = Automatic
-
-	column description
-		dataType: string
-		lineageTag: df0b071e-8702-4643-8f67-0b63ede67cc1
-		summarizeBy: none
-		sourceColumn: description
-
-		annotation SummarizationSetBy = Automatic
-
-	column externalRef
-		dataType: string
-		lineageTag: 3aa514a8-cbb3-48e1-b795-5cf4001424a0
-		summarizeBy: none
-		sourceColumn: externalRef
-
-		annotation SummarizationSetBy = Automatic
-
-	column metadata
-		dataType: string
-		lineageTag: 3b8210fd-2d05-41de-b9fc-bcc0f4a0cd73
-		summarizeBy: none
-		sourceColumn: metadata
-
-		annotation SummarizationSetBy = Automatic
-
 	column name
 		dataType: string
 		lineageTag: f0b374db-483f-4155-9530-32c5bdd2225f
 		summarizeBy: none
 		sourceColumn: name
-
-		annotation SummarizationSetBy = Automatic
-
-	column premium
-		dataType: string
-		lineageTag: 58f4cbe2-ca2f-41b4-a5b1-0fd93c658513
-		summarizeBy: none
-		sourceColumn: premium
-
-		annotation SummarizationSetBy = Automatic
-
-	column productImage
-		dataType: string
-		lineageTag: a245c5bb-057e-4960-9b38-5bc8660a72d8
-		summarizeBy: none
-		sourceColumn: productImage
-
-		annotation SummarizationSetBy = Automatic
-
-	column productUrl
-		dataType: string
-		lineageTag: 64850e88-bfa6-45e8-a572-4b651aec641b
-		summarizeBy: none
-		sourceColumn: productUrl
-
-		annotation SummarizationSetBy = Automatic
-
-	column status
-		dataType: string
-		lineageTag: a13c3fe2-f17a-42c0-8658-6a7673c62169
-		summarizeBy: none
-		sourceColumn: status
-
-		annotation SummarizationSetBy = Automatic
-
-	column sync_at
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 338d5e5d-aa84-4c70-9df8-fd28be5ce746
-		summarizeBy: none
-		sourceColumn: sync_at
-
-		annotation SummarizationSetBy = Automatic
-
-	column updatedAt
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: bbdf98ff-eab2-4cbb-9f58-ec41ba5f1e44
-		summarizeBy: none
-		sourceColumn: updatedAt
-
-		annotation SummarizationSetBy = Automatic
-
-	column updatedBy
-		dataType: string
-		lineageTag: 7c5a04fa-248a-45ad-b871-a8e7689e588d
-		summarizeBy: none
-		sourceColumn: updatedBy
 
 		annotation SummarizationSetBy = Automatic
 
@@ -124,23 +17,6 @@ table products
 
 		annotation SummarizationSetBy = Automatic
 
-	column providerId
-		dataType: string
-		lineageTag: 7a2b9c40-1d3e-4f56-8a7b-c9d0e1f2a3b4
-		summarizeBy: none
-		sourceColumn: providerId
-
-		annotation SummarizationSetBy = Automatic
-
-	column companyRegionId
-		dataType: int64
-		formatString: 0
-		lineageTag: 3f4ba625-942e-4602-9e29-30f4fffb8e00
-		summarizeBy: count
-		sourceColumn: companyRegionId
-
-		annotation SummarizationSetBy = Automatic
-
 	partition products = m
 		mode: import
 		source =
@@ -149,7 +25,9 @@ table products
 				    Workspaces = Source{[Id="Workspaces"]}[Data],
 				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
 				    #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"]}[Data],
-				    products_ = #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"{[entity="products",version=""]}[Data]
+				    products_ = #"ad0b1dd8-fab7-4e5e-8bd5-a380f89cf63d"{[entity="products",version=""]}[Data],
+				    // Only the columns the ESG dashboard uses (the full view is 100+ columns, incl. photos and personal data)
+				    #"Kept Columns" = Table.SelectColumns ( products_, {"name", "id"}, MissingField.Ignore )
 				in
-				    products_
+				    #"Kept Columns"
 
