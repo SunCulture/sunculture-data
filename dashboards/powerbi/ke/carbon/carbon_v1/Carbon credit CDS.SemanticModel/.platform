@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Carbon credit CDS"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1869789c-55d5-4904-aba8-cb3534a1f1f6"
+  }
+}

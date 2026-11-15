@@ -1,0 +1,130 @@
+/// Raw dataflow landing. Kept for data-quality checks; the reporting tables read the dataflow directly.
+table carbon_training_log
+	isHidden
+	lineageTag: 1a6011a5-64c3-4976-9dbc-a2b12a51193c
+
+	column 'Department / Team'
+		dataType: string
+		lineageTag: 43246ff7-a54f-4ba1-ae9b-08c85bdc88fb
+		summarizeBy: none
+		sourceColumn: Department / Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: d170a0be-617b-4e03-bbe2-f1229aa0257c
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: string
+		lineageTag: e8bc4493-63c3-4e5d-bc7d-876410287e62
+		summarizeBy: none
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KE Carbon Ambassador'
+		dataType: string
+		lineageTag: c1b58143-c814-4f82-9f0b-a6788b649c16
+		summarizeBy: none
+		sourceColumn: KE Carbon Ambassador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes/Details
+		dataType: string
+		lineageTag: 456d9f72-8b5e-4032-833e-3b1927acb824
+		summarizeBy: none
+		sourceColumn: Notes/Details
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 374647d9-d4af-4add-b083-0199596b61aa
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Type'
+		dataType: string
+		lineageTag: 6f1a882f-6b0b-4abb-b4ab-e111c0b74b06
+		summarizeBy: none
+		sourceColumn: Session Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: d28807c0-6d7e-4423-93d2-99ee58cb080a
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Lead'
+		dataType: string
+		lineageTag: 0b7f7969-3a9e-47a9-bf71-abcd3af2b1e0
+		summarizeBy: none
+		sourceColumn: Team Lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Date'
+		dataType: string
+		lineageTag: 33d40a34-a816-4a96-a345-9157d71f5d20
+		summarizeBy: none
+		sourceColumn: Training Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UG Carbon Ambassador'
+		dataType: string
+		lineageTag: 62759a07-65dd-4b05-87db-6971388e3d2c
+		summarizeBy: none
+		sourceColumn: UG Carbon Ambassador
+
+		annotation SummarizationSetBy = Automatic
+
+	column _loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3dada6df-b23d-472a-8820-e728b68d5506
+		summarizeBy: none
+		sourceColumn: _loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column _sheet
+		dataType: string
+		lineageTag: 4f7ea993-e9be-47be-b8d6-fa4e77749a37
+		summarizeBy: none
+		sourceColumn: _sheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column _source_file
+		dataType: string
+		lineageTag: ec638c24-51a7-4440-a7e2-e8f4eabcc1bd
+		summarizeBy: none
+		sourceColumn: _source_file
+
+		annotation SummarizationSetBy = Automatic
+
+	partition carbon_training_log = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"46a03dfe-0b06-48be-be37-f1e9e748d922" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    carbon_training_log_ = #"46a03dfe-0b06-48be-be37-f1e9e748d922"{[entity="carbon_training_log",version=""]}[Data]
+				in
+				    carbon_training_log_
+

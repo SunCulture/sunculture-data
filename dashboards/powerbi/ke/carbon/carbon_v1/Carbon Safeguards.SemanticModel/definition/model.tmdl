@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+annotation PBI_QueryOrder = ["County_Lookup","LSC_Events","LSC_Issues","LSC_Savings","Training_Teams","Ambassadors","carbon_lsc_consultation_matrix","carbon_training_log","Grievances"]
+
+ref table County_Lookup
+ref table LSC_Events
+ref table LSC_Issues
+ref table LSC_Savings
+ref table Training_Teams
+ref table Ambassadors
+ref table _Measures
+ref table carbon_lsc_consultation_matrix
+ref table carbon_training_log
+ref table Grievances
+
+ref cultureInfo en-US
+

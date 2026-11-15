@@ -1,0 +1,189 @@
+table _Measures
+	lineageTag: 5523831b-8146-4d47-8058-9b2c9381cab5
+
+	/// Count of local stakeholder consultation events.
+	measure 'Consultations Held' = COUNTROWS(LSC_Events)
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 7aa5965d-1362-454c-b9e6-c78d8bac95f3
+
+	measure 'Total Participants' = SUM(LSC_Events[Total])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 1420717f-e73b-4379-9245-137cd235f3b1
+
+	measure 'Male Participants' = SUM(LSC_Events[Male])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: ff32a966-ed0d-4dfd-a851-211e2ecd90d9
+
+	measure 'Female Participants' = SUM(LSC_Events[Female])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 3696eaaf-86c8-4c91-b5de-4d0057867c93
+
+	measure 'Female %' = DIVIDE([Female Participants], [Total Participants])
+		formatString: 0.0%
+		displayFolder: LSC
+		lineageTag: 8375b854-551a-4559-9ced-549c899d5bee
+
+	measure 'Avg Attendance' = DIVIDE([Total Participants], [Consultations Held])
+		formatString: #,0.0
+		displayFolder: LSC
+		lineageTag: f9f8a23b-84bd-4dec-8497-473ad3a856e7
+
+	measure 'Counties Reached' = DISTINCTCOUNT(LSC_Events[County (map key)])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 98ef9a15-ba62-4f9f-b4c3-0bd3cb4718bc
+
+	/// All 47 Kenyan counties. ALLNOBLANKROW excludes the engine's phantom blank row.
+	measure 'Counties Total' = COUNTROWS(ALLNOBLANKROW(County_Lookup))
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: e8d5216c-c95b-4d61-b642-6d30e1a24be5
+
+	measure 'Counties Not Reached' = [Counties Total] - [Counties Reached]
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 55bfe119-3f2b-4d90-8323-e97f1f3be302
+
+	measure 'County Coverage %' = DIVIDE([Counties Reached], [Counties Total])
+		formatString: 0.0%
+		displayFolder: LSC
+		lineageTag: 0672c09f-e4b3-4049-93e2-781339575142
+
+	measure 'LSC Rounds' = DISTINCTCOUNT(LSC_Events[Round #])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: bf08c86d-16b0-4ba0-9d29-1d10eb67c5f5
+
+	measure 'Issues Logged' = COALESCE(COUNTROWS(LSC_Issues), 0)
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: dbe0bb3e-1556-4aa1-a67d-628a63024304
+
+	/// Number of distinct consultations that raised the theme in context. Use this, not a row count, when comparing themes.
+	measure 'Sites Raising Issue' = DISTINCTCOUNT(LSC_Issues[Event ID])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 89bd1ac5-841d-4454-bc83-ce910ec10819
+
+	measure 'Themes Raised' = DISTINCTCOUNT(LSC_Issues[Theme])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: a56abfb3-e88a-4b46-bcea-f26a8dff1fc7
+
+	measure 'Teams Total' = COUNTROWS(Training_Teams)
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 8677f347-abba-4acc-828f-789a9a04b089
+
+	measure 'Teams Completed' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Completed") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: c7b3ca9b-8d87-4c97-8e4b-f68db5697e32
+
+	measure 'Teams Pending' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Pending") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 58672eb8-e3aa-49f4-991f-17ad0bf6b439
+
+	measure 'Teams Not Started' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Not started") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 29ea0bf9-7f90-47ee-99f6-aec2057f7c91
+
+	measure 'Training Completion %' = DIVIDE([Teams Completed], [Teams Total])
+		formatString: 0%;-0%;0%
+		displayFolder: Training
+		lineageTag: 34e7a2f0-27f4-4d41-a105-59355e34908b
+
+	measure 'Divisions Covered' = DISTINCTCOUNT(Training_Teams[Divisions])
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: da9d23f7-2968-4384-b62a-4a4895c2f06e
+
+	measure 'Teams Remaining' = [Teams Total] - [Teams Completed]
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 2a4fc47d-bba1-493d-856b-ebf144aa5ffe
+
+	measure 'Ambassadors Onboarded' = COALESCE(COUNTROWS(Ambassadors), 0)
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: b07720b3-817c-4946-8bba-6cd242a57dea
+
+	measure 'KE Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Kenya") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 175c029b-ade3-4087-9644-80c446302a1b
+
+	measure 'UG Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Uganda") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 4253a4d0-b32a-4715-9831-38c4cddc3f6c
+
+	measure 'Teams with Ambassador' = CALCULATE(COUNTROWS(Training_Teams), NOT ISBLANK(Training_Teams[KE Carbon Ambassador])) + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 91df3d63-791f-4226-8262-6ab91ad06db9
+
+	measure 'Total Cases' = COALESCE(COUNTROWS(Grievances), 0)
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 73a3c042-db64-4d07-a8ff-bc7f015c63ea
+
+	measure 'Cases Within SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Within SLA") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: a90b9ef1-af8d-43bb-94e7-938f5ccbed7e
+
+	measure 'Cases Outside SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Outside SLA") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 40a0ead6-c780-448e-b0a4-0b97eabae3d8
+
+	measure 'Open Cases' = CALCULATE(COUNTROWS(Grievances), Grievances[Status] <> "Closed") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 9cbad88c-0147-4958-8fe8-e2edd41bd384
+
+	measure 'Average TAT (Days)' = AVERAGE(Grievances[TAT (Days)])
+		formatString: #,0.0
+		displayFolder: Grievances
+		lineageTag: ba504c83-33d2-4f33-96d1-c04b60f7dee3
+
+	measure 'SLA Compliance %' = DIVIDE([Cases Within SLA], [Total Cases])
+		formatString: 0.0%
+		displayFolder: Grievances
+		lineageTag: 3c06739b-ac60-499c-ac9f-aa5480098e64
+
+	/// Font colour for training status (used for conditional formatting in tables).
+	measure 'Status Colour' =
+			SWITCH(
+			    SELECTEDVALUE( Training_Teams[Status] ),
+			    "Completed", "#1B7F5B",
+			    "Pending", "#B7791F",
+			    "Not started", "#C0392B",
+			    "#5F716B"
+			)
+		displayFolder: Formatting
+		lineageTag: c732e8b2-fb27-4a1d-ac7b-de7f5a946fab
+
+	/// Timestamp of the latest data load, shown in the report header.
+	measure 'Last Refreshed' =
+			VAR d = CALCULATE( MAX( carbon_training_log[_loaded_at] ), REMOVEFILTERS() )
+			RETURN IF( ISBLANK( d ), "—", FORMAT( d, "dd mmm yyyy, HH:mm" ) )
+		displayFolder: Formatting
+		lineageTag: 25930b3c-9e91-4c09-a5bc-a1d0c6790b13
+
+	column _
+		lineageTag: 37b54d75-53ba-4f69-8fe9-215634311b72
+		isNameInferred
+		sourceColumn: [_]
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW("_", BLANK())
+

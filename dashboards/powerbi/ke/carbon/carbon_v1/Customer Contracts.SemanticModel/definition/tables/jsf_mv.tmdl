@@ -1,0 +1,424 @@
+table jsf_mv
+	lineageTag: 11d2b71e-8b71-4b73-9f83-3e119ec01851
+
+	column accommodation_cost
+		dataType: string
+		lineageTag: fd7039ba-0fb5-42aa-b988-612dac8b9112
+		summarizeBy: none
+		sourceColumn: accommodation_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: de10fc34-5b09-4b2d-a39b-b141b3d59c71
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column assignment_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a61a9f07-e4d9-4e91-bafe-1a9bfd2ee308
+		summarizeBy: none
+		sourceColumn: assignment_date
+
+		variation Variation
+			isDefault
+			relationship: ca94de95-d50f-4811-a23f-5e4d9441906e
+			defaultHierarchy: LocalDateTable_dd7ad6de-8355-4cdf-a7ad-4d40a33b1df5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column casual_pay
+		dataType: string
+		lineageTag: a3ea7fa8-6155-4587-a5d6-d336e0a3e557
+		summarizeBy: none
+		sourceColumn: casual_pay
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: d27c9936-6be9-4c91-8756-94cf09c1ff44
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column costings
+		dataType: string
+		lineageTag: 2569cd46-b409-4ab5-8743-f6c80d514307
+		summarizeBy: none
+		sourceColumn: costings
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 39618db8-d594-4864-af1d-a82406a364c1
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Variation
+			isDefault
+			relationship: 539416c4-6428-4c62-ae5a-7fd423b68ea8
+			defaultHierarchy: LocalDateTable_5aa3d56a-389e-402f-a45d-6bb07f44fde9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column created_by
+		dataType: string
+		lineageTag: ed9e9586-4448-4998-8dc4-dec27fe67b8e
+		summarizeBy: none
+		sourceColumn: created_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6cb32cab-1108-4394-adf9-345d3d6e4053
+		summarizeBy: none
+		sourceColumn: customer_preferred_date
+
+		variation Variation
+			isDefault
+			relationship: 15d303df-3a1d-4f4f-97a9-00fcdbc3aeb2
+			defaultHierarchy: LocalDateTable_920312a5-c659-4ab3-82b7-4a5c30ca7c80.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column customer_preferred_schedule_type
+		dataType: string
+		lineageTag: ece28163-6dfe-421e-8d41-a5d72c203519
+		summarizeBy: none
+		sourceColumn: customer_preferred_schedule_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_preferred_status
+		dataType: string
+		lineageTag: fa0606ca-f0c0-4747-bf61-5e43df44671a
+		summarizeBy: none
+		sourceColumn: customer_preferred_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column engineer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b761463a-3c0e-4b09-8a72-300f17a4b619
+		summarizeBy: sum
+		sourceColumn: engineer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column engineer_recommendation
+		dataType: string
+		lineageTag: 65147522-4cf9-439a-8254-2a24b6866a0a
+		summarizeBy: none
+		sourceColumn: engineer_recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_signed_carbon_form
+		dataType: string
+		lineageTag: f1308a2a-b234-4f9c-a9f3-fa3d2568bb83
+		summarizeBy: none
+		sourceColumn: has_signed_carbon_form
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: string
+		lineageTag: e599de90-5ce0-4f2b-8cd4-6c7cf17804d5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column installation_id
+		dataType: string
+		lineageTag: 8e0b9600-19a5-4461-8063-661163e020c9
+		summarizeBy: none
+		sourceColumn: installation_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_completed_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a6f190f5-2bbc-41a0-9555-af0271516ab3
+		summarizeBy: none
+		sourceColumn: jsf_completed_date
+
+		variation Variation
+			isDefault
+			relationship: b85d9fb2-7b32-4763-953e-eac3c559aa8b
+			defaultHierarchy: LocalDateTable_7cc4c25f-251d-4d4f-bfa2-6a4b415f530e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column jsf_date
+		dataType: dateTime
+		formatString: m/d/yyyy
+		lineageTag: 5cb79214-0e2e-4ec6-bf9c-ac52be793544
+		summarizeBy: none
+		sourceColumn: jsf_date
+
+		variation Variation
+			isDefault
+			relationship: dad37b21-1849-4e3b-b19e-81ba2c79aba9
+			defaultHierarchy: LocalDateTable_73a65c48-039f-4774-a359-d56e062582f9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column jsf_engineer
+		dataType: string
+		lineageTag: e4997c39-1ea0-4d82-991a-f859238c3250
+		summarizeBy: none
+		sourceColumn: jsf_engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_id
+		dataType: string
+		lineageTag: 51c17769-3240-4d3c-b547-75530f72c488
+		summarizeBy: none
+		sourceColumn: jsf_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_status
+		dataType: string
+		lineageTag: dfba9928-2c8b-4577-93a2-180e28148248
+		summarizeBy: none
+		sourceColumn: jsf_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_type
+		dataType: string
+		lineageTag: 8ec6bf3a-1849-44bf-86aa-21c33b4829ac
+		summarizeBy: none
+		sourceColumn: jsf_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column meal_costings
+		dataType: string
+		lineageTag: 632db438-7cea-4e3b-8636-fd8cb8300167
+		summarizeBy: none
+		sourceColumn: meal_costings
+
+		annotation SummarizationSetBy = Automatic
+
+	column outcome_reason
+		dataType: string
+		lineageTag: 0d54213e-54b9-4a00-b651-036a3c5d23ac
+		summarizeBy: none
+		sourceColumn: outcome_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract
+		dataType: string
+		lineageTag: c868b154-54ac-4257-af28-581b368b6fa1
+		summarizeBy: none
+		sourceColumn: payg_contract
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract1
+		dataType: string
+		lineageTag: 7e89ab6a-cf30-47db-ba1b-fcc17a10f304
+		summarizeBy: none
+		sourceColumn: payg_contract1
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract2
+		dataType: string
+		lineageTag: a54939ba-159b-475f-a832-84b024866f35
+		summarizeBy: none
+		sourceColumn: payg_contract2
+
+		annotation SummarizationSetBy = Automatic
+
+	column payg_contract3
+		dataType: string
+		lineageTag: ece5a7f5-d6e1-4af7-b62d-d80f080ccd65
+		summarizeBy: none
+		sourceColumn: payg_contract3
+
+		annotation SummarizationSetBy = Automatic
+
+	column rm_2_device_id
+		dataType: string
+		lineageTag: 40cf6d27-a9a1-479d-aa45-75b878931188
+		summarizeBy: none
+		sourceColumn: rm_2_device_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_by
+		dataType: string
+		lineageTag: 1700dace-81a0-416c-8f25-0db76d9e69bb
+		summarizeBy: none
+		sourceColumn: scheduled_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_comment
+		dataType: string
+		lineageTag: cea5a3b7-9ad5-41d6-b1e5-7ad903f797c9
+		summarizeBy: none
+		sourceColumn: ticket_comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_number
+		dataType: string
+		lineageTag: 4600f502-2eb2-4569-a73f-060ff01263c3
+		summarizeBy: none
+		sourceColumn: ticket_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column transport_costs
+		dataType: string
+		lineageTag: 0d76ec9e-b47a-4fdd-8064-ec8a862e569f
+		summarizeBy: none
+		sourceColumn: transport_costs
+
+		annotation SummarizationSetBy = Automatic
+
+	column warranty_card_pic
+		dataType: string
+		lineageTag: d08eaead-64f7-4c9c-bc47-2583237a2d1c
+		summarizeBy: none
+		sourceColumn: warranty_card_pic
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'y.updated_at'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 428bbc1e-267a-4aff-ac79-2f38b46b2271
+		summarizeBy: none
+		sourceColumn: y.updated_at
+
+		variation Variation
+			isDefault
+			relationship: db80a566-f82c-44ea-994e-3cb584ca39bc
+			defaultHierarchy: LocalDateTable_2a4eef3b-b764-4e05-b0bd-d4fb9d3e9615.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_date_clean = DATE(YEAR(jsf_mv[jsf_date]), MONTH(jsf_mv[jsf_date]), DAY(jsf_mv[jsf_date]))
+		formatString: General Date
+		lineageTag: f102dc7c-999a-466b-97a8-32b009c7214f
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 7a853935-378a-4525-a8fa-6cfcfbe61bbd
+			defaultHierarchy: LocalDateTable_7e3defbd-8f88-4612-a515-8501e9283fdc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Latest Installation Flag' =
+			VAR myDev = RELATED ( accounts_mv[deviceId] )
+			VAR myAcc = jsf_mv[account_id]
+			VAR myDate = jsf_mv[jsf_date]
+			VAR myCompleted = jsf_mv[jsf_completed_date]
+			VAR myId = jsf_mv[jsf_id]
+			RETURN
+			IF (
+			    jsf_mv[jsf_type] <> "INSTALLATION",
+			    1,
+			    VAR maxDate =
+			        IF (
+			            ISBLANK ( myDev ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", jsf_mv[account_id] = myAcc ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", accounts_mv[deviceId] = myDev )
+			        )
+			    VAR maxCompleted =
+			        IF (
+			            ISBLANK ( myDev ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_completed_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", jsf_mv[account_id] = myAcc, jsf_mv[jsf_date] = maxDate ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_completed_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", accounts_mv[deviceId] = myDev, jsf_mv[jsf_date] = maxDate )
+			        )
+			    VAR maxId =
+			        IF (
+			            ISBLANK ( myDev ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_id] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", jsf_mv[account_id] = myAcc, jsf_mv[jsf_date] = maxDate, jsf_mv[jsf_completed_date] = maxCompleted ),
+			            CALCULATE ( MAX ( jsf_mv[jsf_id] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[jsf_type] = "INSTALLATION", accounts_mv[deviceId] = myDev, jsf_mv[jsf_date] = maxDate, jsf_mv[jsf_completed_date] = maxCompleted )
+			        )
+			    RETURN
+			        IF ( myDate = maxDate && myCompleted = maxCompleted && myId = maxId, 1, 0 )
+			)
+		dataType: int64
+		lineageTag: 9a5ecdd4-2b80-4e52-b034-f0596a3cec57
+		summarizeBy: none
+
+	column assigned_by_name
+		dataType: string
+		lineageTag: 0201f9e7-c014-48d3-8c14-19d5d6926b87
+		summarizeBy: none
+		sourceColumn: assigned_by_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Contract' =
+			IF(
+			    NOT ISBLANK( RELATED( accounts_mv[accountType] ) )
+			        && RELATED( accounts_mv[accountType] ) <> "ADDON"
+			        && RELATED( accounts_mv[companyRegion] ) = "kenya"
+			        && RELATED( accounts_mv[deviceId] ) <> ""
+			        && RELATED( accounts_mv[engineer_recommendation] ) = "Installed"
+			        && NOT ISBLANK( RELATED( accounts_mv[jsfDate] ) )
+			        && jsf_mv[jsf_status] = "COMPLETED"
+			        && jsf_mv[jsf_type] = "INSTALLATION"
+			        && jsf_mv[Latest Installation Flag] = 1,
+			    1,
+			    0
+			)
+		dataType: int64
+		formatString: 0
+		lineageTag: df8e324a-f5e3-4fea-906f-5a62cebb4c58
+		summarizeBy: none
+
+	partition jsf_mv = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="5f59e9d3-ee70-4895-ab17-9c36a0f94aea"]}[Data],
+				    jsf_mv_ = #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea"{[entity="jsf_mv",version=""]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(jsf_mv_,{{"jsf_date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

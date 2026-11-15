@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Carbon Safeguards"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2a059b09-c06e-4abc-b537-566249c77bd7"
+  }
+}

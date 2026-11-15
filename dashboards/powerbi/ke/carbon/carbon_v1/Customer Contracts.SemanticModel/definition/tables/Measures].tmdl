@@ -1,0 +1,199 @@
+table Measures]
+	lineageTag: 2d21d484-5680-4f18-b099-891540baf97d
+
+	measure '# Contracts' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT( jsf_mv[account_id] ),
+			    NOT ISBLANK( accounts_mv[jsfDate] ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[accountType] ) ),
+			    KEEPFILTERS( accounts_mv[accountType] <> "ADDON" ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( accounts_mv[deviceId] <> "" ),
+			    KEEPFILTERS( accounts_mv[engineer_recommendation] = "Installed" ),
+			    KEEPFILTERS( jsf_mv[jsf_status] = "COMPLETED" ),
+			    KEEPFILTERS( jsf_mv[jsf_type] = "INSTALLATION" ),
+			    KEEPFILTERS( jsf_mv[Latest Installation Flag] = 1 ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: #,0
+		lineageTag: b4582f4e-93ed-4eb4-892d-680c506f6f87
+
+	measure Installations =
+			
+			CALCULATE(
+			    DISTINCTCOUNT( jsf_mv[account_id] ),
+			    NOT ISBLANK( accounts_mv[jsfDate] ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[accountType] ) ),
+			    KEEPFILTERS( accounts_mv[accountType] <> "ADDON" ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( accounts_mv[deviceId] <> "" ),
+			    KEEPFILTERS( accounts_mv[engineer_recommendation] = "Installed" ),
+			    KEEPFILTERS( jsf_mv[jsf_status] = "COMPLETED" ),
+			    KEEPFILTERS( jsf_mv[jsf_type] = "INSTALLATION" ),
+			    KEEPFILTERS( jsf_mv[Latest Installation Flag] = 1 ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: #,0
+		lineageTag: 9e9b9eb9-c82c-48ce-8377-ae94b44b9da5
+
+	measure 'Submission Rate' = DIVIDE( [Submitted], [Installations] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b6f3e669-bb70-4291-a0ff-93527046fd83
+
+	measure Submitted =
+			
+			CALCULATE(
+			    [Installations],
+			    KEEPFILTERS( payg_cystomer_contracts[Received] = "Yes" ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: #,0
+		lineageTag: 272339b1-4a10-429d-a34d-3bc857435de5
+
+	measure 'Carbon Forms Signed' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT( jsf_mv[account_id] ),
+			    NOT ISBLANK( accounts_mv[jsfDate] ),
+			    KEEPFILTERS( jsf_mv[has_signed_carbon_form] = "1" ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[accountType] ) ),
+			    KEEPFILTERS( accounts_mv[accountType] <> "ADDON" ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( accounts_mv[deviceId] <> "" ),
+			    KEEPFILTERS( accounts_mv[engineer_recommendation] = "Installed" ),
+			    KEEPFILTERS( jsf_mv[jsf_status] = "COMPLETED" ),
+			    KEEPFILTERS( jsf_mv[jsf_type] = "INSTALLATION" ),
+			    KEEPFILTERS( jsf_mv[Latest Installation Flag] = 1 ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: 0
+		lineageTag: 89ebe412-f774-4371-97cd-432f3fc6aa98
+
+	measure 'Signing Rate' = DIVIDE([Carbon Forms Signed], [Installations])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 078722d8-f96e-4a2d-b7e3-cea730c14502
+
+	measure '# Sales (Sale Date)' =
+			
+			CALCULATE(
+			    SUM( accounts_mv[units] ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( NOT CONTAINSSTRING( accounts_mv[customer_name], "test" ) ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[sale_date] ) ),
+			    KEEPFILTERS( accounts_mv[status] <> "Refunded" ),
+			    REMOVEFILTERS( jsf_mv[jsf_status] ),
+			    REMOVEFILTERS( jsf_mv[jsf_type] ),
+			    REMOVEFILTERS( jsf_mv[Latest Installation Flag] ),
+			    REMOVEFILTERS( jsf_mv[Is Contract] ),
+			    USERELATIONSHIP( accounts_mv[sale_date_only], 'Calendar'[Date] )
+			)
+		formatString: #,0
+		lineageTag: 83809bfe-399e-4595-a2ab-4f43d7f49896
+
+	measure '# Sales (JSF Date)' =
+			
+			CALCULATE(
+			    SUM( accounts_mv[units] ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( NOT CONTAINSSTRING( accounts_mv[customer_name], "test" ) ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[sale_date] ) ),
+			    KEEPFILTERS( accounts_mv[status] <> "Refunded" ),
+			    REMOVEFILTERS( jsf_mv[jsf_status] ),
+			    REMOVEFILTERS( jsf_mv[jsf_type] ),
+			    REMOVEFILTERS( jsf_mv[Latest Installation Flag] ),
+			    REMOVEFILTERS( jsf_mv[Is Contract] ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: #,0
+		lineageTag: 28b6fea4-c6ca-4b7d-b27c-608aa6ed82ac
+
+	measure 'Submission Rate Colour' =
+			
+			-- Standard red / yellow / green scale
+			-- Red    #F8696B  rgb(248,105,107)
+			-- Yellow #FFEB84  rgb(255,235,132)
+			-- Green  #63BE7B  rgb(99,190,123)
+			VAR Lo  = 0.5      -- at or below this = full red
+			VAR Hi  = 0.95     -- at or above this = full green
+			VAR Val = [Submission Rate]
+			VAR P   = MIN( MAX( DIVIDE( Val - Lo, Hi - Lo ), 0 ), 1 )
+			VAR R   = IF( P <= 0.5, 248 + ( 255 - 248 ) * ( P / 0.5 ), 255 + (  99 - 255 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR G   = IF( P <= 0.5, 105 + ( 235 - 105 ) * ( P / 0.5 ), 235 + ( 190 - 235 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR B   = IF( P <= 0.5, 107 + ( 132 - 107 ) * ( P / 0.5 ), 132 + ( 123 - 132 ) * ( ( P - 0.5 ) / 0.5 ) )
+			RETURN
+			    IF(
+			        ISBLANK( Val ),
+			        BLANK(),
+			        "rgb(" & ROUND( R, 0 ) & "," & ROUND( G, 0 ) & "," & ROUND( B, 0 ) & ")"
+			    )
+		lineageTag: d3757ef1-d4e2-47c3-90a9-a82b9e7bf0c0
+
+	measure 'Signing Rate Colour' =
+			
+			-- Standard red / yellow / green scale
+			VAR Lo  = 0.5      -- at or below this = full red
+			VAR Hi  = 0.95     -- at or above this = full green
+			VAR Val = [Signing Rate]
+			VAR P   = MIN( MAX( DIVIDE( Val - Lo, Hi - Lo ), 0 ), 1 )
+			VAR R   = IF( P <= 0.5, 248 + ( 255 - 248 ) * ( P / 0.5 ), 255 + (  99 - 255 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR G   = IF( P <= 0.5, 105 + ( 235 - 105 ) * ( P / 0.5 ), 235 + ( 190 - 235 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR B   = IF( P <= 0.5, 107 + ( 132 - 107 ) * ( P / 0.5 ), 132 + ( 123 - 132 ) * ( ( P - 0.5 ) / 0.5 ) )
+			RETURN
+			    IF(
+			        ISBLANK( Val ),
+			        BLANK(),
+			        "rgb(" & ROUND( R, 0 ) & "," & ROUND( G, 0 ) & "," & ROUND( B, 0 ) & ")"
+			    )
+		lineageTag: 1dbbf654-0c4c-460d-b3ba-273c8436ba8c
+
+	/// Installed accounts whose signed contract has not yet been received.
+	measure 'Pending Contracts' = [Installations] - [Submitted]
+		formatString: #,0
+		lineageTag: 9f3c0eda-fb4b-4679-8b58-5e8315ef877a
+
+	/// Sequential month number used to keep the trend chart on the latest months that have activity.
+	measure 'Month Index' =
+			IF(
+			    NOT ISBLANK( [Installations] ) || NOT ISBLANK( [# Sales (Sale Date)] ),
+			    MAX( 'Calendar'[Year] ) * 12 + MAX( 'Calendar'[Month] )
+			)
+		formatString: 0
+		displayFolder: Formatting
+		lineageTag: 722621f3-d7f8-4b92-8acb-8d083fcfe112
+
+	/// Font colour for the contract-received flag in the customer table.
+	measure 'Contract Status Colour' =
+			SWITCH(
+			    SELECTEDVALUE( accounts_mv[Has Received Contract] ),
+			    "Yes", "#1B7F5B",
+			    "No", "#C0392B",
+			    "#5F716B"
+			)
+		displayFolder: Formatting
+		lineageTag: 353c088e-3ec1-4166-861b-c7cdffc9aec1
+
+	/// Latest contract sync timestamp shown in the report header.
+	measure 'Last Synced' =
+			VAR d = CALCULATE( MAX( payg_cystomer_contracts[synced_at] ), REMOVEFILTERS() )
+			RETURN IF( ISBLANK( d ), "—", FORMAT( d, "dd mmm yyyy, HH:mm" ) )
+		displayFolder: Formatting
+		lineageTag: ea5d4301-107d-4084-8cb6-f2d3ea5757e0
+
+	column Column
+		formatString: 0
+		lineageTag: 29c791c6-ab57-4fa4-8efa-1809911dfbbd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measures] = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 6ad76a3fbde247d9ab0be975d166585c
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

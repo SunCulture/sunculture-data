@@ -1,0 +1,68 @@
+table County_Lookup
+	lineageTag: 4647dbb5-fbab-4c69-b3d9-6c6e72119a64
+
+	column 'County (map key)'
+		dataType: string
+		lineageTag: 11a8a184-0ec5-4320-83ce-674b2a270d9c
+		summarizeBy: none
+		sourceColumn: County (map key)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 95a60462-8a30-4d18-bddf-963536d7a6c0
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coverage Status'
+		dataType: string
+		lineageTag: 1441c4fa-454e-4fd4-ac50-f4d10f594dc7
+		summarizeBy: none
+		sourceColumn: Coverage Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LSC Events'
+		dataType: int64
+		lineageTag: a0fa006c-cfb7-4c6c-ae49-9488e1fa96c6
+		summarizeBy: sum
+		sourceColumn: LSC Events
+
+		annotation SummarizationSetBy = Automatic
+
+	column Participants
+		dataType: int64
+		lineageTag: 18256589-ca34-4c77-9629-23cd07b60406
+		summarizeBy: sum
+		sourceColumn: Participants
+
+		annotation SummarizationSetBy = Automatic
+
+	partition County_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    WS = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    Flow = WS{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    Raw = Flow{[entity="carbon_lsc_consultation_matrix",version=""]}[Data],
+				    AliasMap = [#"Taita-Taveta"="Taita Taveta", #"Trans-Nzoia"="Trans Nzoia", #"Tharaka-Nithi"="Tharaka", #"Elgeyo-Marakwet"="Keiyo-Marakwet", #"Elgeyo Marakwet"="Keiyo-Marakwet", Muranga="Murang'a", Homabay="Homa Bay"],
+				    Rows = Table.SelectRows(Raw, each (try Number.From([#"#"]) otherwise null) <> null),
+				    Keyed = Table.AddColumn(Rows, "ck", each let cr = Text.Trim(Text.From([County])) in Record.FieldOrDefault(AliasMap, cr, cr)),
+				    Totd = Table.AddColumn(Keyed, "tt", each let ml = try Number.From([Male]) otherwise 0, fm = try Number.From([Female]) otherwise 0 in try Number.From([Total]) otherwise ml + fm),
+				    Agg = Table.Group(Totd, {"ck"}, {{"ev", each Table.RowCount(_), Int64.Type}, {"pp", each List.Sum([tt]), type number}}),
+				    Counties = #table({"County (map key)","Region"}, {{"Baringo","Rift Valley"},{"Bomet","Rift Valley"},{"Bungoma","Western"},{"Busia","Western"},{"Embu","Eastern"},{"Garissa","North Eastern"},{"Homa Bay","Nyanza"},{"Isiolo","Eastern"},{"Kajiado","Rift Valley"},{"Kakamega","Western"},{"Keiyo-Marakwet","Rift Valley"},{"Kericho","Rift Valley"},{"Kiambu","Central"},{"Kilifi","Coast"},{"Kirinyaga","Central"},{"Kisii","Nyanza"},{"Kisumu","Nyanza"},{"Kitui","Eastern"},{"Kwale","Coast"},{"Laikipia","Rift Valley"},{"Lamu","Coast"},{"Machakos","Eastern"},{"Makueni","Eastern"},{"Mandera","North Eastern"},{"Marsabit","Eastern"},{"Meru","Eastern"},{"Migori","Nyanza"},{"Mombasa","Coast"},{"Murang'a","Central"},{"Nairobi","Nairobi"},{"Nakuru","Rift Valley"},{"Nandi","Rift Valley"},{"Narok","Rift Valley"},{"Nyamira","Nyanza"},{"Nyandarua","Central"},{"Nyeri","Central"},{"Samburu","Rift Valley"},{"Siaya","Nyanza"},{"Taita Taveta","Coast"},{"Tana River","Coast"},{"Tharaka","Eastern"},{"Trans Nzoia","Rift Valley"},{"Turkana","Rift Valley"},{"Uasin Gishu","Rift Valley"},{"Vihiga","Western"},{"Wajir","North Eastern"},{"West Pokot","Rift Valley"}}),
+				    J = Table.NestedJoin(Counties, {"County (map key)"}, Agg, {"ck"}, "a", JoinKind.LeftOuter),
+				    E = Table.ExpandTableColumn(J, "a", {"ev","pp"}),
+				    Cov = Table.AddColumn(E, "Coverage Status", each if [ev] = null then "Not yet consulted" else "Consulted"),
+				    Zero = Table.TransformColumns(Cov, {{"ev", each if _ = null then 0 else _}, {"pp", each if _ = null then 0 else _}}),
+				    Ren = Table.RenameColumns(Zero, {{"ev","LSC Events"},{"pp","Participants"}}),
+				    Sel = Table.SelectColumns(Ren, {"County (map key)","Region","Coverage Status","LSC Events","Participants"}),
+				    Typed = Table.TransformColumnTypes(Sel, {{"County (map key)",type text},{"Region",type text},{"Coverage Status",type text},{"LSC Events",Int64.Type},{"Participants",Int64.Type}})
+				in
+				    Typed
+
