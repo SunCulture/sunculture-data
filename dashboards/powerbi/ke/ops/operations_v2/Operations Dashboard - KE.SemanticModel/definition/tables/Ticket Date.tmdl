@@ -1,0 +1,52 @@
+/// Date table for SunDesk tickets. Active relationship on ticket creation date, inactive relationship on ticket closed date.
+table 'Ticket Date'
+	lineageTag: 5ba4693a-6743-471e-aff0-05f56167012a
+	dataCategory: Time
+
+	column Date
+		isUnique
+		lineageTag: e703051e-5920-4bbc-99a8-2f90f4c7ee8b
+		isNameInferred
+		sourceColumn: [Date]
+
+	column Year
+		lineageTag: eda84bd4-9215-4572-9ae2-aa3f780eeb00
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Month No'
+		lineageTag: 30d5a96c-beb2-4d19-8b68-0c1ddadc3307
+		isNameInferred
+		sourceColumn: [Month No]
+
+	column Month
+		lineageTag: 5f0d2155-ea46-460e-9e54-35208a3671ca
+		isNameInferred
+		sourceColumn: [Month]
+
+	column 'Month Key'
+		lineageTag: 9f1fd8ef-32bf-494c-9926-dd907aa5e5cf
+		isNameInferred
+		sourceColumn: [Month Key]
+
+	column 'Month Start'
+		lineageTag: 99da044d-cdda-4723-b9c8-6d3d8b0c5961
+		isNameInferred
+		sourceColumn: [Month Start]
+
+	partition 'Ticket Date' = calculated
+		mode: import
+		source =
+				VAR MinD = MINX ( 'Sundesk Tickets', 'Sundesk Tickets'[Created Date] )
+				VAR MaxD = MAXX ( 'Sundesk Tickets', MAX ( 'Sundesk Tickets'[Created Date], 'Sundesk Tickets'[Closed Date] ) )
+				VAR Base = CALENDAR ( DATE ( YEAR(MinD), MONTH(MinD), 1 ), EOMONTH ( MaxD, 0 ) )
+				RETURN
+				ADDCOLUMNS (
+				    Base,
+				    "Year", YEAR ( [Date] ),
+				    "Month No", MONTH ( [Date] ),
+				    "Month", FORMAT ( [Date], "mmm yyyy" ),
+				    "Month Key", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				    "Month Start", DATE ( YEAR([Date]), MONTH([Date]), 1 )
+				)
+

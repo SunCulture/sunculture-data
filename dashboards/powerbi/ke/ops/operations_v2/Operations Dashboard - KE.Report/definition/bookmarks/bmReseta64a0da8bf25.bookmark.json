@@ -1,0 +1,357 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – Product Failure Rate",
+  "name": "bmReseta64a0da8bf25",
+  "options": {
+    "targetVisualNames": [
+      "02dfd2538bba548dd409",
+      "1e0608446fdace436ded",
+      "1fffc0b91864f849e680",
+      "4d2e53e35a221237c6c3",
+      "ad0e06604aef3a29df12",
+      "d80608e544e45e35704e"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "as03failurerates0003",
+    "sections": {
+      "as03failurerates0003": {
+        "visualContainers": {
+          "02dfd2538bba548dd409": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "Product"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "abb9a6e0c1b2557d17e6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "Product"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "1e0608446fdace436ded": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Component"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "eec5a4657f3bc8bba9c4",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Component"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "1fffc0b91864f849e680": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Component Group"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f6c5062dcc4fd173485a",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Sundesk Tickets"
+                        }
+                      },
+                      "Property": "Component Group"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "4d2e53e35a221237c6c3": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "Build Type"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "15c9f7b3c6ba5a0b0928",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "Build Type"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "ad0e06604aef3a29df12": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "First Fault Band"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "05df937ec7b393ce2fc0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Unit Failures"
+                        }
+                      },
+                      "Property": "First Fault Band"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "d80608e544e45e35704e": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AS Calendar"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "08c1560098c9a8c7e354",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AS Calendar"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

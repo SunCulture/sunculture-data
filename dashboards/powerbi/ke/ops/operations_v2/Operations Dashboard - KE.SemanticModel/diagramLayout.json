@@ -1,0 +1,230 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 34672.857142857145,
+        "y": 330
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1027.5264624018723,
+            "y": 151.87293763318354
+          },
+          "nodeIndex": "calendar",
+          "nodeLineageTag": "4e7aa6d2-5eeb-46a3-980f-24ac8b90ad54",
+          "size": {
+            "height": 194,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 410.033497999952,
+            "y": 1098.1349874043967
+          },
+          "nodeIndex": "points",
+          "nodeLineageTag": "266a8c80-79d7-416a-a592-8d6cbaaf6278",
+          "size": {
+            "height": 337,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 14368.8,
+            "y": 28.125
+          },
+          "nodeIndex": "status_change",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 20331.461665219689,
+            "y": 54.125
+          },
+          "nodeIndex": "engineers",
+          "nodeLineageTag": "3b80c050-d97c-4e47-bbfb-33a6cb426a0e",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 21919.213395612671,
+            "y": 116.69642857142857
+          },
+          "nodeIndex": "KPIs",
+          "nodeLineageTag": "223d06fe-9139-49ca-9ad5-1f8560f2bedb",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 24686.870792733265,
+            "y": 440.62929352068693
+          },
+          "nodeIndex": "vw_jsf",
+          "nodeLineageTag": "b3242da5-7ca0-4ee2-8a9b-db5fda4a12e9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 31837.9020978059,
+            "y": 502.22615970771704
+          },
+          "nodeIndex": "vw_employees",
+          "nodeLineageTag": "0bb3c9fa-3f0b-48d5-86b1-fed546fa947c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 33658.896059656116,
+            "y": 1072.8457207207207
+          },
+          "nodeIndex": "Sundesk Tickets",
+          "nodeLineageTag": "4adb1b9c-c026-42b7-b95b-6802dc12d5b2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 35518.373072166673,
+            "y": 600.84572072072069
+          },
+          "nodeIndex": "AS Calendar",
+          "nodeLineageTag": "0d9a6e19-98cb-4c29-ba22-f18e2b00815e",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 36036.373072166673,
+            "y": 686.84572072072069
+          },
+          "nodeIndex": "Fail Age Bands",
+          "nodeLineageTag": "749c4ba4-95a4-4d29-b844-95b9b16337a4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 36320.373072166673,
+            "y": 698.84572072072069
+          },
+          "nodeIndex": "Ticket Unit Link",
+          "nodeLineageTag": "822a0805-ccc1-4508-a4e1-49e5915d02f9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 35234.373072166673,
+            "y": 562.84572072072069
+          },
+          "nodeIndex": "Unit Failures",
+          "nodeLineageTag": "8db1708e-0a4f-4058-8950-cce915e9b9b9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 36548.111578421951,
+            "y": 638.34572072072069
+          },
+          "nodeIndex": "Ticket Date",
+          "nodeLineageTag": "5ba4693a-6743-471e-aff0-05f56167012a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 35752.373072166673,
+            "y": 612.84572072072069
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "ee964bca-0f3d-4f89-93ff-447e6118581e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 36422.078080422,
+            "y": 660.87999370219836
+          },
+          "nodeIndex": "Last Refresh",
+          "nodeLineageTag": "99de40e4-9439-4d59-820e-c5c2f4e6683d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

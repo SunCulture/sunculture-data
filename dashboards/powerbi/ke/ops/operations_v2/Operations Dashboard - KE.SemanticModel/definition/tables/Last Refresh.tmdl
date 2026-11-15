@@ -1,0 +1,25 @@
+/// One row: when the model last refreshed, in East Africa Time (UTC+3).
+table 'Last Refresh'
+	isHidden
+	lineageTag: 99de40e4-9439-4d59-820e-c5c2f4e6683d
+
+	column Refreshed
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 832fd64a-9117-4127-b3e3-22160446b15c
+		summarizeBy: none
+		sourceColumn: Refreshed
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Last Refresh' = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [Refreshed = datetime], {{DateTimeZone.RemoveZone(DateTimeZone.SwitchZone(DateTimeZone.UtcNow(), 3))}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

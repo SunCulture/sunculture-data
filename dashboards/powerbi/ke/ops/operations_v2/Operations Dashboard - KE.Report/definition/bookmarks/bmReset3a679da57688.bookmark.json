@@ -1,0 +1,357 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – CCRP JSFs",
+  "name": "bmReset3a679da57688",
+  "options": {
+    "targetVisualNames": [
+      "351d5c4d86aec9589b40",
+      "3cac44a4671a663a3abf",
+      "4372ff0c8b49e1c70843",
+      "567524b235083a9a919a",
+      "c118f7b9a8492c35c12a",
+      "cbeb28710e921c54d135"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "ReportSectiondf5c7db3921a0dc0d141",
+    "sections": {
+      "ReportSectiondf5c7db3921a0dc0d141": {
+        "visualContainers": {
+          "351d5c4d86aec9589b40": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountRef"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2c54718c16282344bac3",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountRef"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "3cac44a4671a663a3abf": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "Department_name"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "277fb2dd3a7dca1c82f7",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "Department_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "4372ff0c8b49e1c70843": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "vw_jsf"
+                        }
+                      },
+                      "Property": "jsf_date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "81b330dd5c5dc2e60af2",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "vw_jsf"
+                        }
+                      },
+                      "Property": "jsf_date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "567524b235083a9a919a": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountType"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "59fbea55b5819cd4bd08",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "accountType"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "c118f7b9a8492c35c12a": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "sale_date"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ea0dea21ecac475c345f",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "sale_date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          },
+          "cbeb28710e921c54d135": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "product"
+                    }
+                  }
+                ]
+              }
+            },
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8b319e66a476a214c53e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "points"
+                        }
+                      },
+                      "Property": "product"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – Engineer SLA",
+  "name": "bmHide949d3c2b98d6",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp9631e777",
+      "2cc2870140a791e70900",
+      "a10c34905d007069d18a",
+      "afbb2ae7bfb3f43f17c8",
+      "d1019233a5882a60c311",
+      "daefafbf7d64e45ff973",
+      "e39f2c51803b900f9a3a",
+      "paneBg9631e777",
+      "paneClear9631e777",
+      "paneHide9631e777"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "7d3d64f04c4f9631e777",
+    "sections": {
+      "7d3d64f04c4f9631e777": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp9631e777": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+table status_change
+	lineageTag: 522a2c7f-ebe0-43df-82ea-5253e121fe69
+
+	column account_id
+		dataType: string
+		lineageTag: 67599a9b-9c21-42ed-8bfd-efeaabb223b8
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_status
+		dataType: string
+		lineageTag: 9f66efd7-15c7-4b0f-a86d-a3b81882710b
+		summarizeBy: none
+		sourceColumn: current_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: c6ae3d3e-c1e5-49ce-ae91-6ef6c96e72ec
+		summarizeBy: none
+		sourceColumn: status_date
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition status_change-b1eb59b2-1ef0-4f9c-a15d-38d77cfddc3e = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"6dbf4a99-05bd-41da-9725-19874c3aa914" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="6dbf4a99-05bd-41da-9725-19874c3aa914"]}[Data],
+				    account_status_change_ = #"6dbf4a99-05bd-41da-9725-19874c3aa914"{[entity="account_status_change",version=""]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(account_status_change_,{"account_id", "current_status", "initial_status", "status_date"}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Removed Other Columns", {"account_id", "current_status", "status_date"}, MissingField.Ignore)
+				in
+				#"Kept Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

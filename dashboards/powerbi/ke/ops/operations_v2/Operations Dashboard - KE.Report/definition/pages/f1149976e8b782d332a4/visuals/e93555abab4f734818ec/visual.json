@@ -1,0 +1,651 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "e93555abab4f734818ec",
+  "position": {
+    "x": 216.11530542210022,
+    "y": 1166.5586822237476,
+    "z": 1900,
+    "height": 661.52367879203848,
+    "width": 1040.1647220315717,
+    "tabOrder": 1900
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "customer_name"
+                }
+              },
+              "queryRef": "Sundesk Tickets.customer_name",
+              "nativeQueryRef": "Customer Name",
+              "displayName": "Customer Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "AccountRef"
+                }
+              },
+              "queryRef": "Sundesk Tickets.AccountRef",
+              "nativeQueryRef": "AccountRef1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "deviceid"
+                }
+              },
+              "queryRef": "Sundesk Tickets.deviceid",
+              "nativeQueryRef": "Device Id",
+              "displayName": "Device Id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "Sundesk Tickets.number",
+              "nativeQueryRef": "Ticket Number",
+              "displayName": "Ticket Number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "JSF Ticket"
+                }
+              },
+              "queryRef": "Sundesk Tickets.JSF Ticket",
+              "nativeQueryRef": "JSF Ticket1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "JSF ID"
+                }
+              },
+              "queryRef": "Sundesk Tickets.JSF ID",
+              "nativeQueryRef": "JSF ID1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "JSF Assignment ID"
+                }
+              },
+              "queryRef": "Sundesk Tickets.JSF Assignment ID",
+              "nativeQueryRef": "JSF Assignment ID1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "JSF Engineer"
+                }
+              },
+              "queryRef": "Sundesk Tickets.JSF Engineer",
+              "nativeQueryRef": "JSF Engineer1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "ticket_group"
+                }
+              },
+              "queryRef": "Sundesk Tickets.ticket_group",
+              "nativeQueryRef": "Department",
+              "displayName": "Department"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "full_name"
+                }
+              },
+              "queryRef": "Sundesk Tickets.full_name",
+              "nativeQueryRef": "Ticket Owner",
+              "displayName": "Ticket Owner"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "createdby"
+                }
+              },
+              "queryRef": "Sundesk Tickets.createdby",
+              "nativeQueryRef": "Ticket Creator",
+              "displayName": "Ticket Creator"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "last_updated_by"
+                }
+              },
+              "queryRef": "Sundesk Tickets.last_updated_by",
+              "nativeQueryRef": "Last Updated By",
+              "displayName": "Last Updated By"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "type"
+                }
+              },
+              "queryRef": "Sundesk Tickets.type",
+              "nativeQueryRef": "Request Type",
+              "displayName": "Request Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "ticket_state"
+                }
+              },
+              "queryRef": "Sundesk Tickets.ticket_state",
+              "nativeQueryRef": "Status",
+              "displayName": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "Failure Cause"
+                }
+              },
+              "queryRef": "Sundesk Tickets.Failure Cause",
+              "nativeQueryRef": "Failure Cause"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "priority"
+                }
+              },
+              "queryRef": "Sundesk Tickets.priority",
+              "nativeQueryRef": "Priority",
+              "displayName": "Priority"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "title"
+                }
+              },
+              "queryRef": "Sundesk Tickets.title",
+              "nativeQueryRef": "Reason",
+              "displayName": "Reason"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "created_at"
+                }
+              },
+              "queryRef": "Sundesk Tickets.created_at",
+              "nativeQueryRef": "Created Date",
+              "displayName": "Created Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "updated_at"
+                }
+              },
+              "queryRef": "Sundesk Tickets.updated_at",
+              "nativeQueryRef": "Updated Date",
+              "displayName": "Updated Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "close_at"
+                }
+              },
+              "queryRef": "Sundesk Tickets.close_at",
+              "nativeQueryRef": "Closed Date",
+              "displayName": "Closed Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "Time_Taken_To_Close"
+                }
+              },
+              "queryRef": "Sum(Sundesk Tickets.Turn_Around_Time)",
+              "nativeQueryRef": "Time Taken To Close(days)",
+              "displayName": "Time Taken To Close(days)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sundesk Tickets"
+                    }
+                  },
+                  "Property": "Ticket_SLA_Status"
+                }
+              },
+              "queryRef": "Sundesk Tickets.Ticket_SLA_Status",
+              "nativeQueryRef": "SLA Status",
+              "displayName": "SLA Status"
+            }
+          ],
+          "showAll": true
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Sundesk Tickets"
+                  }
+                },
+                "Property": "JSF ID"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#37858D'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#37858D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#018EB1'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "103.78450060935242D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.deviceid"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "80.43618868293792D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.AccountRef"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "208.0987078176748D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.title"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "165.63076480558988D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.ticket_group"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "114.79438496048103D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.last_updated_by"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150.21482527910877D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.customer_name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "66.42072752230611D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.JSF Ticket"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "46.02813421600776D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sundesk Tickets.JSF ID"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "81.31706676551975D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Sundesk Tickets.Turn_Around_Time)"
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table 2: T&R SunDesk Tickets'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "underline": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

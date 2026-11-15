@@ -1,0 +1,4012 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "vw_jsf.jsf_account_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Jsf Account Type"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "vw_jsf.jsf_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.assignment_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "assignment_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Assignment Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.account_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "account_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.outcome_reason": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "outcome_reason"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Outcome Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.comment": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "comment"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Comment": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Engineer Comment": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_engineer": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_engineer"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Engineer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Engineer Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Engineer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.schedule_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "schedule_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Task Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.rm_2_device_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "rm_2_device_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "RM2 Device ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.engineer_role": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Engineer Role"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "vw_jsf.install_failure_reason": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Install Failure Reason"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Outcome Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.engineer_recommendation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "engineer_recommendation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Engineer Recom.": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Engineer Recommendation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_engineer2": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_engineer2"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Engineer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Engineer Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.of_completed_jsfs": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "# of completed jsfs"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "vw_jsf.supervisor_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Supervisor Name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Head Supervisor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.employee_supervisor_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "employee.supervisor_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Supervisor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Team Lead": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "jsf_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.install_outcome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Install Outcome"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Engineer Recommendation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.customer_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Customer Name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customer Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.jsf_date_day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "JSF Date (Day)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.install_product": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Install Product"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.install_build_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Install Build Type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Build Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Refurb / Non-Refurb": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_jsf.install_failure_category": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_jsf",
+			          "ConceptualProperty": "Install Failure Category"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failure Category": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.accountref": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "accountRef"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account Ref": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.phonenumber": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "phoneNumber"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Phone Number": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.accounttype": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "accountType"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.sale_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "sale_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sale Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.payplan_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "payplan_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Payplan Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.region": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "region"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Region": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.county": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "county"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "County": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.product": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "product"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.customer_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "customer_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customer Names": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.warranty_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "warranty_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Warranty Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.cds2_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "cds2_date"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.identification_number": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "identification_number"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.lead_source": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "lead_source"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.account_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "account_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account ID": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.jsf_date1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "jsf_date1"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.installment_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "installment_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installment Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.customer_preferred_engineer": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "customer_preferred_engineer"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customer Preferred Engineer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.jsf_engineer": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "jsf_engineer"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Engineer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.customertype": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "customerType"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customer Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.warranty_expiry_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "warranty_expiry_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Warranty Expiry Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.funnel_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "funnel_status"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.customer_preferred_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "customer_preferred_date"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.department_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "Department_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Department": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "points.refunddate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "RefundDate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "points.employee_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "points",
+			          "ConceptualProperty": "employee_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sales Agent": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "basic.loan_end_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "loan_end_date"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.total_costs_vw_jsf": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "total_costs_vw_jsf"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.installation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "installation"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.aftersale": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "aftersale"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.technical_survey": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "technical_survey"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.repossession": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "repossession"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.successful_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "successful_tasks"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.failed_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "failed_tasks"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.total_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "total_tasks"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "basic.cost_per_task": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "basic",
+			          "ConceptualProperty": "cost_per_task"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "engineers.contract_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "engineers",
+			          "ConceptualProperty": "Contract Status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Contract Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ticket_date.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ticket Date",
+			          "ConceptualProperty": "Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ticket Period": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "ticket_date.month_start": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Ticket Date",
+			          "ConceptualProperty": "Month Start"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.build_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Build Type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Refurb / Non-Refurb": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Build Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.customer_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "customer_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Customer Name": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.deviceid": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "deviceid"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Device Id": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.number": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "number"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ticket Number": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.ticket_group": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "ticket_group"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Department": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket Group": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.full_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "full_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ticket Owner": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.createdby": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "createdby"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ticket Creator": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.last_updated_by": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "last_updated_by"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Last Updated By": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Request Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.ticket_state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "ticket_state"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.priority": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "priority"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Priority": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.title": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "title"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Reason": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.created_at": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "created_at"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Created Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.updated_at": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "updated_at"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Updated Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.close_at": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "close_at"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Closed Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.time_taken_to_close": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Time_Taken_To_Close"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Time Taken To Close(days)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.ticket_sla_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Ticket_SLA_Status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SLA Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.tickets_raised": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Tickets Raised"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.tickets_closed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Tickets Closed"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.open_at_period_end": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Open at Period End"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.closed_within_sla": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Closed Within SLA"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.closed_beyond_sla": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Closed Beyond SLA"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.sla_adherence_closed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "SLA Adherence (Closed)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.product_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "product_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.total_aftersale_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Total_aftersale_tickets"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "sundesk_tickets.linked_town": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Linked Town"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Towns": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.days_to_fail_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Days to Fail Band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days to Fail": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.failure_cause": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Failure Cause"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failure Cause": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.component_group": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Component Group"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Component Group": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Component (Chart 4 only)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.failure_mode": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Failure Mode"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failure Mode": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.linked_product": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Linked Product"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.component": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Component"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Component": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.accountref": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "AccountRef"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Account Ref": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.days_to_failure": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "Days to Failure"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days in Field": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.subcategory": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "subcategory"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Subcategory": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sundesk_tickets.testing_and_repair_resolution": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sundesk Tickets",
+			          "ConceptualProperty": "testing_and_repair_resolution"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "T&R Resolution": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "as_calendar.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "AS Calendar",
+			          "ConceptualProperty": "Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "JSF Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Install Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "as_calendar.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "AS Calendar",
+			          "ConceptualProperty": "Month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Install Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "aftersales_kpis.installation_visits": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Installation Visits"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.not_installed_visits": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Not Installed Visits"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.not_installed_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Not Installed Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.install_failures_product_pump": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Install Failures (Product/Pump)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.installation_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Installation Failure Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.visits_per_install": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Visits per Install"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.share_of_not_installed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Share of Not Installed"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.fault_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Fault Tickets"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.share_of_fault_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Share of Fault Tickets"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.fault_tickets_last_3_months": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Fault Tickets (Last 3 Months)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.units_with_faults": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Units With Faults"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.median_days_to_failure": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Median Days to Failure"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.early_failure_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Early Failure %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.confirmation_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Confirmation Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.refurb_share_of_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Refurb Share of Tickets"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.no_fault_found_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "No Fault Found %"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.units_failed_component": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Units Failed (Component)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.component_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Component Failure Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.units_installed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Units Installed"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.units_failed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Units Failed"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.failure_rate_first_90_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Failure Rate (First 90 Days)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.faults_per_1000_unitmonths": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Faults per 1,000 Unit-Months"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.product_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Product Failure Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.cumulative__failed_by_age": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Cumulative % Failed by Age"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.share_of_failed_units_by_firstfault_age": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Share of Failed Units by First-Fault Age"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.median_days_to_first_fault": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Median Days to First Fault"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.cumulative_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Cumulative Failure Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "aftersales_kpis.refurb_vs_nonrefurb_gap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Aftersales KPIs",
+			          "ConceptualProperty": "Refurb vs Non-Refurb Gap"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "unit_failures.product": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Unit Failures",
+			          "ConceptualProperty": "Product"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "unit_failures.build_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Unit Failures",
+			          "ConceptualProperty": "Build Type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Refurb / Non-Refurb": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Build Type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "unit_failures.first_fault_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Unit Failures",
+			          "ConceptualProperty": "First Fault Band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Age at First Fault": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fail_age_bands.age_band": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Fail Age Bands",
+			          "ConceptualProperty": "Age Band"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Unit Age": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.of_completed_jsfs": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# of completed jsfs"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "# JSFs": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.loan_end_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "loan_end_date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Loan Repayment End Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.total_costs_vw_jsf": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "total_costs_vw_jsf"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Costs": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Total Amount Spent": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "installation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.aftersale": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "aftersale"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Aftersale": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.technical_survey": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "technical_survey"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "TSR": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.repossession": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "repossession"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Repossession": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.successful_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "successful_tasks"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Successful tasks": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.failed_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "failed_tasks"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed Task": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.total_tasks": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "total_tasks"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total Task": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Total Tasks": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.cost_per_task": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "cost_per_task"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Unit Cost per Task (Kes)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Cost per Task": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.tickets_raised": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Tickets Raised"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tickets Raised": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.tickets_closed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Tickets Closed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tickets Closed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.open_at_period_end": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Open at Period End"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Open at Period End": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.closed_within_sla": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Closed Within SLA"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Closed Within SLA": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.closed_beyond_sla": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Closed Beyond SLA"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Closed Beyond SLA": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.sla_adherence_closed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "SLA Adherence (Closed)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SLA Adherence": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.total_aftersale_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Total_aftersale_tickets"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installation_visits": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Installation Visits"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Visits": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.not_installed_visits": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Not Installed Visits"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Not Installed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.not_installed_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Not Installed Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Not Installed %": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.install_failures_product_pump": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Install Failures (Product/Pump)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product/Pump Failures": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Failed: Product / Pump Fault": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installation_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Installation Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installation Failure Rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.visits_per_install": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Visits per Install"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Visits per Install": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.share_of_not_installed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Share of Not Installed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% of Not Installed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.fault_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Fault Tickets"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fault Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Ticket Failures": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.share_of_fault_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Share of Fault Tickets"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% of Fault Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.fault_tickets_last_3_months": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Fault Tickets (Last 3 Months)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Fault Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units_with_faults": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units With Faults"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Units": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Units With Faults": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.median_days_to_failure": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Median Days to Failure"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Median Days to Failure": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.early_failure_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Early Failure %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed in First 30 Days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.confirmation_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Confirmation Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bench Confirmation Rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.refurb_share_of_tickets": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Refurb Share of Tickets"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Refurb Share of Tickets": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.no_fault_found_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "No Fault Found %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "No Fault Found": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units_failed_component": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units Failed (Component)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.component_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Component Failure Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.units_installed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units Installed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Units Installed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Installed in period": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units_failed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units Failed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Units Failed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Of these, failed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.failure_rate_first_90_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Failure Rate (First 90 Days)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "First 90 Days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.faults_per_1000_unitmonths": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Faults per 1,000 Unit-Months"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Faults / 1,000 Unit-Months": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Faults / 1k Unit-Months": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Faults per 1,000 unit-months": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.product_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Product Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Product Failure Rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Failure rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.cumulative__failed_by_age": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Cumulative % Failed by Age"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% Failed by Age": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.share_of_failed_units_by_firstfault_age": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Share of Failed Units by First-Fault Age"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% of Failed Units": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.median_days_to_first_fault": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Median Days to First Fault"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Median Days to 1st Fault": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Median days to first fault": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.cumulative_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Cumulative Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cumulative failure rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.refurb_vs_nonrefurb_gap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Refurb vs Non-Refurb Gap"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.jsf_count": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "JSF Count"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "# JSFs Completed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Completed JFS": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#Units Under Warranty": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "#Units Out of  Warranty": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.jsf_id_count": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "JSF ID Count"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#JSFs": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.ticket_jsf_count": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Ticket JSF Count"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#JSFs": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.ticket_assignment_count": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Ticket Assignment Count"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "#Assignments": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.pending_dispatch": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Pending Dispatch"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pending dispatch": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.shipped": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Shipped"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Shipped": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Dispatches": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Total sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.pending_installation": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Pending Installation"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pending installation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "# Installed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Installations": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.dispatched_vs_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "% Dispatched vs Sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% dispatched vs sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installed_vs_dispatch": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "% Installed vs Dispatch"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% installed vs dispatch": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.pending_installation_vs_dispatched": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "% Pending Installation vs Dispatched"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% pending installation vs dispatches": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.pending_installation_vs_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "% Pending Installation vs Sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% pending installation vs sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units_installed_cum": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units Installed Cum"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installed to date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.installation_tat_median": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Installation TAT (Median)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Installation TAT (Median)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.parts_in_field": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Parts in Field"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "In the field": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.parts_failed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Parts Failed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed first": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.part_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Part Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failure rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.part_rate_in_words": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Part Rate in Words"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "1 in every": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.units_failed_cum": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Units Failed Cum"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failures to date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Failed to date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.first_90_days_card": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "First 90 Days (Card)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Failed within first 90 days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.refurb_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Refurb Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Refurb failure rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.nonrefurb_failure_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Non-Refurb Failure Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Non-refurb failure rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "unit_parts.part": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Unit Parts",
+			          "ConceptualProperty": "Part"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Part": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

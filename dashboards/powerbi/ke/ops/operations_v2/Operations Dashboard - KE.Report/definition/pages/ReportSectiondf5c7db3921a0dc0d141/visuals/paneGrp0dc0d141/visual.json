@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "paneGrp0dc0d141",
+  "position": {
+    "x": 224,
+    "y": 0,
+    "z": 9000,
+    "height": 104,
+    "width": 1032,
+    "tabOrder": 9000
+  },
+  "visualGroup": {
+    "displayName": "Slicer Pane",
+    "groupMode": "ScaleMode"
+  },
+  "isHidden": true
+}

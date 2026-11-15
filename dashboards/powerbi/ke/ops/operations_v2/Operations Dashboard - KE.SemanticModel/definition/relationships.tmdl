@@ -1,0 +1,94 @@
+relationship 7995f935-45d4-4ce7-95c2-eeaa70e5aca2
+	crossFilteringBehavior: bothDirections
+	fromColumn: points.date
+	toColumn: calendar.Date
+
+relationship 66f8f712-0360-488b-98e0-e40c759a3b3a
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: points.dispatchdate
+	toColumn: calendar.Date
+
+relationship ee9451cf-0ebc-47d5-b9ba-61213d342149
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: points.installment_date
+	toColumn: calendar.Date
+
+relationship d6a7e416-c368-415d-a505-900ffa952470
+	isActive: false
+	fromColumn: points.repossession_date
+	toColumn: calendar.Date
+
+relationship 1a2be0be-c0a9-4f1b-a7c6-a55665123c5c
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: points.installation_date
+	toColumn: calendar.Date
+
+relationship af963c68-824e-4844-916d-01e6ca127ad8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: points.account_id
+	toColumn: status_change.account_id
+
+relationship 6e2cdc03-9e8b-fead-0d39-4441e88e771a
+	isActive: false
+	fromColumn: vw_jsf.jsf_date
+	toColumn: calendar.Date
+
+relationship 0a093eee-307f-4b90-7c68-f59e89b51037
+	isActive: false
+	fromColumn: points.RefundDate
+	toColumn: calendar.Date
+
+relationship 17a3e178-78b1-dffc-0023-dbb5e45c81a5
+	isActive: false
+	fromColumn: points.warranty_expiry_date
+	toColumn: calendar.Date
+
+relationship 1317afbd-a2a7-f177-b45f-9e39119a9dd8
+	fromColumn: points.employee_id
+	toColumn: vw_employees.employee_amt_id
+
+relationship 1b772d49-260f-905b-770b-5a1e16d3abf6
+	fromColumn: vw_jsf.account_id
+	toColumn: points.account_id
+
+relationship 175e5220-5a90-701d-c6e4-fdd089b9c89c
+	isActive: false
+	fromColumn: points.jsf_date
+	toColumn: calendar.Date
+
+relationship e39ffd39-9dbc-c903-b89b-f94a152ad8f5
+	fromColumn: vw_jsf.ticket_number
+	toColumn: 'Sundesk Tickets'.number
+
+relationship ASCal_JSFDay
+	isActive: false
+	fromColumn: vw_jsf.'JSF Date (Day)'
+	toColumn: 'AS Calendar'.Date
+
+relationship ASCal_TicketCreated
+	isActive: false
+	fromColumn: 'Sundesk Tickets'.created_at
+	toColumn: 'AS Calendar'.Date
+
+relationship ASCal_UnitInstall
+	isActive: false
+	fromColumn: 'Unit Failures'.'Install Date'
+	toColumn: 'AS Calendar'.Date
+
+relationship Ticket_to_Unit
+	fromColumn: 'Sundesk Tickets'.'Linked Account'
+	toColumn: 'Unit Failures'.Account
+
+relationship TicketDate_Created
+	fromColumn: 'Sundesk Tickets'.'Created Date'
+	toColumn: 'Ticket Date'.Date
+
+relationship TicketDate_Closed
+	isActive: false
+	fromColumn: 'Sundesk Tickets'.'Closed Date'
+	toColumn: 'Ticket Date'.Date
+

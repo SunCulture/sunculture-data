@@ -1,0 +1,22 @@
+/// Axis for the failure-rate-by-part table. Pump, Controller, Panel and TV have a count in the field; the rest are failure causes with no part count.
+table 'Unit Parts'
+	lineageTag: 87a6244d-af96-4f63-8878-630e403ad62e
+
+	column Part
+		lineageTag: 716bb680-13a8-4d95-bebb-787e5c239d6f
+		isNameInferred
+		sourceColumn: [Part]
+		sortByColumn: 'Part Order'
+
+	column 'Part Order'
+		isHidden
+		lineageTag: 4f6e92fe-34d3-469a-b9f5-82c5bb3fd208
+		isNameInferred
+		sourceColumn: [Part Order]
+
+	partition 'Unit Parts' = calculated
+		mode: import
+		source = DATATABLE ( "Part", STRING, "Part Order", INTEGER, { { "Pump", 1 }, { "Controller", 2 }, { "Panel", 3 }, { "TV", 4 }, { "Cables & connectors", 5 }, { "Water / physical damage", 6 }, { "Other", 7 } } )
+
+	annotation PBI_Id = 9f96f62c3a99408d8214c6534513705b
+

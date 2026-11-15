@@ -1,0 +1,48 @@
+table engineers
+	lineageTag: 3b80c050-d97c-4e47-bbfb-33a6cb426a0e
+
+	column Engineer
+		dataType: string
+		lineageTag: f0048125-7f5a-48f9-b2b1-826df70f4706
+		summarizeBy: none
+		sourceColumn: Engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract Status'
+		dataType: string
+		lineageTag: 47540918-755a-4192-af36-0411518679b4
+		summarizeBy: none
+		sourceColumn: Contract Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location '
+		dataType: string
+		lineageTag: 4c2b0695-8f0d-4703-8b3c-f7f61e6061e1
+		summarizeBy: none
+		sourceColumn: "Location "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manager
+		dataType: string
+		lineageTag: 24d11d28-347c-408b-a7b7-e2e70cfed03b
+		summarizeBy: none
+		sourceColumn: Manager
+
+		annotation SummarizationSetBy = Automatic
+
+	partition engineers = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("lVVdb6MwEPwrVp77Jy4f12s4SNRG6kPUhyVs8QpjR8abHP31t06jk+JAjz5hhIfZnZm19/vZIzpfo8rAEzek8jPYmmYPsy36FizaIOtnJs/yvN07e3vYz+boLfhKbbiFBFUAeVfSMG6hwRvsVFFDIJBPtWtLTP6w09TAMH7puDbQqZzDmXxacI5j9a65CywwYT25BJVRecaPkYJXH6Wz6smzrfmuUdvHbYO4X9wetcc+Kmu4SbF5OMNxrEc4UaUegYKOpe6wPToPvpf1qgUzQrjFgF508QJLdSl60Ox5TJwFmBPZA6pNILQp55LAjnAWdNAu2pFBwya1saHANNaiJTRqoV2Ld24Yeh9LjzOGbHS/TqvM4aChcd1/Cs35oLHBBPxlAq52SG5s5dQL9AQp95k+h2cA/eTRopgZXMkJbKF5LOZbYKMyElFIFdU1ezeUMjbQfRmgONHpbK5M5TzG1eee18ueS17JGPm12oFlki7JTseunQUtZmIn3rWTYXNn6R1i7KrB6aITdBoGgCtz1NFL6hx9o0ht5VX6um8towCX+KagZ+nMVNEJDjCd6x/MoJlKtTqBJLv5JtPadXjUKi+50mksG2igxXpIwRdq5VQrKhmLNFnjXBnGYyL6XONk0E809EdthK6iu6nruOUBzM7ZPobC+TvEiHjX0n5LW5Mr+2Erj2clUlDP6lVOhS5VcC65dO2QgEtuUG6TGsPdQUS1u1xMN5C3vw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Engineer = _t, #"Contract Status" = _t, #"Location " = _t, Manager = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Engineer", type text}, {"Contract Status", type text}, {"Location ", type text}, {"Manager", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

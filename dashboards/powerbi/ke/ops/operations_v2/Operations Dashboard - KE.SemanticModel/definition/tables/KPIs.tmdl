@@ -1,0 +1,31 @@
+table KPIs
+	lineageTag: 223d06fe-9139-49ca-9ad5-1f8560f2bedb
+
+	column Id
+		formatString: 0
+		lineageTag: e41583ce-2457-4b93-a258-f9aa915ad3b9
+		summarizeBy: count
+		sourceColumn: [Value1]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KPIs
+		lineageTag: 7c71b5ac-94ed-41bf-9953-b90c5178fd44
+		summarizeBy: none
+		sourceColumn: [Value2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		lineageTag: 1366df15-7359-4c5b-a0a3-2b913e14ab7b
+		summarizeBy: none
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPIs = calculated
+		mode: import
+		source = {(1,"Unit Sales","#"),(2,"- Direct","#"),(3,"- Distributor","#"),(4,"Refunds","#"),(5,"Dispatches (Direct)","#"),(6,"Pending Dispatches","#"),(7,"Installations","#"),(8,"Pending Installations","#"),(9,"Revenue","US$'000s"),(10,"Gross Margin","US$'000s"),(11,"Gross Margin %","%"),(12,"PAR30 (Active)","%"),(13,"FPD","%"),(14,"Collection Rate","%"),(15,"New Clients","#"),(16,"Repossession Pending Installations","#")}
+
+	annotation PBI_Id = de0e20c24e004b10b18b842927cc5d94
+
