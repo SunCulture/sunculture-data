@@ -57,7 +57,7 @@ What every number on ALL JSFs and the aftersales pages means: [METRIC_GUIDE.md](
 | JSFs Syncing Rate | JSFs with status COMPLETED ÷ all JSFs, same date range top and bottom |
 | Installation Failure Rate | Not Installed visits caused by a product or pump fault ÷ all installation visits (Installed + Not Installed) |
 | Installation TAT | Average Days Taken |
-| Installation TAT (Median) | Median Days Taken for Installed / Not Installed visits; replaces "TAT (Without Outliers)", whose filter kept only three outcome reasons |
+| Installation TAT (Median) | Median Days Taken for installation visits with an outcome (Installed / Not Installed; `vw_jsf[Install Outcome]` not blank); replaces "TAT (Without Outliers)", whose filter kept only three outcome reasons |
 
 **Units sold, dispatched and installed (ALL JSFs Tables 1–3)**
 
@@ -72,14 +72,18 @@ Rows are sale months; Installed means units from that month's sales installed by
 
 **Product failures**
 
-- **Confirmed failure:** a Testing & Repairs ticket with a recorded failure cause other than No Fault Found. The Product Failure Occurrences ticket count equals the Testing & Repairs page filtered the same way.
-- **Installed unit:** an account's first JSF with recommendation Installed (about 55,000 units, all time).
-- **Failed unit:** an installed unit with at least one confirmed failure. Each unit counts once, at its **first** failure. Units With Faults (Occurrences page) can be a little higher because it also counts accounts with no Installed JSF.
+- **Confirmed failure:** a Testing & Repairs ticket that is COMPLETED, is a hardware fault (`Fault Class` = Product Fault, which excludes arrears locks) and has a recorded failure cause other than No Fault Found. Completed T&R tickets with a cause that is not a product fault are *Assessed - Not a Product Fault*. The Product Failure Occurrences ticket count equals the Testing & Repairs page filtered the same way.
+- **Installed unit:** an account's first JSF with recommendation Installed, Kenya, not Refunded / Rejected (about 55,200 units, all time). `Ticket Unit Link` uses the same accounts and the same install date, so a ticket only links to a unit installed on or before the ticket date.
+- **Failed unit:** an installed unit with at least one confirmed failure. Each unit counts once, at its **first** failure. Failures dated before the install date are dropped, not counted as day 0. Units With Faults (Occurrences page) can be a little higher because it also counts accounts with no Installed JSF.
 - **Cumulative failure rate (Chart 1):** failed to date ÷ installed to date, at each month end.
 - **Failure rate (Chart 2, cards):** of the units installed in the selected months, the share that has failed since. Recent months are low because those units are new.
 - **Failure rate by part:** units whose first failure was this part ÷ that part in the field. Kits: RM2CK (Kubwa, FM1, FR2, Falcon) and surface pumps = 2 panels + pump + controller; RM2S = 1 panel + pump + controller. Controller covers the whole controller box (electronics, battery, switch, SIM / modem, firmware).
 
-Failure tickets start in October 2025, when Testing & Repairs began recording failure causes in SunDesk; earlier failures are not in the data, so cumulative rates build up from there.
+Failure tickets start in October 2025 (`Confirmation Window Start` never goes earlier than 1 Oct 2025), when Testing & Repairs began recording failure causes in SunDesk; earlier failures are not in the data, so cumulative rates build up from there.
+
+## Customer data
+
+The report shows customer names and account references, not phone numbers, GPS locations or national IDs. `points[phoneNumber]` and `points[gps]` are not loaded; `points[identification_number]` and `Sundesk Tickets[nationalid]` are hidden and used only to link SunDesk tickets to accounts. The model has no row-level security.
 
 ## Formatting
 

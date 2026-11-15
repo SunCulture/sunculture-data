@@ -57,7 +57,9 @@ table points
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Customer national ID: hidden join key for linking SunDesk tickets to accounts; not for display.
 	column identification_number
+		isHidden
 		dataType: string
 		lineageTag: 3f6746c2-f988-4724-ad4d-09b7c6548605
 		summarizeBy: none
@@ -440,13 +442,6 @@ table points
 
 		annotation SummarizationSetBy = Automatic
 
-	column phoneNumber
-		dataType: string
-		lineageTag: 990ea0b9-4e6b-4c93-ba55-d5e95aa38332
-		summarizeBy: none
-		sourceColumn: phoneNumber
-
-		annotation SummarizationSetBy = Automatic
 
 	column productQty
 		dataType: int64
@@ -509,13 +504,6 @@ table points
 
 		annotation SummarizationSetBy = Automatic
 
-	column gps
-		dataType: string
-		lineageTag: 00a163bc-195d-4951-91f3-8a1b27161a3d
-		summarizeBy: none
-		sourceColumn: gps
-
-		annotation SummarizationSetBy = Automatic
 
 	column region
 		dataType: string
@@ -617,7 +605,7 @@ table points
 				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Duplicates",{{"gender", "Gender"}, {"sale_date_clickhouse", "sale_date"}, {"category", "Category"}, {"Region", "county"}, {"region 1", "region"}, {"customer_preferred_date", "customer_preferred_date"}, {"customer_preferred_schedule_type", "customer_preferred_schedule_type"}, {"customer_preferred_status", "customer_preferred_status_pp"}, {"engineer_recommendation", "Engineer_Recommendation"}, {"funnel_status", "funnel_status"}, {"jsf_date", "jsf_date"}, {"jsf_engineer", "jsf_engineer"}, {"jsf_status", "jsf_status"}, {"outcome_reason", "Outcome_Reason"}}),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"jsf_date", type date}}),
 				    // Only the columns this report uses
-				    #"Kept Columns" = Table.SelectColumns(#"Changed Type1", {"Category", "Department_name", "LeadSource", "RefundDate", "accountRef", "accountType", "account_id", "cds2_date", "companyRegion", "county", "customerType", "customer_name", "customer_preferred_date", "deviceId", "dispatch_date", "downpayment_amount", "employee_id", "employee_name", "funnel_status", "gps", "identification_number", "installment_amount", "installment_date", "jsf_date", "jsf_engineer", "payplan_name", "phoneNumber", "product", "productQty", "region", "sale_date", "status", "total_number_payments", "town", "warranty_expiry_date"}, MissingField.Ignore)
+				    #"Kept Columns" = Table.SelectColumns(#"Changed Type1", {"Category", "Department_name", "LeadSource", "RefundDate", "accountRef", "accountType", "account_id", "cds2_date", "companyRegion", "county", "customerType", "customer_name", "customer_preferred_date", "deviceId", "dispatch_date", "downpayment_amount", "employee_id", "employee_name", "funnel_status", "identification_number", "installment_amount", "installment_date", "jsf_date", "jsf_engineer", "payplan_name", "product", "productQty", "region", "sale_date", "status", "total_number_payments", "town", "warranty_expiry_date"}, MissingField.Ignore)
 				in
 				    #"Kept Columns"
 

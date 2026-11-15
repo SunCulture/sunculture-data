@@ -127,21 +127,6 @@
                       "Entity": "points"
                     }
                   },
-                  "Property": "phoneNumber"
-                }
-              },
-              "queryRef": "points.phoneNumber",
-              "nativeQueryRef": "Phone Number",
-              "displayName": "Phone Number"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "points"
-                    }
-                  },
                   "Property": "accountType"
                 }
               },
@@ -237,20 +222,6 @@
               },
               "queryRef": "vw_jsf.rm_2_device_id",
               "nativeQueryRef": "rm_2_device_id"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "points"
-                    }
-                  },
-                  "Property": "gps"
-                }
-              },
-              "queryRef": "points.gps",
-              "nativeQueryRef": "gps1"
             },
             {
               "field": {

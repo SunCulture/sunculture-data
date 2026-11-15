@@ -107,21 +107,6 @@
         "howCreated": "User"
       },
       {
-        "name": "ff64c5a0cb26442c8deb",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "points"
-              }
-            },
-            "Property": "identification_number"
-          }
-        },
-        "type": "Categorical",
-        "howCreated": "User"
-      },
-      {
         "name": "bde631b71781482d9897",
         "field": {
           "Column": {

@@ -59,7 +59,9 @@ table 'Sundesk Tickets'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Customer national ID from SunDesk: hidden join key to points[identification_number]; not for display.
 	column nationalid
+		isHidden
 		dataType: string
 		lineageTag: fc87f5d2-9cc2-4601-9c89-3b9d632ee31d
 		summarizeBy: none
@@ -449,8 +451,9 @@ table 'Sundesk Tickets'
 			VAR NotNFF = 'Sundesk Tickets'[Failure Mode] <> "No Fault Found"
 			RETURN
 			    SWITCH ( TRUE (),
-			        IsTR && HasCause && NotNFF, "Confirmed Failure",
-			        IsTR && HasCause && NOT NotNFF, "No Fault Found",
+			        IsTR && IsDone && IsHardware && HasCause && NotNFF, "Confirmed Failure",
+			        IsTR && IsDone && HasCause && NOT NotNFF, "No Fault Found",
+			        IsTR && IsDone && HasCause, "Assessed - Not a Product Fault",
 			        IsTR && IsDone, "Assessed - No Cause Recorded",
 			        IsTR, "At Bench - Open",
 			        "Not Assessed" )
@@ -489,7 +492,7 @@ table 'Sundesk Tickets'
 				    #"4ac9f4f4-9bce-41e4-97dc-1929b1823dc5" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="4ac9f4f4-9bce-41e4-97dc-1929b1823dc5"]}[Data],
 				    mart_all_tickets_ = #"4ac9f4f4-9bce-41e4-97dc-1929b1823dc5"{[entity="mart_all_tickets",version=""]}[Data],
 				    #"Renamed DF type" = Table.RenameColumns(mart_all_tickets_, {{"type", "sub_type"}}, MissingField.Ignore),
-				    #"Filtered Rows" = Table.SelectRows(#"Renamed DF type", each Text.Contains([ticket_group], "_KE")),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed DF type", each [ticket_group] <> null and Text.Contains([ticket_group], "_KE")),
 				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows", {
 				        {"ticketsId", "id"},
 				        {"ticket_number", "number"},
@@ -501,7 +504,9 @@ table 'Sundesk Tickets'
 				        {"assigned_to", "full_name"}
 				    }, MissingField.Ignore),
 				    #"Truncated created_at" = Table.TransformColumns(#"Renamed Columns", {{"created_at", each if _ = null then null else DateTime.From(Date.From(_)), type datetime}}),
-				    #"Removed Duplicates" = Table.Distinct(#"Truncated created_at", {"number"}),
+				    // Latest update wins if the mart ever has more than one row per ticket
+				    #"Latest First" = Table.Buffer(Table.Sort(#"Truncated created_at", {{"updated_at", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Latest First", {"number"}),
 				    // Only the columns this report uses
 				    #"Kept Columns" = Table.SelectColumns(#"Removed Duplicates", {"close_at", "created_at", "createdby", "customer_name", "failure_cause", "full_name", "id", "last_updated_by", "nationalid", "number", "priority", "product_type", "subcategory", "testing_and_repair_resolution", "ticket_group", "ticket_state", "title", "type", "updated_at"}, MissingField.Ignore)
 				in

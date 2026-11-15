@@ -247,20 +247,6 @@
                       "Entity": "points"
                     }
                   },
-                  "Property": "gps"
-                }
-              },
-              "queryRef": "points.gps",
-              "nativeQueryRef": "gps"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "points"
-                    }
-                  },
                   "Property": "county"
                 }
               },

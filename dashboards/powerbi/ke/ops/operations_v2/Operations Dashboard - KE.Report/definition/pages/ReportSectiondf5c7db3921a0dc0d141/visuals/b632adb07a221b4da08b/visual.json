@@ -496,22 +496,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "Filterf34e83f6f995fd567b3d",
-        "ordinal": 0,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "points"
-              }
-            },
-            "Property": "identification_number"
-          }
-        },
-        "type": "Categorical",
-        "howCreated": "User"
-      },
-      {
         "name": "Filter9f2dbc2db2fcb28840f2",
         "ordinal": 1,
         "field": {
@@ -540,22 +524,6 @@
           }
         },
         "type": "Categorical"
-      },
-      {
-        "name": "Filterecbd7f093031826e4467",
-        "ordinal": 3,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "points"
-              }
-            },
-            "Property": "gps"
-          }
-        },
-        "type": "Categorical",
-        "howCreated": "User"
       },
       {
         "name": "Filter925484bbfbb39d9224c1",

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-15
+
+PR #16 review fixes.
+
+- **Fixed** `Confirmed Failure`: a confirmed failure must be COMPLETED and a hardware fault, as documented; arrears locks (`Device Locked:Arrears`) and open bench tickets no longer count. New category *Assessed - Not a Product Fault*.
+- **Fixed** `Ticket Unit Link` now uses the same installed base and install date as `Unit Failures` (first Installed JSF, Kenya, not Refunded / Rejected); `Unit Failures` drops refunded / rejected accounts and failures dated before the install instead of clamping them to day 0.
+- **Fixed** `Sundesk Tickets`: a null `ticket_group` no longer fails the refresh; duplicates keep the latest `updated_at` row.
+- **Changed** `Confirmation Window Start` floored at 1 Oct 2025; `Installation TAT (Median)` counts installation visits only; `Unit Failures[TVs]` matches TV as a whole word.
+- **Removed** customer phone numbers and GPS locations: no longer loaded, and taken out of *ALL JSFs* Table 4, the *Warranty Status* details table and the *CCRP JSFs* filters. National IDs are hidden join keys.
+
 ## 2026-11-13
 
 - **Changed** slicer pane on every page: opens over the header band only (104 px, two 46 px rows), quieter styling (grey labels, white boxes, thin teal outline, outline buttons); page content starts under it so it never covers the score cards. *Warranty Status* and *CCRP JSFs* header cards moved into a card row; *ALL JSFs* cards in one row.

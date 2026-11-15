@@ -1,4 +1,4 @@
-/// Helper: links each Sundesk ticket (by national ID) to the customer's most recent Kenyan installed unit (non-refunded, non-rejected) installed on or before the ticket date. Built with joins so it computes in seconds.
+/// Helper: links each Sundesk ticket (by national ID) to the customer's most recent Kenyan installed unit (non-refunded, non-rejected) installed on or before the ticket date. Install date = the account's first Installed JSF, the same base and date as 'Unit Failures'. Built with joins so it computes in seconds.
 table 'Ticket Unit Link'
 	isHidden
 	lineageTag: 822a0805-ccc1-4508-a4e1-49e5915d02f9
@@ -16,7 +16,9 @@ table 'Ticket Unit Link'
 	partition 'Ticket Unit Link' = calculated
 		mode: import
 		source =
-				VAR U = SELECTCOLUMNS ( FILTER ( ALL ( points[identification_number], points[account_id], points[jsf_date], points[status], points[companyRegion] ), NOT ISBLANK ( points[jsf_date] ) && NOT points[status] IN { "refunded", "rejected" } && points[companyRegion] = "kenya" && LEN ( points[identification_number] ) > 3 ), "NID", points[identification_number] & "", "Acc", points[account_id] & "", "InstDate", points[jsf_date] + 0 )
+				VAR Inst = GROUPBY ( SELECTCOLUMNS ( FILTER ( vw_jsf, vw_jsf[Install Outcome] = "Installed" && NOT ISBLANK ( vw_jsf[JSF Date (Day)] ) ), "Acc", vw_jsf[account_id] & "", "IDate", vw_jsf[JSF Date (Day)] + 0 ), [Acc], "InstDate", MINX ( CURRENTGROUP (), [IDate] ) )
+				VAR P = SELECTCOLUMNS ( FILTER ( ALL ( points[identification_number], points[account_id], points[status], points[companyRegion] ), NOT points[status] IN { "refunded", "rejected" } && points[companyRegion] = "kenya" && LEN ( points[identification_number] ) > 3 ), "NID", points[identification_number] & "", "Acc", points[account_id] & "" )
+				VAR U = NATURALINNERJOIN ( P, Inst )
 				VAR T = SELECTCOLUMNS ( FILTER ( ALL ( 'Sundesk Tickets'[id], 'Sundesk Tickets'[nationalid], 'Sundesk Tickets'[created_at] ), LEN ( 'Sundesk Tickets'[nationalid] ) > 3 ), "TicketId", 'Sundesk Tickets'[id] + 0, "NID", 'Sundesk Tickets'[nationalid] & "", "Created", 'Sundesk Tickets'[created_at] + 0 )
 				VAR J = FILTER ( NATURALINNERJOIN ( T, U ), [InstDate] < [Created] + 1 )
 				VAR Best = GROUPBY ( J, [TicketId], "MaxD", MAXX ( CURRENTGROUP (), [InstDate] ) )

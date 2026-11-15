@@ -369,10 +369,11 @@ table _Measures
 		displayFolder: Aftersales\0 Slicer Pane
 		lineageTag: cdba204c-0074-4925-a1dc-3d99d3b647ca
 
-	/// First date on which Testing & Repairs recorded a diagnosis. Everything before this is invisible to the confirmed-failure basis.
+	/// First date on which Testing & Repairs recorded a diagnosis, never earlier than 1 Oct 2025 (when T&R began recording failure causes in SunDesk), so a back-dated or legacy ticket cannot move the window. Everything before this is invisible to the confirmed-failure basis.
 	measure 'Confirmation Window Start' =
-			CALCULATE ( MIN ( 'Sundesk Tickets'[created_at] ), REMOVEFILTERS (),
+			VAR FirstSeen = CALCULATE ( MIN ( 'Sundesk Tickets'[created_at] ), REMOVEFILTERS (),
 			    'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" )
+			RETURN MAX ( FirstSeen, DATE ( 2025, 10, 1 ) )
 		isHidden
 		displayFolder: Aftersales\0 Basis
 		lineageTag: 97cb3726-3dbc-4e7b-8091-7f6a62349fd1
@@ -1007,8 +1008,8 @@ table _Measures
 		displayFolder: Aftersales\3 Failure Rates
 		lineageTag: d3ecb504-37e9-4232-944b-548b787188fd
 
-	/// Typical days from assignment to JSF (median), so a few very long jobs do not drag the number up.
-	measure 'Installation TAT (Median)' = MEDIAN ( vw_jsf[Days Taken] )
+	/// Typical days from assignment to JSF (median) for installation visits with an outcome (Installed / Not Installed), so a few very long jobs do not drag the number up.
+	measure 'Installation TAT (Median)' = CALCULATE ( MEDIAN ( vw_jsf[Days Taken] ), NOT ISBLANK ( vw_jsf[Install Outcome] ) )
 		formatString: 0.0
 		displayFolder: JSFs
 		lineageTag: 94d9ff3f-914d-4990-8695-da6d299c6887

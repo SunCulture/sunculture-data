@@ -100,7 +100,8 @@ table 'Unit Failures'
 		lineageTag: 147126b3-f3ac-4bf4-aed7-824221ae89f7
 		summarizeBy: sum
 
-	column TVs = IF ( CONTAINSSTRING ( UPPER ( 'Unit Failures'[Product] ), "TV" ), 1, 0 )
+	/// 1 when the kit includes a TV: "TV" as a whole word in the product name (e.g. RainMaker 2 + TV, CS+TV+Phone, TV Refurbished).
+	column TVs = VAR P = " " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( UPPER ( 'Unit Failures'[Product] ), "+", " " ), "-", " " ), "(", " " ), ")", " " ) & " " RETURN IF ( CONTAINSSTRING ( P, " TV " ), 1, 0 )
 		dataType: int64
 		displayFolder: Parts
 		lineageTag: 74160ea2-da8e-4b3e-b9c2-15d022a9d65e
@@ -126,14 +127,8 @@ table 'Unit Failures'
 	partition 'Unit Failures' = calculated
 		mode: import
 		source =
-				VAR FaultsByUnit =
-				    GROUPBY (
-				        FILTER ( SELECTCOLUMNS ( FILTER ( 'Sundesk Tickets', 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" && NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ), "Account", 'Sundesk Tickets'[Linked Account] & "", "TDate", 'Sundesk Tickets'[created_at] + 0 ), TRUE () ),
-				        [Account],
-				        "Fault Tickets", COUNTX ( CURRENTGROUP (), 1 ),
-				        "First Fault Date", MINX ( CURRENTGROUP (), [TDate] )
-				    )
-				VAR Installs = FILTER ( vw_jsf, vw_jsf[Install Outcome] = "Installed" && NOT ISBLANK ( vw_jsf[JSF Date (Day)] ) )
+				VAR Eligible = SELECTCOLUMNS ( FILTER ( ALL ( points[account_id], points[status], points[companyRegion] ), NOT points[status] IN { "refunded", "rejected" } && points[companyRegion] = "kenya" ), "Account", points[account_id] & "" )
+				VAR Installs = FILTER ( vw_jsf, vw_jsf[Install Outcome] = "Installed" && NOT ISBLANK ( vw_jsf[JSF Date (Day)] ) && ( vw_jsf[account_id] & "" ) IN Eligible )
 				VAR Units =
 				    SELECTCOLUMNS (
 				        GROUPBY (
@@ -147,6 +142,15 @@ table 'Unit Failures'
 				        "Install Date", [First Install],
 				        "Units", 1
 				    )
+				VAR UnitDates = SELECTCOLUMNS ( Units, "Account", [Account], "IDate", [Install Date] + 0 )
+				VAR Tickets = SELECTCOLUMNS ( FILTER ( 'Sundesk Tickets', 'Sundesk Tickets'[Confirmed Failure] = "Confirmed Failure" && NOT ISBLANK ( 'Sundesk Tickets'[Linked Account] ) ), "Account", 'Sundesk Tickets'[Linked Account] & "", "TDate", 'Sundesk Tickets'[created_at] + 0 )
+				VAR FaultsByUnit =
+				    GROUPBY (
+				        FILTER ( NATURALINNERJOIN ( Tickets, UnitDates ), [TDate] >= [IDate] ),
+				        [Account],
+				        "Fault Tickets", COUNTX ( CURRENTGROUP (), 1 ),
+				        "First Fault Date", MINX ( CURRENTGROUP (), [TDate] )
+				    )
 				VAR Joined = NATURALLEFTOUTERJOIN ( Units, FaultsByUnit )
 				RETURN
 				    ADDCOLUMNS (
@@ -154,7 +158,7 @@ table 'Unit Failures'
 				        "Build Type", VAR P = LOWER ( TRIM ( [Product] ) ) RETURN IF ( CONTAINSSTRING ( P, "refurb" ) || RIGHT ( P, 4 ) = " - r" || RIGHT ( P, 2 ) = "-r" || CONTAINSSTRING ( P, "-r " ), "Refurb", "Non-Refurb" ),
 				        "Faults", COALESCE ( [Fault Tickets], 0 ),
 				        "Has Faulted", IF ( COALESCE ( [Fault Tickets], 0 ) > 0, "Faulted", "No Fault" ),
-				        "Days to First Fault", IF ( ISBLANK ( [First Fault Date] ), BLANK (), MAX ( 0, DATEDIFF ( [Install Date], [First Fault Date], DAY ) ) ),
+				        "Days to First Fault", IF ( ISBLANK ( [First Fault Date] ), BLANK (), DATEDIFF ( [Install Date], [First Fault Date], DAY ) ),
 				        "Days in Field", DATEDIFF ( [Install Date], TODAY (), DAY )
 				    )
 
