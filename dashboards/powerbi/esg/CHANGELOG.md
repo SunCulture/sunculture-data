@@ -9,6 +9,7 @@
 - **Changed** climate insurance and climate-resilience training moved from SDG 1 to SDG 13; added SDG 13 rows for tCO₂ (pumps sold, active pumps, lifetime), petrol avoided, diesel MJ and carbon credits; SDG 6 water purification.
 - **Added** *Waiting survey* status for KPIs the SDG survey will collect; other gaps say *Pending – <source>*. No individual names in the report.
 - **Fixed** `policies` refresh: product names are read from the same dataflow inside the query (referencing the `products` query tripped the Formula.Firewall and cancelled every table), and the start date is converted to date-time before date.
+- **Checked** CDS water data: `Quantity_of_water_usage_per_week__c` is filled for 6.7% of responses (6,071 of 91,116), most often 0, so *Water withdrawn & consumed* stays *Waiting survey* and the survey Water use questions stay. Noted in the questionnaire's `kpi_mapping` and `dashboard_methodology`.
 - **Changed** page width 1200 → 1280 so the Country slicer (and the table) are not cut off; the Country slicer filters every row through `accounts_mv` and `vw_employees` (checked: Kenya 65,747 / Uganda 6,337 / CIV 3,762 total sales).
 - **Changed** questionnaire (version 2026111202): Not sure and Prefer not to say separated; post-harvest loss question removed; food access labels Easier / Harder; well / borehole running-dry questions; fuel type and weekly fuel spend; new Water use section (source, pumping days, water pumped per day, uses, water purification system); `dashboard_methodology` sheet with every KPI's formula, source and status.
 
