@@ -1,0 +1,57 @@
+table Ambassadors
+	lineageTag: 2959503d-51d6-4221-93a0-f4110aa716e9
+
+	column Name
+		dataType: string
+		lineageTag: f781ee1e-6382-449f-9472-e76d578f30c7
+		sourceColumn: Name
+
+	column Country
+		dataType: string
+		lineageTag: b213d1ca-490a-467d-9e28-ed8512901677
+		sourceColumn: Country
+
+	column Division
+		dataType: string
+		lineageTag: 2262edbb-d2f6-4d1b-b26e-fdb71fb03f1f
+		sourceColumn: Division
+
+	column Team
+		dataType: string
+		lineageTag: d9572c05-d277-4924-ba84-816b288a9481
+		sourceColumn: Team
+
+	partition Ambassadors = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    WS = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    Flow = WS{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    Raw = Flow{[entity="carbon_training_log",version=""]}[Data],
+				
+				    DivFix = [#"P&C"="People & Culture", Growth="Growth / BD"],
+				    NameFix = [#"Caren Omondi"="Carren Omondi", #"Faith Mutuku"="Faith Mutiku"],
+				    Blank = (v) => let t = Text.Trim(Text.From(v ?? "")) in if t = "" then null else t,
+				    FirstLine = (v) => let t = Blank(v) in if t = null then null else List.First(List.Select(List.Transform(Text.Split(t, "#(lf)"), Text.Trim), each _ <> "")),
+				
+				    Rows = Table.SelectRows(Raw, each Blank([#"Department / Team"]) <> null and Text.Trim(Text.From([#"Department / Team"])) <> "Department / Team"),
+				    DivRaw = Table.AddColumn(Rows, "divx", each let d = FirstLine([Division]) in if d = null then null else Record.FieldOrDefault(DivFix, d, d)),
+				    Filled = Table.FillDown(DivRaw, {"divx"}),
+				
+				    KE = Table.SelectColumns(Table.AddColumn(Table.SelectRows(Filled, each Blank([#"KE Carbon Ambassador"]) <> null), "Country", each "Kenya"), {"divx","Department / Team","Country","KE Carbon Ambassador"}),
+				    KE2 = Table.RenameColumns(KE, {{"KE Carbon Ambassador","nm"}}),
+				    UG = Table.SelectColumns(Table.AddColumn(Table.SelectRows(Filled, each Blank([#"UG Carbon Ambassador"]) <> null), "Country", each "Uganda"), {"divx","Department / Team","Country","UG Carbon Ambassador"}),
+				    UG2 = Table.RenameColumns(UG, {{"UG Carbon Ambassador","nm"}}),
+				    Both = Table.Combine({KE2, UG2}),
+				
+				    Split = Table.AddColumn(Both, "one", each List.Select(List.Transform(Text.Split(Text.From([nm]), ","), Text.Trim), each _ <> "")),
+				    Expl = Table.ExpandListColumn(Split, "one"),
+				    Fixed = Table.AddColumn(Expl, "Name", each Record.FieldOrDefault(NameFix, [one], [one])),
+				    Ren = Table.RenameColumns(Fixed, {{"divx","Division"},{"Department / Team","Team"}}),
+				    Sel = Table.SelectColumns(Ren, {"Name","Country","Division","Team"}),
+				    Typed = Table.TransformColumnTypes(Sel, {{"Name",type text},{"Country",type text},{"Division",type text},{"Team",type text}})
+				in
+				    Typed
+

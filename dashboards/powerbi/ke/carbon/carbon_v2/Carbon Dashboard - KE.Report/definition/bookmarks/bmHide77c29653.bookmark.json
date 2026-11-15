@@ -1,0 +1,33 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – Training",
+  "name": "bmHide77c29653",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp77c29653",
+      "paneBg77c29653",
+      "paneReset77c29653",
+      "paneHide77c29653",
+      "5cb2de0ce250249b6ae5",
+      "6b02b424a376b6ed8671",
+      "70023ea9a2050bdb7571",
+      "9724726df419fab490e0"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "d2e68afd1b4ba1e9847a",
+    "sections": {
+      "d2e68afd1b4ba1e9847a": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp77c29653": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

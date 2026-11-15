@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Show Slicer Pane – Carbon Credit CDS",
+  "name": "bmShowaa034bd5",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrpaa034bd5",
+      "paneBgaa034bd5",
+      "paneResetaa034bd5",
+      "paneHideaa034bd5",
+      "7b76cb0682f932fea152",
+      "505c673453a100242303",
+      "9456e8c37bff8f03066c",
+      "2c431fde6be865572963",
+      "ce95094b691928fa150c"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "ReportSection",
+    "sections": {
+      "ReportSection": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrpaa034bd5": {
+            "isHidden": false
+          }
+        }
+      }
+    }
+  }
+}

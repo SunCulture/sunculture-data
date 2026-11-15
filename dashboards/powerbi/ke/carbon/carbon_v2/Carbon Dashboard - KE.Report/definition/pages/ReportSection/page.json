@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSection",
+  "displayName": "Carbon Credit CDS",
+  "displayOption": "FitToWidth",
+  "height": 1136,
+  "width": 1280,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "201L"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F6F4'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "ae605e02249ac2304a29",
+      "target": "9456e8c37bff8f03066c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "9456e8c37bff8f03066c",
+      "target": "ae605e02249ac2304a29",
+      "type": "DataFilter"
+    }
+  ]
+}

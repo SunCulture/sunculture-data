@@ -1,0 +1,210 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – LSC & Feedback",
+  "name": "bmReset1bde8b85",
+  "options": {
+    "targetVisualNames": [
+      "a5dbde355d6660483759",
+      "a99e9ba647d58a7776b6",
+      "adf664bb43e05cd48d91"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "3c2a0091bdcd9915daa0",
+    "sections": {
+      "3c2a0091bdcd9915daa0": {
+        "visualContainers": {
+          "a5dbde355d6660483759": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "165e66c54ff5e39da2bc",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "LSC Round"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "LSC Round"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "a99e9ba647d58a7776b6": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "4c8985e47999b5a7075f",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "County (map key)"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "County (map key)"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "adf664bb43e05cd48d91": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "61ec1bb32b9b611a62c1",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "LSC_Events"
+                        }
+                      },
+                      "Property": "Year"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

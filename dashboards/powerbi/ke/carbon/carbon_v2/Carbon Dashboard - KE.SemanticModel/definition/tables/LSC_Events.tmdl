@@ -1,0 +1,137 @@
+table LSC_Events
+	lineageTag: 218756ab-e169-4dc8-bc86-30a77a668feb
+
+	column 'Event ID'
+		dataType: int64
+		lineageTag: afa4f86f-3e0b-483a-a3db-c0e909cc9c97
+		sourceColumn: Event ID
+
+	column 'Round #'
+		dataType: int64
+		lineageTag: 71efc35a-d9a4-4699-8435-5d89a3700aae
+		sourceColumn: Round #
+
+	column 'LSC Round'
+		dataType: string
+		lineageTag: 16d83f01-5e42-4745-bdae-814bbde4a247
+		sourceColumn: LSC Round
+
+	column 'Date Start'
+		dataType: dateTime
+		lineageTag: 78ff8adb-284b-42c6-9e5f-2a744e7249d7
+		sourceColumn: Date Start
+
+	column 'Date End'
+		dataType: dateTime
+		lineageTag: 588d2a23-cdbd-4ef2-b653-29869587e797
+		sourceColumn: Date End
+
+	column Year
+		dataType: int64
+		lineageTag: 1d0c44ec-0385-4e86-b66a-5117a1cebecd
+		sourceColumn: Year
+
+	column Month
+		dataType: string
+		lineageTag: ceaccf61-a2b4-4491-a29c-b10c3c69dd10
+		sourceColumn: Month
+
+	column 'Site / Location'
+		dataType: string
+		lineageTag: 359f4fe4-0c2f-445f-a545-a15f094e4852
+		sourceColumn: Site / Location
+
+	column 'County (as recorded)'
+		dataType: string
+		lineageTag: b0ee7bea-31b5-44a4-8097-fe6915d71470
+		sourceColumn: County (as recorded)
+
+	column 'County (map key)'
+		dataType: string
+		lineageTag: 7717d47e-4eb1-44ba-b95e-e1a020102604
+		sourceColumn: County (map key)
+
+	column Male
+		dataType: int64
+		lineageTag: 11728d01-2414-4dd1-88ae-72fc12d6d428
+		sourceColumn: Male
+
+	column Female
+		dataType: int64
+		lineageTag: a45caaec-e364-4a5c-aa08-a2b963dc6a51
+		sourceColumn: Female
+
+	column Total
+		dataType: int64
+		lineageTag: 95428eba-96ef-433e-a69a-cc431aa9b72f
+		sourceColumn: Total
+
+	column 'Female %'
+		dataType: double
+		lineageTag: dd877750-2950-42d6-8afb-8fe54c89024d
+		sourceColumn: Female %
+
+	column Days
+		dataType: int64
+		lineageTag: 25afbffe-68ec-400f-9e89-cf378328094b
+		sourceColumn: Days
+
+	column 'SSC Support Team'
+		dataType: string
+		lineageTag: 1763fc6b-2a4e-42ec-a0ba-d9c6c4ec18fa
+		sourceColumn: SSC Support Team
+
+	column Notes
+		dataType: string
+		lineageTag: 28a0c8ff-38fa-4f6a-97de-66d419e8900e
+		sourceColumn: Notes
+
+	partition LSC_Events = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    WS = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    Flow = WS{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    Raw = Flow{[entity="carbon_lsc_consultation_matrix",version=""]}[Data],
+				
+				    Months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"},
+				    MonthNo = (m) => List.PositionOf(Months, Text.Proper(Text.Start(Text.Trim(m),3))) + 1,
+				    AliasMap = [#"Taita-Taveta"="Taita Taveta", #"Trans-Nzoia"="Trans Nzoia", #"Tharaka-Nithi"="Tharaka", #"Elgeyo-Marakwet"="Keiyo-Marakwet", #"Elgeyo Marakwet"="Keiyo-Marakwet", Muranga="Murang'a", Homabay="Homa Bay"],
+				    RoundLabels = [#"1"="LSC 1 - Nov-Dec 2023", #"2"="LSC 2 - Sep 2024", #"3"="LSC 3 - Mar 2025", #"4"="LSC 4 - Jul 2025", #"5"="LSC 5 - Nov 2025", #"6"="LSC 6 - Oct 2025"],
+				    RoundNo = (id) => if id <= 4 then 1 else if id <= 9 then 2 else if id <= 13 then 3 else if id <= 17 then 4 else if id <= 21 then 6 else 5,
+				
+				    Rows = Table.SelectRows(Raw, each (try Number.From([#"#"]) otherwise null) <> null),
+				
+				    Calc = Table.AddColumn(Rows, "c", each
+				        let
+				            d0 = Text.Trim(Text.Replace(Text.Replace(Text.From([#"LSC Date(s)"]), "–", "-"), "—", "-")),
+				            iso = Text.Length(d0) >= 10 and Text.Middle(d0,4,1) = "-",
+				            tk = List.Select(Text.SplitAny(d0, " ,-"), each _ <> ""),
+				            n = List.Count(tk),
+				            yr = if iso then 0 else Number.From(List.Last(tk)),
+				            m1 = if iso then 1 else MonthNo(tk{0}),
+				            d1 = if iso then 1 else Number.From(tk{1}),
+				            m2 = if iso then 1 else (if n >= 5 then MonthNo(tk{2}) else m1),
+				            d2 = if iso then 1 else (if n >= 5 then Number.From(tk{3}) else (if n = 4 then Number.From(tk{2}) else d1)),
+				            ds = if iso then Date.From(Text.Start(d0,10)) else #date(yr,m1,d1),
+				            de = if iso then ds else #date(yr,m2,d2),
+				            id = Number.From([#"#"]),
+				            ml = try Number.From([Male]) otherwise 0,
+				            fm = try Number.From([Female]) otherwise 0,
+				            tt = try Number.From([Total]) otherwise ml + fm,
+				            cr = Text.Trim(Text.From([County])),
+				            ck = Record.FieldOrDefault(AliasMap, cr, cr),
+				            rn = RoundNo(id)
+				        in
+				            [EID=id, RN=rn, RL=Record.Field(RoundLabels, Number.ToText(rn)), DS=ds, DE=de, YR=Date.Year(ds), MO=Date.ToText(ds,"MMM yyyy"), ML=ml, FM=fm, TT=tt, FP=(if tt>0 then fm/tt else null), DY=Duration.Days(de-ds)+1, CR=cr, CK=ck]),
+				
+				    Ex = Table.ExpandRecordColumn(Calc, "c", {"EID","RN","RL","DS","DE","YR","MO","ML","FM","TT","FP","DY","CR","CK"}),
+				    Drop = Table.RemoveColumns(Ex, {"#","LSC Date(s)","County","Male","Female","Total","Key Issues Raised/Suggestions","_loaded_at","_sheet","_source_file"}),
+				    Ren = Table.RenameColumns(Drop, {{"EID","Event ID"},{"RN","Round #"},{"RL","LSC Round"},{"DS","Date Start"},{"DE","Date End"},{"YR","Year"},{"MO","Month"},{"SSC / Location","Site / Location"},{"CR","County (as recorded)"},{"CK","County (map key)"},{"ML","Male"},{"FM","Female"},{"TT","Total"},{"FP","Female %"},{"DY","Days"}}),
+				    Sel = Table.SelectColumns(Ren, {"Event ID","Round #","LSC Round","Date Start","Date End","Year","Month","Site / Location","County (as recorded)","County (map key)","Male","Female","Total","Female %","Days","SSC Support Team","Notes"}),
+				    Typed = Table.TransformColumnTypes(Sel, {{"Event ID",Int64.Type},{"Round #",Int64.Type},{"LSC Round",type text},{"Date Start",type datetime},{"Date End",type datetime},{"Year",Int64.Type},{"Month",type text},{"Site / Location",type text},{"County (as recorded)",type text},{"County (map key)",type text},{"Male",Int64.Type},{"Female",Int64.Type},{"Total",Int64.Type},{"Female %",type number},{"Days",Int64.Type},{"SSC Support Team",type text},{"Notes",type text}})
+				in
+				    Typed
+

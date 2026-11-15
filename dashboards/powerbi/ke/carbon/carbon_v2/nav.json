@@ -1,0 +1,13 @@
+{"sections": [
+  {"label": "CONTRACTS", "pages": [
+    {"page": "Contracts Overview", "icon": "file-text"},
+    {"page": "Customer Details", "icon": "users"}
+  ]},
+  {"label": "CUSTOMER DATA", "pages": [
+    {"page": "Carbon Credit CDS", "icon": "clipboard-check"}
+  ]},
+  {"label": "SAFEGUARDS", "pages": [
+    {"page": "Training", "icon": "shield-check"},
+    {"page": "LSC & Feedback", "icon": "map-pin"}
+  ]}
+]}

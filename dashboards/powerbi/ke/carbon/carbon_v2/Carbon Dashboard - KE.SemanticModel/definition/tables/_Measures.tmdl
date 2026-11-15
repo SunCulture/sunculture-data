@@ -1,0 +1,393 @@
+table _Measures
+	lineageTag: 2d21d484-5680-4f18-b099-891540baf97d
+
+	/// Same as Installations (kept for existing visuals).
+	measure '# Contracts' = [Installations]
+		formatString: #,0
+		lineageTag: b4582f4e-93ed-4eb4-892d-680c506f6f87
+
+	/// Installed carbon-contract pumps: one pump = one contract. Accounts with a completed Kenya INSTALLATION JSF whose own engineer recommendation is Installed (Category Unit, not ADDON), each counted once at its latest such JSF and contributing its number of pumps (units, at least 1). Dated by the JSF date (Calendar). Matches the Operations 'Installed' units.
+	measure Installations = SUMX ( FILTER ( jsf_mv, jsf_mv[Is Contract] = 1 ), RELATED ( accounts_mv[units] ) )
+		formatString: #,0
+		lineageTag: 9e9b9eb9-c82c-48ce-8377-ae94b44b9da5
+
+	measure 'Submission Rate' = DIVIDE( [Submitted], [Installations] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b6f3e669-bb70-4291-a0ff-93527046fd83
+
+	/// Installations whose signed PAYG contract has been received (customer_contracts Received = Yes).
+	measure Submitted = CALCULATE( [Installations], KEEPFILTERS( payg_cystomer_contracts[Received] = "Yes" ) )
+		formatString: #,0
+		lineageTag: 272339b1-4a10-429d-a34d-3bc857435de5
+
+	/// Installations whose installation JSF has a signed carbon form.
+	measure 'Carbon Forms Signed' = CALCULATE( [Installations], KEEPFILTERS( jsf_mv[has_signed_carbon_form] = "1" ) )
+		formatString: 0
+		lineageTag: 89ebe412-f774-4371-97cd-432f3fc6aa98
+
+	measure 'Signing Rate' = DIVIDE([Carbon Forms Signed], [Installations])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 078722d8-f96e-4a2d-b7e3-cea730c14502
+
+	/// Units sold (units = product quantity, at least 1 per account), dated by sale date: Kenya, Category = Unit (pump kits; no add-ons, financial services or TSR), not Refunded / Rejected, not test. Same definition as the Operations dashboard and the Sales Funnel.
+	measure '# Sales (Sale Date)' =
+			
+			CALCULATE(
+			    SUM( accounts_mv[units] ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( NOT CONTAINSSTRING( accounts_mv[customer_name], "test" ) ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[sale_date] ) ),
+			    KEEPFILTERS( accounts_mv[category] = "Unit" ),
+			    KEEPFILTERS( NOT accounts_mv[status] IN { "Refunded", "Rejected" } ),
+			    REMOVEFILTERS( jsf_mv[jsf_status] ),
+			    REMOVEFILTERS( jsf_mv[jsf_type] ),
+			    REMOVEFILTERS( jsf_mv[Latest Installation Flag] ),
+			    REMOVEFILTERS( jsf_mv[Is Contract] ),
+			    USERELATIONSHIP( accounts_mv[sale_date_only], 'Calendar'[Date] )
+			)
+		formatString: #,0
+		lineageTag: 83809bfe-399e-4595-a2ab-4f43d7f49896
+
+	/// Units sold (units = product quantity, at least 1 per account), dated by account's JSF date: Kenya, Category = Unit (pump kits; no add-ons, financial services or TSR), not Refunded / Rejected, not test. Same definition as the Operations dashboard and the Sales Funnel.
+	measure '# Sales (JSF Date)' =
+			
+			CALCULATE(
+			    SUM( accounts_mv[units] ),
+			    KEEPFILTERS( accounts_mv[companyRegion] = "kenya" ),
+			    KEEPFILTERS( NOT CONTAINSSTRING( accounts_mv[customer_name], "test" ) ),
+			    KEEPFILTERS( NOT ISBLANK( accounts_mv[sale_date] ) ),
+			    KEEPFILTERS( accounts_mv[category] = "Unit" ),
+			    KEEPFILTERS( NOT accounts_mv[status] IN { "Refunded", "Rejected" } ),
+			    REMOVEFILTERS( jsf_mv[jsf_status] ),
+			    REMOVEFILTERS( jsf_mv[jsf_type] ),
+			    REMOVEFILTERS( jsf_mv[Latest Installation Flag] ),
+			    REMOVEFILTERS( jsf_mv[Is Contract] ),
+			    USERELATIONSHIP( 'Calendar'[Date], accounts_mv[jsfDate] )
+			)
+		formatString: #,0
+		lineageTag: 28b6fea4-c6ca-4b7d-b27c-608aa6ed82ac
+
+	measure 'Submission Rate Colour' =
+			
+			-- Standard red / yellow / green scale
+			-- Red    #F8696B  rgb(248,105,107)
+			-- Yellow #FFEB84  rgb(255,235,132)
+			-- Green  #63BE7B  rgb(99,190,123)
+			VAR Lo  = 0.5      -- at or below this = full red
+			VAR Hi  = 0.95     -- at or above this = full green
+			VAR Val = [Submission Rate]
+			VAR P   = MIN( MAX( DIVIDE( Val - Lo, Hi - Lo ), 0 ), 1 )
+			VAR R   = IF( P <= 0.5, 248 + ( 255 - 248 ) * ( P / 0.5 ), 255 + (  99 - 255 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR G   = IF( P <= 0.5, 105 + ( 235 - 105 ) * ( P / 0.5 ), 235 + ( 190 - 235 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR B   = IF( P <= 0.5, 107 + ( 132 - 107 ) * ( P / 0.5 ), 132 + ( 123 - 132 ) * ( ( P - 0.5 ) / 0.5 ) )
+			RETURN
+			    IF(
+			        ISBLANK( Val ),
+			        BLANK(),
+			        "rgb(" & ROUND( R, 0 ) & "," & ROUND( G, 0 ) & "," & ROUND( B, 0 ) & ")"
+			    )
+		lineageTag: d3757ef1-d4e2-47c3-90a9-a82b9e7bf0c0
+
+	measure 'Signing Rate Colour' =
+			
+			-- Standard red / yellow / green scale
+			VAR Lo  = 0.5      -- at or below this = full red
+			VAR Hi  = 0.95     -- at or above this = full green
+			VAR Val = [Signing Rate]
+			VAR P   = MIN( MAX( DIVIDE( Val - Lo, Hi - Lo ), 0 ), 1 )
+			VAR R   = IF( P <= 0.5, 248 + ( 255 - 248 ) * ( P / 0.5 ), 255 + (  99 - 255 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR G   = IF( P <= 0.5, 105 + ( 235 - 105 ) * ( P / 0.5 ), 235 + ( 190 - 235 ) * ( ( P - 0.5 ) / 0.5 ) )
+			VAR B   = IF( P <= 0.5, 107 + ( 132 - 107 ) * ( P / 0.5 ), 132 + ( 123 - 132 ) * ( ( P - 0.5 ) / 0.5 ) )
+			RETURN
+			    IF(
+			        ISBLANK( Val ),
+			        BLANK(),
+			        "rgb(" & ROUND( R, 0 ) & "," & ROUND( G, 0 ) & "," & ROUND( B, 0 ) & ")"
+			    )
+		lineageTag: 1dbbf654-0c4c-460d-b3ba-273c8436ba8c
+
+	/// Installed accounts whose signed contract has not yet been received.
+	measure 'Pending Contracts' = IF( ISBLANK( [Installations] ), BLANK(), [Installations] - COALESCE( [Submitted], 0 ) )
+		formatString: #,0
+		lineageTag: 9f3c0eda-fb4b-4679-8b58-5e8315ef877a
+
+	/// Sequential month number used to keep the trend chart on the latest months that have activity.
+	measure 'Month Index' =
+			IF(
+			    NOT ISBLANK( [Installations] ) || NOT ISBLANK( [# Sales (Sale Date)] ),
+			    MAX( 'Calendar'[Year] ) * 12 + MAX( 'Calendar'[Month] )
+			)
+		formatString: 0
+		displayFolder: Formatting
+		lineageTag: 722621f3-d7f8-4b92-8acb-8d083fcfe112
+
+	/// Font colour for the contract-received flag in the customer table.
+	measure 'Contract Status Colour' =
+			SWITCH(
+			    SELECTEDVALUE( accounts_mv[Has Received Contract] ),
+			    "Yes", "#1B7F5B",
+			    "No", "#C0392B",
+			    "#5F716B"
+			)
+		displayFolder: Formatting
+		lineageTag: 353c088e-3ec1-4166-861b-c7cdffc9aec1
+
+	/// Latest contract sync timestamp shown in the report header.
+	measure 'Last Synced' =
+			VAR d = CALCULATE( MAX( payg_cystomer_contracts[synced_at] ), REMOVEFILTERS() )
+			RETURN IF( ISBLANK( d ), "—", FORMAT( d, "dd mmm yyyy, HH:mm" ) )
+		displayFolder: Formatting
+		lineageTag: ea5d4301-107d-4084-8cb6-f2d3ea5757e0
+
+	/// Count of local stakeholder consultation events.
+	measure 'Consultations Held' = COUNTROWS(LSC_Events)
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 7aa5965d-1362-454c-b9e6-c78d8bac95f3
+
+	measure 'Total Participants' = SUM(LSC_Events[Total])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 1420717f-e73b-4379-9245-137cd235f3b1
+
+	measure 'Male Participants' = SUM(LSC_Events[Male])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: ff32a966-ed0d-4dfd-a851-211e2ecd90d9
+
+	measure 'Female Participants' = SUM(LSC_Events[Female])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 3696eaaf-86c8-4c91-b5de-4d0057867c93
+
+	measure 'Female %' = DIVIDE([Female Participants], [Total Participants])
+		formatString: 0.0%
+		displayFolder: LSC
+		lineageTag: 8375b854-551a-4559-9ced-549c899d5bee
+
+	measure 'Avg Attendance' = DIVIDE([Total Participants], [Consultations Held])
+		formatString: #,0.0
+		displayFolder: LSC
+		lineageTag: f9f8a23b-84bd-4dec-8497-473ad3a856e7
+
+	measure 'Counties Reached' = DISTINCTCOUNT(LSC_Events[County (map key)])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 98ef9a15-ba62-4f9f-b4c3-0bd3cb4718bc
+
+	/// All 47 Kenyan counties. ALLNOBLANKROW excludes the engine's phantom blank row.
+	measure 'Counties Total' = COUNTROWS(ALLNOBLANKROW(County_Lookup))
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: e8d5216c-c95b-4d61-b642-6d30e1a24be5
+
+	measure 'Counties Not Reached' = [Counties Total] - [Counties Reached]
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 55bfe119-3f2b-4d90-8323-e97f1f3be302
+
+	measure 'County Coverage %' = DIVIDE([Counties Reached], [Counties Total])
+		formatString: 0.0%
+		displayFolder: LSC
+		lineageTag: 0672c09f-e4b3-4049-93e2-781339575142
+
+	measure 'LSC Rounds' = DISTINCTCOUNT(LSC_Events[Round #])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: bf08c86d-16b0-4ba0-9d29-1d10eb67c5f5
+
+	measure 'Issues Logged' = COALESCE(COUNTROWS(LSC_Issues), 0)
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: dbe0bb3e-1556-4aa1-a67d-628a63024304
+
+	/// Number of distinct consultations that raised the theme in context. Use this, not a row count, when comparing themes.
+	measure 'Sites Raising Issue' = DISTINCTCOUNT(LSC_Issues[Event ID])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: 89bd1ac5-841d-4454-bc83-ce910ec10819
+
+	measure 'Themes Raised' = DISTINCTCOUNT(LSC_Issues[Theme])
+		formatString: #,0
+		displayFolder: LSC
+		lineageTag: a56abfb3-e88a-4b46-bcea-f26a8dff1fc7
+
+	measure 'Teams Total' = COUNTROWS(Training_Teams)
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 8677f347-abba-4acc-828f-789a9a04b089
+
+	measure 'Teams Completed' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Completed") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: c7b3ca9b-8d87-4c97-8e4b-f68db5697e32
+
+	measure 'Teams Pending' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Pending") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 58672eb8-e3aa-49f4-991f-17ad0bf6b439
+
+	measure 'Teams Not Started' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Not started") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 29ea0bf9-7f90-47ee-99f6-aec2057f7c91
+
+	measure 'Training Completion %' = DIVIDE([Teams Completed], [Teams Total])
+		formatString: 0%;-0%;0%
+		displayFolder: Training
+		lineageTag: 34e7a2f0-27f4-4d41-a105-59355e34908b
+
+	measure 'Divisions Covered' = DISTINCTCOUNT(Training_Teams[Divisions])
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: da9d23f7-2968-4384-b62a-4a4895c2f06e
+
+	measure 'Teams Remaining' = [Teams Total] - [Teams Completed]
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 2a4fc47d-bba1-493d-856b-ebf144aa5ffe
+
+	measure 'Ambassadors Onboarded' = COALESCE(COUNTROWS(Ambassadors), 0)
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: b07720b3-817c-4946-8bba-6cd242a57dea
+
+	measure 'KE Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Kenya") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 175c029b-ade3-4087-9644-80c446302a1b
+
+	measure 'UG Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Uganda") + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 4253a4d0-b32a-4715-9831-38c4cddc3f6c
+
+	measure 'Teams with Ambassador' = CALCULATE(COUNTROWS(Training_Teams), NOT ISBLANK(Training_Teams[KE Carbon Ambassador])) + 0
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 91df3d63-791f-4226-8262-6ab91ad06db9
+
+	measure 'Total Cases' = COALESCE(COUNTROWS(Grievances), 0)
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 73a3c042-db64-4d07-a8ff-bc7f015c63ea
+
+	measure 'Cases Within SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Within SLA") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: a90b9ef1-af8d-43bb-94e7-938f5ccbed7e
+
+	measure 'Cases Outside SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Outside SLA") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 40a0ead6-c780-448e-b0a4-0b97eabae3d8
+
+	measure 'Open Cases' = CALCULATE(COUNTROWS(Grievances), Grievances[Status] <> "Closed") + 0
+		formatString: #,0
+		displayFolder: Grievances
+		lineageTag: 9cbad88c-0147-4958-8fe8-e2edd41bd384
+
+	measure 'Average TAT (Days)' = AVERAGE(Grievances[TAT (Days)])
+		formatString: #,0.0
+		displayFolder: Grievances
+		lineageTag: ba504c83-33d2-4f33-96d1-c04b60f7dee3
+
+	measure 'SLA Compliance %' = DIVIDE([Cases Within SLA], [Total Cases])
+		formatString: 0.0%
+		displayFolder: Grievances
+		lineageTag: 3c06739b-ac60-499c-ac9f-aa5480098e64
+
+	/// Font colour for training status (used for conditional formatting in tables).
+	measure 'Status Colour' =
+			SWITCH(
+			    SELECTEDVALUE( Training_Teams[Status] ),
+			    "Completed", "#1B7F5B",
+			    "Pending", "#B7791F",
+			    "Not started", "#C0392B",
+			    "#5F716B"
+			)
+		displayFolder: Formatting
+		lineageTag: c732e8b2-fb27-4a1d-ac7b-de7f5a946fab
+
+	/// Sidebar text: last model refresh in EAT.
+	measure 'Data refreshed' = "Data refreshed " & FORMAT ( MAX ( 'Last Refresh'[Refreshed] ), "d mmm yyyy, HH:mm" ) & " EAT"
+		displayFolder: Report
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-1c2d3e4f5a62
+
+	/// Sidebar text: when the contract register (customer_contracts) last synced.
+	measure 'Contracts synced' = "Contracts synced " & [Last Synced]
+		displayFolder: Report
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-1c2d3e4f5a63
+
+	/// Number of slicers in the pane currently narrowing the Contracts Overview page.
+	measure 'Active Filters (Contracts Overview)' =
+			INT ( ISFILTERED ( accounts_mv[companyRegion] ) )
+			+ INT ( ISFILTERED ( payg_cystomer_contracts[source] ) )
+			+ INT ( ISFILTERED ( accounts_mv[accountType] ) )
+			+ INT ( ISFILTERED ( accounts_mv[Has Received Contract] ) )
+			+ INT ( ISFILTERED ( Calendar[Year] ) )
+			+ INT ( ISFILTERED ( Calendar[Month Name] ) )
+		formatString: 0
+		displayFolder: Report\Slicer Pane
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-77b45cdb6d86
+
+	/// Number of slicers in the pane currently narrowing the Customer Details page.
+	measure 'Active Filters (Customer Details)' =
+			INT ( ISFILTERED ( accounts_mv[accountRef] ) )
+			+ INT ( ISFILTERED ( accounts_mv[Has Received Contract] ) )
+			+ INT ( ISFILTERED ( accounts_mv[accountType] ) )
+			+ INT ( ISFILTERED ( payg_cystomer_contracts[source] ) )
+			+ INT ( ISFILTERED ( accounts_mv[Dispatch Month] ) )
+			+ INT ( ISFILTERED ( Calendar[Year] ) )
+			+ INT ( ISFILTERED ( Calendar[Month Name] ) )
+		formatString: 0
+		displayFolder: Report\Slicer Pane
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-28d04ec7e267
+
+	/// Number of slicers in the pane currently narrowing the Carbon Credit CDS page.
+	measure 'Active Filters (Carbon Credit CDS)' =
+			INT ( ISFILTERED ( accounts_mv[companyRegion] ) )
+			+ INT ( ISFILTERED ( 'Customer Data Survey'[carbon_credit_which_pump_type_c] ) )
+			+ INT ( ISFILTERED ( 'Customer Data Survey'[did_you_previously_own_a_water_pump_c] ) )
+			+ INT ( ISFILTERED ( 'Customer Data Survey'[CDS2 Month] ) )
+			+ INT ( ISFILTERED ( 'Customer Data Survey'[cdsId] ) )
+		formatString: 0
+		displayFolder: Report\Slicer Pane
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-aa034bd57f62
+
+	/// Number of slicers in the pane currently narrowing the Training page.
+	measure 'Active Filters (Training)' =
+			INT ( ISFILTERED ( Training_Teams[Divisions] ) )
+			+ INT ( ISFILTERED ( Training_Teams[Department / Team] ) )
+			+ INT ( ISFILTERED ( Training_Teams[Status] ) )
+			+ INT ( ISFILTERED ( Training_Teams[Session Type] ) )
+		formatString: 0
+		displayFolder: Report\Slicer Pane
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-77c296531dc1
+
+	/// Number of slicers in the pane currently narrowing the LSC & Feedback page.
+	measure 'Active Filters (LSC & Feedback)' =
+			INT ( ISFILTERED ( LSC_Events[LSC Round] ) )
+			+ INT ( ISFILTERED ( LSC_Events[County (map key)] ) )
+			+ INT ( ISFILTERED ( LSC_Events[Year] ) )
+		formatString: 0
+		displayFolder: Report\Slicer Pane
+		lineageTag: 5e1d2c3b-4a59-4687-9a0b-1bde8b850055
+
+	column Column
+		formatString: 0
+		lineageTag: 29c791c6-ab57-4fa4-8efa-1809911dfbbd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 6ad76a3fbde247d9ab0be975d166585c
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

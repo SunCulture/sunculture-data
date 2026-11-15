@@ -1,0 +1,92 @@
+table Training_Teams
+	lineageTag: 97a5e077-ac4c-466b-bb9d-61714fcd75fa
+
+	column Divisions
+		dataType: string
+		lineageTag: b2237287-bf93-4fac-926a-9c7533cbdcc3
+		sourceColumn: Divisions
+
+	column 'Department / Team'
+		dataType: string
+		lineageTag: 87946600-2f7d-42af-aa36-5a4d3efe5827
+		sourceColumn: Department / Team
+
+	column 'Team Lead'
+		dataType: string
+		lineageTag: 3e955c12-393e-4466-814e-11b7919ed1f2
+		sourceColumn: Team Lead
+
+	column 'Training Date'
+		dataType: dateTime
+		lineageTag: e4eb030d-df15-463d-aa96-d4950a5f94e4
+		sourceColumn: Training Date
+
+	column Status
+		dataType: string
+		lineageTag: d9547f8f-7445-4e01-8c5d-ff378fcc5899
+		sourceColumn: Status
+
+	column Quarter
+		dataType: string
+		lineageTag: 5309b196-5c6e-47e3-8689-27faf902aed1
+		sourceColumn: Quarter
+
+	column 'Session Type'
+		dataType: string
+		lineageTag: 362a9f0a-0a68-4c1c-9221-7e8eb4925e31
+		sourceColumn: Session Type
+
+	column 'KE Carbon Ambassador'
+		dataType: string
+		lineageTag: 8c7f54d8-543e-4266-9be7-8e2e9c6746fa
+		sourceColumn: KE Carbon Ambassador
+
+	column 'UG Carbon Ambassador'
+		dataType: string
+		lineageTag: 56c0917f-4287-4c89-adfe-a0d7a11f6f26
+		sourceColumn: UG Carbon Ambassador
+
+	column Notes
+		dataType: string
+		lineageTag: 3a3172a2-6175-4840-9d6e-c1664bff9f38
+		sourceColumn: Notes
+
+	partition Training_Teams = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    WS = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    Flow = WS{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    Raw = Flow{[entity="carbon_training_log",version=""]}[Data],
+				
+				    DivFix = [#"P&C"="People & Culture", Growth="Growth / BD"],
+				    NameFix = [#"Caren Omondi"="Carren Omondi", #"Faith Mutuku"="Faith Mutiku"],
+				    TeamFix = [#"Cedit-Field Credit"="Credit - Field Credit"],
+				    Heads = [Product="Tim Muchai", Carbon="Daniel Okoth"],
+				    Blank = (v) => let t = Text.Trim(Text.From(v ?? "")) in if t = "" then null else t,
+				    FirstLine = (v) => let t = Blank(v) in if t = null then null else List.First(List.Select(List.Transform(Text.Split(t, "#(lf)"), Text.Trim), each _ <> "")),
+				
+				    Rows = Table.SelectRows(Raw, each Blank([#"Department / Team"]) <> null and Text.Trim(Text.From([#"Department / Team"])) <> "Department / Team"),
+				    DivRaw = Table.AddColumn(Rows, "divx", each let d = FirstLine([Division]) in if d = null then null else Record.FieldOrDefault(DivFix, d, d)),
+				    Filled = Table.FillDown(DivRaw, {"divx"}),
+				    Built = Table.AddColumn(Filled, "c", each
+				        let
+				            dv = [divx] ?? "Unassigned",
+				            tmRaw = Text.Trim(Text.From([#"Department / Team"])),
+				            tm = Record.FieldOrDefault(TeamFix, tmRaw, tmRaw),
+				            ldRaw = Blank([#"Team Lead"]),
+				            ld = if ldRaw <> null then Record.FieldOrDefault(NameFix, ldRaw, ldRaw) else Record.FieldOrDefault(Heads, dv, "TBC"),
+				            st = Text.Trim(Text.From([Status] ?? "")),
+				            stf = if List.Contains({"Completed","Pending"}, st) then st else "Not started",
+				            dt = try DateTime.From(Blank([#"Training Date"])) otherwise null
+				        in [DV=dv, TM=tm, LD=ld, ST=stf, DT=dt]),
+				    Ex = Table.ExpandRecordColumn(Built, "c", {"DV","TM","LD","ST","DT"}),
+				    Drop = Table.RemoveColumns(Ex, {"Division","Department / Team","Team Lead","Status","Training Date","Index","divx","_loaded_at","_sheet","_source_file"}),
+				    Ren = Table.RenameColumns(Drop, {{"DV","Divisions"},{"TM","Department / Team"},{"LD","Team Lead"},{"ST","Status"},{"DT","Training Date"},{"Notes/Details","Notes"}}),
+				    Sel = Table.SelectColumns(Ren, {"Divisions","Department / Team","Team Lead","Training Date","Status","Quarter","Session Type","KE Carbon Ambassador","UG Carbon Ambassador","Notes"}),
+				    Typed = Table.TransformColumnTypes(Sel, {{"Divisions",type text},{"Department / Team",type text},{"Team Lead",type text},{"Training Date",type datetime},{"Status",type text},{"Quarter",type text},{"Session Type",type text},{"KE Carbon Ambassador",type text},{"UG Carbon Ambassador",type text},{"Notes",type text}})
+				in
+				    Typed
+

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – LSC & Feedback",
+  "name": "bmHide1bde8b85",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp1bde8b85",
+      "paneBg1bde8b85",
+      "paneReset1bde8b85",
+      "paneHide1bde8b85",
+      "a5dbde355d6660483759",
+      "a99e9ba647d58a7776b6",
+      "adf664bb43e05cd48d91"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "3c2a0091bdcd9915daa0",
+    "sections": {
+      "3c2a0091bdcd9915daa0": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp1bde8b85": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

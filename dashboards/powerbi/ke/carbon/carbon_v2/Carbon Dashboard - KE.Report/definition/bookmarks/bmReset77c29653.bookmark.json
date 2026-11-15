@@ -1,0 +1,273 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – Training",
+  "name": "bmReset77c29653",
+  "options": {
+    "targetVisualNames": [
+      "5cb2de0ce250249b6ae5",
+      "6b02b424a376b6ed8671",
+      "70023ea9a2050bdb7571",
+      "9724726df419fab490e0"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "d2e68afd1b4ba1e9847a",
+    "sections": {
+      "d2e68afd1b4ba1e9847a": {
+        "visualContainers": {
+          "5cb2de0ce250249b6ae5": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "19274ea5391a89050a1f",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Divisions"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Divisions"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "6b02b424a376b6ed8671": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "495e0d2560c91ccc6b7e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Department / Team"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Department / Team"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "70023ea9a2050bdb7571": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5495747847b3921540f0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Status"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9724726df419fab490e0": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2b3adce58f39a9b5e2a4",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Session Type"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Training_Teams"
+                        }
+                      },
+                      "Property": "Session Type"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

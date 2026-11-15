@@ -1,0 +1,301 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Reset filters – Carbon Credit CDS",
+  "name": "bmResetaa034bd5",
+  "options": {
+    "targetVisualNames": [
+      "2c431fde6be865572963",
+      "505c673453a100242303",
+      "7b76cb0682f932fea152",
+      "9456e8c37bff8f03066c",
+      "ce95094b691928fa150c"
+    ],
+    "applyOnlyToTargetVisuals": true,
+    "suppressDisplay": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "ReportSection",
+    "sections": {
+      "ReportSection": {
+        "visualContainers": {
+          "7b76cb0682f932fea152": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "eaaab218ae1408c78dea",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "accounts_mv"
+                        }
+                      },
+                      "Property": "companyRegion"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "accounts_mv"
+                        }
+                      },
+                      "Property": "companyRegion"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "505c673453a100242303": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ceb2a048e20f71088789",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "carbon_credit_which_pump_type_c"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "carbon_credit_which_pump_type_c"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9456e8c37bff8f03066c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fcfca5bb5e0d2fc0add5",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "did_you_previously_own_a_water_pump_c"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "did_you_previously_own_a_water_pump_c"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "2c431fde6be865572963": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "3106c1dd52c9421cea9c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "CDS2 Month"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "CDS2 Month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ce95094b691928fa150c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "762ef3782907f0c3c3df",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "cdsId"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Customer Data Survey"
+                        }
+                      },
+                      "Property": "cdsId"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
