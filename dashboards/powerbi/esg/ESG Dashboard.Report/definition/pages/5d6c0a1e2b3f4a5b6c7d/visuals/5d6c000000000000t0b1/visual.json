@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "5d6c000000000000t0b1",
   "position": {
-    "x": 24,
-    "y": 186,
-    "z": 1030,
-    "width": 1232,
-    "height": 1120,
-    "tabOrder": 1030
+    "x": 0,
+    "y": 85.216197666437893,
+    "z": 4000,
+    "height": 955.82704186684975,
+    "width": 1280,
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "tableEx",
@@ -15,6 +15,21 @@
       "queryState": {
         "Values": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ESG Measures"
+                    }
+                  },
+                  "Property": "SDG Bar"
+                }
+              },
+              "queryRef": "ESG Measures.SDG Bar",
+              "nativeQueryRef": "SDG Bar",
+              "displayName": " "
+            },
             {
               "field": {
                 "Column": {
@@ -27,8 +42,8 @@
                 }
               },
               "queryRef": "SDG Summary.SDG Display",
-              "nativeQueryRef": "SDG",
-              "displayName": "SD Goal"
+              "nativeQueryRef": "SDG Display",
+              "displayName": "SDG"
             },
             {
               "field": {
@@ -43,7 +58,7 @@
               },
               "queryRef": "SDG Summary.KPI",
               "nativeQueryRef": "KPI",
-              "displayName": "Description"
+              "displayName": "KPI / Metric"
             },
             {
               "field": {
@@ -53,12 +68,12 @@
                       "Entity": "ESG Measures"
                     }
                   },
-                  "Property": "SDG Baseline"
+                  "Property": "SDG 2024"
                 }
               },
-              "queryRef": "ESG Measures.SDG Baseline",
-              "nativeQueryRef": "Baseline",
-              "displayName": "Baseline"
+              "queryRef": "ESG Measures.SDG 2024",
+              "nativeQueryRef": "2024",
+              "displayName": "2024"
             },
             {
               "field": {
@@ -68,12 +83,43 @@
                       "Entity": "ESG Measures"
                     }
                   },
-                  "Property": "SDG Score"
+                  "Property": "SDG 2025"
                 }
               },
-              "queryRef": "ESG Measures.SDG Score",
-              "nativeQueryRef": "Score",
-              "displayName": "SunCulture score"
+              "queryRef": "ESG Measures.SDG 2025",
+              "nativeQueryRef": "2025",
+              "displayName": "2025"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ESG Measures"
+                    }
+                  },
+                  "Property": "SDG 2026"
+                }
+              },
+              "queryRef": "ESG Measures.SDG 2026",
+              "nativeQueryRef": "2026",
+              "displayName": "2026"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SDG Years"
+                    }
+                  },
+                  "Property": "SDG Years"
+                }
+              },
+              "index": 3,
+              "length": 3
             }
           ]
         }
@@ -121,6 +167,35 @@
                   "Value": "'Left'"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2326'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -128,6 +203,13 @@
       "values": [
         {
           "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
             "wordWrap": {
               "expr": {
                 "Literal": {
@@ -135,13 +217,80 @@
                 }
               }
             },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2326'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2326'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "ESG Measures"
+                        }
+                      },
+                      "Property": "SDG Colour"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "ESG Measures.SDG Bar"
           }
         }
       ],
@@ -161,6 +310,24 @@
                   "Value": "true"
                 }
               }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#ECEEEA'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -171,7 +338,21 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "320D"
+                  "Value": "6D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG Bar"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "271.5703515179867D"
                 }
               }
             }
@@ -185,7 +366,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "500D"
+                  "Value": "415.47700579836413D"
                 }
               }
             }
@@ -199,13 +380,13 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "180D"
+                  "Value": "150D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "ESG Measures.SDG Baseline"
+            "metadata": "ESG Measures.SDG 2024"
           }
         },
         {
@@ -213,13 +394,83 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "180D"
+                  "Value": "150D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "ESG Measures.SDG Score"
+            "metadata": "ESG Measures.SDG 2025"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2026"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2027"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2028"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2029"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2030"
           }
         }
       ],
@@ -248,6 +499,20 @@
             }
           },
           "selector": {
+            "metadata": "ESG Measures.SDG Bar"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          },
+          "selector": {
             "metadata": "SDG Summary.SDG Display"
           }
         },
@@ -256,13 +521,13 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'Center'"
+                  "Value": "'Left'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "ESG Measures.SDG Baseline"
+            "metadata": "SDG Summary.KPI"
           }
         },
         {
@@ -276,7 +541,91 @@
             }
           },
           "selector": {
-            "metadata": "ESG Measures.SDG Score"
+            "metadata": "ESG Measures.SDG 2024"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2025"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2026"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2027"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2028"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2029"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "ESG Measures.SDG 2030"
           }
         }
       ]
@@ -320,6 +669,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
                 }
               }
             }
@@ -447,65 +803,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "e8d105f08e2e89d45e3f",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "SDG Summary"
-              }
-            },
-            "Property": "SDG Display"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "7ac0d88e47a39db0aa26",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "SDG Summary"
-              }
-            },
-            "Property": "KPI"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "ded3e5f083300d4115c7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ESG Measures"
-              }
-            },
-            "Property": "SDG Baseline"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "659b9d62e74991871e7b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "ESG Measures"
-              }
-            },
-            "Property": "SDG Score"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

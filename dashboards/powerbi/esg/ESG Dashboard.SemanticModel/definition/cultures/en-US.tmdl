@@ -81,7 +81,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "SD Goal": {
+			          "SDG": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -102,7 +102,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Description": {
+			          "KPI / Metric": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -113,17 +113,35 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "esg_measures.sdg_baseline": {
+			    "esg_measures.sdg_year_end": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "ESG Measures",
-			          "ConceptualProperty": "SDG Baseline"
+			          "ConceptualProperty": "SDG Year-End"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "esg_measures.sdg_bar": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "SDG Bar"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "esg_measures.sdg_2024": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "SDG 2024"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Baseline": {
+			          "2024": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -134,17 +152,38 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "esg_measures.sdg_score": {
+			    "esg_measures.sdg_2025": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "ESG Measures",
-			          "ConceptualProperty": "SDG Score"
+			          "ConceptualProperty": "SDG 2025"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "SunCulture score": {
+			          "2025": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "esg_measures.sdg_2026": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "ESG Measures",
+			          "ConceptualProperty": "SDG 2026"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "2026": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

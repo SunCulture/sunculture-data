@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["accounts_mv","mart_cds_responses","customers","vw_employees","device_daily_usage"]
+annotation PBI_QueryOrder = ["accounts_mv","mart_cds_responses","customers","vw_employees","device_daily_usage","policies","products"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -24,6 +24,9 @@ ref table 'IoT Connection'
 ref table Country
 ref table 'Product Watts'
 ref table 'SDG Summary'
+ref table 'SDG Years'
+ref table policies
+ref table products
 
 ref cultureInfo en-US
 

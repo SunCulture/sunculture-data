@@ -1277,3 +1277,5 @@ table accounts_mv
 				in
 				    accounts_mv_
 
+	annotation PBI_ResultType = Table
+
