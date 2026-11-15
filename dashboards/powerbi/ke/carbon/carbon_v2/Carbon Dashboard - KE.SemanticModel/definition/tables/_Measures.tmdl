@@ -11,6 +11,7 @@ table _Measures
 		formatString: #,0
 		lineageTag: 9e9b9eb9-c82c-48ce-8377-ae94b44b9da5
 
+	/// Contracts received as a share of installed pumps: Submitted ÷ Installations.
 	measure 'Submission Rate' = DIVIDE( [Submitted], [Installations] )
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: b6f3e669-bb70-4291-a0ff-93527046fd83
@@ -25,6 +26,7 @@ table _Measures
 		formatString: 0
 		lineageTag: 89ebe412-f774-4371-97cd-432f3fc6aa98
 
+	/// Installed pumps whose installation JSF has a signed carbon form, as a share of installations.
 	measure 'Signing Rate' = DIVIDE([Carbon Forms Signed], [Installations])
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 078722d8-f96e-4a2d-b7e3-cea730c14502
@@ -67,6 +69,7 @@ table _Measures
 		formatString: #,0
 		lineageTag: 28b6fea4-c6ca-4b7d-b27c-608aa6ed82ac
 
+	/// Red / yellow / green colour for Submission Rate (red at 50% or below, green at 95% or above).
 	measure 'Submission Rate Colour' =
 			
 			-- Standard red / yellow / green scale
@@ -88,6 +91,7 @@ table _Measures
 			    )
 		lineageTag: d3757ef1-d4e2-47c3-90a9-a82b9e7bf0c0
 
+	/// Red / yellow / green colour for Signing Rate (red at 50% or below, green at 95% or above).
 	measure 'Signing Rate Colour' =
 			
 			-- Standard red / yellow / green scale
@@ -106,7 +110,7 @@ table _Measures
 			    )
 		lineageTag: 1dbbf654-0c4c-460d-b3ba-273c8436ba8c
 
-	/// Installed accounts whose signed contract has not yet been received.
+	/// Installed pumps whose signed contract has not yet been received (Installations − Submitted); blank when there are no installations.
 	measure 'Pending Contracts' = IF( ISBLANK( [Installations] ), BLANK(), [Installations] - COALESCE( [Submitted], 0 ) )
 		formatString: #,0
 		lineageTag: 9f3c0eda-fb4b-4679-8b58-5e8315ef877a
@@ -145,31 +149,37 @@ table _Measures
 		displayFolder: LSC
 		lineageTag: 7aa5965d-1362-454c-b9e6-c78d8bac95f3
 
+	/// People who attended local stakeholder consultations.
 	measure 'Total Participants' = SUM(LSC_Events[Total])
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: 1420717f-e73b-4379-9245-137cd235f3b1
 
+	/// Men who attended local stakeholder consultations.
 	measure 'Male Participants' = SUM(LSC_Events[Male])
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: ff32a966-ed0d-4dfd-a851-211e2ecd90d9
 
+	/// Women who attended local stakeholder consultations.
 	measure 'Female Participants' = SUM(LSC_Events[Female])
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: 3696eaaf-86c8-4c91-b5de-4d0057867c93
 
+	/// Women as a share of consultation participants.
 	measure 'Female %' = DIVIDE([Female Participants], [Total Participants])
 		formatString: 0.0%
 		displayFolder: LSC
 		lineageTag: 8375b854-551a-4559-9ced-549c899d5bee
 
+	/// Average participants per consultation.
 	measure 'Avg Attendance' = DIVIDE([Total Participants], [Consultations Held])
 		formatString: #,0.0
 		displayFolder: LSC
 		lineageTag: f9f8a23b-84bd-4dec-8497-473ad3a856e7
 
+	/// Counties with at least one consultation.
 	measure 'Counties Reached' = DISTINCTCOUNT(LSC_Events[County (map key)])
 		formatString: #,0
 		displayFolder: LSC
@@ -181,21 +191,25 @@ table _Measures
 		displayFolder: LSC
 		lineageTag: e8d5216c-c95b-4d61-b642-6d30e1a24be5
 
+	/// Kenyan counties with no consultation yet (47 − counties reached).
 	measure 'Counties Not Reached' = [Counties Total] - [Counties Reached]
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: 55bfe119-3f2b-4d90-8323-e97f1f3be302
 
+	/// Counties reached as a share of the 47 Kenyan counties.
 	measure 'County Coverage %' = DIVIDE([Counties Reached], [Counties Total])
 		formatString: 0.0%
 		displayFolder: LSC
 		lineageTag: 0672c09f-e4b3-4049-93e2-781339575142
 
+	/// Number of consultation rounds held.
 	measure 'LSC Rounds' = DISTINCTCOUNT(LSC_Events[Round #])
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: bf08c86d-16b0-4ba0-9d29-1d10eb67c5f5
 
+	/// Issues raised by communities across consultations.
 	measure 'Issues Logged' = COALESCE(COUNTROWS(LSC_Issues), 0)
 		formatString: #,0
 		displayFolder: LSC
@@ -207,91 +221,109 @@ table _Measures
 		displayFolder: LSC
 		lineageTag: 89bd1ac5-841d-4454-bc83-ce910ec10819
 
+	/// Distinct issue themes raised by communities.
 	measure 'Themes Raised' = DISTINCTCOUNT(LSC_Issues[Theme])
 		formatString: #,0
 		displayFolder: LSC
 		lineageTag: a56abfb3-e88a-4b46-bcea-f26a8dff1fc7
 
+	/// Teams on the carbon training register.
 	measure 'Teams Total' = COUNTROWS(Training_Teams)
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 8677f347-abba-4acc-828f-789a9a04b089
 
+	/// Teams whose carbon training is Completed.
 	measure 'Teams Completed' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Completed") + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: c7b3ca9b-8d87-4c97-8e4b-f68db5697e32
 
+	/// Teams whose carbon training is Pending.
 	measure 'Teams Pending' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Pending") + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 58672eb8-e3aa-49f4-991f-17ad0bf6b439
 
+	/// Teams whose carbon training has Not started.
 	measure 'Teams Not Started' = CALCULATE(COUNTROWS(Training_Teams), Training_Teams[Status] = "Not started") + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 29ea0bf9-7f90-47ee-99f6-aec2057f7c91
 
+	/// Teams completed as a share of all teams on the register.
 	measure 'Training Completion %' = DIVIDE([Teams Completed], [Teams Total])
 		formatString: 0%;-0%;0%
 		displayFolder: Training
 		lineageTag: 34e7a2f0-27f4-4d41-a105-59355e34908b
 
+	/// Divisions with at least one team on the training register.
 	measure 'Divisions Covered' = DISTINCTCOUNT(Training_Teams[Divisions])
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: da9d23f7-2968-4384-b62a-4a4895c2f06e
 
+	/// Teams still to complete training (total − completed).
 	measure 'Teams Remaining' = [Teams Total] - [Teams Completed]
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 2a4fc47d-bba1-493d-856b-ebf144aa5ffe
 
+	/// Carbon ambassadors on the roster.
 	measure 'Ambassadors Onboarded' = COALESCE(COUNTROWS(Ambassadors), 0)
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: b07720b3-817c-4946-8bba-6cd242a57dea
 
+	/// Carbon ambassadors in Kenya.
 	measure 'KE Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Kenya") + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 175c029b-ade3-4087-9644-80c446302a1b
 
+	/// Carbon ambassadors in Uganda.
 	measure 'UG Ambassadors' = CALCULATE(COUNTROWS(Ambassadors), Ambassadors[Country] = "Uganda") + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 4253a4d0-b32a-4715-9831-38c4cddc3f6c
 
+	/// Teams that have a Kenya carbon ambassador assigned.
 	measure 'Teams with Ambassador' = CALCULATE(COUNTROWS(Training_Teams), NOT ISBLANK(Training_Teams[KE Carbon Ambassador])) + 0
 		formatString: #,0
 		displayFolder: Training
 		lineageTag: 91df3d63-791f-4226-8262-6ab91ad06db9
 
+	/// Grievance cases logged.
 	measure 'Total Cases' = COALESCE(COUNTROWS(Grievances), 0)
 		formatString: #,0
 		displayFolder: Grievances
 		lineageTag: 73a3c042-db64-4d07-a8ff-bc7f015c63ea
 
+	/// Grievance cases resolved within the SLA.
 	measure 'Cases Within SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Within SLA") + 0
 		formatString: #,0
 		displayFolder: Grievances
 		lineageTag: a90b9ef1-af8d-43bb-94e7-938f5ccbed7e
 
+	/// Grievance cases resolved outside the SLA.
 	measure 'Cases Outside SLA' = CALCULATE(COUNTROWS(Grievances), Grievances[SLA Met?] = "Outside SLA") + 0
 		formatString: #,0
 		displayFolder: Grievances
 		lineageTag: 40a0ead6-c780-448e-b0a4-0b97eabae3d8
 
+	/// Grievance cases not yet closed.
 	measure 'Open Cases' = CALCULATE(COUNTROWS(Grievances), Grievances[Status] <> "Closed") + 0
 		formatString: #,0
 		displayFolder: Grievances
 		lineageTag: 9cbad88c-0147-4958-8fe8-e2edd41bd384
 
+	/// Average days to resolve a grievance case.
 	measure 'Average TAT (Days)' = AVERAGE(Grievances[TAT (Days)])
 		formatString: #,0.0
 		displayFolder: Grievances
 		lineageTag: ba504c83-33d2-4f33-96d1-c04b60f7dee3
 
+	/// Grievance cases within SLA as a share of all cases.
 	measure 'SLA Compliance %' = DIVIDE([Cases Within SLA], [Total Cases])
 		formatString: 0.0%
 		displayFolder: Grievances
