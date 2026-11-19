@@ -1,0 +1,55 @@
+table payg_cystomer_contracts
+	lineageTag: 0b8d9bf6-471c-44ca-bfe4-715ed0cb2003
+
+	column Account_Ref
+		dataType: string
+		lineageTag: b3da6e12-3a5e-4313-8e92-43ed4b14ba74
+		summarizeBy: none
+		sourceColumn: Account_Ref
+
+		annotation SummarizationSetBy = Automatic
+
+	column Received
+		dataType: string
+		lineageTag: 30903924-6c12-4d05-963c-d90646bab8ee
+		summarizeBy: none
+		sourceColumn: Received
+
+		annotation SummarizationSetBy = Automatic
+
+	column synced_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5de8cdfb-3a0a-4f10-84f4-c7e88a2e4a42
+		summarizeBy: none
+		sourceColumn: synced_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: f4324bea-d8b6-47e5-b971-84ba8dd140bb
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payg_cystomer_contracts = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"53592722-7e0e-4647-aca3-d40201d022dd" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="53592722-7e0e-4647-aca3-d40201d022dd"]}[Data],
+				    customer_contracts_ = #"53592722-7e0e-4647-aca3-d40201d022dd"{[entity="customer_contracts",version=""]}[Data],
+				    #"Removed Duplicates" = Table.Distinct(customer_contracts_, {"Account_Ref"}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Removed Duplicates", {"Account_Ref", "Received", "synced_at", "source"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

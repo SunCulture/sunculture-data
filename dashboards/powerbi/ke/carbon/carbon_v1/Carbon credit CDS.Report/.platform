@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Carbon credit CDS"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "edc10cc5-314a-45f9-8dea-deabcef06748"
+  }
+}

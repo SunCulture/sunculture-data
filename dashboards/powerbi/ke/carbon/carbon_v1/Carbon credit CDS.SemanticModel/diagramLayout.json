@@ -1,0 +1,48 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 802,
+            "y": 0
+          },
+          "nodeIndex": "Customer Data Survey",
+          "nodeLineageTag": "3ac8dd2e-3d08-4a90-a7eb-24da768fabd2",
+          "size": {
+            "height": 249,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 84.526020074990129,
+            "y": 229.89438112325308
+          },
+          "nodeIndex": "Customer",
+          "nodeLineageTag": "9da17381-fe56-428a-bb12-be0603e93bc6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.553182037699813,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

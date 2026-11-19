@@ -1,0 +1,99 @@
+table LSC_Issues
+	lineageTag: 1ef13329-ce58-4a57-8357-185be9d5f6f6
+
+	column 'Event ID'
+		dataType: int64
+		lineageTag: 85efdea1-38df-48d8-8b69-ed2d66287953
+		sourceColumn: Event ID
+
+	column 'Round #'
+		dataType: int64
+		lineageTag: 964a1efb-72b4-4754-92f5-f5ee20818b48
+		sourceColumn: Round #
+
+	column 'County (map key)'
+		dataType: string
+		lineageTag: f4642c3e-d437-4862-90d3-851698b8a922
+		sourceColumn: County (map key)
+
+	column Site
+		dataType: string
+		lineageTag: d998fe6b-ef40-4e16-b189-873cdeb5c244
+		sourceColumn: Site
+
+	column Year
+		dataType: int64
+		lineageTag: eb992976-57bb-4bcd-8a07-04a5f006ac4f
+		sourceColumn: Year
+
+	column Theme
+		dataType: string
+		lineageTag: 09901b4a-7008-49ea-a84b-fe824d80251a
+		sourceColumn: Theme
+
+	column 'Issue / Suggestion (verbatim)'
+		dataType: string
+		lineageTag: 117bc105-6fb2-43d4-a5d2-1cb8408a3131
+		sourceColumn: Issue / Suggestion (verbatim)
+
+	partition LSC_Issues = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    WS = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    Flow = WS{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    Raw = Flow{[entity="carbon_lsc_consultation_matrix",version=""]}[Data],
+				    AliasMap = [#"Taita-Taveta"="Taita Taveta", #"Trans-Nzoia"="Trans Nzoia", #"Tharaka-Nithi"="Tharaka", #"Elgeyo-Marakwet"="Keiyo-Marakwet", #"Elgeyo Marakwet"="Keiyo-Marakwet", Muranga="Murang'a", Homabay="Homa Bay"],
+				    RoundNo = (id) => if id <= 4 then 1 else if id <= 9 then 2 else if id <= 13 then 3 else if id <= 17 then 4 else if id <= 21 then 6 else 5,
+				    Themes = {
+				        {"Water storage & supply", {"water tank","borehole","water catchment","water storage","brackish","saline","water softening","filtration"}},
+				        {"Credit & payment terms", {"on credit","installment","instalment","repayment","grace period","lipa pole","credit/loan","credit facility","paygrow"}},
+				        {"Farm inputs & agronomy", {"seed","fertilizer","fertiliser","farm input","farming input","agronomic","seedling","agricultural input","farming tool","rain boot"}},
+				        {"Farmer training & extension", {"farmer training","more farmer","trainings/lessons","training seminar","continued farmer","more lessons"}},
+				        {"Clean cooking", {"cooking","cooker","stove","pressure cooker"}},
+				        {"Pump performance & hardware", {"batter","standby pump","sprinkler","drip irrigation","pipe durability","powerful pump","light bulb","maintenance schedule","engineer visit"}},
+				        {"Theft & security tech", {"theft","iot","location sensor","security/flood","flood light","token-based"}},
+				        {"Adjacent solar products", {"incubator","fridge","blender","fan","solar lighting","tvs","biogas","solar-powered household","solar powered household"}},
+				        {"Environmental stewardship", {"tree planting","environmental stewardship","environmental conservation","awareness campaign","fresh air","protects health"}},
+				        {"Carbon literacy & comms", {"carbon messaging","language barrier","simplified communication","fpic","carbon credit familiarity","sms","call-hold"}},
+				        {"Community organisation", {"farmer association","community members","joint awareness"}},
+				        {"Benefit sharing", {"benefit sharing","discounted pump price","medical insurance","free after-sales"}}
+				    },
+				    Rows = Table.SelectRows(Raw, each (try Number.From([#"#"]) otherwise null) <> null),
+				    WithId = Table.AddColumn(Rows, "idn", each Number.From([#"#"]), type number),
+				
+				    // ---- WORKAROUND for an upstream pipeline defect ----
+				    // The dataflow fills blank text cells downward, so events 2,3,4 carry
+				    // event 1's Key Issues verbatim. 23 rows, only 14 distinct texts.
+				    // Keeping the lowest Event ID per distinct text restores the true 14.
+				    // DELETE THIS STEP once the fill-down is removed upstream.
+				    Sorted = Table.Sort(WithId, {{"idn", Order.Ascending}}),
+				    Dedup = Table.Distinct(Sorted, {"Key Issues Raised/Suggestions"}),
+				
+				    Base = Table.AddColumn(Dedup, "b", each
+				        let
+				            d0 = Text.Trim(Text.From([#"LSC Date(s)"])),
+				            iso = Text.Length(d0) >= 10 and Text.Middle(d0,4,1) = "-",
+				            tk = List.Select(Text.SplitAny(Text.Replace(Text.Replace(d0, "–", "-"), "—", "-"), " ,-"), each _ <> ""),
+				            yr = if iso then Number.From(Text.Start(d0,4)) else Number.From(List.Last(tk)),
+				            cr = Text.Trim(Text.From([County])),
+				            id = Number.From([#"#"])
+				        in [EID=id, RN=RoundNo(id), CK=Record.FieldOrDefault(AliasMap, cr, cr), YR=yr]),
+				    Ex1 = Table.ExpandRecordColumn(Base, "b", {"EID","RN","CK","YR"}),
+				    Frag = Table.AddColumn(Ex1, "frag", each List.Select(List.Transform(Text.SplitAny(Text.From([#"Key Issues Raised/Suggestions"]), ";#(lf)#(cr)"), Text.Trim), each Text.Length(_) >= 6)),
+				    Expl = Table.ExpandListColumn(Frag, "frag"),
+				    Keep = Table.SelectRows(Expl, each [frag] <> null and Text.Length([frag]) >= 6),
+				    Tag = Table.AddColumn(Keep, "th", each
+				        let low = Text.Lower([frag]),
+				            hits = List.Transform(List.Select(Themes, each List.AnyTrue(List.Transform(_{1}, (k) => Text.Contains(low, k)))), each _{0})
+				        in if List.Count(hits) = 0 then {"Other / general feedback"} else hits),
+				    Expl2 = Table.ExpandListColumn(Tag, "th"),
+				    Cut = Table.AddColumn(Expl2, "iss", each Text.Start([frag], 300)),
+				    Ren = Table.RenameColumns(Cut, {{"EID","Event ID"},{"RN","Round #"},{"CK","County (map key)"},{"SSC / Location","Site"},{"YR","Year"},{"th","Theme"},{"iss","Issue / Suggestion (verbatim)"}}),
+				    Sel = Table.SelectColumns(Ren, {"Event ID","Round #","County (map key)","Site","Year","Theme","Issue / Suggestion (verbatim)"}),
+				    Typed = Table.TransformColumnTypes(Sel, {{"Event ID",Int64.Type},{"Round #",Int64.Type},{"County (map key)",type text},{"Site",type text},{"Year",Int64.Type},{"Theme",type text},{"Issue / Suggestion (verbatim)",type text}})
+				in
+				    Typed
+

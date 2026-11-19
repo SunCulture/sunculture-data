@@ -1,0 +1,155 @@
+table jsf_mv
+	lineageTag: 11d2b71e-8b71-4b73-9f83-3e119ec01851
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: de10fc34-5b09-4b2d-a39b-b141b3d59c71
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column engineer_recommendation
+		dataType: string
+		lineageTag: 65147522-4cf9-439a-8254-2a24b6866a0a
+		summarizeBy: none
+		sourceColumn: engineer_recommendation
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_signed_carbon_form
+		dataType: string
+		lineageTag: f1308a2a-b234-4f9c-a9f3-fa3d2568bb83
+		summarizeBy: none
+		sourceColumn: has_signed_carbon_form
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_completed_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a6f190f5-2bbc-41a0-9555-af0271516ab3
+		summarizeBy: none
+		sourceColumn: jsf_completed_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column jsf_date
+		dataType: dateTime
+		formatString: m/d/yyyy
+		lineageTag: 5cb79214-0e2e-4ec6-bf9c-ac52be793544
+		summarizeBy: none
+		sourceColumn: jsf_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column jsf_engineer
+		dataType: string
+		lineageTag: e4997c39-1ea0-4d82-991a-f859238c3250
+		summarizeBy: none
+		sourceColumn: jsf_engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_id
+		dataType: string
+		lineageTag: 51c17769-3240-4d3c-b547-75530f72c488
+		summarizeBy: none
+		sourceColumn: jsf_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_status
+		dataType: string
+		lineageTag: dfba9928-2c8b-4577-93a2-180e28148248
+		summarizeBy: none
+		sourceColumn: jsf_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_type
+		dataType: string
+		lineageTag: 8ec6bf3a-1849-44bf-86aa-21c33b4829ac
+		summarizeBy: none
+		sourceColumn: jsf_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column rm_2_device_id
+		dataType: string
+		lineageTag: 40cf6d27-a9a1-479d-aa45-75b878931188
+		summarizeBy: none
+		sourceColumn: rm_2_device_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column jsf_date_clean = DATE(YEAR(jsf_mv[jsf_date]), MONTH(jsf_mv[jsf_date]), DAY(jsf_mv[jsf_date]))
+		formatString: General Date
+		lineageTag: f102dc7c-999a-466b-97a8-32b009c7214f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Completed Kenya INSTALLATION JSF whose own engineer recommendation is Installed, on a Unit account that is not ADDON. Uses the JSF row, not the account's latest-JSF summary in accounts_mv (which can lag or point at a later aftersale).
+	column 'Installed JSF' =
+			jsf_mv[jsf_type] = "INSTALLATION"
+			    && jsf_mv[jsf_status] = "COMPLETED"
+			    && jsf_mv[engineer_recommendation] = "Installed"
+			    && RELATED ( accounts_mv[companyRegion] ) = "kenya"
+			    && NOT ISBLANK ( RELATED ( accounts_mv[accountType] ) )
+			    && RELATED ( accounts_mv[accountType] ) <> "ADDON"
+			    && RELATED ( accounts_mv[category] ) = "Unit"
+		dataType: boolean
+		lineageTag: 3b1f7a52-0c1e-4d9a-9e5f-1a2b3c4d5e01
+		summarizeBy: none
+
+	/// 1 on the account's latest Installed JSF (latest JSF date, then completed date, then JSF id); one account = one contract. Other rows 0.
+	column 'Latest Installation Flag' =
+			IF (
+			    NOT jsf_mv[Installed JSF],
+			    0,
+			    VAR a = jsf_mv[account_id]
+			    VAR d = CALCULATE ( MAX ( jsf_mv[jsf_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[account_id] = a, jsf_mv[Installed JSF] = TRUE () )
+			    VAR c = CALCULATE ( MAX ( jsf_mv[jsf_completed_date] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[account_id] = a, jsf_mv[Installed JSF] = TRUE (), jsf_mv[jsf_date] = d )
+			    VAR i = CALCULATE ( MAX ( jsf_mv[jsf_id] ), REMOVEFILTERS ( jsf_mv ), jsf_mv[account_id] = a, jsf_mv[Installed JSF] = TRUE (), jsf_mv[jsf_date] = d, jsf_mv[jsf_completed_date] = c )
+			    RETURN IF ( jsf_mv[jsf_date] = d && jsf_mv[jsf_completed_date] = c && jsf_mv[jsf_id] = i, 1, 0 )
+			)
+		dataType: int64
+		lineageTag: 9a5ecdd4-2b80-4e52-b034-f0596a3cec57
+		summarizeBy: none
+
+	/// 1 when this JSF is the counted installation of a carbon contract: Installed JSF and the latest one for its account (one account = one contract).
+	column 'Is Contract' = IF ( jsf_mv[Installed JSF] && jsf_mv[Latest Installation Flag] = 1, 1, 0 )
+		dataType: int64
+		formatString: 0
+		lineageTag: df8e324a-f5e3-4fea-906f-5a62cebb4c58
+		summarizeBy: none
+
+	partition jsf_mv = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="5f59e9d3-ee70-4895-ab17-9c36a0f94aea"]}[Data],
+				    jsf_mv_ = #"5f59e9d3-ee70-4895-ab17-9c36a0f94aea"{[entity="jsf_mv",version=""]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(jsf_mv_,{{"jsf_date", type date}}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Changed Type", {"account_id", "engineer_recommendation", "has_signed_carbon_form", "jsf_completed_date", "jsf_date", "jsf_engineer", "jsf_id", "jsf_status", "jsf_type", "rm_2_device_id"}, MissingField.Ignore),
+				    // Only completed installation JSFs marked Installed (the only rows the carbon pages use)
+				    #"Installed Rows" = Table.SelectRows(#"Kept Columns", each [jsf_type] = "INSTALLATION" and [jsf_status] = "COMPLETED" and [engineer_recommendation] = "Installed")
+				in
+				    #"Installed Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

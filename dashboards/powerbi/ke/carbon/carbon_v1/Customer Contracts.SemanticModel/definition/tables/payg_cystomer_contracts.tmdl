@@ -1,0 +1,177 @@
+table payg_cystomer_contracts
+	lineageTag: 0b8d9bf6-471c-44ca-bfe4-715ed0cb2003
+
+	column Account_Ref
+		dataType: string
+		lineageTag: b3da6e12-3a5e-4313-8e92-43ed4b14ba74
+		summarizeBy: none
+		sourceColumn: Account_Ref
+
+		annotation SummarizationSetBy = Automatic
+
+	column Credit_Sale
+		dataType: double
+		lineageTag: f27ad143-5e72-4b9a-a43b-9baf759c5f1c
+		summarizeBy: sum
+		sourceColumn: Credit_Sale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Customer_Names
+		dataType: string
+		lineageTag: 3e0bb108-b3e5-45f5-8657-dcb5727ac267
+		summarizeBy: none
+		sourceColumn: Customer_Names
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Recorded
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c9188956-a2bc-4e8e-b8c9-c31cecb1f21b
+		summarizeBy: none
+		sourceColumn: Date_Recorded
+
+		variation Variation
+			isDefault
+			relationship: 7da823a0-eff6-4785-880d-ec8b8b3d8342
+			defaultHierarchy: LocalDateTable_0fa87f04-382b-4cd2-be5e-859f68e900b0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Deposits
+		dataType: double
+		lineageTag: bfa52046-c1d9-4803-95d0-e9d84626a4f0
+		summarizeBy: sum
+		sourceColumn: Deposits
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Installment_Amount
+		dataType: double
+		lineageTag: 1caa3ea9-f47c-445a-9a59-56bdfbcb85b8
+		summarizeBy: sum
+		sourceColumn: Installment_Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column JSF_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7263a682-1fd0-4a96-9540-84b712b1d831
+		summarizeBy: none
+		sourceColumn: JSF_Date
+
+		variation Variation
+			isDefault
+			relationship: fd833a16-54c7-4dce-90a0-07d1fda26c70
+			defaultHierarchy: LocalDateTable_bb18a7d7-c81c-4de9-96f1-3873a9fafe7d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column JSF_Engineer
+		dataType: string
+		lineageTag: 2259b919-ccbb-4459-9650-3d4b4b52ac62
+		summarizeBy: none
+		sourceColumn: JSF_Engineer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 18aeb462-cc73-463b-b736-e16014df7951
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 3dd65cc3-9e69-468d-afb9-184665d03fbd
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Received
+		dataType: string
+		lineageTag: 30903924-6c12-4d05-963c-d90646bab8ee
+		summarizeBy: none
+		sourceColumn: Received
+
+		annotation SummarizationSetBy = Automatic
+
+	column Slash
+		dataType: string
+		lineageTag: 7f3132b8-4792-45a8-bc86-916790f4b469
+		summarizeBy: none
+		sourceColumn: Slash
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 22b7e084-d9c8-4c76-ab61-b73b1f9953f8
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column synced_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5de8cdfb-3a0a-4f10-84f4-c7e88a2e4a42
+		summarizeBy: none
+		sourceColumn: synced_at
+
+		variation Variation
+			isDefault
+			relationship: 6963660c-80eb-40ea-8eac-d369190f2fb4
+			defaultHierarchy: LocalDateTable_95238a34-c719-4aac-aa63-50551c6ecbe1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account_Type
+		dataType: string
+		lineageTag: 283871c1-1af8-46b2-a04e-1f4645c1e4e5
+		summarizeBy: none
+		sourceColumn: Account_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: f4324bea-d8b6-47e5-b971-84ba8dd140bb
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payg_cystomer_contracts = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"53592722-7e0e-4647-aca3-d40201d022dd" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="53592722-7e0e-4647-aca3-d40201d022dd"]}[Data],
+				    customer_contracts_ = #"53592722-7e0e-4647-aca3-d40201d022dd"{[entity="customer_contracts",version=""]}[Data],
+				    #"Removed Duplicates" = Table.Distinct(customer_contracts_, {"Account_Ref"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

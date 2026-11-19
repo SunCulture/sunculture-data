@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["jsf_mv","accounts_mv","payg_cystomer_contracts","Customer Data Survey","County_Lookup","LSC_Events","LSC_Issues","LSC_Savings","Training_Teams","Ambassadors","Grievances","Last Refresh"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","MCP-PBIModeling","DevMode"]
+
+ref table jsf_mv
+ref table accounts_mv
+ref table _Measures
+ref table payg_cystomer_contracts
+ref table Calendar
+ref table Ambassadors
+ref table County_Lookup
+ref table 'Customer Data Survey'
+ref table Grievances
+ref table LSC_Events
+ref table LSC_Issues
+ref table LSC_Savings
+ref table Training_Teams
+ref table 'Last Refresh'
+
+ref cultureInfo en-US
+

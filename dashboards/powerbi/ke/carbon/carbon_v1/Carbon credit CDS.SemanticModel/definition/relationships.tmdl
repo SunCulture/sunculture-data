@@ -1,0 +1,161 @@
+relationship 254f6576-5a5e-4538-b2fb-b86cb64059da
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Data Survey'.cds1CompletionDate
+	toColumn: LocalDateTable_5d1feb64-a755-4961-b8b5-34e1a0b040b4.Date
+
+relationship f8ad2cb5-63e7-405f-9f4e-7309cf252cc1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Data Survey'.cds2CompletionDate
+	toColumn: LocalDateTable_0ac07074-ce00-4580-bdad-62f31db0c825.Date
+
+relationship fb88dbd2-96b1-42ca-aaa6-1f5bc7ed0a88
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.Full_Deposit_Date
+	toColumn: LocalDateTable_2b9d1d94-c1ee-4e85-87fd-5d96189e4ee2.Date
+
+relationship ee6c6d81-d4cf-4b26-9d7f-a872870a2820
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.RefundDate
+	toColumn: LocalDateTable_997ac54f-06d4-47d7-8af9-a6df906f179c.Date
+
+relationship 9b2fd2f3-c4eb-483e-90eb-5d6265746964
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.Repossession_created_at
+	toColumn: LocalDateTable_753e8f4a-7df2-4e15-add5-7f13beb83b7b.Date
+
+relationship e3544f47-4ea3-406e-baa2-9ea93bc9a36b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer._generated_at
+	toColumn: LocalDateTable_38f0b323-765a-44e9-903d-3730cbbf018d.Date
+
+relationship 754a3028-b0bf-442f-9aec-b0d54a84a7b9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.cds1_date
+	toColumn: LocalDateTable_f6d3c6ca-2ddf-4d8d-b3cf-def46bb84c11.Date
+
+relationship 69c32d27-1841-4d34-b75a-f8dd5dd4374e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.cds2_date
+	toColumn: LocalDateTable_560b4142-6c4f-4f0e-91c1-9ffd85f1d21b.Date
+
+relationship 84fe444c-d0ab-4c76-b427-5b6ff0b77234
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.createdAt
+	toColumn: LocalDateTable_5ecba4b0-db57-4ce4-8aa4-61c3fdd9e27f.Date
+
+relationship f84d72ff-9bf9-4df4-9ea9-ddd0b78e7498
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.customer_preferred_date
+	toColumn: LocalDateTable_2e37ed57-0bac-4e0f-8bec-61fdcfcb758e.Date
+
+relationship 5fdb79e7-3602-4156-9677-992517897d3e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.dispatchDate
+	toColumn: LocalDateTable_c75a403d-4d56-42b7-bbea-965b3e47a529.Date
+
+relationship b078a802-b2bf-44cf-ae75-8cad2b073bf4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.employee_createdAt
+	toColumn: LocalDateTable_471500ed-4a1b-410d-a163-84d4a2645a41.Date
+
+relationship c20d5d82-51df-48e5-b983-ff993043a929
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.end_date
+	toColumn: LocalDateTable_23f58a33-8d2d-437d-8226-c17487acb506.Date
+
+relationship 5d3cc703-ac84-4221-881d-82fdbdae8147
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.first_payment_date
+	toColumn: LocalDateTable_b9c89b0f-face-4a89-b896-b12b64ee0b6e.Date
+
+relationship 7996234d-b2c3-40a2-875e-0468a556ce40
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.fullDepositDate
+	toColumn: LocalDateTable_7d60402b-fd37-4cb2-82d5-caed19e09e21.Date
+
+relationship e8d00544-e246-4a5f-8e64-c06640a2401e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.installment_date
+	toColumn: LocalDateTable_65dfe19a-f047-4042-b679-62a8e99db13a.Date
+
+relationship 614d0f67-550f-4a66-9c4f-c5e889689705
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.jsfDate
+	toColumn: LocalDateTable_8643bd35-af13-46c4-82fc-9f3671e143b5.Date
+
+relationship 3bf83dd3-2a01-4eb6-ae9d-e605cbb57978
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.jsf_completed_date
+	toColumn: LocalDateTable_b85798d3-9741-499f-a2b0-199c95baeece.Date
+
+relationship 496cf2df-0164-4b3e-a9c2-224bd1530a1c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.jsf_date
+	toColumn: LocalDateTable_6a6a5efd-befe-4c34-8bb1-5c6ad5e727a3.Date
+
+relationship da1fcba9-86c5-45d1-aabc-4c4a6be294a7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.last_modified
+	toColumn: LocalDateTable_1690deb6-9a32-4275-9a8b-51379d2b37d3.Date
+
+relationship ca4bca6a-7e61-4c2f-a01e-d7b7485bec7d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.last_payment_date
+	toColumn: LocalDateTable_dbfe312e-53e7-4444-877d-88c4ea008b68.Date
+
+relationship 81cf398c-f17c-437c-b564-d502463a2e47
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.last_updated_at
+	toColumn: LocalDateTable_4d8c85fb-7a78-4373-a03b-feb634b18e86.Date
+
+relationship 944fd20e-0a0f-4515-ba7f-191b23524fe2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.sale_date
+	toColumn: LocalDateTable_4cfe5ab4-d013-4eaa-98fc-a2b7ff170844.Date
+
+relationship 2670efd4-812a-41e3-9241-5013d7668d30
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.updatedAt
+	toColumn: LocalDateTable_a3204c97-c39d-499c-ba4c-c57a40f1cee2.Date
+
+relationship 927e1e1a-665c-4bcc-a80b-ddcc51a0e252
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.warranty_expiry_date
+	toColumn: LocalDateTable_c7557221-5355-4e97-b39e-991173aaa8a6.Date
+
+relationship 4a4c4fb9-7f78-b0bd-ec0a-c268f234961b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Customer Data Survey'.leadId
+	toColumn: Customer.leadId
+
+relationship 091f3abf-b66f-4359-880a-71f808cc9bda
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Data Survey'._generated_at
+	toColumn: LocalDateTable_291ebf6e-8c1f-490b-82a9-f63f15530d27.Date
+
+relationship 12ebc012-3977-40f7-b8e4-0cb6c7d6d448
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.creditScoreDate
+	toColumn: LocalDateTable_c106bf5f-4f0e-47bc-a523-c5247dcd34eb.Date
+
+relationship b4562995-f057-4d89-9a81-02d7d9cd456e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.leadCreatedAt
+	toColumn: LocalDateTable_0efdbcf5-3a83-4d74-b239-699cd5ec10fd.Date
+
+relationship f012d958-6fe0-47d7-bb2d-e1bd4fe83c31
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.boqcreatedAt
+	toColumn: LocalDateTable_126833ae-2109-4110-a5aa-1a021ed47001.Date
+
+relationship 53690c97-69d5-4fe3-bb52-b0da483576fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.boqdate
+	toColumn: LocalDateTable_020e0937-240b-4033-aa26-284abbf12b8f.Date
+
+relationship 18cad9c9-49bb-4a4d-9808-fe5c2bf26de1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customer.dob
+	toColumn: LocalDateTable_89104d4e-9b78-4dbd-8fcb-029b72e0cd2c.Date
+

@@ -1,0 +1,62 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["jsf_mv","accounts_mv","payg_cystomer_contracts"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","MCP-PBIModeling","DevMode"]
+
+ref table jsf_mv
+ref table DateTableTemplate_bb02238b-ace6-4e04-83a3-7eda798dcf7b
+ref table LocalDateTable_dd7ad6de-8355-4cdf-a7ad-4d40a33b1df5
+ref table LocalDateTable_5aa3d56a-389e-402f-a45d-6bb07f44fde9
+ref table LocalDateTable_920312a5-c659-4ab3-82b7-4a5c30ca7c80
+ref table LocalDateTable_7cc4c25f-251d-4d4f-bfa2-6a4b415f530e
+ref table LocalDateTable_2a4eef3b-b764-4e05-b0bd-d4fb9d3e9615
+ref table accounts_mv
+ref table LocalDateTable_7ca19995-796e-4915-8eb1-dd9f0bc8400a
+ref table LocalDateTable_8816ca63-7535-4e37-99f3-139377a3a61d
+ref table LocalDateTable_f065c9e3-3e15-4879-9b5f-fa68bfe6377d
+ref table LocalDateTable_26a99746-eaf9-4b95-b81e-9701f777ea6f
+ref table LocalDateTable_a85e303d-fd2a-4bf1-a8c0-f5ea2d41a851
+ref table LocalDateTable_d0dc69ef-c625-48cf-b63f-de6649b221d3
+ref table LocalDateTable_affee044-b480-466d-a53b-4e902058d642
+ref table LocalDateTable_6c3f1045-8602-4211-812c-eaa8aa434493
+ref table LocalDateTable_f7e5f600-f387-424d-bd9d-002fd0b3e262
+ref table LocalDateTable_43657fbf-78f7-4abc-a067-1f6b84d59c35
+ref table LocalDateTable_923c911d-b097-42e2-b48d-642178512a17
+ref table LocalDateTable_88389b32-4d4a-484c-8347-2f1024c68c98
+ref table LocalDateTable_66f9ce2c-c57a-4c6f-b32b-a004443a23cc
+ref table LocalDateTable_068ec976-73ab-4359-9461-0e9a765bb407
+ref table LocalDateTable_a9ba26ef-04e4-45dd-83cc-8e15571a87e7
+ref table Measures]
+ref table payg_cystomer_contracts
+ref table LocalDateTable_0fa87f04-382b-4cd2-be5e-859f68e900b0
+ref table LocalDateTable_95238a34-c719-4aac-aa63-50551c6ecbe1
+ref table Calendar
+ref table LocalDateTable_7e3defbd-8f88-4612-a515-8501e9283fdc
+ref table LocalDateTable_bb18a7d7-c81c-4de9-96f1-3873a9fafe7d
+ref table LocalDateTable_73a65c48-039f-4774-a359-d56e062582f9
+ref table LocalDateTable_56145caa-4ec7-492f-b9f3-104b1e7fd646
+ref table LocalDateTable_6c781441-9db8-4923-8d4f-28f53d99a06a
+ref table LocalDateTable_01da0825-5227-4b01-8932-f98074968299
+ref table LocalDateTable_9c7c334a-0636-44f2-81fa-af3d39190f6e
+ref table LocalDateTable_c5179402-3a13-4004-a655-6e32d30bcf55
+ref table LocalDateTable_16669059-8a1f-43e7-84cf-d83a04573758
+ref table LocalDateTable_cc2e69d0-80f9-4bb5-badd-83e83e09b1cf
+ref table LocalDateTable_1e12b04a-72e4-46c0-84d0-f31380336b0f
+ref table LocalDateTable_3c9002b8-9607-422c-846b-dea9e5a7c18a
+ref table LocalDateTable_747376e8-57d6-46d4-87a2-31178a3b5f0c
+ref table LocalDateTable_89082e94-178f-4c09-a9eb-8c2130930369
+ref table LocalDateTable_823da7d3-2b30-47cc-aff1-6febed84aede
+ref table LocalDateTable_b4c46ec4-8499-4ca8-a10b-fde45e70ebe1
+ref table LocalDateTable_aae5c864-fa9b-4abd-9836-21b82bbf06a4
+
+ref cultureInfo en-US
+

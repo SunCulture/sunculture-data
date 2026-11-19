@@ -1,0 +1,16 @@
+relationship Events_County
+	fromColumn: LSC_Events.'County (map key)'
+	toColumn: County_Lookup.'County (map key)'
+
+relationship Issues_Event
+	fromColumn: LSC_Issues.'Event ID'
+	toColumn: LSC_Events.'Event ID'
+
+relationship Savings_Event
+	fromColumn: LSC_Savings.'Event ID'
+	toColumn: LSC_Events.'Event ID'
+
+relationship Grievances_County
+	fromColumn: Grievances.'County (map key)'
+	toColumn: County_Lookup.'County (map key)'
+

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Hide Slicer Pane – Contracts Overview",
+  "name": "bmHide77b45cdb",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "paneGrp77b45cdb",
+      "paneBg77b45cdb",
+      "paneReset77b45cdb",
+      "paneHide77b45cdb",
+      "3fe8f5129c0e2b48c9d1",
+      "3908e948d542cbe5ee26",
+      "d9ef49b3e66f2f15e80e",
+      "ec6ace7997da0a816cec",
+      "2317d2e8554da904f4d0",
+      "6855cf53a943752fdcdd"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "dd4396468f2335421862",
+    "sections": {
+      "dd4396468f2335421862": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "paneGrp77b45cdb": {
+            "isHidden": true
+          }
+        }
+      }
+    }
+  }
+}

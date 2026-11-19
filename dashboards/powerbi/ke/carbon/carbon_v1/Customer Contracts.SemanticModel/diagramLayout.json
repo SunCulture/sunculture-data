@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 40.362097109061686
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 402.49980172647622
+          },
+          "nodeIndex": "accounts_mv",
+          "nodeLineageTag": "5f217e67-021e-4104-934c-1967170df192",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 445.9651219630444,
+            "y": 416.29657398523085
+          },
+          "nodeIndex": "jsf_mv",
+          "nodeLineageTag": "11d2b71e-8b71-4b73-9f83-3e119ec01851",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 727.845363582264,
+            "y": 379.13649190757815
+          },
+          "nodeIndex": "Measures]",
+          "nodeLineageTag": "2d21d484-5680-4f18-b099-891540baf97d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 595.60000038146973,
+            "y": 0
+          },
+          "nodeIndex": "payg_cystomer_contracts",
+          "nodeLineageTag": "0b8d9bf6-471c-44ca-bfe4-715ed0cb2003",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "82953dd1-2232-40b9-9b9a-051f1fc64bc3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 89.192590520569482,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

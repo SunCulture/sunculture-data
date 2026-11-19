@@ -1,0 +1,55 @@
+table LSC_Savings
+	lineageTag: 6a89b0ae-318f-4f75-992d-e9b5d478037f
+
+	column 'Event ID'
+		dataType: int64
+		lineageTag: c0ca2fd9-17ad-4720-a45d-df973bbfccb8
+		sourceColumn: Event ID
+
+	column Site
+		dataType: string
+		lineageTag: e8c4b305-9814-4339-9f73-616e1c0aa7f3
+		sourceColumn: Site
+
+	column 'County (map key)'
+		dataType: string
+		lineageTag: 29de7618-7fb9-4ea3-b64e-152f3d8b9366
+		sourceColumn: County (map key)
+
+	column 'Litres/day (low)'
+		dataType: double
+		lineageTag: 6428f0c3-af16-41c6-82b6-a0d3e013357b
+		sourceColumn: Litres/day (low)
+
+	column 'Litres/day (high)'
+		dataType: double
+		lineageTag: 6d384a55-630f-459f-b0b5-d6ad8cd70a91
+		sourceColumn: Litres/day (high)
+
+	column 'Reported saving (verbatim)'
+		dataType: string
+		lineageTag: 324caba2-fee6-4f7e-bc21-ab70e1f00366
+		sourceColumn: Reported saving (verbatim)
+
+	partition LSC_Savings = m
+		mode: import
+		source =
+				let
+				    Src = #table(
+				        type table [#"Event ID"=Int64.Type, #"Site"=text, #"County (map key)"=text, #"Litres/day (low)"=number, #"Litres/day (high)"=number, #"Reported saving (verbatim)"=text],
+				        {
+				            {1,"Machakos","Machakos",null,null,"Not quantified"},
+				            {5,"Kitui","Kitui",null,null,"20-50% reduction in fuel expenses"},
+				            {11,"Busia","Busia",5,10,"5-10 litres petrol/day"},
+				            {12,"Bungoma","Bungoma",null,null,"~KES 400/day on petrol"},
+				            {14,"Ukunda","Kwale",5,10,"5-10 L/day or KES 3,000-15,000/month"},
+				            {18,"Chuka","Tharaka",null,null,"KES 2,000-3,000/month"},
+				            {19,"Mitunguu","Meru",null,null,"KES 9,000-10,000/month"},
+				            {21,"Nyanyuki","Laikipia",null,55,"KES 300-700/day, up to 50-55 L petrol"},
+				            {22,"Taveta","Taita Taveta",10,10,"10 litres petrol/day (most common)"},
+				            {24,"Makindu","Makueni",null,null,"KES 300-400/day to KES 15,000/month"},
+				            {25,"Emali","Makueni",null,null,"KES 200-1,000/day, up to KES 15,000/month"}
+				        })
+				in
+				    Src
+

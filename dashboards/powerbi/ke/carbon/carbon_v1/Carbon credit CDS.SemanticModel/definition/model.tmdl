@@ -1,0 +1,51 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-KE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Customer Data Survey","Customer"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table 'Customer Data Survey'
+ref table DateTableTemplate_b84d9ff7-0fd8-4f09-a2a0-8ab0ac7e5343
+ref table Customer
+ref table LocalDateTable_5d1feb64-a755-4961-b8b5-34e1a0b040b4
+ref table LocalDateTable_0ac07074-ce00-4580-bdad-62f31db0c825
+ref table LocalDateTable_2b9d1d94-c1ee-4e85-87fd-5d96189e4ee2
+ref table LocalDateTable_997ac54f-06d4-47d7-8af9-a6df906f179c
+ref table LocalDateTable_753e8f4a-7df2-4e15-add5-7f13beb83b7b
+ref table LocalDateTable_38f0b323-765a-44e9-903d-3730cbbf018d
+ref table LocalDateTable_f6d3c6ca-2ddf-4d8d-b3cf-def46bb84c11
+ref table LocalDateTable_560b4142-6c4f-4f0e-91c1-9ffd85f1d21b
+ref table LocalDateTable_5ecba4b0-db57-4ce4-8aa4-61c3fdd9e27f
+ref table LocalDateTable_2e37ed57-0bac-4e0f-8bec-61fdcfcb758e
+ref table LocalDateTable_c75a403d-4d56-42b7-bbea-965b3e47a529
+ref table LocalDateTable_471500ed-4a1b-410d-a163-84d4a2645a41
+ref table LocalDateTable_23f58a33-8d2d-437d-8226-c17487acb506
+ref table LocalDateTable_b9c89b0f-face-4a89-b896-b12b64ee0b6e
+ref table LocalDateTable_7d60402b-fd37-4cb2-82d5-caed19e09e21
+ref table LocalDateTable_65dfe19a-f047-4042-b679-62a8e99db13a
+ref table LocalDateTable_8643bd35-af13-46c4-82fc-9f3671e143b5
+ref table LocalDateTable_b85798d3-9741-499f-a2b0-199c95baeece
+ref table LocalDateTable_6a6a5efd-befe-4c34-8bb1-5c6ad5e727a3
+ref table LocalDateTable_1690deb6-9a32-4275-9a8b-51379d2b37d3
+ref table LocalDateTable_dbfe312e-53e7-4444-877d-88c4ea008b68
+ref table LocalDateTable_4d8c85fb-7a78-4373-a03b-feb634b18e86
+ref table LocalDateTable_4cfe5ab4-d013-4eaa-98fc-a2b7ff170844
+ref table LocalDateTable_a3204c97-c39d-499c-ba4c-c57a40f1cee2
+ref table LocalDateTable_c7557221-5355-4e97-b39e-991173aaa8a6
+ref table LocalDateTable_291ebf6e-8c1f-490b-82a9-f63f15530d27
+ref table LocalDateTable_c106bf5f-4f0e-47bc-a523-c5247dcd34eb
+ref table LocalDateTable_0efdbcf5-3a83-4d74-b239-699cd5ec10fd
+ref table LocalDateTable_126833ae-2109-4110-a5aa-1a021ed47001
+ref table LocalDateTable_020e0937-240b-4033-aa26-284abbf12b8f
+ref table LocalDateTable_89104d4e-9b78-4dbd-8fcb-029b72e0cd2c
+
+ref cultureInfo en-GB
+

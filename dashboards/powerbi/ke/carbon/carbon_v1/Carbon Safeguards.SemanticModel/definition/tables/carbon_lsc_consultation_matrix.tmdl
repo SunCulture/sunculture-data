@@ -1,0 +1,122 @@
+/// Raw dataflow landing. Kept for data-quality checks; the reporting tables read the dataflow directly.
+table carbon_lsc_consultation_matrix
+	isHidden
+	lineageTag: 39a5541d-5088-458c-8020-3c86acd83364
+
+	column #
+		dataType: string
+		lineageTag: 274a5c75-142a-4775-91e3-bc43695c7f38
+		summarizeBy: none
+		sourceColumn: #
+
+		annotation SummarizationSetBy = Automatic
+
+	column County
+		dataType: string
+		lineageTag: e71306a0-147a-4002-9d48-a2046119000d
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female
+		dataType: string
+		lineageTag: 6264b860-c87f-4a65-8480-d7279ae41c4f
+		summarizeBy: none
+		sourceColumn: Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Key Issues Raised/Suggestions'
+		dataType: string
+		lineageTag: 17b81e66-f777-48ba-97c3-05741c9cc708
+		summarizeBy: none
+		sourceColumn: Key Issues Raised/Suggestions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LSC Date(s)'
+		dataType: string
+		lineageTag: 989bc70b-e52d-4f4d-89bc-84aa4761419d
+		summarizeBy: none
+		sourceColumn: LSC Date(s)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Male
+		dataType: string
+		lineageTag: d7586cc0-47ac-464c-8554-0f98e57a0baa
+		summarizeBy: none
+		sourceColumn: Male
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: dd64f20b-738e-4c41-b486-2c5c0afe7b34
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SSC / Location'
+		dataType: string
+		lineageTag: b0732599-f76e-4191-8493-9e8594a1d123
+		summarizeBy: none
+		sourceColumn: SSC / Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SSC Support Team'
+		dataType: string
+		lineageTag: 49279e86-b867-47fa-9ac8-9977c566c9a1
+		summarizeBy: none
+		sourceColumn: SSC Support Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total
+		dataType: string
+		lineageTag: 366311bc-90ce-44ea-b570-a01fd7d1ea09
+		summarizeBy: none
+		sourceColumn: Total
+
+		annotation SummarizationSetBy = Automatic
+
+	column _loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8d636958-dcf3-41f8-a06b-d85e123ecec7
+		summarizeBy: none
+		sourceColumn: _loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column _sheet
+		dataType: string
+		lineageTag: 28cc2ab5-4333-4035-ae14-e55758d2c807
+		summarizeBy: none
+		sourceColumn: _sheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column _source_file
+		dataType: string
+		lineageTag: 6911618a-a5aa-482e-8f99-75d5e4e7e9e0
+		summarizeBy: none
+		sourceColumn: _source_file
+
+		annotation SummarizationSetBy = Automatic
+
+	partition carbon_lsc_consultation_matrix = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"46a03dfe-0b06-48be-be37-f1e9e748d922" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="46a03dfe-0b06-48be-be37-f1e9e748d922"]}[Data],
+				    carbon_lsc_consultation_matrix_ = #"46a03dfe-0b06-48be-be37-f1e9e748d922"{[entity="carbon_lsc_consultation_matrix",version=""]}[Data]
+				in
+				    carbon_lsc_consultation_matrix_
+

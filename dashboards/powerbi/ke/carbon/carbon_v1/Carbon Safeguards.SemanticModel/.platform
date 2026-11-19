@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Carbon Safeguards"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "25c55302-7ee6-457c-ae97-de142006c6c6"
+  }
+}

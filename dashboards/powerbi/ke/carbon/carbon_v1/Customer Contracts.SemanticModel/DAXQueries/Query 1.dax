@@ -1,0 +1,11 @@
+EVALUATE
+ROW(
+    "PAYG 2018 Count", CALCULATE(
+        COUNTROWS(payg_cystomer_contracts),
+        YEAR(payg_cystomer_contracts[JSF_Date]) = 2018
+    ),
+    "Accounts 2018 Count", CALCULATE(
+        COUNTROWS(accounts_mv),
+        YEAR(accounts_mv[jsfDate]) = 2018
+    )
+)

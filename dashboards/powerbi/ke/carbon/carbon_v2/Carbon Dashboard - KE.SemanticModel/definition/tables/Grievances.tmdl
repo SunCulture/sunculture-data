@@ -1,0 +1,88 @@
+table Grievances
+	lineageTag: 1b0c6ce3-fa1c-4483-9e9e-c13b20ef7f4d
+
+	column 'Case ID'
+		dataType: string
+		lineageTag: 173533a4-546d-4ef8-98bc-684934719be3
+		sourceColumn: Case ID
+
+	column 'Date Received'
+		dataType: dateTime
+		lineageTag: d0454be1-f242-4042-9f6b-e54d42d33c71
+		sourceColumn: Date Received
+
+	column Channel
+		dataType: string
+		lineageTag: 165dac59-ab03-4b09-8800-d75eadea3ca7
+		sourceColumn: Channel
+
+	column 'County (map key)'
+		dataType: string
+		lineageTag: d5fc89a3-a8b1-42bb-8ce0-33fb11244b38
+		sourceColumn: County (map key)
+
+	column 'Site / SSC'
+		dataType: string
+		lineageTag: daa60951-8bc5-4e8b-a8ba-7103cf47d0db
+		sourceColumn: Site / SSC
+
+	column 'Complainant Type'
+		dataType: string
+		lineageTag: 0e644e35-087a-4761-aebd-88ba07658de9
+		sourceColumn: Complainant Type
+
+	column Category
+		dataType: string
+		lineageTag: 3725c5bd-92d3-4391-a95c-7bad4ae41bba
+		sourceColumn: Category
+
+	column Description
+		dataType: string
+		lineageTag: cbf969c8-9bba-4a56-91ad-c792dd85b9f5
+		sourceColumn: Description
+
+	column 'Date Closed'
+		dataType: dateTime
+		lineageTag: 0e79cd35-5f3e-4d24-98f8-27bab106ad0a
+		sourceColumn: Date Closed
+
+	column 'TAT (Days)'
+		dataType: int64
+		lineageTag: e0a57fa0-1a57-4535-9686-8d01010eb627
+		sourceColumn: TAT (Days)
+
+	column 'SLA Target (Days)'
+		dataType: int64
+		lineageTag: 12f10d6d-f074-48d3-a1f0-a08f74c5f36e
+		sourceColumn: SLA Target (Days)
+
+	column 'SLA Met?'
+		dataType: string
+		lineageTag: 0c00f270-2295-49da-8c52-cc6df3f0e95b
+		sourceColumn: SLA Met?
+
+	column Status
+		dataType: string
+		lineageTag: a9e17cd9-bcbb-4a48-ba92-d7d9cdcd6e13
+		sourceColumn: Status
+
+	column Resolution
+		dataType: string
+		lineageTag: 62bbaad4-9a2e-419b-b4d9-9b07a0b5b7b2
+		sourceColumn: Resolution
+
+	column Owner
+		dataType: string
+		lineageTag: a34beda3-ae33-4d82-bc5c-d36cea17cdf0
+		sourceColumn: Owner
+
+	partition Grievances = m
+		mode: import
+		source =
+				let
+				    Src = #table(
+				        type table [#"Case ID"=text, #"Date Received"=datetime, #"Channel"=text, #"County (map key)"=text, #"Site / SSC"=text, #"Complainant Type"=text, #"Category"=text, #"Description"=text, #"Date Closed"=datetime, #"TAT (Days)"=Int64.Type, #"SLA Target (Days)"=Int64.Type, #"SLA Met?"=text, #"Status"=text, #"Resolution"=text, #"Owner"=text],
+				        {})
+				in
+				    Src
+

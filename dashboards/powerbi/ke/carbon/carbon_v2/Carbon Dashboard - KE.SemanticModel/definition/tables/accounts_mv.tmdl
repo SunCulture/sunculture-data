@@ -1,0 +1,223 @@
+table accounts_mv
+	lineageTag: 5f217e67-021e-4104-934c-1967170df192
+
+	column accountRef
+		dataType: string
+		lineageTag: d97174d6-4479-4370-88e7-01c37b9bcce2
+		summarizeBy: none
+		sourceColumn: accountRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column accountType
+		dataType: string
+		lineageTag: 07e7767d-b774-4585-a2b7-eabe5285169a
+		summarizeBy: none
+		sourceColumn: accountType
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 146c99f3-520c-42bb-84ff-77d094401aad
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column companyRegion
+		dataType: string
+		lineageTag: aaddc72f-2a97-4ba7-ae30-253e54f3e2f3
+		summarizeBy: none
+		sourceColumn: companyRegion
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_name
+		dataType: string
+		lineageTag: 5eb3176c-9a2e-44c0-b790-7a64f2ddd89f
+		summarizeBy: none
+		sourceColumn: customer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceId
+		dataType: string
+		lineageTag: 684b2e87-ce6f-405f-9d10-40c020133489
+		summarizeBy: none
+		sourceColumn: deviceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column dispatchDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 46cbf472-8236-4856-8f2a-4adcfb123595
+		summarizeBy: none
+		sourceColumn: dispatchDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column jsfDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 345307db-8e21-45b2-9dc2-3281a4867251
+		summarizeBy: none
+		sourceColumn: jsfDate
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column product
+		dataType: string
+		lineageTag: b242c468-4a20-4797-bdae-604a83a0d0c4
+		summarizeBy: none
+		sourceColumn: product
+
+		annotation SummarizationSetBy = Automatic
+
+	column productQty
+		dataType: int64
+		formatString: 0
+		lineageTag: c1cb08e4-fd67-4582-bc92-ec1a04595523
+		summarizeBy: sum
+		sourceColumn: productQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date
+		dataType: dateTime
+		formatString: m/d/yyyy
+		lineageTag: af66a097-81fd-47c3-98e4-6140f8e9a40a
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column status
+		dataType: string
+		lineageTag: bc81be31-8b30-4945-a3b1-9ccb58e48a7b
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column leadId
+		dataType: string
+		lineageTag: 3a24e328-48b1-4699-b7d2-dee3c585532c
+		summarizeBy: none
+		sourceColumn: leadId
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Yes / No: whether the account's signed contract has been received (customer_contracts Received = Yes); blank when the account is not in the contract register. Read through the contracts relationship.
+	column 'Has Received Contract' =
+			VAR ref = RELATED ( payg_cystomer_contracts[Account_Ref] )
+			RETURN IF ( ISBLANK ( ref ), BLANK (), IF ( RELATED ( payg_cystomer_contracts[Received] ) = "Yes", "Yes", "No" ) )
+		lineageTag: 0625b469-8abb-4d40-a751-2cf158d69c1c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: aa0aa18f-7321-421f-ad47-9393a603b627
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 13de41e6-bae7-46fb-a593-c75ba407444f
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'region 1'
+		dataType: string
+		lineageTag: 3bd038b3-2451-4d19-824e-9f26f1b0f9f6
+		summarizeBy: none
+		sourceColumn: region 1
+
+		annotation SummarizationSetBy = Automatic
+
+	column town
+		dataType: string
+		lineageTag: 935cf185-2e7e-4331-8198-e57826983364
+		summarizeBy: none
+		sourceColumn: town
+
+		annotation SummarizationSetBy = Automatic
+
+	column units =
+			
+			
+			var f=if(accounts_mv[productQty]<0||isblank(accounts_mv[productQty]),1,accounts_mv[productQty])
+			return
+			f
+		formatString: 0
+		lineageTag: c0ce4584-64b2-4451-8cb7-40852a437994
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date_only = DATEVALUE( accounts_mv[sale_date] )
+		formatString: General Date
+		lineageTag: 856a0991-2154-42e6-9d7a-b474d6da0004
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month the unit was dispatched (yyyy-mm), for the Dispatch Month slicer.
+	column 'Dispatch Month' = IF ( ISBLANK ( accounts_mv[dispatchDate] ), BLANK (), FORMAT ( accounts_mv[dispatchDate], "yyyy-mm" ) )
+		dataType: string
+		lineageTag: 8d1e2f30-4a5b-4c6d-9e7f-8091a2b3c401
+		summarizeBy: none
+
+	/// Year of the sale date, for the sales-cohort table.
+	column 'Sale Year' = IF ( ISBLANK ( accounts_mv[sale_date_only] ), BLANK (), YEAR ( accounts_mv[sale_date_only] ) )
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d1e2f30-4a5b-4c6d-9e7f-8091a2b3c402
+		summarizeBy: none
+
+	partition accounts_mv = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"e6f716db-6042-41b8-b4b1-633806e1dd39" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="e6f716db-6042-41b8-b4b1-633806e1dd39"]}[Data],
+				    accounts_mv_ = #"e6f716db-6042-41b8-b4b1-633806e1dd39"{[entity="accounts_mv",version=""]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(accounts_mv_,{{"jsfDate", type date}}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Changed Type", {"accountRef", "accountType", "account_id", "companyRegion", "customer_name", "deviceId", "dispatchDate", "jsfDate", "product", "productQty", "sale_date", "status", "leadId", "Region", "category", "region 1", "town"}, MissingField.Ignore),
+				    // The dashboard is Kenya only
+				    #"Kenya Only" = Table.SelectRows(#"Kept Columns", each [companyRegion] = "kenya"),
+				    // An account ref can be reused by a newer account (e.g. 3483116). The contract link needs one row per ref:
+				    // the oldest account keeps the plain ref, later ones get "<ref>-<account_id>". All accounts stay in.
+				    #"First Account per Ref" = Table.Group(#"Kenya Only", {"accountRef"}, {{"first_account_id", each List.Min([account_id])}}),
+				    #"Joined First" = Table.Join(#"Kenya Only", {"accountRef"}, Table.RenameColumns(#"First Account per Ref", {{"accountRef", "ref_key"}}), {"ref_key"}, JoinKind.LeftOuter),
+				    #"Unique Ref" = Table.AddColumn(#"Joined First", "accountRef_unique", each if [accountRef] = null or [account_id] = [first_account_id] then [accountRef] else [accountRef] & "-" & Text.From([account_id]), type text),
+				    #"Removed Helpers" = Table.RemoveColumns(#"Unique Ref", {"accountRef", "ref_key", "first_account_id"}),
+				    #"Unique Account Ref" = Table.RenameColumns(#"Removed Helpers", {{"accountRef_unique", "accountRef"}})
+				in
+				    #"Unique Account Ref"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

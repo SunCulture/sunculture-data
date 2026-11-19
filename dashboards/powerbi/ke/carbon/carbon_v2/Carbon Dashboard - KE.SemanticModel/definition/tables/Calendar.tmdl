@@ -1,0 +1,118 @@
+table Calendar
+	lineageTag: 82953dd1-2232-40b9-9b9a-051f1fc64bc3
+
+	column Date
+		formatString: General Date
+		lineageTag: 388ea843-913d-47c5-9283-44be394ca42b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: f7a61d36-a752-4ec3-8658-064a21590b55
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		formatString: 0
+		lineageTag: c9f7ab45-14a6-4cd9-bf01-6dbe99b669fe
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		lineageTag: 71ce0b5f-f0e2-488b-a2b3-4c076054b707
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Name]
+		sortByColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 0c8ab531-1f1b-4012-ab1d-fa1995552750
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week No'
+		formatString: 0
+		lineageTag: c781fed9-b91a-437a-8323-0cbfea768bbe
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Week No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: e1fc774d-7e4c-459a-b5f8-be50dc0c697c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		lineageTag: 23dbfd5b-408d-4240-a1e4-392f5a59f897
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		lineageTag: c0b14432-816e-4f61-884a-18b403f6e87e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year-Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source =
+				
+				VAR MinDate =
+				    MINX(
+				        UNION(
+				            SELECTCOLUMNS( accounts_mv,              "Date", [jsfDate] ),
+				            SELECTCOLUMNS( accounts_mv,              "Date", DATEVALUE( [sale_date] ) ),
+				            SELECTCOLUMNS( jsf_mv,                   "Date", [jsf_date_clean] )
+				        ),
+				        [Date]
+				    )
+				VAR MaxDate =
+				    MAXX(
+				        UNION(
+				            SELECTCOLUMNS( accounts_mv,              "Date", [jsfDate] ),
+				            SELECTCOLUMNS( accounts_mv,              "Date", DATEVALUE( [sale_date] ) ),
+				            SELECTCOLUMNS( jsf_mv,                   "Date", [jsf_date_clean] )
+				        ),
+				        [Date]
+				    )
+				RETURN
+				    ADDCOLUMNS(
+				        CALENDAR( MinDate, MaxDate ),
+				        "Year",       YEAR( [Date] ),
+				        "Month",      MONTH( [Date] ),
+				        "Month Name", FORMAT( [Date], "MMMM" ),
+				        "Quarter",    "Q" & QUARTER( [Date] ),
+				        "Week No",    WEEKNUM( [Date], 2 ),
+				        "Day",        DAY( [Date] ),
+				        "Day Name",   FORMAT( [Date], "dddd" ),
+				        "Year-Month", FORMAT( [Date], "YYYY-MM" )
+				    )
+
+	annotation PBI_Id = 4d607f6853c14e3da48d23cc87b7ee39
+

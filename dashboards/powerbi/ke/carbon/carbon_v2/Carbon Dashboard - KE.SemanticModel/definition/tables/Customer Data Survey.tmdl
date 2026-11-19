@@ -1,0 +1,122 @@
+table 'Customer Data Survey'
+	lineageTag: 3ac8dd2e-3d08-4a90-a7eb-24da768fabd2
+
+	column leadId
+		dataType: string
+		lineageTag: cdebf05d-4fc2-47b3-af8e-70dcd83d3657
+		summarizeBy: none
+		sourceColumn: leadId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity_of_water_usage_per_week__c
+		dataType: string
+		lineageTag: b0598ea2-a3a4-4523-8253-45cf7848d0ac
+		summarizeBy: none
+		sourceColumn: Quantity_of_water_usage_per_week__c
+
+		annotation SummarizationSetBy = Automatic
+
+	column carbon_credit_which_pump_type_c
+		dataType: string
+		lineageTag: 444912fd-0c66-4320-af34-46aad6d0474d
+		summarizeBy: none
+		sourceColumn: carbon_credit_which_pump_type_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column cds2CompletionDate
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: fd2bd972-cef1-4449-aed8-6a4f0b447168
+		summarizeBy: none
+		sourceColumn: cds2CompletionDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column cdsId
+		dataType: string
+		lineageTag: ba9ac652-00c4-44e4-b7f3-083c2b2645cf
+		summarizeBy: none
+		sourceColumn: cdsId
+
+		annotation SummarizationSetBy = Automatic
+
+	column did_you_previously_own_a_water_pump_c
+		dataType: string
+		lineageTag: c1136c33-9b8d-4bca-aa7f-7ac677eb285e
+		summarizeBy: none
+		sourceColumn: did_you_previously_own_a_water_pump_c
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_sources_of_water_c
+		dataType: string
+		lineageTag: a5aced6d-dcac-4f0f-9e78-f04b766e0fdc
+		summarizeBy: none
+		sourceColumn: other_sources_of_water_c
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Month the CDS 2 was completed (yyyy-mm), for the CDS 2 Month slicer.
+	column 'CDS2 Month' = IF ( ISBLANK ( 'Customer Data Survey'[cds2CompletionDate] ), BLANK (), FORMAT ( 'Customer Data Survey'[cds2CompletionDate], "yyyy-mm" ) )
+		dataType: string
+		lineageTag: 8d1e2f30-4a5b-4c6d-9e7f-8091a2b3c403
+		summarizeBy: none
+
+	/// Customer Name of the customer's account (accounts_mv.customer_name), looked up once per lead so the survey table does not join every account. Blank when the response has no lead.
+	column 'Customer Name' = IF ( ISBLANK ( 'Customer Data Survey'[leadId] ) || 'Customer Data Survey'[leadId] = "", BLANK (), MAXX ( RELATEDTABLE ( accounts_mv ), accounts_mv[customer_name] ) )
+		dataType: string
+		displayFolder: Customer
+		lineageTag: 9e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a50
+		summarizeBy: none
+
+	/// Account Ref of the customer's account (accounts_mv.accountRef), looked up once per lead so the survey table does not join every account. Blank when the response has no lead.
+	column 'Account Ref' = IF ( ISBLANK ( 'Customer Data Survey'[leadId] ) || 'Customer Data Survey'[leadId] = "", BLANK (), MAXX ( RELATEDTABLE ( accounts_mv ), accounts_mv[accountRef] ) )
+		dataType: string
+		displayFolder: Customer
+		lineageTag: 9e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a51
+		summarizeBy: none
+
+	/// Town of the customer's account (accounts_mv.town), looked up once per lead so the survey table does not join every account. Blank when the response has no lead.
+	column Town = IF ( ISBLANK ( 'Customer Data Survey'[leadId] ) || 'Customer Data Survey'[leadId] = "", BLANK (), MAXX ( RELATEDTABLE ( accounts_mv ), accounts_mv[town] ) )
+		dataType: string
+		displayFolder: Customer
+		lineageTag: 9e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a52
+		summarizeBy: none
+
+	/// Account Type of the customer's account (accounts_mv.accountType), looked up once per lead so the survey table does not join every account. Blank when the response has no lead.
+	column 'Account Type' = IF ( ISBLANK ( 'Customer Data Survey'[leadId] ) || 'Customer Data Survey'[leadId] = "", BLANK (), MAXX ( RELATEDTABLE ( accounts_mv ), accounts_mv[accountType] ) )
+		dataType: string
+		displayFolder: Customer
+		lineageTag: 9e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a53
+		summarizeBy: none
+
+	/// Country of the customer's account (accounts_mv.companyRegion), looked up once per lead so the survey table does not join every account. Blank when the response has no lead.
+	column Country = IF ( ISBLANK ( 'Customer Data Survey'[leadId] ) || 'Customer Data Survey'[leadId] = "", BLANK (), MAXX ( RELATEDTABLE ( accounts_mv ), accounts_mv[companyRegion] ) )
+		dataType: string
+		displayFolder: Customer
+		lineageTag: 9e2f3a4b-5c6d-4e7f-8a9b-0c1d2e3f4a54
+		summarizeBy: none
+
+	partition 'Customer Data Survey-b43da39c-9962-4c6e-8440-c8535093bcd7' = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"6b82f3d7-43f9-4345-8122-49f60c0278af" = Workspaces{[workspaceId="6b82f3d7-43f9-4345-8122-49f60c0278af"]}[Data],
+				    #"381ab5ac-e517-45dd-bbeb-c054b335280d" = #"6b82f3d7-43f9-4345-8122-49f60c0278af"{[dataflowId="381ab5ac-e517-45dd-bbeb-c054b335280d"]}[Data],
+				    mart_cds_responses_ = #"381ab5ac-e517-45dd-bbeb-c054b335280d"{[entity="mart_cds_responses",version=""]}[Data],
+				    #"Removed Duplicates" = Table.Distinct(mart_cds_responses_, {"leadId"}),
+				    // Only the columns this report uses
+				    #"Kept Columns" = Table.SelectColumns(#"Removed Duplicates", {"leadId", "Quantity_of_water_usage_per_week__c", "carbon_credit_which_pump_type_c", "cds2CompletionDate", "cdsId", "did_you_previously_own_a_water_pump_c", "other_sources_of_water_c"}, MissingField.Ignore)
+				in
+				    #"Kept Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
