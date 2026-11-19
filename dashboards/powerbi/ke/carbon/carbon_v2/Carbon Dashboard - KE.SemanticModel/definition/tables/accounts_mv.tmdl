@@ -206,9 +206,16 @@ table accounts_mv
 				    // Only the columns this report uses
 				    #"Kept Columns" = Table.SelectColumns(#"Changed Type", {"accountRef", "accountType", "account_id", "companyRegion", "customer_name", "deviceId", "dispatchDate", "jsfDate", "product", "productQty", "sale_date", "status", "leadId", "Region", "category", "region 1", "town"}, MissingField.Ignore),
 				    // The dashboard is Kenya only
-				    #"Kenya Only" = Table.SelectRows(#"Kept Columns", each [companyRegion] = "kenya")
+				    #"Kenya Only" = Table.SelectRows(#"Kept Columns", each [companyRegion] = "kenya"),
+				    // An account ref can be reused by a newer account (e.g. 3483116). The contract link needs one row per ref:
+				    // the oldest account keeps the plain ref, later ones get "<ref>-<account_id>". All accounts stay in.
+				    #"First Account per Ref" = Table.Group(#"Kenya Only", {"accountRef"}, {{"first_account_id", each List.Min([account_id])}}),
+				    #"Joined First" = Table.Join(#"Kenya Only", {"accountRef"}, Table.RenameColumns(#"First Account per Ref", {{"accountRef", "ref_key"}}), {"ref_key"}, JoinKind.LeftOuter),
+				    #"Unique Ref" = Table.AddColumn(#"Joined First", "accountRef_unique", each if [accountRef] = null or [account_id] = [first_account_id] then [accountRef] else [accountRef] & "-" & Text.From([account_id]), type text),
+				    #"Removed Helpers" = Table.RemoveColumns(#"Unique Ref", {"accountRef", "ref_key", "first_account_id"}),
+				    #"Unique Account Ref" = Table.RenameColumns(#"Removed Helpers", {{"accountRef_unique", "accountRef"}})
 				in
-				    #"Kenya Only"
+				    #"Unique Account Ref"
 
 	annotation PBI_ResultType = Table
 

@@ -46,7 +46,7 @@ Every page is 1280 wide with the SunCulture sidebar (`nav.json`), header and fil
 |---|---|---|
 | `accounts_mv` | ~139k (Kenya only) | 17 of 141 columns. Calculated: `units`, `sale_date_only`, `Sale Year`, `Dispatch Month`, `Has Received Contract` (via the contracts relationship) |
 | `jsf_mv` | ~61k | Only completed INSTALLATION JSFs marked Installed. Calculated: `Installed JSF`, `Latest Installation Flag` (latest per account), `Is Contract`, `jsf_date_clean` |
-| `payg_cystomer_contracts` | contract register | 4 columns; one row per account ref; 1:1 with `accounts_mv` |
+| `payg_cystomer_contracts` | contract register | 4 columns; one row per account ref; 1:1 with `accounts_mv` on the account ref (when a ref is reused by a newer account, the oldest account keeps it and the newer one gets `<ref>-<account_id>`) |
 | `Customer Data Survey` | ~79k | 7 of 101 columns plus looked-up customer columns (Customer Name, Account Ref, Town, Account Type, Country), so the CDS table does not join every account per lead |
 | `Calendar` | daily | Active on `jsf_mv[jsf_date_clean]`; inactive on the sale date and the account JSF date (used with `USERELATIONSHIP`) |
 | Safeguards | small | `Training_Teams`, `Ambassadors`, `LSC_Events`, `LSC_Issues`, `LSC_Savings`, `County_Lookup`, `Grievances` (typed-in, empty) |
@@ -63,9 +63,11 @@ No phone numbers, GPS or national IDs are loaded or shown. Customer names and ac
 - Power BI Desktop does not apply a slicer's saved selection when the file opens; click **Reset Filters** after opening.
 - The contract register (`customer_contracts`) and the dataset refresh weekly, so recent months show few submitted contracts until the next sync.
 - `accounts_mv` has a JSF date in 2028 (bad source data), so the Calendar runs to 2028.
+- Account refs are not unique in the source: a newer account can reuse an older ref (e.g. 3483116, 18 Nov 2026). Contracts for a reused ref are linked to the oldest account.
 
 ## Open questions
 
+- **Reused account refs:** ask the sales / Salesforce team why new accounts get an existing ref (1,732 Kenya refs appear on more than one row in ClickHouse `marts.mart_accounts`).
 - **Refresh schedule:** move the published dataset (and the `customer_contracts` sync) to daily.
 - **Grievances:** the table is typed in and empty; connect it to the grievance log or remove it.
 - **Training register names:** the `Training_Teams` query corrects a few staff names and division heads in code; move these fixes to the source sheet.

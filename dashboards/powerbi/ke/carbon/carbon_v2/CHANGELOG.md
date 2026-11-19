@@ -3,6 +3,7 @@
 ## 2026-11-19
 
 - **Changed** every chart and table title to bold, italic and underlined, and every score-card label to bold.
+- **Fixed** the refresh failing with "Column 'accountRef' in Table 'accounts_mv' contains a duplicate value '3483116'": a new account (18 Nov) reused an older account's ref. In `accounts_mv` the oldest account keeps the plain ref and later accounts sharing it get `<ref>-<account_id>`, so the contract link stays one-to-one and no account is dropped.
 
 ## 2026-11-16
 
