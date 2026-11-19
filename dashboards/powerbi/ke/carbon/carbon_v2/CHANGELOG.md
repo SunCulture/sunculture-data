@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-19
+
+- **Changed** every chart and table title to bold, italic and underlined, and every score-card label to bold.
+
 ## 2026-11-16
 
 - **Added** `Carbon Dashboard - KE.pbip`: Customer Contracts, Carbon credit CDS and Carbon Safeguards in one report and one model (originals unchanged in `../carbon_v1/`).
